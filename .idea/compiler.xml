@@ -2,6 +2,9 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="Rapid-Reee-2022.main" target="11" />
+      <module name="Rapid-Reee-2022.sourceSets" target="11" />
+      <module name="Rapid-Reee-2022.test" target="11" />
       <module name="Robot-Code-Template.main" target="11" />
       <module name="Robot-Code-Template.sourceSets" target="11" />
       <module name="Robot-Code-Template.test" target="11" />
