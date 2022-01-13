@@ -1,0 +1,84 @@
+plugins {
+    id "java"
+    id "edu.wpi.first.GradleRIO" version "2020.1.2" // set this to the latest stable version
+}
+
+apply plugin: 'idea'
+
+def ROBOT_MAIN_CLASS = "edu.greenblitz.robotName.main" // set this to the full name of the robot class (including package)
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:all" << "-Werror"
+    }
+}
+
+deploy {
+    targets {
+        roboRIO("roborio") {
+            team = frc.getTeamNumber()
+        }
+    }
+    artifacts {
+        frcJavaArtifact('frcJava') {
+            targets << "roborio"
+            debug = frc.getDebugOrDefault(false)
+        }
+
+        fileTreeArtifact('frcStaticFileDeploy') {
+            files = fileTree(dir: 'src/main/deploy')
+            targets << "roborio"
+            directory = '/home/lvuser/deploy'
+        }
+    }
+}
+
+repositories {
+    jcenter()
+    maven { url "https://jitpack.io" }
+    mavenCentral()
+}
+
+dependencies {
+    compile wpi.deps.wpilib()
+    compile wpi.deps.vendor.java()
+    nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
+    nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
+
+    nativeZip wpi.deps.wpilibJni(wpi.platforms.roborio) 
+    nativeDesktopZip wpi.deps.wpilibJni(wpi.platforms.desktop)
+    // Optional lines, adds common robot code libraries to the project
+    // The jitpack line in repositories is required for these libraries.
+    compile 'com.github.GreenBlitz.MotionControl:motion:master-SNAPSHOT'
+    compile 'com.github.GreenBlitz:GBLib:master-SNAPSHOT'
+
+    compile group: 'com.google.guava', name: 'guava', version: '11.0.2'
+
+    // Optional lines, used for writing tests
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+
+    // Optional lines, used for logging
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.2'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.2'
+}
+
+jar {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
+}
+
+test {
+    // Optinal if you use juint for testing
+    useJUnitPlatform()
+}
+
+sourceSets {
+    sourceSets {
+        main.java.srcDirs = ['src/main/java']
+    }
+}
+
+wrapper{
+    gradleVersion = '5.1.1'
+}

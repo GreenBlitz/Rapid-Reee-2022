@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Robot-Code-Template.iml" filepath="$PROJECT_DIR$/.idea/Robot-Code-Template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Robot-Code-Template.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Robot-Code-Template.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Robot-Code-Template.sourceSets.iml" filepath="$PROJECT_DIR$/.idea/modules/Robot-Code-Template.sourceSets.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Robot-Code-Template.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Robot-Code-Template.test.iml" />
+    </modules>
+  </component>
+</project>
