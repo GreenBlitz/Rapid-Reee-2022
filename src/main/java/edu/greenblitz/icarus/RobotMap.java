@@ -16,5 +16,23 @@ public class RobotMap {
 						RIGHT_TALON = 4;
 			}
 		}
+
+		public static class Intake{
+			public static final int PCM = -1;
+
+			public static class Motors{
+				public static final int ROLLER_PORT = -1;
+				public static final boolean IS_REVERSED = false;
+			}
+
+			public static class Solenoid{
+				public static final int FORWARD_LEFT = -1;
+				public static final int REVERSE_LEFT = -1;
+				public static final int FORWARD_RIGHT = -1;
+				public static final int REVERSE_RIGHT = -1;
+			}
+		}
+
+
 	}
 }
