@@ -1,9 +1,13 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2022.1.1" // set this to the latest stable version
+    id "edu.wpi.first.GradleRIO" version "2020.3.2" // set this to the latest stable version
 }
 
 apply plugin: 'idea'
+apply plugin: 'java'
+
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
 
 def ROBOT_MAIN_CLASS = "edu.greenblitz.robotName.main" // set this to the full name of the robot class (including package)
 
@@ -45,13 +49,14 @@ dependencies {
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
-    nativeZip wpi.deps.wpilibJni(wpi.platforms.roborio) 
+    compile 'org.jetbrains:annotations:16.0.2'
+
+    nativeZip wpi.deps.wpilibJni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.wpilibJni(wpi.platforms.desktop)
     // Optional lines, adds common robot code libraries to the project
     // The jitpack line in repositories is required for these libraries.
-    compile 'com.github.GreenBlitz.MotionControl:motion:1232859d20da194f2ec58ed6accbe36d1d097004'
-    compile 'com.github.GreenBlitz:GBLib:7ba4e91b71a4d4f78b1221ced7292a3dc5d8d45c'
-
+    compile 'com.github.GreenBlitz.MotionControl:motion:b58e6c0a206b00794c18ae6465f909c891dc517c'
+    compile 'com.github.GreenBlitz:GBLib:756c105d941fe748fb05edb1c612a9748c390e7e'
     compile group: 'com.google.guava', name: 'guava', version: '11.0.2'
 
     // Optional lines, used for writing tests
@@ -73,12 +78,7 @@ test {
     useJUnitPlatform()
 }
 
-sourceSets {
-    sourceSets {
-        main.java.srcDirs = ['src/main/java']
-    }
+wrapper{
+    gradleVersion = '5.6'
 }
 
-wrapper{
-    gradleVersion = '5.1.1'
-}
