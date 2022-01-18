@@ -2,7 +2,7 @@ package edu.greenblitz.icarus;
 
 public class RobotMap {
 
-    public static class BigRodika {
+    public static class Icarus {
         public static class Joystick {
             public static final int MAIN = 0;
             public static final int SECOND = 1;
