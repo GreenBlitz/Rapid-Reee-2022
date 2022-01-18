@@ -1,4 +1,4 @@
-package edu.greenblitz.robotName;
+package edu.greenblitz.icarus;
 
 public class RobotMap {
 
