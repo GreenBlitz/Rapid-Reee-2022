@@ -16,5 +16,11 @@ public class RobotMap {
 						RIGHT_TALON = 4;
 			}
 		}
+		
+		public static class Funnel {
+			public static class Motor {
+				public static final int MOTOR_PORT = -1;
+			}
+		}
 	}
 }
