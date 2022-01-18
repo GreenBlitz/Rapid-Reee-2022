@@ -16,5 +16,14 @@ public class RobotMap {
 						RIGHT_TALON = 4;
 			}
 		}
+
+		public static class Shooter {
+			public static class Motor {
+				public static final int PORT_LEADER = 8,
+						PORT_FOLLOWER = 9;
+				public static final boolean LEADER_INVERTED = false,
+						FOLLOWER_INVERTED = false;
+			}
+		}
 	}
 }
