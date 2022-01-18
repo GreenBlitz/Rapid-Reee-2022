@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-<<<<<<< Updated upstream
     <bytecodeTargetLevel target="11" />
-=======
-    <bytecodeTargetLevel target="11">
-      <module name="Rapid-Reee-2022.sourceSets" target="11" />
-      <module name="Robot-Code-Template.main" target="11" />
-      <module name="Robot-Code-Template.sourceSets" target="11" />
-      <module name="Robot-Code-Template.test" target="11" />
-    </bytecodeTargetLevel>
->>>>>>> Stashed changes
   </component>
 </project>
