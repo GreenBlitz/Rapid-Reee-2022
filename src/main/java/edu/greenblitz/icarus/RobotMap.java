@@ -35,11 +35,17 @@ public class RobotMap {
 			}
 		}
 
-		public static class Climb{
-			public static class Motor{
+		public static class Climb {
+			public static class Motor {
 				public static final int MOTOR = -1;
 				public static final boolean MOTOR_REVERSE = false;
 				public static final GearDependentValue<Double> MOTOR_TICKS_PER_METER = null;
+			}
+		}
+
+		public static class Funnel {
+			public static class FunnelMotor {
+				public static final int MOTOR_PORT = -1;
 			}
 		}
 	}
