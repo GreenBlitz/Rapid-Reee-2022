@@ -31,8 +31,4 @@ public class Funnel extends GBSubsystem{
 	public void moveMotor(double power){
 		motor.set(power);
 	}
-	
-	
-	
-	
 }
