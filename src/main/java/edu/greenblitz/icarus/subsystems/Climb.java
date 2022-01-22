@@ -5,12 +5,12 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import edu.greenblitz.gblib.encoder.SparkEncoder;
 import edu.greenblitz.icarus.RobotMap;
 
-public class Climb extends GBSubsystem{
+public class Climb extends GBSubsystem {
     private static Climb instance;
     private CANSparkMax motor;
     private SparkEncoder encoder;
 
-    private Climb(){
+    private Climb() {
         motor = new CANSparkMax(RobotMap.Icarus.Climb.Motor.MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         motor.setInverted(RobotMap.Icarus.Climb.Motor.MOTOR_REVERSE);
         encoder = new SparkEncoder(RobotMap.Icarus.Climb.Motor.MOTOR_TICKS_PER_METER, motor);
@@ -22,24 +22,30 @@ public class Climb extends GBSubsystem{
         //Add data to smartdashboard here
     }
 
-    private static void init(){
+    private static void init() {
         instance = new Climb();
     }
 
-    public static Climb getInstance(){
-        if(instance == null){
+    public static Climb getInstance() {
+        if (instance == null) {
             init();
         }
         return instance;
     }
 
-    private void moveMotor(double power){
+    private void moveMotor(double power) {
         motor.set(power);
     }
 
-    public void safeMoveMotor(double power){
-        if(power < 0 || power > 1){
-
+    public void safeMoveMotor(double power) {
+        if (power < 0 || power > 1) {
+            moveMotor(0);
+            return;
         }
+        moveMotor(power);
+    }
+
+    public double getMotorTicks() {
+        return encoder.getRawTicks();
     }
 }
