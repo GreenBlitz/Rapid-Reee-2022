@@ -10,7 +10,7 @@ public class Climb extends GBSubsystem{
     private CANSparkMax motor;
     private SparkEncoder encoder;
 
-    priavte Climb(){
+    private Climb(){
         motor = new CANSparkMax(RobotMap.Icarus.Climb.Motor.MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
         motor.setInverted(RobotMap.Icarus.Climb.Motor.MOTOR_REVERSE);
         encoder = new SparkEncoder(RobotMap.Icarus.Climb.Motor.MOTOR_TICKS_PER_METER, motor);
