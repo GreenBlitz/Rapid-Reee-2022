@@ -1,4 +1,5 @@
 package edu.greenblitz.icarus.commands.climb;
+import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.icarus.subsystems.Climb;
 
 public class ClimbByTriggers extends ClimbCommand {

@@ -1,6 +1,8 @@
 package edu.greenblitz.icarus.commands.climb;
 
 import edu.greenblitz.icarus.commands.climb.ClimbCommand;
+import org.greenblitz.motion.pid.PIDController;
+import org.greenblitz.motion.pid.PIDObject;
 
 public class MotorByPID extends ClimbCommand {
     private PIDController controller;
