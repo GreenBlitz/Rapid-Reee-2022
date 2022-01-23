@@ -50,5 +50,11 @@ public class RobotMap {
 						FOLLOWER_INVERTED = false;
 			}
 		}
+
+		public static class Funnel {
+			public static class FunnelMotor {
+				public static final int MOTOR_PORT = -1;
+			}
+		}
 	}
 }
