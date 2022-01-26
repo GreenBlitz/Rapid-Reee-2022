@@ -1,6 +1,7 @@
 package edu.greenblitz.icarus;
 
 import edu.greenblitz.gblib.gears.GearDependentValue;
+import org.greenblitz.motion.interpolation.Dataset;
 
 public class RobotMap {
 	public static class Icarus {
@@ -48,6 +49,19 @@ public class RobotMap {
 						PORT_FOLLOWER = 9;
 				public static final boolean LEADER_INVERTED = false,
 						FOLLOWER_INVERTED = false;
+
+
+				public static final Dataset RPM_TO_POWER = new Dataset(2);
+				static {
+					RPM_TO_POWER.addDatapoint(0, new double[]{0});
+					RPM_TO_POWER.addDatapoint(975, new double[]{0.2});
+					RPM_TO_POWER.addDatapoint(2062.5, new double[]{0.4});
+					RPM_TO_POWER.addDatapoint(3075, new double[]{0.6});
+					RPM_TO_POWER.addDatapoint(3960, new double[]{0.8});
+				}
+				// No fucking idea how much is 1.0, but 0.8 is already very fucking scary
+//        rpmToPowerMap.addDatapoint(5500, new double[]{1.0});
+
 			}
 		}
 

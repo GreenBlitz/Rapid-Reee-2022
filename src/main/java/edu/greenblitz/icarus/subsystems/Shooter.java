@@ -32,15 +32,6 @@ public class Shooter extends GBSubsystem {
 		follower.setSmartCurrentLimit(40);
 
 		preparedToShoot = false;
-		rpmToPowerMap = new Dataset(2);
-		rpmToPowerMap.addDatapoint(0, new double[]{0});
-		rpmToPowerMap.addDatapoint(975, new double[]{0.2});
-		rpmToPowerMap.addDatapoint(2062.5, new double[]{0.4});
-		rpmToPowerMap.addDatapoint(3075, new double[]{0.6});
-		rpmToPowerMap.addDatapoint(3960, new double[]{0.8});
-		// No fucking idea how much is 1.0, but 0.8 is already very fucking scary
-//        rpmToPowerMap.addDatapoint(5500, new double[]{1.0});
-
 		putNumber("testing_target", 0);
 		putNumber("p", 0);
 		putNumber("i", 0);
@@ -52,12 +43,13 @@ public class Shooter extends GBSubsystem {
 	}
 
 	public static void init() {
-		if (instance == null) {
-			instance = new Shooter();
-		}
+		instance = new Shooter();
 	}
 
 	public static Shooter getInstance() {
+		if (instance == null) {
+			init();
+		}
 		return instance;
 	}
 
