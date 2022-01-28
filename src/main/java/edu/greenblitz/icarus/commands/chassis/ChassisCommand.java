@@ -1,4 +1,4 @@
-package edu.greenblitz.icarus.commands;
+package edu.greenblitz.icarus.commands.chassis;
 
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.icarus.subsystems.Chassis;
