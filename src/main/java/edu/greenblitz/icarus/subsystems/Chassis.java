@@ -1,10 +1,12 @@
 package edu.greenblitz.icarus.subsystems;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.greenblitz.gblib.encoder.IEncoder;
 import edu.greenblitz.gblib.encoder.SparkEncoder;
 import edu.greenblitz.gblib.gyroscope.IGyroscope;
+import edu.greenblitz.gblib.gyroscope.PigeonGyro;
 import edu.greenblitz.icarus.RobotMap;
 import org.greenblitz.motion.Localizer;
 import org.greenblitz.motion.base.Position;
@@ -48,7 +50,7 @@ public class Chassis extends GBSubsystem {
 		rightEncoder = new SparkEncoder(RobotMap.Icarus.Chassis.Encoders.NORM_CONST_SPARK, rightLeader);
 		rightEncoder.invert(RobotMap.Icarus.Chassis.Encoders.RIGHT_ENCODER_REVERSED);
 
-//		gyroscope = new PigeonGyro(new PigeonIMU(Funnel.getInstance().getPusher().getTalon())); //Pigeon connects to talon/CAN bus
+		gyroscope = new PigeonGyro(new PigeonIMU(Funnel.getInstance().getMotor())); //Pigeon connects to talon/CAN bus
 		gyroscope.reset();
 		gyroscope.inverse();
 	}
