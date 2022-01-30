@@ -55,14 +55,11 @@ public class Chassis extends GBSubsystem {
 		gyroscope.inverse();
 	}
 
-	public static void init() {
+	public static Chassis getInstance() {
 		if (instance == null) {
 			instance = new Chassis();
-//			instance.setDefaultCommand(new ArcadeDrive(OI.getInstance().getMainJoystick()));
+//			instance.setDefaultCommand(new ArcadeDrive(OI.getInstance().getMainJoystick())); //currently already done in Robot.java (teleopInit)
 		}
-	}
-
-	public static Chassis getInstance() {
 		return instance;
 	}
 

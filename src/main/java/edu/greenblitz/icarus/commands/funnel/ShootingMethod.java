@@ -1,14 +1,12 @@
 package edu.greenblitz.icarus.commands.funnel;
 
-public abstract class ShootingMethod  extends FunnelCommand{
-	
-	
-	
-		public ShootingMethod() {
-			super();
-			require(funnel.getInserter());
-		}
-		
-	
-	
+import edu.greenblitz.icarus.subsystems.Funnel;
+
+public abstract class ShootingMethod extends FunnelCommand {
+
+	public ShootingMethod() {
+		super();
+		require(Funnel.getInstance());
+	}
+
 }

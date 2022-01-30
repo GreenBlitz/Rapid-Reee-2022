@@ -1,10 +1,12 @@
 package edu.greenblitz.icarus.commands.funnel.Inserter;
 
 import edu.greenblitz.icarus.commands.funnel.FunnelCommand;
+import edu.greenblitz.icarus.subsystems.Funnel;
 
-public class InserterCommand extends FunnelCommand {
+public abstract class InserterCommand extends FunnelCommand {
+
 		public InserterCommand() {
 			super();
-			require(funnel.getPusher());
+			require(Funnel.getInstance());
 	}
 }
