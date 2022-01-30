@@ -1,7 +1,12 @@
 package edu.greenblitz.icarus;
 
+import edu.greenblitz.gblib.gears.Gear;
 import edu.greenblitz.gblib.gears.GearDependentValue;
 import org.greenblitz.motion.interpolation.Dataset;
+import org.greenblitz.motion.profiling.ProfilingConfiguration;
+import org.greenblitz.motion.profiling.ProfilingData;
+
+import java.util.HashMap;
 
 public class RobotMap {
 	public static class Icarus {
@@ -23,6 +28,43 @@ public class RobotMap {
 				public static final int RIGHT_ENCODER = -1, LEFT_ENCODER = -1;
 				public static final boolean RIGHT_ENCODER_REVERSED = false, LEFT_ENCODER_REVERSED = false;
 			}
+
+			public static class MotionData { // TODO: calibrate this
+
+				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(
+						0.85, 1.0, .0005,
+						0.8, 0.0, 2.0, .01,
+						0.5 * 0, 0, 0, .01, 500);
+				public static HashMap<String, ProfilingData> POWER;
+				public static HashMap<String, ProfilingData> SPEED;
+				public static GearDependentValue<HashMap<String, ProfilingData>> PROF;
+
+				static {
+
+					POWER = new HashMap<>();
+					SPEED = new HashMap<>();
+					PROF = new GearDependentValue<>(null, null);
+
+					POWER.put("1.0",
+							new ProfilingData(2.64, 7, 8, 30));
+					POWER.put("0.5",
+							new ProfilingData(1.4, 8.4, 4, 10));
+
+					// TODO this is dumb
+					POWER.put("0.3",
+							new ProfilingData(1.93 * 1.2, 4.6, 4.3, 12.6));
+
+
+					SPEED.put("0.3",
+							new ProfilingData(1.93 * 1.2, 4.6, 4.3, 12.6));
+
+					PROF.setValue(Gear.POWER, POWER);
+					PROF.setValue(Gear.SPEED, SPEED);
+				}
+
+			}
+
+
 		}
 
 		public static class Intake {
