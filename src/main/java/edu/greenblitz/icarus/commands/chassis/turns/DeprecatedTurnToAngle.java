@@ -1,6 +1,6 @@
 package edu.greenblitz.icarus.commands.chassis.turns;
 
-
+//info in DelicateTurn
 import edu.greenblitz.gblib.threading.ThreadedCommand;
 import edu.greenblitz.icarus.commands.chassis.ChassisCommand;
 import edu.greenblitz.icarus.subsystems.Chassis;
@@ -10,7 +10,7 @@ import org.greenblitz.motion.profiling.ActuatorLocation;
 import org.greenblitz.motion.profiling.MotionProfile1D;
 import org.greenblitz.motion.profiling.Profiler1D;
 
-public class TurnToAngle extends ChassisCommand {
+public class DeprecatedTurnToAngle extends ChassisCommand {
 
     private ActuatorLocation end;
     private MotionProfile1D motionProfile;
@@ -21,9 +21,9 @@ public class TurnToAngle extends ChassisCommand {
 
     private int overCount;
 
-    public TurnToAngle(double angleToTurnDeg, double locP, double velP,
-                       double maxV, double maxA,
-                       double power, boolean allowRedo, double maxError) {
+    public DeprecatedTurnToAngle(double angleToTurnDeg, double locP, double velP,
+                                 double maxV, double maxA,
+                                 double power, boolean allowRedo, double maxError) {
         this.locP = locP;
         this.velP = velP;
         this.maxA = maxA;
@@ -85,7 +85,7 @@ public class TurnToAngle extends ChassisCommand {
         double err = Math.toDegrees(Position.normalizeAngle(chassis.getAngle() - end.getX()));
         SmartDashboard.putNumber("Final Error", err);
         if (Math.abs(err) > maxError && !interrupted && allowRedo) {
-            new ThreadedCommand(new DelicateTurn(end.getX()), Chassis.getInstance()).schedule();
+            new ThreadedCommand(new DeprecatedDelicateTurn(end.getX()), Chassis.getInstance()).schedule();
         }
     }
 

@@ -1,18 +1,22 @@
 package edu.greenblitz.icarus.commands.chassis.turns;
 
+/*
+this was deprecated due to criminal non use of PID. replacement was not yet written so if you require use of this class;
+you are encouraged to write it yourself;
+ */
 import edu.greenblitz.gblib.threading.IThreadable;
 import edu.greenblitz.icarus.subsystems.Chassis;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.base.Position;
 
-public class DelicateTurn implements IThreadable {
+public class DeprecatedDelicateTurn implements IThreadable {
 
     private double POWER = 0.2;
     private double TOL = Math.toRadians(1);
     private double goal;
     private double rightMult;
 
-    public DelicateTurn(double goal) {
+    public DeprecatedDelicateTurn(double goal) {
         this.goal = goal;
     }
 
