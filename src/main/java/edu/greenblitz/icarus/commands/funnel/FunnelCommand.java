@@ -1,4 +1,4 @@
-package edu.greenblitz.icarus.commands.Funnel;
+package edu.greenblitz.icarus.commands.funnel;
 
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.icarus.subsystems.Funnel;
