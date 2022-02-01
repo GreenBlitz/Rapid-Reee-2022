@@ -14,9 +14,9 @@ import org.greenblitz.motion.base.Position;
 public class Chassis extends GBSubsystem {
 	private static Chassis instance;
 
-	private CANSparkMax rightLeader, rightFollower1, rightFollower2, leftLeader, leftFollower1, leftFollower2;
-	private IEncoder leftEncoder, rightEncoder;
-	private IGyroscope gyroscope;
+	private final CANSparkMax rightLeader, rightFollower1, rightFollower2, leftLeader, leftFollower1, leftFollower2;
+	private final IEncoder leftEncoder, rightEncoder;
+	private final IGyroscope gyroscope;
 
 	private Chassis() {
 		rightLeader = new CANSparkMax(RobotMap.Icarus.Chassis.Motors.RIGHT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
