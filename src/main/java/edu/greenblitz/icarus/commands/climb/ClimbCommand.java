@@ -7,8 +7,8 @@ public abstract class ClimbCommand extends GBCommand {
     protected Climb climb;
 
     public ClimbCommand() {
-        require (Climb.getInstance());
-        climb = Climb.getInstance();
+	    climb = Climb.getInstance();
+	    require (climb);
     }
 
 }
