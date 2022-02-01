@@ -1,23 +1,23 @@
 package edu.greenblitz.icarus.commands.climb;
 
-import edu.greenblitz.icarus.commands.climb.ClimbCommand;
 import org.greenblitz.motion.pid.PIDController;
 import org.greenblitz.motion.pid.PIDObject;
 
 public class MotorByPID extends ClimbCommand {
-    private PIDController controller;
 
-    public MotorByPID(PIDObject obj) {
-        controller = new PIDController(obj);
-    }
+	private PIDController controller;
 
-    @Override
-    public void execute() {
-        climb.safeMoveMotor(controller.calculatePID(-1));//TODO:check for PID value
-    }
+	public MotorByPID(PIDObject obj) {
+		controller = new PIDController(obj);
+	}
 
-    @Override
-    public void end(boolean interrupted) {
-        climb.safeMoveMotor(0);
-    }
+	@Override
+	public void execute() {
+		climb.safeMoveMotor(controller.calculatePID(-1));//TODO:check for PID value
+	}
+
+	@Override
+	public void end(boolean interrupted) {
+		climb.safeMoveMotor(0);
+	}
 }

@@ -1,2 +1,4 @@
-package edu.greenblitz.icarus.commands.funnel;public class ShootingMethod {
+package edu.greenblitz.icarus.commands.funnel;
+
+public class ShootingMethod {
 }

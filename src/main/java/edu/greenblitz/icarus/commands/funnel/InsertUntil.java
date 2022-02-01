@@ -1,2 +1,4 @@
-package edu.greenblitz.icarus.commands.funnel;public class InsertUntil {
+package edu.greenblitz.icarus.commands.funnel;
+
+public class InsertUntil extends FunnelCommand {
 }
