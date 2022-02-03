@@ -45,8 +45,8 @@ public class RobotMap {
 
 		public static class Shooter {
 			public static class ShooterMotor {
-				public static final int PORT_LEADER = 8,
-						PORT_FOLLOWER = 9;
+				public static final int PORT_LEADER = -1,
+						PORT_FOLLOWER = -1;
 				public static final boolean LEADER_INVERTED = false,
 						FOLLOWER_INVERTED = false;
 
@@ -68,6 +68,17 @@ public class RobotMap {
 		public static class Funnel {
 			public static class FunnelMotor {
 				public static final int MOTOR_PORT = -1;
+			}
+		}
+
+		public static class ComplexClimb {
+			public static class ComplexClimbMotor {
+				public static final int HOOK_MOTOR_PORT = -1;
+				public static final boolean HOOK_MOTOR_REVERSED = false;
+				public static final GearDependentValue<Double> HOOK_MOTOR_TICKS_PER_METER = null;
+				public static final int TURNING_MOTOR_PORT = -1;
+				public static final boolean TURNING_MOTOR_REVERSED = false;
+				public static final GearDependentValue<Double> TURNING_MOTOR_TICKS_PER_METER = null;
 			}
 		}
 	}
