@@ -45,8 +45,11 @@ public class ComplexClimb extends GBSubsystem {
 	}
 
 	public void safeMoveHookMotor(double power) {
-		if (power < 0 || power > 1) {
+		if (power < 0) {
 			moveHookMotor(0);
+			return;
+		} else if (power > 1) {
+			moveHookMotor(1);
 			return;
 		}
 		moveHookMotor(power);
@@ -57,8 +60,11 @@ public class ComplexClimb extends GBSubsystem {
 	}
 
 	public void safeMoveTurningMotor(double power) {
-		if (power < 0 || power > 1) {
+		if (power < 0) {
 			moveTurningMotor(0);
+			return;
+		} else if (power > 1) {
+			moveTurningMotor(1);
 			return;
 		}
 		moveTurningMotor(power);
@@ -73,16 +79,12 @@ public class ComplexClimb extends GBSubsystem {
 	}
 
 	public void moveCurrentMotor(double power) {
-		if (turningMode)
-			safeMoveTurningMotor(power);
-		else
-			safeMoveHookMotor(power);
+		if (turningMode) safeMoveTurningMotor(power);
+		else safeMoveHookMotor(power);
 	}
 
 	public double getCurrentEncoderTicks() {
-		if (turningMode)
-			return getTurningMotorTicks();
-		else
-			return getHookMotorTicks();
+		if (turningMode) return getTurningMotorTicks();
+		else return getHookMotorTicks();
 	}
 }
