@@ -9,7 +9,8 @@ import edu.greenblitz.icarus.subsystems.Chassis;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.base.Position;
 
-public class DeprecatedDelicateTurn implements IThreadable {
+public class
+DeprecatedDelicateTurn implements IThreadable {
 
     private double POWER = 0.2;
     private double TOL = Math.toRadians(1);
