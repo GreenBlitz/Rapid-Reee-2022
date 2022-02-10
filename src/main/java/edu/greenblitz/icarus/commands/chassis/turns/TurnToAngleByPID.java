@@ -10,24 +10,16 @@ public class TurnToAngleByPID extends ChassisCommand {
 	
 	private double angleTarget;
 	private CollapsingPIDController anglePID;
-	
-	public TurnToAngleByPID(CollapsingPIDController anglePID, double angleTarget, double thresh, double tolerance, PIDObject PIDObject) {
+	static private PIDObject defaultPIDObject = new PIDObject(0,0,0);
+	static private double defaultThresh = 0;
+	static private double defaultTolerance = 0;
+	public TurnToAngleByPID(double angleTarget) {
 		this.angleTarget = angleTarget;
-		this.anglePID = anglePID;
-		anglePID = new CollapsingPIDController(PIDObject, thresh);
+		
+		anglePID = new CollapsingPIDController(defaultPIDObject, defaultThresh);
 		anglePID.configure(chassis.getAngle(), angleTarget, -0.2, 0.2, 0);
 		SmartDashboard.putNumber("angle target", chassis.getAngle());
-		anglePID.setTolerance((goal, current) -> Math.abs(goal - current) < tolerance);
-	}
-	
-	
-	public TurnToAngleByPID(CollapsingPIDController anglePID, double angleTarget, double thresh, double tolerance) {
-		this(anglePID, angleTarget, thresh, tolerance, new PIDObject(0.0, 0.0, 0.0));
-	}
-	
-	@Override
-	public void initialize() {
-	
+		anglePID.setTolerance((goal, current) -> Math.abs(goal - current) < defaultTolerance);
 	}
 	
 	public void execute() {
@@ -37,11 +29,11 @@ public class TurnToAngleByPID extends ChassisCommand {
 	
 	@Override
 	public void end(boolean interrupted) {
-		super.end(interrupted);
+		chassis.arcadeDrive(0,0);
 	}
 	
 	@Override
 	public boolean isFinished() {
-		return super.isFinished();
+		return anglePID.isFinished(chassis.getAngle());
 	}
 }
