@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -20,8 +21,20 @@ public abstract class GBSubsystem implements Subsystem {
 	protected NetworkTable table;
 	
 	public GBSubsystem() {
-		table = NetworkTableInstance.getDefault().getTable(this.getClass().getSimpleName());
 		CommandScheduler.getInstance().registerSubsystem(this);
+		initializeTable();
+	}
+	
+	private void initializeTable(){
+		String name = this.getClass().getSimpleName();
+		table = NetworkTableInstance.getDefault().getTable(name);
+		NetworkTableEntry entry = NetworkTableInstance.getDefault().getTable("general").getEntry("tables");
+		String[] tablesString = entry.getStringArray(new String[0]);
+		if(!Arrays.asList(tablesString).contains(name)){
+			tablesString = Arrays.copyOf(tablesString, tablesString.length+1);
+			tablesString[tablesString.length-1] = name;
+			entry.forceSetStringArray(tablesString);
+		}
 	}
 	
 	public synchronized void putData(String key, Sendable data) {
