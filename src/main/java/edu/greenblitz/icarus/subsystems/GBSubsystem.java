@@ -3,8 +3,6 @@ package edu.greenblitz.icarus.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.Sendable;
-import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -16,7 +14,7 @@ import java.util.Set;
 
 public abstract class GBSubsystem implements Subsystem {
 	
-	private final Map<String, Sendable> tablesToData = new HashMap<>();
+	private final Map<String, Object> tablesToData = new HashMap<>();
 	protected NetworkTable table;
 	
 	public GBSubsystem() {
@@ -24,27 +22,19 @@ public abstract class GBSubsystem implements Subsystem {
 		CommandScheduler.getInstance().registerSubsystem(this);
 	}
 	
-	public synchronized void putData(String key, Sendable data) {
-		Sendable sddata = tablesToData.get(key);
+	public synchronized void putData(String key, Object data) {
+		Object sddata = tablesToData.get(key);
 		if (sddata == null || sddata != data) {
 			tablesToData.put(key, data);
 			NetworkTable dataTable = table.getSubTable(key);
-			SendableRegistry.publish(data, dataTable);
 			dataTable.getEntry(".name").setString(key);
 		}
 		
 	}
-	
-	public void putData(Sendable value) {
-		String name = SendableRegistry.getName(value);
-		if (!name.isEmpty()) {
-			putData(name, value);
-		}
-		
-	}
-	
-	public synchronized Sendable getData(String key) {
-		Sendable data = tablesToData.get(key);
+
+
+	public synchronized Object getData(String key) {
+		Object data = tablesToData.get(key);
 		if (data == null) {
 			throw new IllegalArgumentException(key);
 		} else {

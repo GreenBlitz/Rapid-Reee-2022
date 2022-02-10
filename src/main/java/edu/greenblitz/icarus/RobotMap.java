@@ -1,6 +1,7 @@
 package edu.greenblitz.icarus;
 
 import edu.greenblitz.gblib.gears.GearDependentValue;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
 
 public class RobotMap {
@@ -20,7 +21,7 @@ public class RobotMap {
 		}
 
 		public static class Intake{
-			public static final int PCM = -1;
+			public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM; //TODO unchecked need to find out correct one
 
 			public static class Motors{
 				public static final int ROLLER_PORT = -1;
