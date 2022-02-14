@@ -1,8 +1,7 @@
 package edu.greenblitz.icarus.commands.chassis.turns;
 
 /*
-this was deprecated due to criminal non use of PID. replacement was not yet written so if you require use of this class;
-you are encouraged to write it yourself;
+this was deprecated due to criminal non use of PID use TurnToAngleByPID.
  */
 import edu.greenblitz.gblib.threading.IThreadable;
 import edu.greenblitz.icarus.subsystems.Chassis;

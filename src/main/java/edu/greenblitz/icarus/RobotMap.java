@@ -20,7 +20,6 @@ public class RobotMap {
 
 			public static class Motors {
 				public static final int RIGHT_LEADER = 1, RIGHT_FOLLOWER_1 = 2, RIGHT_FOLLOWER_2 = -1, LEFT_LEADER = 3, LEFT_FOLLOWER_1 = 4, LEFT_FOLLOWER_2 = -1;
-//				public static final int RIGHT_LEADER = -1, RIGHT_FOLLOWER_1 = -1, RIGHT_FOLLOWER_2 = -1, LEFT_LEADER = -1, LEFT_FOLLOWER_1 = -1, LEFT_FOLLOWER_2 = -1;
 				public static final boolean RIGHT_LEADER_REVERSED = false, RIGHT_FOLLOWER_1_REVERSED = false, RIGHT_FOLLOWER_2_REVERSED = false, LEFT_LEADER_REVERSED = false, LEFT_FOLLOWER_1_REVERSED = false, LEFT_FOLLOWER_2_REVERSED = false;
 			}
 
