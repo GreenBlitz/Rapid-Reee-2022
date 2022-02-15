@@ -25,7 +25,7 @@ public class Intake {
     }
 
     public static Intake getInstance() {
-        if(instance != null){
+        if(instance == null){
             init();
         }
         return instance;

@@ -10,29 +10,20 @@ public class RobotMap {
 			public static final int MAIN = 0;
 			public static final int SECOND = 1;
 		}
-		
-		public static class Chassis {
-			public static class Motor {
-				public static final int LEFT_VICTOR = 2,
-						RIGHT_VICTOR = 3,
-						LEFT_TALON = 1,
-						RIGHT_TALON = 4;
-			}
-		}
 
 		public static class Intake{
 			public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM; //TODO unchecked need to find out correct one
 
 			public static class Motors{
-				public static final int ROLLER_PORT = -1;
+				public static final int ROLLER_PORT = 5;
 				public static final boolean IS_REVERSED = false;
 			}
 
 			public static class Solenoid{
-				public static final int FORWARD_LEFT = -1;
-				public static final int REVERSE_LEFT = -1;
-				public static final int FORWARD_RIGHT = -1;
-				public static final int REVERSE_RIGHT = -1;
+				public static final int FORWARD_LEFT = 0;
+				public static final int REVERSE_LEFT = 0;
+				public static final int FORWARD_RIGHT = 1;
+				public static final int REVERSE_RIGHT = 1;
 			}
 		}
 
@@ -44,10 +35,11 @@ public class RobotMap {
 			}
 		}
 
+
 		public static class Shooter {
 			public static class ShooterMotor {
-				public static final int PORT_LEADER = -1,
-						PORT_FOLLOWER = -1;
+				public static final int PORT_LEADER = 1,
+						PORT_FOLLOWER = 2;
 				public static final boolean LEADER_INVERTED = false,
 						FOLLOWER_INVERTED = false;
 
@@ -66,21 +58,23 @@ public class RobotMap {
 			}
 		}
 
+
 		public static class Funnel {
 			public static class FunnelMotor {
-				public static final int MOTOR_PORT = -1;
+				public static final int MOTOR_PORT = 6;
 			}
 		}
 
 		public static class ComplexClimb {
 			public static class ComplexClimbMotor {
-				public static final int HOOK_MOTOR_PORT = -1;
+				public static final int HOOK_MOTOR_PORT = 8;
 				public static final boolean HOOK_MOTOR_REVERSED = false;
-				public static final GearDependentValue<Double> HOOK_MOTOR_TICKS_PER_METER = null;
-				public static final int TURNING_MOTOR_PORT = -1;
+				public static final GearDependentValue<Double> HOOK_MOTOR_TICKS_PER_METER = new GearDependentValue<>(0.1,0.1);
+				public static final int TURNING_MOTOR_PORT = 6;
 				public static final boolean TURNING_MOTOR_REVERSED = false;
-				public static final GearDependentValue<Double> TURNING_MOTOR_TICKS_PER_METER = null;
+				public static final GearDependentValue<Double> TURNING_MOTOR_TICKS_PER_METER = new GearDependentValue<>(0.1,0.1);
 			}
 		}
+
 	}
 }

@@ -21,6 +21,7 @@ public class ShootByConstant extends ShooterCommand {
 
 	@Override
 	public void execute() {
+		System.out.println("in execute");
 		shooter.shoot(power);
 		logger.report((System.currentTimeMillis() - tStart) / 1000.0, shooter.getShooterSpeed());
 	}
