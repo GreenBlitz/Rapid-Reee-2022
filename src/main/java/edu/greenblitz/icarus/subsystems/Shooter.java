@@ -1,9 +1,6 @@
 package edu.greenblitz.icarus.subsystems;
 
-import com.revrobotics.CANPIDController;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
-import com.revrobotics.ControlType;
+import com.revrobotics.*;
 import edu.greenblitz.icarus.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.interpolation.Dataset;
@@ -66,11 +63,11 @@ public class Shooter extends GBSubsystem {
 	}
 
 	public void setSpeedByPID(double target) {
-		leader.getPIDController().setReference(target, ControlType.kVelocity);
+		leader.getPIDController().setReference(target, CANSparkMax.ControlType.kVelocity);
 	}
 
 	public void setPIDConsts(PIDObject obj) {
-		CANPIDController controller = leader.getPIDController();
+		SparkMaxPIDController controller = leader.getPIDController();
 		controller.setP(obj.getKp());
 		controller.setI(obj.getKi());
 		controller.setD(obj.getKd());
@@ -108,7 +105,7 @@ public class Shooter extends GBSubsystem {
 
 	}
 
-	public CANPIDController getPIDController() {
+	public SparkMaxPIDController getPIDController() {
 		return leader.getPIDController();
 	}
 
