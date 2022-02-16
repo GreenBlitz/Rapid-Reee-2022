@@ -1,11 +1,9 @@
-package edu.greenblitz.icarus.commands.chassis.simple;
+package edu.greenblitz.icarus.commands.chassis.auto;
 
-import edu.greenblitz.icarus.commands.chassis.ChassisCommand;
 import edu.greenblitz.icarus.commands.chassis.turns.TurnToAngleByPID;
 import edu.greenblitz.icarus.subsystems.Chassis;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.greenblitz.motion.base.Point;
-import org.greenblitz.motion.pid.PIDObject;
 
 public class MoveToPointByPID extends SequentialCommandGroup {
 	Point startPos;

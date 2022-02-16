@@ -1,4 +1,4 @@
-package edu.greenblitz.icarus.commands.chassis.simple;
+package edu.greenblitz.icarus.commands.chassis.auto;
 
 import edu.greenblitz.icarus.commands.chassis.ChassisCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
