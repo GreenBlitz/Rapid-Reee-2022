@@ -4,6 +4,10 @@ import edu.greenblitz.gblib.gears.Gear;
 import edu.greenblitz.gblib.gears.GearDependentValue;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
+import org.greenblitz.motion.profiling.ProfilingConfiguration;
+import org.greenblitz.motion.profiling.ProfilingData;
+
+import java.util.HashMap;
 
 public class RobotMap {
 	public static class Icarus {
@@ -16,7 +20,7 @@ public class RobotMap {
 			public static final double WHEEL_DIST = 0.0; //very accurate right now
 
 			public static class Motors {
-				public static final int RIGHT_LEADER = 1, RIGHT_FOLLOWER_1 = 2, RIGHT_FOLLOWER_2 = -1, LEFT_LEADER = 3, LEFT_FOLLOWER_1 = 4, LEFT_FOLLOWER_2 = -1;
+				public static final int RIGHT_LEADER = 7, RIGHT_FOLLOWER_1 = 5, RIGHT_FOLLOWER_2 = 9, LEFT_LEADER = 10, LEFT_FOLLOWER_1 = 4, LEFT_FOLLOWER_2 = 3;
 				public static final boolean RIGHT_LEADER_REVERSED = false, RIGHT_FOLLOWER_1_REVERSED = false, RIGHT_FOLLOWER_2_REVERSED = false, LEFT_LEADER_REVERSED = false, LEFT_FOLLOWER_1_REVERSED = false, LEFT_FOLLOWER_2_REVERSED = false;
 			}
 

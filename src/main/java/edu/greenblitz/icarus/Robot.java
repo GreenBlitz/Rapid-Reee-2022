@@ -13,12 +13,6 @@ import java.io.*;
 import java.util.HashMap;
 
 public class Robot extends TimedRobot {
-
-	private double startTime;
-	private boolean recordDriver = true;//will be false when we need to stop the recording.
-	private HashMap<Double, HashMap<Integer, Double>> followDriverData = new HashMap<>();
-	private final String dataPlace = "/home/lvuser/command_recordings/ourRecord";
-
 	@Override
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
@@ -32,12 +26,10 @@ public class Robot extends TimedRobot {
 		Shooter.init();
 		ComplexClimb.getInstance();
 
-//        UARTCommunication.getInstance().register();
-
 		OI.getInstance();
 
 //        VisionMaster.getInstance().register();
-		//Chassis.init();
+		Chassis.getInstance();
 		// Must be last!
 
 	}
@@ -55,7 +47,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		System.out.println(followDriverData.toString());
 		//Shifter.getInstance().setShift(Gear.SPEED);
 		CommandScheduler.getInstance().cancelAll();
 		//VisionMaster.GameState.TELEOP.setAsCurrent();
@@ -80,8 +71,6 @@ public class Robot extends TimedRobot {
             new ClimbByTriggers(OI.getInstance().getMainJoystick(), OI.getInstance().getSideStick(), 0.4, 0.4).schedule();
             Localizer.getInstance().reset(Chassis.getInstance().getLeftMeters(), Chassis.getInstance().getRightMeters());
         }*/
-		File f = new File(dataPlace);
-		System.out.println(f.isFile());
 	}
 
 	@Override
@@ -92,7 +81,6 @@ public class Robot extends TimedRobot {
 		//SmartDashboard.putString("Shooter::currentCommand", shooterCommand == null ? "" : shooterCommand.getName());
 		//Command chassisCommand = Chassis.getInstance().getCurrentCommand();
 		//SmartDashboard.putString("Chassis::currentCommand", chassisCommand == null ? "" : chassisCommand.getName());
-		//follow driver code is here:
 	}
 
 
@@ -118,7 +106,5 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 		SmartDashboard.putNumber("RIGHT STICK X", OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.RIGHT_X));
-//		collectFollowDriverData(false);
 	}
-
 }

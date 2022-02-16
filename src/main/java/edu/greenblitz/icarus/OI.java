@@ -1,6 +1,7 @@
 package edu.greenblitz.icarus;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.icarus.commands.chassis.driver.ArcadeDrive;
 import edu.greenblitz.icarus.commands.complexClimb.MoveHookMotorByConstant;
 import edu.greenblitz.icarus.commands.funnel.PushByConstant;
 import edu.greenblitz.icarus.commands.intake.ExtendAndCollect;
@@ -30,10 +31,12 @@ public class OI {
 
 	private void initDebugButtons() {
 		System.out.println("Init");
-		mainJoystick.A.whenPressed(new ShootByConstant(0.3));
+		//mainJoystick.A.whenPressed(new ShootByConstant(0.3));
 		mainJoystick.B.whenPressed(new ExtendAndCollect(0.3));
 		mainJoystick.X.whenPressed(new PushByConstant(0.1));
 		mainJoystick.Y.whenPressed(new MoveHookMotorByConstant(0.1));
+
+		mainJoystick.A.whenHeld(new ArcadeDrive(mainJoystick));
 	}
 
 	public static OI getInstance() {
