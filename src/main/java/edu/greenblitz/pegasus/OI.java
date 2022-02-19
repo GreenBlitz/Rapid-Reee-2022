@@ -1,9 +1,6 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.pegasus.commands.chassis.BrakeChassis;
-import edu.greenblitz.pegasus.commands.chassis.MoveMotorByID;
-import edu.greenblitz.pegasus.commands.funnel.InsertByConstants;
 import edu.greenblitz.pegasus.commands.intake.ExtendAndCollect;
 import edu.greenblitz.pegasus.commands.intake.RetractAndStop;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
@@ -39,18 +36,7 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
-		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		mainJoystick.X.whileHeld(new ShootByConstant(0.8));
-		mainJoystick.Y.whileHeld(new RollByConstant(1));
-		mainJoystick.START.whenPressed(new BrakeChassis());
-		//mainJoystick.START.whenPressed(new ToPower());
-		//mainJoystick.BACK.whenPressed(new ToSpeed());
-		mainJoystick.A.whileHeld(new ExtendAndCollect(0.3));
-		mainJoystick.Y.whenPressed(new RetractAndStop());
-		mainJoystick.B.whileHeld(new InsertByConstants(0.6));
-		mainJoystick.R1.whenPressed(new ToggleRoller());
-
-	}
+}
 
 	public static OI getInstance() {
 		if (instance == null) {

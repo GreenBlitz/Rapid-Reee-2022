@@ -18,11 +18,6 @@ public class Robot extends TimedRobot {
 
 		DigitalInputMap.getInstance();
 		Intake.getInstance();
-		//Shifter.getInstance();
-		//Funnel.getInstance();
-		//Shooter.getInstance();
-		//ComplexClimb.getInstance();
-
 		OI.getInstance();
 		Pneumatics.init();
 
