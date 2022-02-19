@@ -1,20 +1,19 @@
 package edu.greenblitz.pegasus.commands.colorSensor;
 
-import com.revrobotics.ColorMatchResult;
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.pegasus.subsystems.ColorSensor;
 import edu.wpi.first.wpilibj.util.Color;
 
 public class PrintColor extends GBCommand {
-	ColorSensor sensor;
+	ColorSensor colorSensor;
 
-	public PrintColor(){
-		sensor = ColorSensor.getInstance();
+	public PrintColor() {
+		colorSensor = ColorSensor.getInstance();
 	}
 
 	@Override
 	public void execute() {
-		Color color = sensor.getColor();
+		Color color = colorSensor.getColor();
 
 		System.out.println("Red: " + color.red);
 		System.out.println("Green: " + color.green);
