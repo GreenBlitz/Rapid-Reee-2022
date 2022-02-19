@@ -21,7 +21,7 @@ public class Robot extends TimedRobot {
 		Funnel.getInstance();
 		Shooter.init();
 		ComplexClimb.getInstance();
-
+		ColorSensor.getInstance();
 		OI.getInstance();
 
 //        VisionMaster.getInstance().register();

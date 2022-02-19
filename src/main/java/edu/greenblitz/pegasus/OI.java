@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
+import edu.greenblitz.pegasus.commands.colorSensor.PrintColor;
 import edu.greenblitz.pegasus.commands.complexClimb.MoveHookMotorByConstant;
 import edu.greenblitz.pegasus.commands.funnel.PushByConstant;
 import edu.greenblitz.pegasus.commands.intake.ExtendAndCollect;
@@ -29,13 +30,7 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
-		System.out.println("Init");
-		//mainJoystick.A.whenPressed(new ShootByConstant(0.3));
-		mainJoystick.B.whenPressed(new ExtendAndCollect(0.3));
-		mainJoystick.X.whenPressed(new PushByConstant(0.1));
-		mainJoystick.Y.whenPressed(new MoveHookMotorByConstant(0.1));
-
-		mainJoystick.A.whenHeld(new ArcadeDrive(mainJoystick));
+		mainJoystick.A.whileHeld(new PrintColor());
 	}
 
 	public static OI getInstance() {
