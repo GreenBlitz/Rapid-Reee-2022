@@ -1,14 +1,7 @@
-<<<<<<< HEAD:src/main/java/edu/greenblitz/pegasus/commands/chassis/simple/MoveToPointByPID.java
-package edu.greenblitz.pegasus.commands.chassis.simple;
+package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.pegasus.commands.chassis.turns.TurnToAngleByPID;
 import edu.greenblitz.pegasus.subsystems.Chassis;
-=======
-package edu.greenblitz.icarus.commands.auto;
-
-import edu.greenblitz.icarus.commands.chassis.turns.TurnToAngleByPID;
-import edu.greenblitz.icarus.subsystems.Chassis;
->>>>>>> b092291 (?-started work on ShootByRPM):src/main/java/edu/greenblitz/pegasus/commands/auto/MoveToPointByPID.java
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.greenblitz.motion.base.Point;
 

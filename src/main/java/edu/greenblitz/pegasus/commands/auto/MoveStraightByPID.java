@@ -1,8 +1,4 @@
-<<<<<<< HEAD:src/main/java/edu/greenblitz/pegasus/commands/chassis/simple/MoveSimpleByPID.java
-package edu.greenblitz.pegasus.commands.chassis.simple;
-=======
-package edu.greenblitz.icarus.commands.auto;
->>>>>>> b092291 (?-started work on ShootByRPM):src/main/java/edu/greenblitz/pegasus/commands/auto/MoveStraightByPID.java
+package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
