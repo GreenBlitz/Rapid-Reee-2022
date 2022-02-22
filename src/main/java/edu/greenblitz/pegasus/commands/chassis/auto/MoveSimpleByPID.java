@@ -1,3 +1,5 @@
+package edu.greenblitz.pegasus.commands.chassis.auto;
+
 <<<<<<< HEAD:src/main/java/edu/greenblitz/pegasus/commands/chassis/simple/MoveSimpleByPID.java
 package edu.greenblitz.pegasus.commands.chassis.simple;
 =======
