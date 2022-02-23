@@ -10,11 +10,18 @@ public class MoveToPointByPID extends SequentialCommandGroup {
 	Point startPos;
 	Point targetPos;
 	
-	public MoveToPointByPID(Point targetPos) {
+	public MoveToPointByPID(Point targetPos, boolean isReverse) {
 		this.targetPos = targetPos;
 		this.startPos = Chassis.getInstance().getLocation();
 		double angleTarget = Math.atan((targetPos.getX()- startPos.getX())/ (targetPos.getY()- startPos.getY()));
+		if((targetPos.getY()- startPos.getY() < 0) ^ isReverse){
+			angleTarget+=Math.PI;
+		}
 		double dist = Point.dist(startPos,targetPos);
-		addCommands(new TurnToAngleByPID(angleTarget),new MoveSimpleByPID(dist));
+		addCommands(new TurnToAngleByPID(angleTarget),new MoveSimpleByPID(isReverse ? -dist : dist));
+	}
+
+	public MoveToPointByPID(Point targetPos) {
+		this(targetPos, false);
 	}
 }

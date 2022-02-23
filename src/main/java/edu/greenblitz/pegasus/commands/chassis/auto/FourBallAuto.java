@@ -21,9 +21,11 @@ public class FourBallAuto extends SequentialCommandGroup {
 		addCommands(new ThreadedCommand(new Follow2DProfileCommand(firstTwo , RobotMap.Pegasus.Chassis.MotionData.CONFIG
 				, maxPower , false)));
 
+
+
 		//Inorder to shoot, go back in a linear line for 3.13 meter
 		addCommands(new MoveToPointByPID(new Point(3.1, 2.2) // currant location at path
-				.translate(new Point(0,-3.13).rotate(-1.11)))); // a vector of length 3.13 rotated to back of robot
+				.translate(new Point(0,3.13).rotate(-1.11)), true)); // a vector of length 3.13 rotated to back of robot
 
 		//firstTwo.add(new State(0.3, 0.8, -1.11, 3.6, 4));
 
