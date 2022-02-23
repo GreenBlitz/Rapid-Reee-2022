@@ -20,4 +20,9 @@ public class PrintColor extends GBCommand {
 		System.out.println("Blue: " + color.blue);
 		System.out.println("------------------------------------");
 	}
+
+	@Override
+	public boolean isFinished() {
+		return false;
+	}
 }
