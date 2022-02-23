@@ -24,6 +24,6 @@ public class MoveMotorByID extends ChassisCommand {
 
 	@Override
 	public boolean isFinished() {
-		return true;
+		return false;
 	}
 }

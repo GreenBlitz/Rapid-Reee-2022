@@ -9,12 +9,13 @@ public class Funnel extends GBSubsystem{
 	private WPI_TalonSRX motor;
 	
 	private Funnel() {
+		super();
 		motor = new WPI_TalonSRX(RobotMap.Pegasus.Funnel.FunnelMotor.MOTOR_PORT);
+		motor.setInverted(RobotMap.Pegasus.Funnel.FunnelMotor.IS_REVERSED);
 	}
 	
 	private static void init(){
 		instance = new Funnel();
-		CommandScheduler.getInstance().registerSubsystem(instance);
 	}
 	
 	public static Funnel getInstance() {
@@ -23,11 +24,7 @@ public class Funnel extends GBSubsystem{
 		}
 		return instance;
 	}
-	
-	public WPI_TalonSRX getMotor() {
-		return motor;
-	}
-	
+
 	public void moveMotor(double power){
 		motor.set(power);
 	}

@@ -11,22 +11,22 @@ public class Shooter extends GBSubsystem {
 	private static Shooter instance;
 
 	// Leader is left, follower is right
-	private CANSparkMax leader, follower;
+	private CANSparkMax leader; //, follower;
 	private Dataset rpmToPowerMap;
 	private boolean preparedToShoot;
 
 	private Shooter() {
 		leader = new CANSparkMax(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
-		follower = new CANSparkMax(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_FOLLOWER, CANSparkMaxLowLevel.MotorType.kBrushless);
+//		follower = new CANSparkMax(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_FOLLOWER, CANSparkMaxLowLevel.MotorType.kBrushless);
 
 		leader.setInverted(RobotMap.Pegasus.Shooter.ShooterMotor.LEADER_INVERTED);
-		follower.follow(leader, RobotMap.Pegasus.Shooter.ShooterMotor.FOLLOWER_INVERTED);
+//		follower.follow(leader, RobotMap.Pegasus.Shooter.ShooterMotor.FOLLOWER_INVERTED);
 
 		leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
-		follower.setIdleMode(CANSparkMax.IdleMode.kCoast);
+//		follower.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
 		leader.setSmartCurrentLimit(40);
-		follower.setSmartCurrentLimit(40);
+//		follower.setSmartCurrentLimit(40);
 
 		preparedToShoot = false;
 		putNumber("testing_target", 0);
@@ -109,6 +109,6 @@ public class Shooter extends GBSubsystem {
 
 	public void toCoast() {
 		this.leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
-		this.follower.setIdleMode(CANSparkMax.IdleMode.kCoast);
+//		this.follower.setIdleMode(CANSparkMax.IdleMode.kCoast);
 	}
 }

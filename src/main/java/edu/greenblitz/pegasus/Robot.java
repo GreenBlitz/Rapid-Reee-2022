@@ -14,7 +14,6 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().enable();
 
 		DigitalInputMap.getInstance();
-
 		//Intake.getInstance();
 		//Shifter.getInstance();
 		//Funnel.getInstance();

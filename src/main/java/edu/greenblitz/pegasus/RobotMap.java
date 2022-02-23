@@ -20,8 +20,13 @@ public class RobotMap {
 			public static final double WHEEL_DIST = 0.0; //very accurate right now
 
 			public static class Motors {
-				public static final int RIGHT_LEADER = 1, RIGHT_FOLLOWER_1 = 2, RIGHT_FOLLOWER_2 = 3, LEFT_LEADER = 4, LEFT_FOLLOWER_1 = 5, LEFT_FOLLOWER_2 = 6;
-				public static final boolean RIGHT_LEADER_REVERSED = false, RIGHT_FOLLOWER_1_REVERSED = false, RIGHT_FOLLOWER_2_REVERSED = false, LEFT_LEADER_REVERSED = false, LEFT_FOLLOWER_1_REVERSED = false, LEFT_FOLLOWER_2_REVERSED = false;
+				public static final int RIGHT_LEADER = 1,
+										RIGHT_FOLLOWER_1 = 2,
+										RIGHT_FOLLOWER_2 = 3,
+										LEFT_LEADER = 4,
+										LEFT_FOLLOWER_1 = 5,
+										LEFT_FOLLOWER_2 = 6;
+				public static final boolean RIGHT_LEADER_REVERSED = false, RIGHT_FOLLOWER_1_REVERSED = false, RIGHT_FOLLOWER_2_REVERSED = false, LEFT_LEADER_REVERSED = true, LEFT_FOLLOWER_1_REVERSED = true, LEFT_FOLLOWER_2_REVERSED = true;
 			}
 
 			public static class Encoders {
@@ -70,7 +75,7 @@ public class RobotMap {
 			public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
 
 			public static class Motors{
-				public static final int ROLLER_PORT = 5;
+				public static final int ROLLER_PORT = 6;
 				public static final boolean IS_REVERSED = false;
 			}
 
@@ -91,10 +96,10 @@ public class RobotMap {
 
 		public static class Shooter {
 			public static class ShooterMotor {
-				public static final int PORT_LEADER = 1,
-						PORT_FOLLOWER = 2;
-				public static final boolean LEADER_INVERTED = false,
-						FOLLOWER_INVERTED = false;
+				public static final int PORT_LEADER = 7; /*,
+						PORT_FOLLOWER = 2;*/
+				public static final boolean LEADER_INVERTED = true;  /*,
+						FOLLOWER_INVERTED = false;*/
 
 
 				public static final Dataset RPM_TO_POWER = new Dataset(2);
@@ -114,7 +119,8 @@ public class RobotMap {
 
 		public static class Funnel {
 			public static class FunnelMotor {
-				public static final int MOTOR_PORT = 6;
+				public static final int MOTOR_PORT = 5;
+				public static final boolean IS_REVERSED = true;
 			}
 		}
 
