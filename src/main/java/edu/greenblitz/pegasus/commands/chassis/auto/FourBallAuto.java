@@ -3,6 +3,9 @@ package edu.greenblitz.pegasus.commands.chassis.auto;
 import edu.greenblitz.gblib.threading.ThreadedCommand;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.chassis.profiling.Follow2DProfileCommand;
+import edu.greenblitz.pegasus.commands.chassis.turns.TurnToAngleByPID;
+import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
+import edu.greenblitz.pegasus.commands.shooter.ShooterCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.greenblitz.motion.base.Point;
 import org.greenblitz.motion.base.State;
@@ -34,8 +37,13 @@ public class FourBallAuto extends SequentialCommandGroup {
 		lastTwo.add(new State(0.3,0.8,-1.11,0,0)); // shoot pos
 		lastTwo.add(new State(7.1,3,-1.11,3.6,4)); // balls 3,4
 
+		//Turn to an angel by pid pre-Used only implemented :
+		TurnToAngleByPID firstTurn = new TurnToAngleByPID(0);
+		firstTurn.schedule();
 
-
+		//Shoot to nowhere
+		ShootByConstant fire = new ShootByConstant(100);
+		fire.schedule();
 
 	}
 }
