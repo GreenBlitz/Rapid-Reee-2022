@@ -65,6 +65,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
-	
+		SmartDashboard.putNumber("RIGHT STICK X", OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.RIGHT_X));
 	}
 }
