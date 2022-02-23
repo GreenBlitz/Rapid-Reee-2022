@@ -17,13 +17,22 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().enable();
 
 		DigitalInputMap.getInstance();
-		Intake.getInstance();
+
+
+		//Pneumatics.init();
+/*		Intake.getInstance();
+		//Shifter.init();
+		Funnel.getInstance();
+		Shooter.init();
+		ComplexClimb.getInstance();
+>>>>>>> 910e430 (asaf- set up color sensor test)
 		OI.getInstance();
 		Pneumatics.init();
 
 //        VisionMaster.getInstance().register();
 		Chassis.getInstance();
-		// Must be last!
+*/		// Must be last!
+		ColorSensor.getInstance();
 
 	}
 
@@ -34,19 +43,15 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
-		//VisionMaster.GameState.DISABLED.setAsCurrent();
 		CommandScheduler.getInstance().cancelAll();
 	}
 
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
-		Chassis.getInstance().toCoast();
 	}
-
 	@Override
 	public void teleopPeriodic() {
-	
 	}
 
 
@@ -57,7 +62,7 @@ public class Robot extends TimedRobot {
 				new WaitCommand(1),
 				new LineAuto(-0.1) //auto line in the back of the robot
 		).schedule();
-	}
+}
 
 
 	@Override
@@ -67,6 +72,5 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
-		SmartDashboard.putNumber("RIGHT STICK X", OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.RIGHT_X));
 	}
 }
