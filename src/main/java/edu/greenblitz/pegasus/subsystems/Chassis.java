@@ -7,7 +7,9 @@ import edu.greenblitz.gblib.encoder.IEncoder;
 import edu.greenblitz.gblib.encoder.SparkEncoder;
 import edu.greenblitz.gblib.gyroscope.IGyroscope;
 import edu.greenblitz.gblib.gyroscope.PigeonGyro;
+import edu.greenblitz.pegasus.OI;
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import org.greenblitz.motion.Localizer;
 import org.greenblitz.motion.base.Position;
 
@@ -58,7 +60,6 @@ public class Chassis extends GBSubsystem {
 	public static Chassis getInstance() {
 		if (instance == null) {
 			instance = new Chassis();
-//			instance.setDefaultCommand(new ArcadeDrive(OI.getInstance().getMainJoystick())); //currently already done in Robot.java (teleopInit)
 		}
 		return instance;
 	}
@@ -146,6 +147,10 @@ public class Chassis extends GBSubsystem {
 		return Localizer.getInstance().getLocation();
 	}
 
+	public void initDefaultCommand(){
+		instance.setDefaultCommand(new ArcadeDrive(OI.getInstance().getMainJoystick()));
+	}
+	
 	@Override
 	public void periodic() {
 		super.periodic();

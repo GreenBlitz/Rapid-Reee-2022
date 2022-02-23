@@ -35,8 +35,6 @@ public class Shooter extends GBSubsystem {
 		putNumber("d", 0);
 		putNumber("f", 0);
 
-//        leader.getEncoder().setVelocityConversionFactor(TICKS_PER_REVOLUTION);
-//        encoder = new SparkEncoder(RobotMap.Limbo2.Shooter.NORMALIZER, leader);
 	}
 
 	public static void init() {
@@ -99,7 +97,7 @@ public class Shooter extends GBSubsystem {
 	public void periodic() {
 
 		putNumber("Position", leader.getEncoder().getPosition());
-		SmartDashboard.putNumber("Velocity", leader.getEncoder().getVelocity());
+		putNumber("Velocity", leader.getEncoder().getVelocity());
 		putNumber("Output", leader.getAppliedOutput());
 		putBoolean("ReadyToShoot", preparedToShoot);
 

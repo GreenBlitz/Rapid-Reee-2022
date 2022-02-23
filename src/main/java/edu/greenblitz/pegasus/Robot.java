@@ -16,9 +16,9 @@ public class Robot extends TimedRobot {
 		DigitalInputMap.getInstance();
 
 		Intake.getInstance();
-		//Shifter.init();
+		Shifter.getInstance();
 		Funnel.getInstance();
-		Shooter.init();
+		Shooter.getInstance();
 		//ComplexClimb.getInstance();
 
 		OI.getInstance();
@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
-		VisionMaster.GameState.DISABLED.setAsCurrent();
+		//VisionMaster.GameState.DISABLED.setAsCurrent();
 		CommandScheduler.getInstance().cancelAll();
 	}
 
