@@ -19,6 +19,7 @@ public class Chassis extends GBSubsystem {
 	private final CANSparkMax rightLeader, rightFollower1, rightFollower2, leftLeader, leftFollower1, leftFollower2;
 	private final IEncoder leftEncoder, rightEncoder;
 	private final IGyroscope gyroscope;
+	private final CANSparkMax[] allMotors;
 
 	private Chassis() {
 		rightLeader = new CANSparkMax(RobotMap.Pegasus.Chassis.Motors.RIGHT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -27,18 +28,18 @@ public class Chassis extends GBSubsystem {
 		leftLeader = new CANSparkMax(RobotMap.Pegasus.Chassis.Motors.LEFT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
 		leftFollower1 = new CANSparkMax(RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_1, CANSparkMaxLowLevel.MotorType.kBrushless);
 		leftFollower2 = new CANSparkMax(RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_2, CANSparkMaxLowLevel.MotorType.kBrushless);   //big-haim
-
+		allMotors = new CANSparkMax[] {rightLeader, rightFollower1, rightFollower2, leftLeader, leftFollower1, leftFollower2};
 		rightLeader.setSmartCurrentLimit(40);
 		rightFollower1.setSmartCurrentLimit(40);
 		rightFollower2.setSmartCurrentLimit(40);
 		leftLeader.setSmartCurrentLimit(40);
 		leftFollower1.setSmartCurrentLimit(40);
 		leftFollower2.setSmartCurrentLimit(40);
-
+/*
 		leftFollower1.follow(leftLeader);
 		leftFollower2.follow(leftLeader);
 		rightFollower1.follow(rightLeader);
-		rightFollower2.follow(rightLeader);
+		rightFollower2.follow(rightLeader);*/
 
 		rightLeader.setInverted(RobotMap.Pegasus.Chassis.Motors.RIGHT_LEADER_REVERSED);
 		rightFollower1.setInverted(RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_1_REVERSED);
@@ -165,5 +166,12 @@ public class Chassis extends GBSubsystem {
 		rightEncoder.reset();
 		leftEncoder.reset();
 	}
+
+	public void setMotorByID(int id, double power){
+		allMotors[id].set(power);
+	}
+
+
+
 
 }

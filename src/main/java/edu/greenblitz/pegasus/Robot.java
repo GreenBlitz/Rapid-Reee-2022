@@ -15,10 +15,10 @@ public class Robot extends TimedRobot {
 
 		DigitalInputMap.getInstance();
 
-		Intake.getInstance();
-		Shifter.getInstance();
-		Funnel.getInstance();
-		Shooter.getInstance();
+		//Intake.getInstance();
+		//Shifter.getInstance();
+		//Funnel.getInstance();
+		//Shooter.getInstance();
 		//ComplexClimb.getInstance();
 
 		OI.getInstance();
@@ -43,6 +43,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
+		Chassis.getInstance().toCoast();
 	}
 
 	@Override

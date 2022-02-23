@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.commands.chassis.MoveMotorByID;
 import edu.greenblitz.pegasus.commands.funnel.InsertByConstants;
 import edu.greenblitz.pegasus.commands.intake.ExtendAndCollect;
 import edu.greenblitz.pegasus.commands.intake.RetractAndStop;
@@ -33,13 +34,18 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
-		Chassis.getInstance().initDefaultCommand();
-		mainJoystick.START.whenPressed(new ToPower());
-		mainJoystick.BACK.whenPressed(new ToSpeed());
-		mainJoystick.A.whileHeld(new ExtendAndCollect(0.3));
-		mainJoystick.Y.whenPressed(new RetractAndStop());
-		mainJoystick.R1.whileHeld(new ShooterByRPM(new PIDObject(0.01, 0.0, 0.0), 200));
-		mainJoystick.B.whileHeld(new InsertByConstants(0.2));
+		//Chassis.getInstance().initDefaultCommand();
+		mainJoystick.POV_DOWN.whileHeld(new MoveMotorByID(0, 0.3));
+		mainJoystick.POV_LEFT.whileHeld(new MoveMotorByID(1, 0.3));
+		mainJoystick.POV_UP.whileHeld(new MoveMotorByID(2, 0.3));
+		mainJoystick.POV_RIGHT.whileHeld(new MoveMotorByID(3, 0.3));
+		mainJoystick.R1.whileHeld(new MoveMotorByID(4, 0.3));
+		mainJoystick.L1.whileHeld(new MoveMotorByID(5, 0.3));
+		//mainJoystick.START.whenPressed(new ToPower());
+		//mainJoystick.BACK.whenPressed(new ToSpeed());
+		//mainJoystick.A.whileHeld(new ExtendAndCollect(0.3));
+		//mainJoystick.Y.whenPressed(new RetractAndStop());
+		//mainJoystick.B.whileHeld(new InsertByConstants(0.2));
 	}
 
 	public static OI getInstance() {
