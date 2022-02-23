@@ -22,7 +22,6 @@ public class VisionMaster extends GBSubsystem {
     private VisionLocation current;
     private Algorithm currentAlgorithm;
     private GameState currentGameState;
-    private ShifterState currentShifterState;
     private NetworkTable visionTable;
     private NetworkTableEntry algorithm;
     private NetworkTableEntry output;
@@ -53,11 +52,7 @@ public class VisionMaster extends GBSubsystem {
         }
         return instance;
     }
-
-    private void setCurrentShifterState(ShifterState state) {
-        this.currentShifterState = state;
-    }
-
+    
     private void setCurrentGameState(GameState state) {
         this.currentGameState = state;
     }
@@ -191,23 +186,5 @@ public class VisionMaster extends GBSubsystem {
         }
     }
 
-    public enum ShifterState {
-        POWER("power"),
-        SPEED("speed");
-
-
-        public final String rawStateName;
-
-        ShifterState(String rawStateName) {
-            this.rawStateName = rawStateName;
-        }
-
-        public void setAsCurrent() {
-            VisionMaster.getInstance().setCurrentShifterState(this);
-        }
-
-        public String getRawName() {
-            return rawStateName;
-        }
-    }
+    
 }

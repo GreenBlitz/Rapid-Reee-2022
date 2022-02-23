@@ -29,6 +29,14 @@ public class RobotMap {
 				public static final int RIGHT_ENCODER = -1, LEFT_ENCODER = -1;
 				public static final boolean RIGHT_ENCODER_REVERSED = false, LEFT_ENCODER_REVERSED = false;
 			}
+			
+			public static class Shifter{
+				public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
+				public static class Solenoid {
+					public static final int FORWARD = -1;
+					public static final int REVERSE= -1;
+				}
+			}
 
 			public static class MotionData { // TODO: calibrate this
 
@@ -46,18 +54,8 @@ public class RobotMap {
 					SPEED = new HashMap<>();
 					PROF = new GearDependentValue<>(null, null);
 
-					POWER.put("1.0",
-							new ProfilingData(2.64, 7, 8, 30));
 					POWER.put("0.5",
 							new ProfilingData(1.4, 8.4, 4, 10));
-
-					// TODO this is dumb
-					POWER.put("0.3",
-							new ProfilingData(1.93 * 1.2, 4.6, 4.3, 12.6));
-
-
-					SPEED.put("0.3",
-							new ProfilingData(1.93 * 1.2, 4.6, 4.3, 12.6));
 
 					PROF.setValue(Gear.POWER, POWER);
 					PROF.setValue(Gear.SPEED, SPEED);
@@ -69,7 +67,7 @@ public class RobotMap {
 		}
 
 		public static class Intake{
-			public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM; //TODO unchecked need to find out correct one
+			public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
 
 			public static class Motors{
 				public static final int ROLLER_PORT = 5;
@@ -77,10 +75,8 @@ public class RobotMap {
 			}
 
 			public static class Solenoid{
-				public static final int FORWARD_LEFT = 0;
-				public static final int REVERSE_LEFT = 0;
-				public static final int FORWARD_RIGHT = 1;
-				public static final int REVERSE_RIGHT = 1;
+				public static final int FORWARD = 0;
+				public static final int REVERSE = 1;
 			}
 		}
 
