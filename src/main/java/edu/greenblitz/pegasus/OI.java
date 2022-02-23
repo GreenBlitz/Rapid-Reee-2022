@@ -29,7 +29,6 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
-		//mainJoystick.A.whenPressed(new ShootByConstant(0.3));
 		mainJoystick.B.whenPressed(new ExtendAndCollect(0.3));
 		mainJoystick.X.whenPressed(new PushByConstant(0.1));
 		mainJoystick.Y.whenPressed(new MoveHookMotorByConstant(0.1));
