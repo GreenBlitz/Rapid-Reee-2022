@@ -6,14 +6,14 @@ import org.greenblitz.motion.base.Point;
 import org.greenblitz.motion.pid.CollapsingPIDController;
 import org.greenblitz.motion.pid.PIDObject;
 
-public class MoveStraightByPID extends ChassisCommand{
+public class MoveSimpleByPID extends ChassisCommand{
 		private Point startPos;
 		private double distanceTarget;
 		private CollapsingPIDController distancePID;
 		static private PIDObject defaultPIDObject = new PIDObject(0,0,0);
 		static private double defaultThresh = 0;
 		static private double defaultTolerance = 0;
-		public MoveStraightByPID(double distanceTarget) {
+		public MoveSimpleByPID(double distanceTarget) {
 			startPos = chassis.getLocation();
 			this.distanceTarget = distanceTarget;
 			distancePID = new CollapsingPIDController(defaultPIDObject, defaultThresh);
