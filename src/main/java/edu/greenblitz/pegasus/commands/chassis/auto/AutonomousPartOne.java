@@ -1,4 +1,4 @@
-package edu.greenblitz.pegasus.commands.auto;
+package edu.greenblitz.pegasus.commands.chassis.auto;
 
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
