@@ -15,7 +15,7 @@ public class InsertIntoShooter extends SequentialCommandGroup {
 				new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 				new ParallelCommandGroup(
 
-						new PushByConstant(pushConst),
+						new InsertByConstants(pushConst),
 						new RollByConstant(rollConst)
 
 				)

@@ -45,7 +45,6 @@ public class Shifter extends GBSubsystem {
 	public static void init() {
 		if (instance == null) {
 			instance = new Shifter();
-//            instance.setDefaultCommand(new ToPower());
 		}
 		
 	}

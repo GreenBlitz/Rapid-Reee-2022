@@ -1,5 +1,6 @@
 package edu.greenblitz.pegasus.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -7,7 +8,10 @@ import edu.greenblitz.gblib.encoder.IEncoder;
 import edu.greenblitz.gblib.encoder.SparkEncoder;
 import edu.greenblitz.gblib.gyroscope.IGyroscope;
 import edu.greenblitz.gblib.gyroscope.PigeonGyro;
+import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.OI;
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import org.greenblitz.motion.Localizer;
 import org.greenblitz.motion.base.Position;
 
@@ -17,6 +21,7 @@ public class Chassis extends GBSubsystem {
 	private final CANSparkMax rightLeader, rightFollower1, rightFollower2, leftLeader, leftFollower1, leftFollower2;
 	private final IEncoder leftEncoder, rightEncoder;
 	private final IGyroscope gyroscope;
+	private final CANSparkMax[] allMotors;
 
 	private Chassis() {
 		rightLeader = new CANSparkMax(RobotMap.Pegasus.Chassis.Motors.RIGHT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -25,13 +30,11 @@ public class Chassis extends GBSubsystem {
 		leftLeader = new CANSparkMax(RobotMap.Pegasus.Chassis.Motors.LEFT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
 		leftFollower1 = new CANSparkMax(RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_1, CANSparkMaxLowLevel.MotorType.kBrushless);
 		leftFollower2 = new CANSparkMax(RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_2, CANSparkMaxLowLevel.MotorType.kBrushless);   //big-haim
+		allMotors = new CANSparkMax[] {rightLeader, rightFollower1, rightFollower2, leftLeader, leftFollower1, leftFollower2};
 
-		rightLeader.setSmartCurrentLimit(40);
-		rightFollower1.setSmartCurrentLimit(40);
-		rightFollower2.setSmartCurrentLimit(40);
-		leftLeader.setSmartCurrentLimit(40);
-		leftFollower1.setSmartCurrentLimit(40);
-		leftFollower2.setSmartCurrentLimit(40);
+		for (CANSparkMax spark : allMotors){
+			spark.setSmartCurrentLimit(40);
+		}
 
 		leftFollower1.follow(leftLeader);
 		leftFollower2.follow(leftLeader);
@@ -49,8 +52,7 @@ public class Chassis extends GBSubsystem {
 		leftEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.LEFT_ENCODER_REVERSED);
 		rightEncoder = new SparkEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, rightLeader);
 		rightEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.RIGHT_ENCODER_REVERSED);
-
-		gyroscope = new PigeonGyro(new PigeonIMU(Funnel.getInstance().getMotor())); //Pigeon connects to talon/CAN bus
+		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
 		gyroscope.reset();
 		gyroscope.inverse();
 	}
@@ -58,7 +60,6 @@ public class Chassis extends GBSubsystem {
 	public static Chassis getInstance() {
 		if (instance == null) {
 			instance = new Chassis();
-//			instance.setDefaultCommand(new ArcadeDrive(OI.getInstance().getMainJoystick())); //currently already done in Robot.java (teleopInit)
 		}
 		return instance;
 	}
@@ -146,6 +147,10 @@ public class Chassis extends GBSubsystem {
 		return Localizer.getInstance().getLocation();
 	}
 
+	public void initDefaultCommand(SmartJoystick joystick){
+		instance.setDefaultCommand(new ArcadeDrive(joystick));
+	}
+	
 	@Override
 	public void periodic() {
 		super.periodic();
@@ -160,5 +165,12 @@ public class Chassis extends GBSubsystem {
 		rightEncoder.reset();
 		leftEncoder.reset();
 	}
+
+	public void setMotorByID(int id, double power){
+		allMotors[id].set(power);
+	}
+
+
+
 
 }
