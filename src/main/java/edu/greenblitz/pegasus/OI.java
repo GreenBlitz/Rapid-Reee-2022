@@ -22,7 +22,7 @@ public class OI {
 	private SmartJoystick mainJoystick;
 	private SmartJoystick secondJoystick;
 
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 
 	private OI() {
 		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.2);
@@ -36,6 +36,16 @@ public class OI {
 	}
 
 	private void initRealButtons() {
+		secondJoystick.R1.whileHeld(new RollByConstant(0.8));
+		secondJoystick.L1.whileHeld(new RollByConstant(-0.8));
+		//change these to use the triggers instead of the buttons please
+		secondJoystick.X.whileHeld(new InsertByConstants(0.8));
+		secondJoystick.B.whileHeld(new InsertByConstants(-0.8));
+
+		secondJoystick.A.whileHeld(new ShootByConstant(0.8));
+		secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
+
+		Chassis.getInstance().initDefaultCommand(mainJoystick);
 	}
 
 	private void initDebugButtons() {

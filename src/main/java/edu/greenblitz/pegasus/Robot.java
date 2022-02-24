@@ -59,8 +59,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		new ParallelRaceGroup(
-				new WaitCommand(1),
-				new LineAuto(-0.1) //auto line in the back of the robot
+				new WaitCommand(4),
+				new LineAuto(-0.2) //auto line in the back of the robot
 		).schedule();
 	}
 
