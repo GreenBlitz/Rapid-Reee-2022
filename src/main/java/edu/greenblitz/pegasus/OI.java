@@ -38,14 +38,14 @@ public class OI {
 
 	private void initDebugButtons() {
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		mainJoystick.X.whileHeld(new ShootByConstant(0.2));
+		mainJoystick.X.whileHeld(new ShootByConstant(0.5));
 		//mainJoystick.X.whileHeld(new RollByConstant(0.3));
 		mainJoystick.START.whenPressed(new BrakeChassis());
 		//mainJoystick.START.whenPressed(new ToPower());
 		//mainJoystick.BACK.whenPressed(new ToSpeed());
 		//mainJoystick.A.whileHeld(new ExtendAndCollect(0.3));
 		//mainJoystick.Y.whenPressed(new RetractAndStop());
-		mainJoystick.B.whileHeld(new InsertByConstants(0.2));
+		mainJoystick.B.whileHeld(new InsertByConstants(0.4));
 	}
 
 	public static OI getInstance() {
