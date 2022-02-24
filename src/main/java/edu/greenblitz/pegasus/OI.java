@@ -15,6 +15,9 @@ import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.subsystems.Chassis;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import org.greenblitz.motion.pid.PIDObject;
 
 public class OI {
@@ -43,8 +46,8 @@ public class OI {
 		secondJoystick.X.whileHeld(new InsertByConstants(0.8));
 		secondJoystick.B.whileHeld(new InsertByConstants(-0.8));
 
-		secondJoystick.A.whileHeld(new ShootByConstant(0.8));
-		secondJoystick.Y.whileHeld(new ShootByConstant(0.3));
+		secondJoystick.A.whileHeld(new ShootByConstant(0.7));
+		secondJoystick.Y.whileHeld(new ShootByConstant(0.4));
 		secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
 
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
@@ -53,16 +56,38 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
+		secondJoystick.X.whenPressed(new SequentialCommandGroup(
+				new ParallelRaceGroup(
+					new WaitCommand(1),
+					new ShootByConstant(0.7)
+				),
+				new ParallelRaceGroup(
+						new WaitCommand(4),
+						new ShootByConstant(0.7),
+						new InsertByConstants(0.8)
+				)
+		));
+
+		secondJoystick.B.whenPressed(new SequentialCommandGroup(
+				new ParallelRaceGroup(
+						new WaitCommand(1),
+						new ShootByConstant(0.4)
+				),
+				new ParallelRaceGroup(
+						new WaitCommand(4),
+						new ShootByConstant(0.4),
+						new InsertByConstants(0.8)
+				)
+		));
+
+		secondJoystick.R1.whileHeld(new RollByConstant(0.8));
+		secondJoystick.L1.whileHeld(new RollByConstant(-0.8));
+
+		secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
+
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		mainJoystick.X.whileHeld(new ShootByConstant(0.8));
-		mainJoystick.Y.whileHeld(new RollByConstant(1));
-		mainJoystick.START.whenPressed(new BrakeChassis());
-		//mainJoystick.START.whenPressed(new ToPower());
-		//mainJoystick.BACK.whenPressed(new ToSpeed());
-		mainJoystick.A.whileHeld(new ExtendAndCollect(0.3));
-		mainJoystick.Y.whenPressed(new RetractAndStop());
-		mainJoystick.B.whileHeld(new InsertByConstants(0.6));
-		mainJoystick.R1.whenPressed(new ToggleRoller());
+
+		secondJoystick.POV_UP.whenPressed(new PrintColor());
 	}
 
 	public static OI getInstance() {

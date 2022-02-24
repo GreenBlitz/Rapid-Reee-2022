@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.chassis.auto.FourBallAuto;
 import edu.greenblitz.pegasus.commands.chassis.auto.RobotDotMove;
+import edu.greenblitz.pegasus.commands.chassis.auto.ShootAndGo;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.greenblitz.pegasus.utils.VisionMaster;
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import org.greenblitz.motion.pid.PIDObject;
 
 public class Robot extends TimedRobot {
 	@Override
@@ -61,10 +63,15 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		// Line auto
+		/*
 		new ParallelRaceGroup(
 				new WaitCommand(5),
 				new RobotDotMove(-0.1) //auto line in the back of the robot
 		).schedule();
+		 */
+
+		//Shoot and go
+		new ShootAndGo(new PIDObject(0,0,0,0,0), -0.1, 5).schedule();
 
 
 		//new FourBallAuto(0.3).schedule(); // 2 ball auto
