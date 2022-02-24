@@ -46,6 +46,7 @@ public class Intake {
     }
 
     public void toggleExtender() {
+        System.out.println(isExtended());
         if (isExtended()) {
             retract();
         } else {

@@ -25,8 +25,8 @@ public class OI {
 	private boolean DEBUG = true;
 
 	private OI() {
-		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.1);
-		secondJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.SECOND, 0.1);
+		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.2);
+		secondJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.SECOND, 0.2);
 		System.out.println("In OI");
 		if(DEBUG) {
 			initDebugButtons();
@@ -45,10 +45,11 @@ public class OI {
 		mainJoystick.START.whenPressed(new BrakeChassis());
 		//mainJoystick.START.whenPressed(new ToPower());
 		//mainJoystick.BACK.whenPressed(new ToSpeed());
-		//mainJoystick.A.whileHeld(new ExtendAndCollect(0.3));
-		//mainJoystick.Y.whenPressed(new RetractAndStop());
+		mainJoystick.A.whileHeld(new ExtendAndCollect(0.3));
+		mainJoystick.Y.whenPressed(new RetractAndStop());
 		mainJoystick.B.whileHeld(new InsertByConstants(0.6));
-		mainJoystick.A.whenPressed(new ToggleRoller());
+		mainJoystick.R1.whenPressed(new ToggleRoller());
+
 
 	}
 

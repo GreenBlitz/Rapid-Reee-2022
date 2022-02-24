@@ -6,7 +6,6 @@ public class HandleCompressor extends CompressorCommand {
 
     @Override
     public void execute() {
-        System.out.println(compressor.getPressure());
         if (compressor.getPressure() < TURN_ON_THRESHOLD) {
             compressor.setCompressor(true);
         }
