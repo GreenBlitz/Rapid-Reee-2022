@@ -21,7 +21,7 @@ public class OI {
 	private SmartJoystick secondJoystick;
 
 	private boolean DEBUG = true;
-	
+
 	private OI() {
 		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN);
 		secondJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.SECOND);
@@ -45,7 +45,8 @@ public class OI {
 		//mainJoystick.BACK.whenPressed(new ToSpeed());
 		//mainJoystick.A.whileHeld(new ExtendAndCollect(0.3));
 		//mainJoystick.Y.whenPressed(new RetractAndStop());
-		mainJoystick.B.whileHeld(new InsertByConstants(0.4));
+		mainJoystick.B.whileHeld(new InsertByConstants(0.6));
+		mainJoystick.A.whileHeld(new RollByConstant(1));
 	}
 
 	public static OI getInstance() {

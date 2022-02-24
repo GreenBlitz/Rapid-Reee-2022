@@ -34,17 +34,15 @@ public class Intake {
     }
 
     public void extend() {
-        extender.extenderLeft.set(DoubleSolenoid.Value.kForward);
-        extender.extenderRight.set(DoubleSolenoid.Value.kForward);
+        extender.extender.set(DoubleSolenoid.Value.kForward);
     }
 
     public void retract() {
-        extender.extenderLeft.set(DoubleSolenoid.Value.kReverse);
-        extender.extenderRight.set(DoubleSolenoid.Value.kReverse);
+        extender.extender.set(DoubleSolenoid.Value.kReverse);
     }
 
     public boolean isExtended() {
-        return extender.extenderLeft.get().equals(DoubleSolenoid.Value.kForward);
+        return extender.extender.get().equals(DoubleSolenoid.Value.kForward);
     }
 
     public void toggleExtender() {
@@ -86,21 +84,16 @@ public class Intake {
 
     public class Extender extends IntakeSubsystem {
 
-        private DoubleSolenoid extenderLeft;
-        private DoubleSolenoid extenderRight;
+        private DoubleSolenoid extender;
 
         private Extender() {
-            extenderLeft = new DoubleSolenoid(RobotMap.Pegasus.Intake.PCM,
-                    RobotMap.Pegasus.Intake.Solenoid.FORWARD,
-                    RobotMap.Pegasus.Intake.Solenoid.REVERSE);
-            extenderRight = new DoubleSolenoid(RobotMap.Pegasus.Intake.PCM,
+            extender = new DoubleSolenoid(RobotMap.Pegasus.Intake.PCM,
                     RobotMap.Pegasus.Intake.Solenoid.FORWARD,
                     RobotMap.Pegasus.Intake.Solenoid.REVERSE);
         }
 
         private void setValue(DoubleSolenoid.Value value) {
-            extenderRight.set(value);
-            extenderLeft.set(value);
+            extender.set(value);
         }
 
         public void extend() {
@@ -115,8 +108,7 @@ public class Intake {
         @Override
         public void periodic() {
             super.periodic();
-            putString("Left", extenderLeft.get().toString());
-            putString("Right", extenderRight.get().toString());
+            putString("Left", extender.get().toString());
         }
     }
 }

@@ -43,8 +43,8 @@ public class RobotMap {
 			public static class Shifter{
 				public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
 				public static class Solenoid {
-					public static final int FORWARD = -1;
-					public static final int REVERSE= -1;
+					public static final int FORWARD = 1;
+					public static final int REVERSE = 2;
 				}
 			}
 
@@ -86,7 +86,7 @@ public class RobotMap {
 
 			public static class Solenoid{
 				public static final int FORWARD = 0;
-				public static final int REVERSE = 1;
+				public static final int REVERSE = 3;
 			}
 		}
 
@@ -137,6 +137,14 @@ public class RobotMap {
 				public static final int TURNING_MOTOR_PORT = 6;
 				public static final boolean TURNING_MOTOR_REVERSED = false;
 				public static final GearDependentValue<Double> TURNING_MOTOR_TICKS_PER_METER = new GearDependentValue<>(0.1,0.1);
+			}
+		}
+
+		public static class Pneumatics{
+			public static final int PCM = 21;
+
+			public static class PressureSensor {
+				public static final int PRESSURE = 3;
 			}
 		}
 

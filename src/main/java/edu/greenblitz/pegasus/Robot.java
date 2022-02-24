@@ -24,6 +24,7 @@ public class Robot extends TimedRobot {
 		//ComplexClimb.getInstance();
 
 		OI.getInstance();
+		//Pneumatics.init();
 
 //        VisionMaster.getInstance().register();
 		Chassis.getInstance();
@@ -58,8 +59,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		new ParallelRaceGroup(
-				new WaitCommand(5),
-				new LineAuto(-0.3) //auto line in the back of the robot
+				new WaitCommand(1),
+				new LineAuto(-0.1) //auto line in the back of the robot
 		).schedule();
 	}
 

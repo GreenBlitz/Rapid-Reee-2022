@@ -35,11 +35,11 @@ public class Chassis extends GBSubsystem {
 		for (CANSparkMax spark : allMotors){
 			spark.setSmartCurrentLimit(40);
 		}
-/*
+
 		leftFollower1.follow(leftLeader);
 		leftFollower2.follow(leftLeader);
 		rightFollower1.follow(rightLeader);
-		rightFollower2.follow(rightLeader);*/
+		rightFollower2.follow(rightLeader);
 
 		rightLeader.setInverted(RobotMap.Pegasus.Chassis.Motors.RIGHT_LEADER_REVERSED);
 		rightFollower1.setInverted(RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_1_REVERSED);
