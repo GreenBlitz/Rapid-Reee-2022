@@ -43,6 +43,7 @@ public class OI {
 		secondJoystick.B.whileHeld(new InsertByConstants(-0.8));
 
 		secondJoystick.A.whileHeld(new ShootByConstant(0.8));
+		secondJoystick.Y.whileHeld(new ShootByConstant(0.3));
 		secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
 
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
