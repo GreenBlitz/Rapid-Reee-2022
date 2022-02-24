@@ -1,6 +1,5 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.pegasus.commands.chassis.LineAuto;
 import edu.greenblitz.pegasus.commands.chassis.auto.FourBallAuto;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
@@ -26,6 +25,7 @@ public class Robot extends TimedRobot {
 
 		OI.getInstance();
 		Pneumatics.init();
+		ColorSensor.getInstance();
 
 //        VisionMaster.getInstance().register();
 		Chassis.getInstance();
@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-	
+
 	}
 
 
@@ -77,6 +77,5 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
-		SmartDashboard.putNumber("RIGHT STICK X", OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.RIGHT_X));
 	}
 }
