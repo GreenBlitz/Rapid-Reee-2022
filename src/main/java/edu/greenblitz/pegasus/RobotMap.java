@@ -26,7 +26,12 @@ public class RobotMap {
 										LEFT_LEADER = 4,
 										LEFT_FOLLOWER_1 = 5,
 										LEFT_FOLLOWER_2 = 6;
-				public static final boolean RIGHT_LEADER_REVERSED = false, RIGHT_FOLLOWER_1_REVERSED = false, RIGHT_FOLLOWER_2_REVERSED = false, LEFT_LEADER_REVERSED = true, LEFT_FOLLOWER_1_REVERSED = true, LEFT_FOLLOWER_2_REVERSED = true;
+				public static final boolean RIGHT_LEADER_REVERSED = true,
+											RIGHT_FOLLOWER_1_REVERSED = true,
+											RIGHT_FOLLOWER_2_REVERSED = true,
+											LEFT_LEADER_REVERSED = false,
+											LEFT_FOLLOWER_1_REVERSED = false,
+											LEFT_FOLLOWER_2_REVERSED = false;
 			}
 
 			public static class Encoders {
