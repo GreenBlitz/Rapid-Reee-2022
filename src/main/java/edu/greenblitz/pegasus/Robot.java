@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.chassis.LineAuto;
+import edu.greenblitz.pegasus.commands.chassis.auto.FourBallAuto;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.greenblitz.pegasus.utils.VisionMaster;
@@ -58,10 +59,14 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
+		/* Line auto
 		new ParallelRaceGroup(
 				new WaitCommand(4),
 				new LineAuto(-0.2) //auto line in the back of the robot
 		).schedule();
+		 */
+
+		new FourBallAuto(0.3).schedule(); // 2 ball auto
 	}
 
 
@@ -72,6 +77,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
-	
+		SmartDashboard.putNumber("RIGHT STICK X", OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.RIGHT_X));
 	}
 }

@@ -61,7 +61,6 @@ public class OI {
 		mainJoystick.B.whileHeld(new InsertByConstants(0.6));
 		mainJoystick.R1.whenPressed(new ToggleRoller());
 
-
 	}
 
 	public static OI getInstance() {
