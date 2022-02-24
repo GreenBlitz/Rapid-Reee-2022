@@ -87,7 +87,8 @@ public class Intake {
         private DoubleSolenoid extender;
 
         private Extender() {
-            extender = new DoubleSolenoid(RobotMap.Pegasus.Intake.PCM,
+            extender = new DoubleSolenoid(RobotMap.Pegasus.Intake.module,
+                    RobotMap.Pegasus.Intake.PCM,
                     RobotMap.Pegasus.Intake.Solenoid.FORWARD,
                     RobotMap.Pegasus.Intake.Solenoid.REVERSE);
         }
@@ -108,7 +109,6 @@ public class Intake {
         @Override
         public void periodic() {
             super.periodic();
-            putString("Left", extender.get().toString());
         }
     }
 }

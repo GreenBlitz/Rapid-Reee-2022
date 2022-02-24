@@ -17,14 +17,14 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().enable();
 
 		DigitalInputMap.getInstance();
-		//Intake.getInstance();
+		Intake.getInstance();
 		//Shifter.getInstance();
 		//Funnel.getInstance();
 		//Shooter.getInstance();
 		//ComplexClimb.getInstance();
 
 		OI.getInstance();
-		//Pneumatics.init();
+		Pneumatics.init();
 
 //        VisionMaster.getInstance().register();
 		Chassis.getInstance();

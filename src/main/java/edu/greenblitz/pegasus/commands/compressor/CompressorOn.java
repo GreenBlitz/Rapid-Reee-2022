@@ -12,3 +12,4 @@ public class CompressorOn extends CompressorCommand {
         return true;
     }
 }
+
