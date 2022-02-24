@@ -52,8 +52,7 @@ public class Chassis extends GBSubsystem {
 		leftEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.LEFT_ENCODER_REVERSED);
 		rightEncoder = new SparkEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, rightLeader);
 		rightEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.RIGHT_ENCODER_REVERSED);
-
-		gyroscope = new PigeonGyro(new PigeonIMU(new TalonSRX(30)));//Funnel.getInstance().getMotor())); //Pigeon connects to talon/CAN bus
+		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
 		gyroscope.reset();
 		gyroscope.inverse();
 	}
