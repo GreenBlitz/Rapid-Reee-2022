@@ -3,6 +3,7 @@ package edu.greenblitz.pegasus;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.chassis.BrakeChassis;
 import edu.greenblitz.pegasus.commands.chassis.MoveMotorByID;
+import edu.greenblitz.pegasus.commands.colorSensor.PrintColor;
 import edu.greenblitz.pegasus.commands.funnel.InsertByConstants;
 import edu.greenblitz.pegasus.commands.intake.ExtendAndCollect;
 import edu.greenblitz.pegasus.commands.intake.RetractAndStop;
@@ -47,6 +48,8 @@ public class OI {
 		secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
 
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
+
+		secondJoystick.POV_UP.whenPressed(new PrintColor());
 	}
 
 	private void initDebugButtons() {

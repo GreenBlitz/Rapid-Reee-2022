@@ -1,11 +1,14 @@
 package edu.greenblitz.pegasus.commands.colorSensor;
 
 import edu.greenblitz.gblib.command.GBCommand;
+import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.subsystems.ColorSensor;
 import edu.wpi.first.wpilibj.util.Color;
 
 public class PrintColor extends GBCommand {
-	ColorSensor colorSensor;
+	private ColorSensor colorSensor;
+
+	private static double COLOR_THRESHOLD = 0.3;
 
 	public PrintColor() {
 		colorSensor = ColorSensor.getInstance();
@@ -15,14 +18,21 @@ public class PrintColor extends GBCommand {
 	public void execute() {
 		Color color = colorSensor.getColor();
 
-		System.out.println("Red: " + color.red);
-		System.out.println("Green: " + color.green);
-		System.out.println("Blue: " + color.blue);
-		System.out.println("------------------------------------");
+		double red = color.red;
+		double green = color.green;
+		double blue = color.blue;
+
+		if(red > blue && red > COLOR_THRESHOLD){
+			System.out.println("Red");
+		}else if(blue > red && blue > COLOR_THRESHOLD){
+			System.out.println("Blue");
+		}else{
+			System.out.println("Well else");
+		}
 	}
 
 	@Override
 	public boolean isFinished() {
-		return false;
+		return true;
 	}
 }
