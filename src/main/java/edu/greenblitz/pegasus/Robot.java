@@ -71,7 +71,7 @@ public class Robot extends TimedRobot {
 		 */
 
 		//Shoot and go
-		new ShootAndGo(new PIDObject(0,0,0,0,0), -0.1, 5).schedule();
+		new ShootAndGo(5).schedule();
 
 
 		//new FourBallAuto(0.3).schedule(); // 2 ball auto

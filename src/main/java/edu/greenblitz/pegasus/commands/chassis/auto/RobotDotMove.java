@@ -3,7 +3,7 @@ package edu.greenblitz.pegasus.commands.chassis.auto;
 import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
 
 public class RobotDotMove extends ChassisCommand {
-	private static final double DEF_POWER = 0.1;
+	private static final double DEF_POWER = -0.1;
 
 	private double power;
 
