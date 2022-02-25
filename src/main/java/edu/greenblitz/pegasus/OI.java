@@ -15,6 +15,7 @@ import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.subsystems.Chassis;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -78,6 +79,11 @@ public class OI {
 						new ShootByConstant(0.4),
 						new InsertByConstants(0.8)
 				)
+		));
+
+		secondJoystick.Y.whileHeld(new ParallelCommandGroup(
+				new InsertByConstants(-0.8),
+				new RollByConstant(-0.8)
 		));
 
 		secondJoystick.R1.whileHeld(new RollByConstant(0.8));
