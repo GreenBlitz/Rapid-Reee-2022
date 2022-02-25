@@ -47,13 +47,13 @@ public class OI {
 		secondJoystick.X.whileHeld(new InsertByConstants(0.8));
 		secondJoystick.B.whileHeld(new InsertByConstants(-0.8));
 
-		secondJoystick.A.whileHeld(new ShootByConstant(0.7));
+		secondJoystick.A.whileHeld(new ShootByConstant(0.6));
 		secondJoystick.Y.whileHeld(new ShootByConstant(0.4));
 		secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
 
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
 
-		secondJoystick.POV_UP.whenPressed(new PrintColor());
+		mainJoystick.POV_UP.whenPressed(new PrintColor());
 	}
 
 	private void initDebugButtons() {
