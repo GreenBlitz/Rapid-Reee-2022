@@ -21,14 +21,14 @@ public class RejectWrongBalls extends ParallelRaceGroup {
 		if (funnelPower < 0) {
 			this.funnelPower = funnelPower;
 		} else this.rollerPower = -rollerPower;
-		if (opponentColor == "RED" || opponentColor == "BLUE") {
+		if (opponentColor.equals("RED") || opponentColor.equals("BLUE")) {
 			this.opponentColor = opponentColor;
 		}
 	}
 
 	@Override
 	public void execute() {
-		if (colorSensor.getPerceivedColor() == opponentColor)
+		if (colorSensor.getPerceivedColor().equals(opponentColor))
 			addCommands(
 					new WaitCommand(activationTime),
 					new InsertByConstants(funnelPower),
