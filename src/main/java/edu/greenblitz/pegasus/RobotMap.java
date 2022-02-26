@@ -141,12 +141,15 @@ public class RobotMap {
 			}
 		}
 
-		public static class Pneumatics{
+		public static class Pneumatics {
 			public static final int PCM = 21;
 
 			public static class PressureSensor {
 				public static final int PRESSURE = 3;
 			}
+		}
+		public static class DigitalInputMap{
+			public static final int MACRO_SWITCH = 0;
 		}
 
 	}

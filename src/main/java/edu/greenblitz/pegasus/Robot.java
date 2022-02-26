@@ -1,12 +1,10 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.chassis.LineAuto;
+
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
-import edu.greenblitz.pegasus.utils.VisionMaster;
-import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -32,7 +30,7 @@ public class Robot extends TimedRobot {
 //        VisionMaster.getInstance().register();
 		Chassis.getInstance();
 */		// Must be last!
-		ColorSensor.getInstance();
+		BallQueue.getInstance();
 
 	}
 

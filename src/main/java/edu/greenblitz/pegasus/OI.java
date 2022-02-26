@@ -1,17 +1,6 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.pegasus.commands.intake.ExtendAndCollect;
-import edu.greenblitz.pegasus.commands.intake.RetractAndStop;
-import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
-import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
-import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
-import edu.greenblitz.pegasus.commands.shifter.ToPower;
-import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
-import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
-import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
-import edu.greenblitz.pegasus.subsystems.Chassis;
-import org.greenblitz.motion.pid.PIDObject;
 
 public class OI {
 	private static OI instance;
