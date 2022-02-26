@@ -27,4 +27,30 @@ public class ColorSensor extends GBSubsystem {
 	public Color getColor() {
 		return colorSensor.getColor();
 	}
+
+	public String getPerceivedColor(){
+		Color color = this.getColor();
+		double marginOfError = 1.2; // Above 1
+		String perceivedColor = "NONE";
+		if (color.red > color.blue * (marginOfError)) {
+			System.out.println("RED");
+			System.out.println("Red: " + color.red);
+			System.out.println("blue: " + color.blue);
+			System.out.println("------------------------------------");
+			perceivedColor = "RED";
+		} else if (color.blue > color.red * (marginOfError)) {
+			System.out.println("BLUE");
+			System.out.println("red: " + color.red);
+			System.out.println("blue" + color.blue);
+			System.out.println("------------------------------------");
+			perceivedColor = "BLUE";
+		} else {
+			System.out.println("NONE");
+			System.out.println("red: " + color.red);
+			System.out.println("blue" + color.blue);
+			System.out.println("------------------------------------");
+			perceivedColor = "NONE";
+		}
+		return perceivedColor;
+	}
 }
