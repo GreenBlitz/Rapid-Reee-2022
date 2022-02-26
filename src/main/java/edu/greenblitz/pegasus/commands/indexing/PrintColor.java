@@ -1,19 +1,13 @@
-package edu.greenblitz.pegasus.commands.BallQueue;
+package edu.greenblitz.pegasus.commands.indexing;
 
 import edu.greenblitz.gblib.command.GBCommand;
-import edu.greenblitz.pegasus.subsystems.BallQueue;
+import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.wpi.first.wpilibj.util.Color;
 
-public class PrintColor extends GBCommand {
-	BallQueue colorSensor;
-
-	public PrintColor() {
-		colorSensor = BallQueue.getInstance();
-	}
-
+public class PrintColor extends IndexingCommand {
 	@Override
 	public void execute() {
-		Color color = colorSensor.getColor();
+		Color color = indexing.getColor();
 
 		System.out.println("Red: " + color.red);
 		System.out.println("Green: " + color.green);

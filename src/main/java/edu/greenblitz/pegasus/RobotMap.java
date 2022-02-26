@@ -89,6 +89,9 @@ public class RobotMap {
 				public static final int FORWARD = 2;
 				public static final int REVERSE = 0;
 			}
+
+			public static final double POWER = 0.7;
+			public static final double REVERSE_POWER = -0.7;
 		}
 
 		public static class Climb {
@@ -128,6 +131,9 @@ public class RobotMap {
 				public static final int MOTOR_PORT = 5;
 				public static final boolean IS_REVERSED = true;
 			}
+
+			public static final double POWER = 0.7;
+			public static final double REVERSE_POWER = -0.7;
 		}
 
 		public static class ComplexClimb {

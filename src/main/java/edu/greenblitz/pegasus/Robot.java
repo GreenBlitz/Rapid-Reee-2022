@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
 //        VisionMaster.getInstance().register();
 		Chassis.getInstance();
 */		// Must be last!
-		BallQueue.getInstance();
+		Indexing.getInstance();
 
 	}
 

@@ -28,4 +28,12 @@ public class Funnel extends GBSubsystem{
 	public void moveMotor(double power){
 		motor.set(power);
 	}
+
+	public void move(){
+		motor.set(RobotMap.Pegasus.Funnel.POWER);
+	}
+
+	public void stop(){
+		motor.set(0);
+	}
 }

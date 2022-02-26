@@ -33,6 +33,14 @@ public class Intake {
         roller.rollerMotor.set(power);
     }
 
+    public void move(){
+        roller.rollerMotor.set(RobotMap.Pegasus.Intake.POWER);
+    }
+
+    public void stop(){
+        roller.rollerMotor.set(0);
+    }
+
     public void extend() {
         extender.extender.set(DoubleSolenoid.Value.kForward);
     }
