@@ -7,32 +7,28 @@ import edu.greenblitz.pegasus.subsystems.ColorSensor;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class RejectWrongBalls extends ParallelRaceGroup {
-	double rollerPower; //both should be negative
-	double funnelPower;
-	ColorSensor colorSensor;
-	String opponentColor;
-	double activationTime;
+public class RejectWrongBalls extends ColorSensorCommand {
+	ColorSensor.AllianceColor myColor;
 
-	public RejectWrongBalls(double rollerPower, double funnelPower,double activationTime, String opponentColor) {
-		if (rollerPower < 0) {
-			this.rollerPower = rollerPower;
-		} else this.rollerPower = -rollerPower;
-		if (funnelPower < 0) {
-			this.funnelPower = funnelPower;
-		} else this.rollerPower = -rollerPower;
-		if (opponentColor.equals("RED") || opponentColor.equals("BLUE")) {
-			this.opponentColor = opponentColor;
-		}
-	}
+	public static final Double ROLLER_POWER = -0.8; //both should be negative
+	static public final double FUNNEL_POWER = -0.8;
+	static final public double ACTIVATION_TIME = 3.0;
+
+	@Override
+	public void initialize() {
+		this.myColor = colorSensor.getPerceivedColor();
+}
 
 	@Override
 	public void execute() {
-		if (colorSensor.getPerceivedColor().equals(opponentColor))
-			addCommands(
-					new WaitCommand(activationTime),
-					new InsertByConstants(funnelPower),
-					new RollByConstant(rollerPower)
+		if (myColor == ColorSensor.AllianceColor.OTHER) {
+			this.myColor = colorSensor.getPerceivedColor();
+		}
+		if (colorSensor.getPerceivedColor() != myColor)
+			new ParallelRaceGroup(
+					new WaitCommand(ACTIVATION_TIME),
+					new InsertByConstants(FUNNEL_POWER),
+					new RollByConstant(ROLLER_POWER)
 			);
 	}
 }
