@@ -1,7 +1,7 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.chassis.LineAuto;
-
+import edu.greenblitz.pegasus.commands.colorSensor.PrintColor;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -23,14 +23,16 @@ public class Robot extends TimedRobot {
 		Funnel.getInstance();
 		Shooter.init();
 		ComplexClimb.getInstance();
->>>>>>> 910e430 (asaf- set up color sensor test)
 		OI.getInstance();
 		Pneumatics.init();
 
 //        VisionMaster.getInstance().register();
-		Chassis.getInstance();
-*/		// Must be last!
+
+ */
 		Indexing.getInstance();
+		Chassis.getInstance();
+		// Must be last!
+
 
 	}
 
@@ -60,8 +62,7 @@ public class Robot extends TimedRobot {
 				new WaitCommand(1),
 				new LineAuto(-0.1) //auto line in the back of the robot
 		).schedule();
-}
-
+	}
 
 	@Override
 	public void testInit() {

@@ -25,7 +25,7 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
-}
+	}
 
 	public static OI getInstance() {
 		if (instance == null) {
