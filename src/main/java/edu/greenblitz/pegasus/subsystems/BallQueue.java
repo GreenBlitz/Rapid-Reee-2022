@@ -8,7 +8,10 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
 
+import java.util.PriorityQueue;
+
 public class BallQueue extends GBSubsystem {
+	public PriorityQueue<AllianceColor> ballQueue; // only works if roll by ball queue is only roller command scheduled
 	private static BallQueue instance;
 	private final I2C.Port i2cPort = I2C.Port.kOnboard;
 	private final ColorSensorV3 colorSensor;

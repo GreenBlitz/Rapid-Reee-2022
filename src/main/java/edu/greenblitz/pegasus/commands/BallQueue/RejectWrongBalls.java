@@ -10,21 +10,21 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class RejectWrongBalls extends BallQueueCommand {
 	BallQueue.AllianceColor myColor;
 
-	public static final Double ROLLER_POWER = -0.8; //both should be negative
+	public final static double ROLLER_POWER = -0.8; //both should be negative
 	static public final double FUNNEL_POWER = -0.8;
-	static final public double ACTIVATION_TIME = 3.0;
+	final static public double ACTIVATION_TIME = 3.0;
 
 	@Override
 	public void initialize() {
-		this.myColor = colorSensor.getPerceivedColor();
+		this.myColor = ballQueue.getPerceivedColor();
 }
 
 	@Override
 	public void execute() {
 		if (myColor == BallQueue.AllianceColor.OTHER) {
-			this.myColor = colorSensor.getPerceivedColor();
+			this.myColor = ballQueue.getPerceivedColor();
 		}
-		if (colorSensor.getPerceivedColor() != myColor)
+		if (ballQueue.getPerceivedColor() != myColor)
 			new ParallelRaceGroup(
 					new WaitCommand(ACTIVATION_TIME),
 					new InsertByConstants(FUNNEL_POWER),
