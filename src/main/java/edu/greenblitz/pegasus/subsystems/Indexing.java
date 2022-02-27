@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj2.command.Command;
+
 import java.util.Queue;
 
 public class Indexing extends GBSubsystem {
@@ -29,9 +31,8 @@ public class Indexing extends GBSubsystem {
 		colorSensor = new ColorSensorV3(i2cPort);
 		macroSwitch = DigitalInputMap.getInstance().getDigitalInput(RobotMap.Pegasus.DigitalInputMap.MACRO_SWITCH);
 		ballCount = 0;
+		System.out.println(DriverStation.getAlliance());
 		allianceColor = DriverStation.getAlliance() == DriverStation.Alliance.Blue ? BallColor.BLUE : BallColor.RED;
-
-		instance.setDefaultCommand(new RejectWrongBalls());
 	}
 
 	private static void init() {

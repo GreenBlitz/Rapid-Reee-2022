@@ -1,6 +1,15 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
+import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
+import edu.greenblitz.pegasus.commands.indexing.PrintColor;
+import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
+import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
+import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
+import edu.greenblitz.pegasus.subsystems.Chassis;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 
 public class OI {
 	private static OI instance;
@@ -25,6 +34,18 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
+		mainJoystick.A.whileHeld(new ParallelCommandGroup(
+				new RunFunnel(),
+				new ShootByConstant(0.8),
+				new RollByConstant(0.8)
+		));
+
+		mainJoystick.POV_UP.whileHeld(new RollByConstant(0.8));
+		mainJoystick.POV_RIGHT.whileHeld(new RunFunnel());
+		mainJoystick.POV_DOWN.whileHeld(new ShootByConstant(0.8));
+		mainJoystick.POV_LEFT.whileHeld(new ToggleRoller());
+
+		Chassis.getInstance().initDefaultCommand(mainJoystick);
 	}
 
 	public static OI getInstance() {

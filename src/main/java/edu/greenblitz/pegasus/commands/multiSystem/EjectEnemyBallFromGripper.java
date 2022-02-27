@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class EjectEnemyBallFromGripper extends ParallelRaceGroup {
 	public EjectEnemyBallFromGripper(){
 		addCommands(
-				new WaitCommand(2),
+				new WaitCommand(3),
 				new ReverseRoller(),
 				new ReverseFunnel()
 		);

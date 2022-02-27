@@ -17,18 +17,17 @@ public class Robot extends TimedRobot {
 		DigitalInputMap.getInstance();
 
 
-		//Pneumatics.init();
-/*		Intake.getInstance();
+		Pneumatics.init();
+		Intake.getInstance();
 		//Shifter.init();
 		Funnel.getInstance();
 		Shooter.init();
-		ComplexClimb.getInstance();
+		//ComplexClimb.getInstance();
 		OI.getInstance();
 		Pneumatics.init();
 
 //        VisionMaster.getInstance().register();
 
- */
 		Indexing.getInstance();
 		Chassis.getInstance();
 		// Must be last!
@@ -49,6 +48,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
+		Chassis.getInstance().initDefaultCommand(OI.getInstance().getMainJoystick());
 	}
 	@Override
 	public void teleopPeriodic() {
