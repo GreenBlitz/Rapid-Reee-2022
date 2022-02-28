@@ -81,10 +81,12 @@ public class RobotMap {
 		public static class Intake {
 			public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
 			public static final int module = 21;
+			
 
 			public static class Motors {
 				public static final int ROLLER_PORT = 6;
 				public static final boolean IS_REVERSED = false;
+				public static final double DEFAULT_POWER= 0.8;
 			}
 
 			public static class Solenoid {
@@ -122,7 +124,7 @@ public class RobotMap {
 
 				// No fucking idea how much is 1.0, but 0.8 is already very fucking scary
 //        rpmToPowerMap.addDatapoint(5500, new double[]{1.0});
-				public static final PIDObject SHOOTER_PID = new PIDObject(0.1);
+				public static final PIDObject pid = new PIDObject(0.1);
 			}
 		}
 
@@ -132,6 +134,8 @@ public class RobotMap {
 				public static final int MOTOR_PORT = 5;
 				public static final boolean IS_REVERSED = true;
 			}
+			public static final int MACRO_SWITCH_PORT = 0;
+			public static final double DEFAULT_POWER= 0.8;
 		}
 
 		public static class ComplexClimb {

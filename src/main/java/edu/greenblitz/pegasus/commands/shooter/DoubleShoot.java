@@ -1,47 +1,33 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
-import edu.greenblitz.gblib.command.GBCommand;
-import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.commands.funnel.InsertByConstants;
-import edu.greenblitz.pegasus.utils.DigitalInputMap;
-import edu.wpi.first.wpilibj2.command.*;
+import edu.greenblitz.pegasus.RobotMap.Pegasus.Funnel;
+import edu.greenblitz.pegasus.RobotMap.Pegasus.Intake;
+import edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter;
+import edu.greenblitz.pegasus.commands.funnel.InsertIntoShooter;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import org.greenblitz.motion.pid.PIDObject;
 
-public class DoubleShoot extends ShooterCommand {
-
+public class DoubleShoot extends SequentialCommandGroup {
+	
 	double RPM1;
 	double RPM2;
-	static PIDObject PID = RobotMap.Pegasus.Shooter.ShooterMotor.SHOOTER_PID;
-
+	static PIDObject PID = Shooter.ShooterMotor.pid;
+	
 	public DoubleShoot(double RPM1, double RPM2) {
 		super();
 		this.RPM1 = RPM1;
 		this.RPM2 = RPM2;
+		
+		addCommands(
+				new ParallelDeadlineGroup(new InsertIntoShooter(Funnel.DEFAULT_POWER, Intake.Motors.DEFAULT_POWER), new ShooterByRPM(Shooter.ShooterMotor.pid, RPM1)),
+				new WaitCommand(0.1),
+				new ParallelDeadlineGroup(new InsertIntoShooter(Funnel.DEFAULT_POWER, Intake.Motors.DEFAULT_POWER), new ShooterByRPM(Shooter.ShooterMotor.pid, RPM2))
+		);
 	}
-
-	@Override
-	public void initialize() {
-	}
-
-	@Override
-	public void execute() {
-		if (DigitalInputMap.getInstance().getValue(0)){
-			(new ParallelRaceGroup(new ShooterByRPM(PID, RPM1) ,new WaitCommand(1))).schedule();
-			(new ParallelCommandGroup(new ShooterByRPM(PID, RPM1), new InsertByConstants(0.8))).schedule();
-			if (DigitalInputMap.getInstance().getValue(0)){
-				(new ParallelCommandGroup(new ShooterByRPM(PID, RPM2), new InsertByConstants(0.8))).schedule();
-			}
-			else{
-				new ParallelRaceGroup(new InsertByConstants(0.8), new GBCommand() {
-					@Override
-					public boolean isFinished() {
-						return DigitalInputMap.getInstance().getValue(0);
-					}
-				}
-				);
-
-			}
-		}
-
+	
+	public DoubleShoot(double RPM){
+		this(RPM,RPM);
 	}
 }
