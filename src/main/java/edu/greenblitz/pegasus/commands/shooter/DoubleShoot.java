@@ -14,7 +14,6 @@ public class DoubleShoot extends SequentialCommandGroup {
 	
 	double RPM1;
 	double RPM2;
-	static PIDObject PID = Shooter.ShooterMotor.pid;
 	
 	public DoubleShoot(double RPM1, double RPM2) {
 		super();
