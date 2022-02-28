@@ -1,5 +1,6 @@
 package edu.greenblitz.pegasus;
 
+import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.chassis.BrakeChassis;
 import edu.greenblitz.pegasus.commands.chassis.MoveMotorByID;
@@ -14,6 +15,8 @@ import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.subsystems.Chassis;
+import edu.greenblitz.pegasus.subsystems.Intake;
+import edu.greenblitz.pegasus.subsystems.Shooter;
 import org.greenblitz.motion.pid.PIDObject;
 
 public class OI {
@@ -22,7 +25,8 @@ public class OI {
 	private SmartJoystick mainJoystick;
 	private SmartJoystick secondJoystick;
 
-	private boolean DEBUG = true;
+	private final boolean DEBUG = true;
+	private static boolean isHandled = true;
 
 	private OI() {
 		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.2);
@@ -35,7 +39,17 @@ public class OI {
 		}
 	}
 
+
+
 	private void initRealButtons() {
+
+		Intake.getInstance().initDefaultCommand(secondJoystick);
+		Shooter.getInstance().initDefaultCommand(secondJoystick);
+
+		secondJoystick.X.whenPressed(new ToggleRoller());
+		secondJoystick.POV_LEFT.whenPressed(new InitManualOverride());
+
+		Chassis.getInstance().initDefaultCommand(mainJoystick);
 	}
 
 	private void initDebugButtons() {
@@ -52,6 +66,32 @@ public class OI {
 
 	}
 
+	private class InitManualOverride extends GBCommand {
+
+		private InitManualOverride() {
+			super();
+		}
+
+		@Override
+		public void initialize() {
+			super.initialize();
+			secondJoystick.R1.whileHeld(new RollByConstant(0.8));
+			secondJoystick.L1.whileHeld(new RollByConstant(-0.8));
+
+			secondJoystick.X.whileHeld(new InsertByConstants(0.8));
+			secondJoystick.B.whileHeld(new InsertByConstants(-0.8));
+
+			secondJoystick.A.whileHeld(new ShootByConstant(0.6));
+			secondJoystick.Y.whileHeld(new ShootByConstant(0.4));
+			secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
+		}
+
+		@Override
+		public boolean isFinished() {
+			return true;
+		}
+	}
+
 	public static OI getInstance() {
 		if (instance == null) {
 			instance = new OI();
@@ -65,5 +105,13 @@ public class OI {
 	
 	public SmartJoystick getSecondJoystick() {
 		return secondJoystick;
+	}
+
+	public static boolean isIsHandled() {
+		return isHandled;
+	}
+
+	public static void disableHandling() {
+		isHandled = false;
 	}
 }

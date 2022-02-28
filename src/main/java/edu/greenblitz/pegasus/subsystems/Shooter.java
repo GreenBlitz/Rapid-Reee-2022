@@ -1,7 +1,10 @@
 package edu.greenblitz.pegasus.subsystems;
 
 import com.revrobotics.*;
+import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
+import edu.greenblitz.pegasus.commands.shooter.ShootByTrigger;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.interpolation.Dataset;
 import org.greenblitz.motion.pid.PIDObject;
@@ -46,6 +49,10 @@ public class Shooter extends GBSubsystem {
 			init();
 		}
 		return instance;
+	}
+
+	public void initDefaultCommand(SmartJoystick joystick){
+		instance.setDefaultCommand(new ShootByTrigger(joystick));
 	}
 
 	public void shoot(double power) {
