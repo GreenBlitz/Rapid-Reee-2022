@@ -4,6 +4,7 @@ import edu.greenblitz.gblib.gears.Gear;
 import edu.greenblitz.gblib.gears.GearDependentValue;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
+import org.greenblitz.motion.pid.PIDObject;
 import org.greenblitz.motion.profiling.ProfilingConfiguration;
 import org.greenblitz.motion.profiling.ProfilingData;
 
@@ -110,14 +111,21 @@ public class RobotMap {
 
 				public static final Dataset RPM_TO_POWER = new Dataset(2);
 				static {
-					RPM_TO_POWER.addDatapoint(0, new double[]{0});
-					RPM_TO_POWER.addDatapoint(975, new double[]{0.2});
-					RPM_TO_POWER.addDatapoint(2062.5, new double[]{0.4});
-					RPM_TO_POWER.addDatapoint(3075, new double[]{0.6});
-					RPM_TO_POWER.addDatapoint(3960, new double[]{0.8});
+					RPM_TO_POWER.addDatapoint(0, new double[]{-0.0000000001});
+					RPM_TO_POWER.addDatapoint(346.17146728515627, new double[]{0.1});
+					RPM_TO_POWER.addDatapoint(840.5715405273437, new double[]{0.2});
+					RPM_TO_POWER.addDatapoint(1352.4570483398438, new double[]{0.3});
+					RPM_TO_POWER.addDatapoint(1890.8568017578125, new double[]{0.4});
+					RPM_TO_POWER.addDatapoint(2411.9998046875, new double[]{0.5});
+					RPM_TO_POWER.addDatapoint(2904.800322265625, new double[]{0.6});
+					RPM_TO_POWER.addDatapoint(3518.057314453125, new double[]{0.7});
+					RPM_TO_POWER.addDatapoint(4140.91421875, new double[]{0.8});
+					RPM_TO_POWER.addDatapoint(4664.115322265625, new double[]{0.9});
+					RPM_TO_POWER.addDatapoint(5209.37181640625, new double[]{1.0});
+					
 				}
-				// No fucking idea how much is 1.0, but 0.8 is already very fucking scary
-//        rpmToPowerMap.addDatapoint(5500, new double[]{1.0});
+				PIDObject pid = new PIDObject(0,0.0000004,0);
+				
 
 			}
 		}

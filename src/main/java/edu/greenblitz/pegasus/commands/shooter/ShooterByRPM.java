@@ -1,36 +1,21 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
-import org.greenblitz.debug.RemoteCSVTarget;
-import org.greenblitz.motion.pid.PIDObject;
+import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.subsystems.Shooter;
 
-public class ShooterByRPM extends ShooterCommand {
-	protected PIDObject obj;
-	protected RemoteCSVTarget logger;
-	protected double target;
-	protected long tStart;
-
-	public ShooterByRPM(PIDObject obj, double target) {
-		this.obj = obj;
-		this.obj.setKf(this.obj.getKf() / target);
-		this.target = target;
-		this.logger = RemoteCSVTarget.initTarget("FlyWheelVel", "time", "vel");
+public class ShooterByRPM extends ShootByConstant{
+	
+	private double rpm;
+	
+	public ShooterByRPM(double rpm){
+		super(RobotMap.Pegasus.Shooter.ShooterMotor.RPM_TO_POWER.linearlyInterpolate(rpm)[0]);
+		shooter.putNumber("RPM", rpm);
+		this.rpm = rpm;
 	}
-
-	@Override
-	public void initialize() {
-		shooter.getPIDController().setIAccum(0.0);
-		shooter.setPIDConsts(obj);
-		tStart = System.currentTimeMillis();
-	}
-
+	
 	@Override
 	public void execute() {
-		shooter.setSpeedByPID(target);
-		logger.report((System.currentTimeMillis() - tStart) / 1000.0, shooter.getShooterSpeed());
-	}
-
-	@Override
-	public boolean isFinished() {
-		return false;
+		power = RobotMap.Pegasus.Shooter.ShooterMotor.RPM_TO_POWER.linearlyInterpolate(shooter.getNumber("RPM" , rpm))[0];
+		super.execute();
 	}
 }

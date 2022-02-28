@@ -29,12 +29,6 @@ public class Shooter extends GBSubsystem {
 //		follower.setSmartCurrentLimit(40);
 
 		preparedToShoot = false;
-		putNumber("testing_target", 0);
-		putNumber("p", 0);
-		putNumber("i", 0);
-		putNumber("d", 0);
-		putNumber("f", 0);
-
 	}
 
 	public static void init() {
