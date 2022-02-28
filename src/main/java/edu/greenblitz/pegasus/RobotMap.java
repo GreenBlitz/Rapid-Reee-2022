@@ -128,7 +128,7 @@ public class RobotMap {
 					RPM_TO_POWER.addDatapoint(5209.37181640625, new double[]{1.0});
 					
 				}
-				PIDObject pid = new PIDObject(0,0.0000004,0);
+				public static final PIDObject pid = new PIDObject(0,0.0000004,0);
 				
 }
 		}

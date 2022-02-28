@@ -1,5 +1,7 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
+import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.subsystems.Shooter;
 import org.greenblitz.debug.RemoteCSVTarget;
 import org.greenblitz.motion.pid.PIDObject;
 
@@ -8,13 +10,14 @@ public class ShooterByRPM extends ShooterCommand {
 	protected RemoteCSVTarget logger;
 	protected double target;
 	protected long tStart;
-	private double epsilon = 10;
-
+	private double epsilon = 15;
+	
 	public ShooterByRPM(PIDObject obj, double target) {
 		this.obj = obj;
 		this.obj.setKf(this.obj.getKf() / target);
 		this.target = target;
 		this.logger = RemoteCSVTarget.initTarget("FlyWheelVel", "time", "vel");
+		
 	}
 
 	@Override

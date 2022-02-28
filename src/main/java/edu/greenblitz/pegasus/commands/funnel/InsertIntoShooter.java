@@ -19,8 +19,8 @@ public class InsertIntoShooter extends SequentialCommandGroup {
 				),
 				
 				//waits until the shooter is ready
-				// todo new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
-				new WaitCommand(0.25),
+				new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
+				
 				new ParallelDeadlineGroup(//activates both roller and funnel until ball is no longer at macro switch (was probably propelled)
 						new WaitUntilCommand(() -> !DigitalInputMap.getInstance().getValue(RobotMap.Pegasus.Funnel.MACRO_SWITCH_PORT)),
 						new InsertByConstants(pushConst),
