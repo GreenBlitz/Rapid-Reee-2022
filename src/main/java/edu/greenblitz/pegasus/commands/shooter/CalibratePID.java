@@ -6,7 +6,7 @@ import org.greenblitz.motion.pid.PIDObject;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-public class CalibratePID extends ShooterByPID {
+public class CalibratePID extends ShooterByRPM {
 	
 	Queue<Double> lastValues = new ArrayDeque<>(50);
 	

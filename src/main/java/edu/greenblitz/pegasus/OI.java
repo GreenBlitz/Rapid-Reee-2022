@@ -3,7 +3,6 @@ package edu.greenblitz.pegasus;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.funnel.InsertByConstants;
 import edu.greenblitz.pegasus.commands.shooter.CalibratePID;
-import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import org.greenblitz.motion.pid.PIDObject;
 
 public class OI {
