@@ -11,6 +11,7 @@ import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.shifter.ToPower;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
+import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.subsystems.Chassis;
@@ -47,9 +48,9 @@ public class OI {
 		//mainJoystick.BACK.whenPressed(new ToSpeed());
 		mainJoystick.A.whileHeld(new ExtendAndCollect(0.3));
 		mainJoystick.Y.whenPressed(new RetractAndStop());
-		mainJoystick.B.whileHeld(new InsertByConstants(0.6));
+		//mainJoystick.B.whileHeld(new InsertByConstants(0.6));
 		mainJoystick.R1.whenPressed(new ToggleRoller());
-
+		mainJoystick.B.whenPressed(new DoubleShoot(0.8,0.8));
 	}
 
 	public static OI getInstance() {

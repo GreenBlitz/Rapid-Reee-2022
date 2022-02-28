@@ -22,7 +22,7 @@ public class InsertUntil extends SequentialCommandGroup {
 			}
 		};
 
-		addCommands(new ParallelRaceGroup(insertionMethod, endConditionCommand), new StopInserter());
+		addCommands(new ParallelRaceGroup(insertionMethod, endConditionCommand), new InsertByConstants(0));
 	}
 
 }
