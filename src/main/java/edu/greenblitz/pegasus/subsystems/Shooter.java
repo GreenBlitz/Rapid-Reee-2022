@@ -111,4 +111,6 @@ public class Shooter extends GBSubsystem {
 		this.leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
 //		this.follower.setIdleMode(CANSparkMax.IdleMode.kCoast);
 	}
+
+
 }

@@ -4,6 +4,7 @@ import edu.greenblitz.gblib.gears.Gear;
 import edu.greenblitz.gblib.gears.GearDependentValue;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
+import org.greenblitz.motion.pid.PIDObject;
 import org.greenblitz.motion.profiling.ProfilingConfiguration;
 import org.greenblitz.motion.profiling.ProfilingData;
 
@@ -21,17 +22,17 @@ public class RobotMap {
 
 			public static class Motors {
 				public static final int RIGHT_LEADER = 1,
-										RIGHT_FOLLOWER_1 = 2,
-										RIGHT_FOLLOWER_2 = 3,
-										LEFT_LEADER = 4,
-										LEFT_FOLLOWER_1 = 5,
-										LEFT_FOLLOWER_2 = 6;
+						RIGHT_FOLLOWER_1 = 2,
+						RIGHT_FOLLOWER_2 = 3,
+						LEFT_LEADER = 4,
+						LEFT_FOLLOWER_1 = 5,
+						LEFT_FOLLOWER_2 = 6;
 				public static final boolean RIGHT_LEADER_REVERSED = true,
-											RIGHT_FOLLOWER_1_REVERSED = true,
-											RIGHT_FOLLOWER_2_REVERSED = true,
-											LEFT_LEADER_REVERSED = false,
-											LEFT_FOLLOWER_1_REVERSED = false,
-											LEFT_FOLLOWER_2_REVERSED = false;
+						RIGHT_FOLLOWER_1_REVERSED = true,
+						RIGHT_FOLLOWER_2_REVERSED = true,
+						LEFT_LEADER_REVERSED = false,
+						LEFT_FOLLOWER_1_REVERSED = false,
+						LEFT_FOLLOWER_2_REVERSED = false;
 			}
 
 			public static class Encoders {
@@ -39,9 +40,10 @@ public class RobotMap {
 				public static final int RIGHT_ENCODER = -1, LEFT_ENCODER = -1;
 				public static final boolean RIGHT_ENCODER_REVERSED = false, LEFT_ENCODER_REVERSED = false;
 			}
-			
-			public static class Shifter{
+
+			public static class Shifter {
 				public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
+
 				public static class Solenoid {
 					public static final int FORWARD = 3;
 					public static final int REVERSE = 1;
@@ -76,16 +78,16 @@ public class RobotMap {
 
 		}
 
-		public static class Intake{
+		public static class Intake {
 			public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
 			public static final int module = 21;
 
-			public static class Motors{
+			public static class Motors {
 				public static final int ROLLER_PORT = 6;
 				public static final boolean IS_REVERSED = false;
 			}
 
-			public static class Solenoid{
+			public static class Solenoid {
 				public static final int FORWARD = 2;
 				public static final int REVERSE = 0;
 			}
@@ -109,6 +111,7 @@ public class RobotMap {
 
 
 				public static final Dataset RPM_TO_POWER = new Dataset(2);
+
 				static {
 					RPM_TO_POWER.addDatapoint(0, new double[]{0});
 					RPM_TO_POWER.addDatapoint(975, new double[]{0.2});
@@ -116,9 +119,10 @@ public class RobotMap {
 					RPM_TO_POWER.addDatapoint(3075, new double[]{0.6});
 					RPM_TO_POWER.addDatapoint(3960, new double[]{0.8});
 				}
+
 				// No fucking idea how much is 1.0, but 0.8 is already very fucking scary
 //        rpmToPowerMap.addDatapoint(5500, new double[]{1.0});
-
+				public static final PIDObject SHOOTER_PID = new PIDObject(0.1);
 			}
 		}
 
@@ -134,14 +138,14 @@ public class RobotMap {
 			public static class ComplexClimbMotor {
 				public static final int HOOK_MOTOR_PORT = 8;
 				public static final boolean HOOK_MOTOR_REVERSED = false;
-				public static final GearDependentValue<Double> HOOK_MOTOR_TICKS_PER_METER = new GearDependentValue<>(0.1,0.1);
+				public static final GearDependentValue<Double> HOOK_MOTOR_TICKS_PER_METER = new GearDependentValue<>(0.1, 0.1);
 				public static final int TURNING_MOTOR_PORT = 6;
 				public static final boolean TURNING_MOTOR_REVERSED = false;
-				public static final GearDependentValue<Double> TURNING_MOTOR_TICKS_PER_METER = new GearDependentValue<>(0.1,0.1);
+				public static final GearDependentValue<Double> TURNING_MOTOR_TICKS_PER_METER = new GearDependentValue<>(0.1, 0.1);
 			}
 		}
 
-		public static class Pneumatics{
+		public static class Pneumatics {
 			public static final int PCM = 21;
 
 			public static class PressureSensor {

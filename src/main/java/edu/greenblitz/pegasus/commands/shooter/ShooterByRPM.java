@@ -8,6 +8,7 @@ public class ShooterByRPM extends ShooterCommand {
 	protected RemoteCSVTarget logger;
 	protected double target;
 	protected long tStart;
+	private double epsilon = 10;
 
 	public ShooterByRPM(PIDObject obj, double target) {
 		this.obj = obj;
@@ -18,6 +19,7 @@ public class ShooterByRPM extends ShooterCommand {
 
 	@Override
 	public void initialize() {
+		shooter.setPreparedToShoot(false);
 		shooter.getPIDController().setIAccum(0.0);
 		shooter.setPIDConsts(obj);
 		tStart = System.currentTimeMillis();
@@ -26,11 +28,20 @@ public class ShooterByRPM extends ShooterCommand {
 	@Override
 	public void execute() {
 		shooter.setSpeedByPID(target);
+		if(Math.abs(target - shooter.getShooterSpeed()) < epsilon ){
+			shooter.setPreparedToShoot(true);
+		}
 		logger.report((System.currentTimeMillis() - tStart) / 1000.0, shooter.getShooterSpeed());
 	}
 
 	@Override
 	public boolean isFinished() {
 		return false;
+	}
+
+	@Override
+	public void end(boolean interrupted) {
+		super.end(interrupted);
+		shooter.setPreparedToShoot(false);
 	}
 }
