@@ -13,7 +13,7 @@ public class ShootByTrigger extends ShooterCommand {
 	@Override
 	public void execute() {
 		SmartDashboard.putBoolean("RollByTrigger", true);
-		double power = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_TRIGGER);
+		double power = joystick.getAxisValue(SmartJoystick.Axis.LEFT_TRIGGER);
 		shooter.shoot(power);
 	}
 

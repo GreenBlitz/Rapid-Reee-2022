@@ -14,7 +14,7 @@ public class RollByTrigger extends RollerCommand {
 	public void execute() {
 		SmartDashboard.putBoolean("RollByTrigger", true);
 		double power = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_TRIGGER);
-		intake.moveRoller(power);
+		intake.moveRoller(-power);
 	}
 
 	@Override

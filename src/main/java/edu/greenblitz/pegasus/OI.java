@@ -3,21 +3,15 @@ package edu.greenblitz.pegasus;
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.chassis.BrakeChassis;
-import edu.greenblitz.pegasus.commands.chassis.MoveMotorByID;
 import edu.greenblitz.pegasus.commands.funnel.InsertByConstants;
 import edu.greenblitz.pegasus.commands.intake.ExtendAndCollect;
 import edu.greenblitz.pegasus.commands.intake.RetractAndStop;
-import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
-import edu.greenblitz.pegasus.commands.shifter.ToPower;
-import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
-import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Intake;
 import edu.greenblitz.pegasus.subsystems.Shooter;
-import org.greenblitz.motion.pid.PIDObject;
 
 public class OI {
 	private static OI instance;
@@ -25,7 +19,7 @@ public class OI {
 	private SmartJoystick mainJoystick;
 	private SmartJoystick secondJoystick;
 
-	private final boolean DEBUG = true;
+	private final boolean DEBUG = false;
 	private static boolean isHandled = true;
 
 	private OI() {
@@ -39,12 +33,9 @@ public class OI {
 		}
 	}
 
-
-
 	private void initRealButtons() {
-
 		Intake.getInstance().initDefaultCommand(secondJoystick);
-		Shooter.getInstance().initDefaultCommand(secondJoystick);
+		Shooter.getInstance().initDefaultCommand(secondJoystick); //change in the future
 
 		secondJoystick.X.whenPressed(new ToggleRoller());
 		secondJoystick.POV_LEFT.whenPressed(new InitManualOverride());
@@ -63,7 +54,6 @@ public class OI {
 		mainJoystick.Y.whenPressed(new RetractAndStop());
 		mainJoystick.B.whileHeld(new InsertByConstants(0.6));
 		mainJoystick.R1.whenPressed(new ToggleRoller());
-
 	}
 
 	private class InitManualOverride extends GBCommand {
