@@ -54,6 +54,8 @@ public class Shooter extends GBSubsystem {
 		return rpmToPowerMap.linearlyInterpolate(rpm)[0];
 	}
 
+	public void setIdleMode(CANSparkMax.IdleMode idleMode){leader.setIdleMode(idleMode);}
+
 	public void setSpeedByPID(double target) {
 		leader.getPIDController().setReference(target, CANSparkMax.ControlType.kVelocity);
 	}

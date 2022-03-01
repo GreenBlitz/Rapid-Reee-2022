@@ -27,7 +27,8 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		mainJoystick.B.whenPressed(new DoubleShoot(1500,1000));
+		mainJoystick.B.whenPressed(new DoubleShoot());
+		mainJoystick.A.whileHeld(new InsertByConstants(Math.PI/10.0));
 	}
 	
 	public static OI getInstance() {

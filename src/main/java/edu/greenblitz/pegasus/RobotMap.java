@@ -21,18 +21,8 @@ public class RobotMap {
 			public static final double WHEEL_DIST = 0.0; //very accurate right now
 
 			public static class Motors {
-				public static final int RIGHT_LEADER = 1,
-						RIGHT_FOLLOWER_1 = 2,
-						RIGHT_FOLLOWER_2 = 3,
-						LEFT_LEADER = 4,
-						LEFT_FOLLOWER_1 = 5,
-						LEFT_FOLLOWER_2 = 6;
-				public static final boolean RIGHT_LEADER_REVERSED = true,
-						RIGHT_FOLLOWER_1_REVERSED = true,
-						RIGHT_FOLLOWER_2_REVERSED = true,
-						LEFT_LEADER_REVERSED = false,
-						LEFT_FOLLOWER_1_REVERSED = false,
-						LEFT_FOLLOWER_2_REVERSED = false;
+				public static final int RIGHT_LEADER = 1, RIGHT_FOLLOWER_1 = 2, RIGHT_FOLLOWER_2 = 3, LEFT_LEADER = 4, LEFT_FOLLOWER_1 = 5, LEFT_FOLLOWER_2 = 6;
+				public static final boolean RIGHT_LEADER_REVERSED = true, RIGHT_FOLLOWER_1_REVERSED = true, RIGHT_FOLLOWER_2_REVERSED = true, LEFT_LEADER_REVERSED = false, LEFT_FOLLOWER_1_REVERSED = false, LEFT_FOLLOWER_2_REVERSED = false;
 			}
 
 			public static class Encoders {
@@ -52,10 +42,7 @@ public class RobotMap {
 
 			public static class MotionData { // TODO: calibrate this
 
-				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(
-						0.85, 1.0, .0005,
-						0.8, 0.0, 2.0, .01,
-						0.5 * 0, 0, 0, .01, 500);
+				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(0.85, 1.0, .0005, 0.8, 0.0, 2.0, .01, 0.5 * 0, 0, 0, .01, 500);
 				public static HashMap<String, ProfilingData> POWER;
 				public static HashMap<String, ProfilingData> SPEED;
 				public static GearDependentValue<HashMap<String, ProfilingData>> PROF;
@@ -66,8 +53,7 @@ public class RobotMap {
 					SPEED = new HashMap<>();
 					PROF = new GearDependentValue<>(null, null);
 
-					POWER.put("0.5",
-							new ProfilingData(1.4, 8.4, 4, 10));
+					POWER.put("0.5", new ProfilingData(1.4, 8.4, 4, 10));
 
 					PROF.setValue(Gear.POWER, POWER);
 					PROF.setValue(Gear.SPEED, SPEED);
@@ -81,12 +67,12 @@ public class RobotMap {
 		public static class Intake {
 			public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
 			public static final int module = 21;
-			
+
 
 			public static class Motors {
 				public static final int ROLLER_PORT = 6;
 				public static final boolean IS_REVERSED = false;
-				public static final double DEFAULT_POWER= 0.8;
+				public static final double DEFAULT_POWER = 0.8;
 			}
 
 			public static class Solenoid {
@@ -126,11 +112,11 @@ public class RobotMap {
 					RPM_TO_POWER.addDatapoint(4140.91421875, new double[]{0.8});
 					RPM_TO_POWER.addDatapoint(4664.115322265625, new double[]{0.9});
 					RPM_TO_POWER.addDatapoint(5209.37181640625, new double[]{1.0});
-					
 				}
-				public static final PIDObject pid = new PIDObject(0,0.0000004,0);
-				
-}
+				public static final PIDObject pid1 = new PIDObject(0.00003, 0.0000007, 0);
+				public static final PIDObject pid2 = new PIDObject(0.00003, 0.0000001, 0);
+
+			}
 		}
 
 
@@ -139,8 +125,9 @@ public class RobotMap {
 				public static final int MOTOR_PORT = 5;
 				public static final boolean IS_REVERSED = true;
 			}
+
 			public static final int MACRO_SWITCH_PORT = 0;
-			public static final double DEFAULT_POWER= 0.8;
+			public static final double DEFAULT_POWER = 0.8;
 		}
 
 		public static class ComplexClimb {

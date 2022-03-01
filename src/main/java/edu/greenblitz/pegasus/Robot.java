@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.chassis.LineAuto;
+import edu.greenblitz.pegasus.commands.compressor.CompressorOff;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.greenblitz.pegasus.utils.VisionMaster;
@@ -25,7 +26,7 @@ public class Robot extends TimedRobot {
 
 		OI.getInstance();
 		Pneumatics.init();
-
+		Pneumatics.getInstance().setDefaultCommand(new CompressorOff()); // todo temp
 //        VisionMaster.getInstance().register();
 		Chassis.getInstance();
 		// Must be last!

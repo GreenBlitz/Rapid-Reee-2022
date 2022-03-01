@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj2.command.*;
 
 public class InsertIntoShooter extends SequentialCommandGroup {
 
+	private double startTime;
+
 	public InsertIntoShooter(double pushConst, double rollConst) {
-// todo: make Shooter.isPreparedToShoot work.
 		addCommands(
 				new ParallelDeadlineGroup(//activates both roller and funnel until the ball is at macro switch
 						new WaitUntilCommand(() -> DigitalInputMap.getInstance().getValue(RobotMap.Pegasus.Funnel.MACRO_SWITCH_PORT)),
@@ -31,4 +32,16 @@ public class InsertIntoShooter extends SequentialCommandGroup {
 
 	}
 
+	@Override
+	public void initialize() {
+		super.initialize();
+		startTime = System.currentTimeMillis()/1000.0;
+	}
+
+
+	@Override
+	public void end(boolean interrupted) {
+		super.end(interrupted);
+		System.out.println(System.currentTimeMillis()/1000.0 - startTime);
+	}
 }
