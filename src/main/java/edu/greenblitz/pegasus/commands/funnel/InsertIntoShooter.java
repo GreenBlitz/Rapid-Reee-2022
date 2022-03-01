@@ -7,9 +7,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 public class InsertIntoShooter extends SequentialCommandGroup {
-
+// AKA InsertoShooter @tal935
 	public InsertIntoShooter(double pushConst, double rollConst) {
-
 		addCommands(
 
 				new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),

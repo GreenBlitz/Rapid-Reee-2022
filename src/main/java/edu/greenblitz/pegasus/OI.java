@@ -10,7 +10,6 @@ import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.subsystems.Chassis;
-import edu.greenblitz.pegasus.subsystems.Intake;
 import edu.greenblitz.pegasus.subsystems.Shooter;
 
 public class OI {
@@ -19,22 +18,32 @@ public class OI {
 	private SmartJoystick mainJoystick;
 	private SmartJoystick secondJoystick;
 
-	private final boolean DEBUG = false;
+	private enum IOModes {
+		DEBUG, REAL, NO_AUTO
+	}
+	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
 	private static boolean isHandled = true;
 
 	private OI() {
 		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.2);
 		secondJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.SECOND, 0.2);
 		System.out.println("In OI");
-		if(DEBUG) {
-			initDebugButtons();
-		}else{
-			initRealButtons();
+		switch (IOMode){
+			case DEBUG:
+				initDebugButtons();
+				break;
+			case REAL:
+				initRealButtons();
+				break;
+			case NO_AUTO:
+				initNoAutoButtons();
+				break;
+
 		}
 	}
 
 	private void initRealButtons() {
-		Intake.getInstance().initDefaultCommand(secondJoystick);
+		//Intake.getInstance().initDefaultCommand(secondJoystick);
 		Shooter.getInstance().initDefaultCommand(secondJoystick); //change in the future
 
 		secondJoystick.X.whenPressed(new ToggleRoller());
@@ -54,6 +63,10 @@ public class OI {
 		mainJoystick.Y.whenPressed(new RetractAndStop());
 		mainJoystick.B.whileHeld(new InsertByConstants(0.6));
 		mainJoystick.R1.whenPressed(new ToggleRoller());
+	}
+
+	private void initNoAutoButtons(){
+		Chassis.getInstance().initDefaultCommand(mainJoystick);
 	}
 
 	private class InitManualOverride extends GBCommand {
