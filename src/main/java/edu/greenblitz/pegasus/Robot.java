@@ -1,12 +1,10 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.chassis.LineAuto;
+import edu.greenblitz.pegasus.commands.colorSensor.PrintColor;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
-import edu.greenblitz.pegasus.utils.VisionMaster;
-import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -17,18 +15,23 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().enable();
 
 		DigitalInputMap.getInstance();
-		Intake.getInstance();
-		//Shifter.getInstance();
-		//Funnel.getInstance();
-		//Shooter.getInstance();
-		//ComplexClimb.getInstance();
 
+
+		Pneumatics.init();
+		Intake.getInstance();
+		//Shifter.init();
+		Funnel.getInstance();
+		Shooter.init();
+		//ComplexClimb.getInstance();
 		OI.getInstance();
 		Pneumatics.init();
 
 //        VisionMaster.getInstance().register();
+
+		Indexing.getInstance();
 		Chassis.getInstance();
 		// Must be last!
+
 
 	}
 
@@ -39,19 +42,16 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
-		//VisionMaster.GameState.DISABLED.setAsCurrent();
 		CommandScheduler.getInstance().cancelAll();
 	}
 
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
-		Chassis.getInstance().toCoast();
+		Chassis.getInstance().initDefaultCommand(OI.getInstance().getMainJoystick());
 	}
-
 	@Override
 	public void teleopPeriodic() {
-	
 	}
 
 
@@ -64,7 +64,6 @@ public class Robot extends TimedRobot {
 		).schedule();
 	}
 
-
 	@Override
 	public void testInit() {
 		CommandScheduler.getInstance().cancelAll();
@@ -72,6 +71,5 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
-		SmartDashboard.putNumber("RIGHT STICK X", OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.RIGHT_X));
 	}
 }

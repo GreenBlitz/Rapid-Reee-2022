@@ -1,21 +1,16 @@
 package edu.greenblitz.pegasus.commands.funnel;
 
-public class InsertByConstants extends FunnelCommand {
-	private double power;
+import edu.greenblitz.pegasus.RobotMap;
 
-	public InsertByConstants(double power) {
-		super();
-		this.power = power;
-	}
-
+public class ReverseRunFunnel extends FunnelCommand {
 	@Override
 	public void execute() {
-		funnel.moveMotor(power);
+		funnel.moveMotor(RobotMap.Pegasus.Funnel.REVERSE_POWER);
 	}
 
 	@Override
 	public void end(boolean interrupted) {
-		funnel.moveMotor(0);
+		funnel.stop();
 	}
 
 	@Override
