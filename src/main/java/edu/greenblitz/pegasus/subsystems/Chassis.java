@@ -1,15 +1,10 @@
 package edu.greenblitz.pegasus.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.greenblitz.gblib.encoder.IEncoder;
 import edu.greenblitz.gblib.encoder.SparkEncoder;
-import edu.greenblitz.gblib.gyroscope.IGyroscope;
-import edu.greenblitz.gblib.gyroscope.PigeonGyro;
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.pegasus.OI;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import org.greenblitz.motion.Localizer;
@@ -20,7 +15,7 @@ public class Chassis extends GBSubsystem {
 
 	private final CANSparkMax rightLeader, rightFollower1, rightFollower2, leftLeader, leftFollower1, leftFollower2;
 	private final IEncoder leftEncoder, rightEncoder;
-	private final IGyroscope gyroscope;
+//	private final IGyroscope gyroscope;
 	private final CANSparkMax[] allMotors;
 
 	private Chassis() {
@@ -52,9 +47,9 @@ public class Chassis extends GBSubsystem {
 		leftEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.LEFT_ENCODER_REVERSED);
 		rightEncoder = new SparkEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, rightLeader);
 		rightEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.RIGHT_ENCODER_REVERSED);
-		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
-		gyroscope.reset();
-		gyroscope.inverse();
+//		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
+//		gyroscope.reset();
+//		gyroscope.inverse();
 	}
 
 	public static Chassis getInstance() {
@@ -124,19 +119,22 @@ public class Chassis extends GBSubsystem {
 	}
 
 	public double getAngle() {
-		return gyroscope.getNormalizedYaw();
+//		return gyroscope.getNormalizedYaw();
+	return 0;
 	}
 
 	public double getRawAngle() {
-		return gyroscope.getRawYaw();
+//		return gyroscope.getRawYaw();
+	return 0;
 	}
 
 	public double getAngularVelocityByGyro() {
-		return gyroscope.getYawRate();
+//		return gyroscope.getYawRate();
+	return 0;
 	}
 
 	public void resetGyro() {
-		gyroscope.reset();
+//		gyroscope.reset();
 	}
 
 	public double getWheelDistance() {

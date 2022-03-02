@@ -1,22 +1,29 @@
 package edu.greenblitz.pegasus.commands.indexing;
 
-import edu.greenblitz.gblib.command.GBCommand;
-import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.wpi.first.wpilibj.util.Color;
 
 public class PrintColor extends IndexingCommand {
+	private static double COLOR_THRESHOLD = 0.3;
+
 	@Override
 	public void execute() {
 		Color color = indexing.getColor();
 
-		System.out.println("Red: " + color.red);
-		System.out.println("Green: " + color.green);
-		System.out.println("Blue: " + color.blue);
-		System.out.println("------------------------------------");
+		double red = color.red;
+		double green = color.green;
+		double blue = color.blue;
+
+		if (red > blue && red > COLOR_THRESHOLD) {
+			System.out.println("Red");
+		} else if (blue > red && blue > COLOR_THRESHOLD) {
+			System.out.println("Blue");
+		} else {
+			System.out.println("Well else");
+		}
 	}
 
 	@Override
 	public boolean isFinished() {
-		return false;
+		return true;
 	}
 }

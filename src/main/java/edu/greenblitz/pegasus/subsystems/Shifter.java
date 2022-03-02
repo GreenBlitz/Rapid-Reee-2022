@@ -5,7 +5,6 @@ import edu.greenblitz.gblib.gears.GearDependentValue;
 import edu.greenblitz.gblib.gears.GlobalGearContainer;
 import edu.greenblitz.gblib.sendables.GBDoubleSolenoid;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.utils.VisionMaster;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /**

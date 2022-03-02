@@ -6,6 +6,6 @@ import edu.greenblitz.pegasus.subsystems.Intake;
 public class DisableRoller extends RollerCommand{
 	@Override
 	public void execute() {
-		Intake.getInstance().stop();
+		Intake.getInstance().stopRoller();
 	}
 }
