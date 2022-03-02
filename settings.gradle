@@ -4,7 +4,7 @@ pluginManagement {
     repositories {
         mavenLocal()
         gradlePluginPortal()
-        String frcYear = '2021' // set this as the current year
+        String frcYear = '2022' // set this as the current year
         File frcHome
         if (OperatingSystem.current().isWindows()) {
             String publicFolder = System.getenv('PUBLIC')
