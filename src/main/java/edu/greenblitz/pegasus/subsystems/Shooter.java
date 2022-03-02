@@ -2,7 +2,8 @@ package edu.greenblitz.pegasus.subsystems;
 
 import com.revrobotics.*;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
+import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import org.greenblitz.motion.interpolation.Dataset;
 import org.greenblitz.motion.pid.PIDObject;
 
@@ -14,6 +15,8 @@ public class Shooter extends GBSubsystem {
 	private CANSparkMax leader; //, follower;
 	private Dataset rpmToPowerMap;
 	private boolean preparedToShoot;
+	private boolean isShooter;
+	private static final double RPM = 2750;
 
 	private Shooter() {
 		leader = new CANSparkMax(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -88,7 +91,19 @@ public class Shooter extends GBSubsystem {
 	public void setPreparedToShoot(boolean preparedToShoot) {
 		this.preparedToShoot = preparedToShoot;
 	}
+	
 
+	public boolean toggleShooter() {
+		System.out.println(isShooter);
+		isShooter = !isShooter;
+		if (isShooter) {
+			(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid1,RPM)).schedule();
+		} else {
+			(new ShootByConstant(0)).schedule();
+		}
+		return isShooter;
+	}
+	
 	@Override
 	public void periodic() {
 
