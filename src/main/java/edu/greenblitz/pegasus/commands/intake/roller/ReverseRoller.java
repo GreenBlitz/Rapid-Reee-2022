@@ -15,6 +15,6 @@ public class ReverseRoller extends RollerCommand{
 
 	@Override
 	public void end(boolean interrupted) {
-		intake.stop();
+		intake.stopRoller();
 	}
 }
