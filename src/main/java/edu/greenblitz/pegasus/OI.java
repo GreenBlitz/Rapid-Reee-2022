@@ -2,6 +2,8 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.funnel.InsertByConstants;
+import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
+import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 
 public class OI {
@@ -27,8 +29,8 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		mainJoystick.B.whenPressed(new DoubleShoot());
-		mainJoystick.A.whileHeld(new InsertByConstants(Math.PI/10.0));
+		mainJoystick.A.whileHeld(new RollByConstant(Math.PI/10.0));
+		mainJoystick.B.whenPressed(new ToggleRoller());
 	}
 	
 	public static OI getInstance() {

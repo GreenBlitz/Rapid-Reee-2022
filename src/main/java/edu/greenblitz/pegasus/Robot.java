@@ -26,7 +26,6 @@ public class Robot extends TimedRobot {
 
 		OI.getInstance();
 		Pneumatics.init();
-		Pneumatics.getInstance().setDefaultCommand(new CompressorOff()); // todo temp
 //        VisionMaster.getInstance().register();
 		Chassis.getInstance();
 		// Must be last!
