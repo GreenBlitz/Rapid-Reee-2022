@@ -4,6 +4,7 @@ import com.revrobotics.*;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import org.greenblitz.motion.interpolation.Dataset;
 import org.greenblitz.motion.pid.PIDObject;
 
@@ -63,14 +64,18 @@ public class Shooter extends GBSubsystem {
 		leader.getPIDController().setReference(target, CANSparkMax.ControlType.kVelocity);
 	}
 
-	public void setPIDConsts(PIDObject obj) {
+	public void setPIDConsts(PIDObject obj, double iZone) {
 		SparkMaxPIDController controller = leader.getPIDController();
 		controller.setP(obj.getKp());
 		controller.setI(obj.getKi());
 		controller.setD(obj.getKd());
 		controller.setFF(obj.getKf());
+		controller.setIZone(iZone);
 	}
 
+	public void setPIDConsts(PIDObject obj) {
+		setPIDConsts(obj, 0);
+	}
 
 	public double getShooterSpeed() {
 		return leader.getEncoder().getVelocity();
@@ -97,9 +102,9 @@ public class Shooter extends GBSubsystem {
 		System.out.println(isShooter);
 		isShooter = !isShooter;
 		if (isShooter) {
-			(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid1,RPM)).schedule();
+			(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM)).schedule();
 		} else {
-			(new ShootByConstant(0)).schedule();
+			(new StopShooter()).schedule();
 		}
 		return isShooter;
 	}

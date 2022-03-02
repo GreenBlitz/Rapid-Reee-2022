@@ -5,6 +5,13 @@ import edu.greenblitz.pegasus.commands.funnel.InsertByConstants;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
+import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
+import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.commands.shooter.StopShooter;
+import edu.greenblitz.pegasus.subsystems.Shooter;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 public class OI {
 	private static OI instance;
@@ -29,8 +36,14 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		mainJoystick.A.whileHeld(new RollByConstant(Math.PI/10.0));
-		mainJoystick.B.whenPressed(new ToggleRoller());
+		mainJoystick.B.whenPressed(new ParallelRaceGroup(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2750), new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot())){
+			@Override
+			public void end(boolean interrupted) {
+				super.end(interrupted);
+				Shooter.getInstance().setSpeedByPID(0);
+			}
+		});
+		mainJoystick.A.whileHeld(new ShootByConstant(0.5));
 	}
 	
 	public static OI getInstance() {
