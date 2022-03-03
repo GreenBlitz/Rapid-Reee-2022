@@ -2,7 +2,6 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.pegasus.commands.funnel.InsertByConstants;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
