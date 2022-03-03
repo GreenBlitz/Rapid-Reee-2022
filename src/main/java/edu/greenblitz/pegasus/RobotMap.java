@@ -129,7 +129,8 @@ public class RobotMap {
 			}
 
 			public static final int MACRO_SWITCH_PORT = 0;
-			public static final double DEFAULT_POWER = 0.8;
+			public static final double POWER = 0.8;
+			public static final double REVERSE_POWER = 0.8;
 		}
 
 		public static class ComplexClimb {

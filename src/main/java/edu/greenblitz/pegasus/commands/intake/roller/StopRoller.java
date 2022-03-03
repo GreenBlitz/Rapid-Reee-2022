@@ -3,7 +3,7 @@ package edu.greenblitz.pegasus.commands.intake.roller;
 public class StopRoller extends RollerCommand{
     @Override
     public void initialize() {
-        intake.moveRoller(0);
+        intake.stopMotor();
     }
 
     @Override

@@ -40,15 +40,19 @@ public class Intake {
 	public void moveRoller(double power) {
 		roller.rollerMotor.set(power);
 	}
-
-	public void moveRoller() {
-		roller.rollerMotor.set(RobotMap.Pegasus.Intake.POWER);
-	}
-
+	
 	public void stopRoller() {
 		moveRoller(0.0);
 	}
 
+	public void moveRoller(boolean reversed){
+		moveRoller(reversed ? RobotMap.Pegasus.Intake.REVERSE_POWER : RobotMap.Pegasus.Intake.POWER);
+	}
+	
+	public void moveRoller(){
+		moveRoller(false);
+	}
+	
 	public void extend() {
 		extender.extender.set(DoubleSolenoid.Value.kForward);
 	}

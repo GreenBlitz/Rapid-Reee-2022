@@ -2,7 +2,6 @@ package edu.greenblitz.pegasus.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Funnel extends GBSubsystem{
 	private static Funnel instance;
@@ -29,11 +28,14 @@ public class Funnel extends GBSubsystem{
 		motor.set(power);
 	}
 
-	public void move(){
-		motor.set(RobotMap.Pegasus.Funnel.POWER);
+	public void moveMotor(boolean reversed){
+		moveMotor(reversed ? RobotMap.Pegasus.Funnel.REVERSE_POWER : RobotMap.Pegasus.Funnel.POWER);
+	}
+	public void moveMotor(){
+		moveMotor(false);
 	}
 
-	public void stop(){
+	public void stopMotor(){
 		motor.set(0);
 	}
 }

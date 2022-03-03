@@ -3,12 +3,12 @@ package edu.greenblitz.pegasus.commands.funnel;
 public class RunFunnel extends FunnelCommand {
 	@Override
 	public void execute() {
-		funnel.move();
+		funnel.moveMotor();
 	}
 
 	@Override
 	public void end(boolean interrupted) {
-		funnel.stop();
+		funnel.stopMotor();
 	}
 
 	@Override
