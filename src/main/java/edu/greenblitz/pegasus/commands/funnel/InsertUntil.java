@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public class InsertUntil extends SequentialCommandGroup {
 
-	public InsertUntil(@NotNull ShootingMethod insertionMethod, @NotNull Supplier<Boolean> endCondition) {
+	public InsertUntil(@NotNull FunnelCommand insertionMethod, @NotNull Supplier<Boolean> endCondition) {
 
 		if (insertionMethod.isFinished()) {
 			throw new RuntimeException("Insertion method must never finish");
@@ -22,7 +22,7 @@ public class InsertUntil extends SequentialCommandGroup {
 			}
 		};
 
-		addCommands(new ParallelRaceGroup(insertionMethod, endConditionCommand), new StopInserter());
+		addCommands(new ParallelRaceGroup(insertionMethod, endConditionCommand), new InsertByConstants(0));
 	}
 
 }

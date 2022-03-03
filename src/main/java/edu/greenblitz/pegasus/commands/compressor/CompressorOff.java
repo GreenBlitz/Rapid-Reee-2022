@@ -9,7 +9,7 @@ public class CompressorOff extends CompressorCommand {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
 }

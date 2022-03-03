@@ -2,6 +2,17 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.commands.funnel.InsertByConstants;
+import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
+import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
+import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
+import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
+import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.commands.shooter.StopShooter;
+import edu.greenblitz.pegasus.subsystems.Shooter;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
@@ -49,7 +60,7 @@ public class OI {
 	private void initNoAutoButtons() {
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
 	}
-
+	
 	private void initDebugButtons() {
 	}
 
@@ -99,7 +110,7 @@ public class OI {
 
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
 	}
-
+	
 	public static OI getInstance() {
 		if (instance == null) {
 			instance = new OI();

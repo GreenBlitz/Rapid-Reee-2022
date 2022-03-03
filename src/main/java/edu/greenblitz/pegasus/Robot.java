@@ -1,5 +1,7 @@
 package edu.greenblitz.pegasus;
 
+import edu.greenblitz.pegasus.commands.chassis.LineAuto;
+import edu.greenblitz.pegasus.commands.compressor.CompressorOff;
 import edu.greenblitz.pegasus.commands.chassis.auto.ShootAndGo;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
