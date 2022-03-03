@@ -72,6 +72,7 @@ public class RobotMap {
 			public static class Motors {
 				public static final int ROLLER_PORT = 6;
 				public static final boolean IS_REVERSED = true;
+
 			}
 
 			public static class Solenoid {
