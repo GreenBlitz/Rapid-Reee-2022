@@ -47,16 +47,17 @@ public class Climb extends GBSubsystem {
 	}
 
 	
-	private static final double safety = 0.05;
+	private static final double safety = 0.1;
+	private static final double absoluteSafety = 0.005;
 	public void safeMoveRailMotor(double power) {
 		double delta = getRailMotorTicks() / RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER;
 		double loc = delta + RobotMap.Pegasus.Climb.ClimbMotors.START_LOCATION;
-		System.out.println(loc);
+		double len = RobotMap.Pegasus.Climb.ClimbMotors.RAIL_LENGTH;
 		if (loc < safety && power < 0){
-			moveRailMotor(0);
+			moveRailMotor((loc - absoluteSafety)/safety*power);
 		}
-		else if(loc + safety > RobotMap.Pegasus.Climb.ClimbMotors.RAIL_LENGTH && power > 0){
-			moveRailMotor(0);
+		else if(loc + safety > len && power > 0){
+			moveRailMotor((len - loc - absoluteSafety)/safety*power);
 		}
 		else{
 			moveRailMotor(power);
