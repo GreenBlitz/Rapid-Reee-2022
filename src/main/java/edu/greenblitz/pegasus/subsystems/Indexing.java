@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import java.util.Queue;
 
 public class Indexing extends GBSubsystem {
-	public Queue<BallColor> ballQueue; // only works if roll by ball queue is only roller command scheduled
 	private final I2C.Port i2cPort = I2C.Port.kOnboard;
 	private final ColorSensorV3 colorSensor;
 	private final DigitalInput macroSwitch;
@@ -21,8 +20,8 @@ public class Indexing extends GBSubsystem {
 
 	private static Indexing instance;
 
-	private static final double MARGIN_OF_ERROR = 0.2;
-	private static final double THRESHOLD = 0.2;
+	private static final double MARGIN_OF_ERROR = 0.1;
+	private static final double THRESHOLD = 0.3;
 
 	public enum BallColor {RED, BLUE, OTHER}
 

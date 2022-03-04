@@ -8,5 +8,6 @@ abstract public class IndexingCommand extends GBCommand {
 
 	public IndexingCommand() {
 		indexing = Indexing.getInstance();
+		require(indexing);
 	}
 }

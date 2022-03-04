@@ -1,11 +1,13 @@
 package edu.greenblitz.pegasus.commands.indexing;
 
-import edu.greenblitz.pegasus.commands.intake.roller.DisableRoller;
+import edu.greenblitz.pegasus.commands.funnel.StopFunnel;
+import edu.greenblitz.pegasus.commands.intake.roller.StopRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class HandleBalls extends IndexingCommand{
 	private Command lastCommand;
@@ -24,7 +26,7 @@ public class HandleBalls extends IndexingCommand{
 			System.out.println("Action needed");
 			if (indexing.getBallCount() >= 2){
 				System.out.println("Disabling Robot");
-				lastCommand = new DisableRoller();
+				lastCommand = new StopRoller();
 				lastCommand.schedule();
 				return;
 			}
@@ -55,5 +57,11 @@ public class HandleBalls extends IndexingCommand{
 	@Override
 	public boolean isFinished() {
 		return false;
+	}
+	
+	@Override
+	public void end(boolean interrupted) {
+		super.end(interrupted);
+		CommandScheduler.getInstance().schedule(new StopRoller(), new StopFunnel());
 	}
 }

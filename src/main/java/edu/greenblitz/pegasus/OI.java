@@ -2,28 +2,26 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
+import edu.greenblitz.pegasus.commands.indexing.IndexingCommand;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
+import edu.greenblitz.pegasus.commands.intake.roller.ReverseRunRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
-import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
+import edu.greenblitz.pegasus.commands.intake.roller.RollIfNotFull;
+import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
-import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
-import edu.greenblitz.pegasus.commands.shooter.StopShooter;
+import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
-import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
-import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
-import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Intake;
-import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+
+import javax.swing.*;
 
 public class OI {
 	private static OI instance;
@@ -61,6 +59,12 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
+		mainJoystick.A.whileHeld(new RollIfNotFull());
+		mainJoystick.B.whileHeld(new ReverseRunRoller());
+		mainJoystick.Y.whileHeld(new ReverseRunFunnel());
+		mainJoystick.X.whenPressed(new ToggleRoller());
+		
+		
 	}
 
 	private void initRealButtons() {

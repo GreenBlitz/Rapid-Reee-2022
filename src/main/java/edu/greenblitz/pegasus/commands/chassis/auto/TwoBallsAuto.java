@@ -1,6 +1,5 @@
 package edu.greenblitz.pegasus.commands.chassis.auto;
 
-import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;

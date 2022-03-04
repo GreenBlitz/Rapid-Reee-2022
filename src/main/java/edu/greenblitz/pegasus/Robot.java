@@ -3,6 +3,7 @@ package edu.greenblitz.pegasus;
 import edu.greenblitz.pegasus.commands.chassis.LineAuto;
 import edu.greenblitz.pegasus.commands.compressor.CompressorOff;
 import edu.greenblitz.pegasus.commands.chassis.auto.ShootAndGo;
+import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -13,14 +14,14 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
 		DigitalInputMap.getInstance();
-		Pneumatics.getInstance();
 		Intake.getInstance();
 		Shifter.getInstance();
 		Funnel.getInstance();
 		Shooter.init();
-		ComplexClimb.getInstance();
+		//ComplexClimb.getInstance();
 		OI.getInstance();
 		Indexing.getInstance();
+		Indexing.getInstance().setDefaultCommand(new HandleBalls());
 //      VisionMaster.getInstance().register();
 //		ColorSensor.getInstance();
 		Chassis.getInstance(); // Must be last!
