@@ -5,11 +5,13 @@ import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.climb.ClimbByJoysticks;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
+import edu.greenblitz.pegasus.commands.intake.ExtendAndCollect;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShootByTrigger;
 import edu.greenblitz.pegasus.subsystems.Chassis;
+import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.greenblitz.pegasus.subsystems.Intake;
 import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.*;
@@ -50,9 +52,28 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
-		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		new ClimbByJoysticks(secondJoystick).schedule();
-}
+//		Chassis.getInstance().initDefaultCommand(mainJoystick);
+		mainJoystick.A.whenPressed(new InstantCommand(){
+			@Override
+			public void initialize() {
+				System.out.println(Climb.getInstance().getRailMotorTicks());
+			}
+		});
+		mainJoystick.B.whenPressed(new InstantCommand(){
+			@Override
+			public void initialize() {
+				Climb.getInstance().resetTurningMotorTicks();
+			}
+		});
+		mainJoystick.A.whenPressed(new InstantCommand(){
+			@Override
+			public void initialize() {
+				Climb.getInstance().resetRailMotorTicks();
+			}
+		});
+		mainJoystick.Y.whileHeld(new ToggleRoller());
+		
+	}
 
 	private void initRealButtons() {
 		Intake.getInstance().initDefaultCommand(secondJoystick);

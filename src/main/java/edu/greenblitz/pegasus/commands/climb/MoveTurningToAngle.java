@@ -4,43 +4,15 @@ import edu.greenblitz.pegasus.RobotMap;
 
 public class MoveTurningToAngle extends ClimbCommand {
 
-	private static final double POWER = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.ROTATION_POWER;
-	private static final double TICKS_GOAL_FORWARD = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.TICKS_GOAL_FORWARD;
-	private static final double TICKS_GOAL_BACKWARD = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.TICKS_GOAL_BACKWARD;
-	private static final double EPSILON = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.EPSILON;
-	private boolean isBackwards;
+	private double rads;
 
-	public MoveTurningToAngle(boolean isBackwards) {
-		this.isBackwards = isBackwards;
+	public MoveTurningToAngle(double rads) {
+		super();
+		this.rads = rads;
 	}
 
 	@Override
-	public void execute() {
-		if (isBackwards) {
-			climb.moveTurningMotor(-POWER);
-		} else {
-			climb.moveTurningMotor(POWER);
-		}
-	}
+	public void initialize() {
 
-	@Override
-	public void end(boolean interrupted) {
-		climb.moveTurningMotor(0);
-	}
-
-	@Override
-	public boolean isFinished() {
-		if (isBackwards) {
-			return (climb.getTurningMotorTicks() - TICKS_GOAL_BACKWARD) < EPSILON;
-		}
-		return (climb.getTurningMotorTicks() - TICKS_GOAL_FORWARD) < EPSILON;
-	}
-
-	public boolean isBackwards() {
-		return isBackwards;
-	}
-
-	public void toggleIsBackwards() {
-		isBackwards = !isBackwards;
 	}
 }

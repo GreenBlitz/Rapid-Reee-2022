@@ -25,6 +25,7 @@ public class Climb extends GBSubsystem {
 		
 		turningMotor = new CANSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
 		turningMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_REVERSED);
+		turningMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 		turningEncoder = new SparkEncoder(new GearDependentValue<>(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN, RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN), turningMotor);
 		turningEncoder.reset();
 	}
@@ -46,30 +47,70 @@ public class Climb extends GBSubsystem {
 		return instance;
 	}
 
-	
-	private static final double safety = 0.1;
-	private static final double absoluteSafety = 0.005;
+public double getLoc(){
+	double delta = getRailMotorTicks() / RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER;
+	double loc = delta + RobotMap.Pegasus.Climb.ClimbMotors.START_LOCATION;
+	loc += (getAng() - RobotMap.Pegasus.Climb.ClimbMotors.START_ANGLE)*0.022;
+	return loc;
+}
+
+public double getAng(){
+		double delta = getTurningMotorTicks() / RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN;
+		double ang = delta + RobotMap.Pegasus.Climb.ClimbMotors.START_ANGLE;
+		return ang;
+	}
+
 	public void safeMoveRailMotor(double power) {
-		double delta = getRailMotorTicks() / RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER;
-		double loc = delta + RobotMap.Pegasus.Climb.ClimbMotors.START_LOCATION;
+		double loc = getLoc();
 		double len = RobotMap.Pegasus.Climb.ClimbMotors.RAIL_LENGTH;
-		if (loc < safety && power < 0){
-			moveRailMotor((loc - absoluteSafety)/safety*power);
+		double safety = RobotMap.Pegasus.Climb.ClimbMotors.RAIL_SAFETY;
+		double absoluteSafety = RobotMap.Pegasus.Climb.ClimbMotors.RAIL_ABSOLUTE_SAFETY;
+		double safetyAngle = RobotMap.Pegasus.Climb.ClimbMotors.SAFETY_ANGLE;
+		double safetyLoc = RobotMap.Pegasus.Climb.ClimbMotors.SAFETY_LOC;
+		if(getLoc() + safety > safetyLoc && getAng() < safetyAngle && power > 0){
+			unsafeMoveRailMotor((safetyLoc - loc - absoluteSafety)/safety*power);
+		}
+		else if (loc < safety && power < 0){
+			unsafeMoveRailMotor((loc - absoluteSafety)/safety*power);
 		}
 		else if(loc + safety > len && power > 0){
-			moveRailMotor((len - loc - absoluteSafety)/safety*power);
+			unsafeMoveRailMotor((len - loc - absoluteSafety)/safety*power);
 		}
 		else{
-			moveRailMotor(power);
+			unsafeMoveRailMotor(power);
 		}
 		
 	}
 	
-	public void moveRailMotor(double power){
+	public void unsafeMoveRailMotor(double power){
 		railMotor.set(power);
 	}
 
-	public void moveTurningMotor(double power) {
+
+
+	public void safeMoveTurningMotor(double power){
+		double ang = getAng();
+		double safety = RobotMap.Pegasus.Climb.ClimbMotors.TURN_SAFETY;
+		double absoluteSafety = RobotMap.Pegasus.Climb.ClimbMotors.TURN_ABSOLUTE_SAFETY;
+		double min = RobotMap.Pegasus.Climb.ClimbMotors.LOWEST_ANGLE;
+		double max = RobotMap.Pegasus.Climb.ClimbMotors.HIGHEST_ANGLE;
+		double safetyAngle = RobotMap.Pegasus.Climb.ClimbMotors.SAFETY_ANGLE;
+		double safetyLoc = RobotMap.Pegasus.Climb.ClimbMotors.SAFETY_LOC;
+		if(getLoc() > safetyLoc && ang - safety < safetyAngle && power < 0){
+			unsafeMoveTurningMotor((ang - absoluteSafety - safetyAngle)/safety*power);
+		}
+		else if (ang - safety < min && power < 0){
+			unsafeMoveTurningMotor((ang - absoluteSafety - min)/safety*power);
+		}
+		else if(ang + safety > max && power > 0){
+			unsafeMoveTurningMotor((max - ang - absoluteSafety)/safety*power);
+		}
+		else{
+			unsafeMoveTurningMotor(power);
+		}
+	}
+
+	public void unsafeMoveTurningMotor(double power) {
 		turningMotor.set(power);
 	}
 
@@ -83,6 +124,10 @@ public class Climb extends GBSubsystem {
 
 	public double getTurningMotorTicks() {
 		return turningEncoder.getRawTicks();
+	}
+
+	public void resetTurningMotorTicks(){
+		turningEncoder.reset();
 	}
 
 	public void setRailPIDValues(PIDObject pid) {

@@ -16,7 +16,9 @@ public class ClimbByJoysticks extends ClimbCommand{
 		climb.safeMoveRailMotor(railMotorPower);
 
 		double turningMotorPower = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_Y);
-		climb.moveTurningMotor(turningMotorPower);
+		climb.safeMoveTurningMotor(turningMotorPower*0.4);
+		System.out.println("ang: " + climb.getAng());
+		System.out.println("loc: " + climb.getLoc());
 	}
 
 	@Override

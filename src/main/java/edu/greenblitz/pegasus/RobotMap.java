@@ -116,18 +116,25 @@ public class RobotMap {
 
 		public static class Climb {
 			public static class ClimbMotors {
-				public static final int NEO_TICKS_PER_REVOLUTION = 42;
 
 				public static final int RAIL_MOTOR_PORT = 9;
 				public static final boolean RAIL_MOTOR_REVERSED = false;
-				public static final double RAIL_MOTOR_TICKS_PER_METER = 51040;
+				public static final double RAIL_MOTOR_TICKS_PER_METER = 14240;
 				public static final double RAIL_LENGTH = 0.88;
-				public static final double START_LOCATION = 0.567;
+				public static final double START_LOCATION = 0.4;
+				public static final double RAIL_SAFETY = 0.07;
+				public static final double RAIL_ABSOLUTE_SAFETY = 0.025;
+				public static final double SAFETY_LOC = 0.6;
 
 				public static final int TURNING_MOTOR_PORT = 6;
 				public static final boolean TURNING_MOTOR_REVERSED = false;
-				public static final double TURNING_MOTOR_REDUCTION_COEFFICIENT = 10; //TODO: change this
-				public static final double TURNING_MOTOR_TICKS_PER_RADIAN = NEO_TICKS_PER_REVOLUTION * TURNING_MOTOR_REDUCTION_COEFFICIENT;
+				public static final double TURNING_MOTOR_TICKS_PER_RADIAN = 2139;
+				public static final double LOWEST_ANGLE = 0.4;
+				public static final double HIGHEST_ANGLE = Math.PI/2-0.2;
+				public static final double START_ANGLE = 0.59;
+				public static final double TURN_SAFETY = 0.05;
+				public static final double TURN_ABSOLUTE_SAFETY = 0.01;
+				public static final double SAFETY_ANGLE = 0.51;
 			}
 
 			public static class ClimbConstants {
