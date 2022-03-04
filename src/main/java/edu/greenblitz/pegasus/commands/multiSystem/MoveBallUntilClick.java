@@ -18,8 +18,10 @@ public class MoveBallUntilClick extends GBCommand {
 
 	@Override
 	public void execute() {
-		funnel.moveMotor();
-		intake.moveRoller();
+		if (!indexing.isBallUp()) {
+			funnel.moveMotor();
+			intake.moveRoller();
+		}
 	}
 
 	@Override

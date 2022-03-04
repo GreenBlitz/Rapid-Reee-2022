@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class HandleBalls extends IndexingCommand{
 	private Command lastCommand;
+	private boolean lastMacroSwitchPos;
 
 	@Override
 	public void initialize() {
@@ -21,7 +22,10 @@ public class HandleBalls extends IndexingCommand{
 	public void execute() {
 		//if(indexing.getAllianceColor() == Indexing.BallColor.RED) System.out.println("Red");
 		//else System.out.println("Blue");
-		System.out.println("------------------");
+		if (lastMacroSwitchPos && !indexing.isBallUp()){
+			indexing.removeBall();
+		}
+		lastMacroSwitchPos = indexing.isBallUp();
 		if(lastCommand == null || lastCommand.isFinished()) { //need to do an action
 			System.out.println("Action needed");
 			if (indexing.getBallCount() >= 2){
@@ -33,13 +37,9 @@ public class HandleBalls extends IndexingCommand{
 			if (indexing.getPerceivedColor() == indexing.getAllianceColor()) { // same color
 				System.out.println("Adding a ball");
 				indexing.addBall();
-				if (!indexing.isBallUp()) { //first ball
-					System.out.println("Moving until click");
-					lastCommand = new MoveBallUntilClick();
-					lastCommand.schedule();
-				}else{
-					//No need for action
-				}
+				lastCommand = new MoveBallUntilClick();
+				lastCommand.schedule();
+				
 			} else if(indexing.getPerceivedColor() != Indexing.BallColor.OTHER){ // other color
 				System.out.println("Trying to eject");
 				if (!indexing.isBallUp()) {
