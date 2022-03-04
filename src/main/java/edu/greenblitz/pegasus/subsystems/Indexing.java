@@ -2,8 +2,6 @@ package edu.greenblitz.pegasus.subsystems;
 
 import com.revrobotics.ColorSensorV3;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.commands.indexing.PrintColor;
-import edu.greenblitz.pegasus.commands.indexing.RejectWrongBalls;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -44,7 +42,6 @@ public class Indexing extends GBSubsystem {
 		if (instance == null) {
 			init();
 		}
-		instance.setDefaultCommand(new PrintColor());
 		return instance;
 	}
 
