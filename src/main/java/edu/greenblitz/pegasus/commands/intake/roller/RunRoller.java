@@ -13,6 +13,6 @@ public class RunRoller extends RollerCommand{
 	
 	@Override
 	public void end(boolean interrupted) {
-		intake.stopMotor();
+		intake.stopRoller();
 	}
 }
