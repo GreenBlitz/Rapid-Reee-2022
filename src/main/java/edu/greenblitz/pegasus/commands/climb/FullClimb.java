@@ -7,12 +7,12 @@ public class FullClimb extends SequentialCommandGroup {
 	public FullClimb(){
 		addCommands(
 				new ParallelCommandGroup(
-						new MoveTurning(false),
-						new MoveRail(false)
+						new MoveTurningToAngle(false),
+						new MoveRailToPosition(false)
 				),
 				new ParallelCommandGroup(
-						new MoveTurning(true),
-						new MoveRail(true)
+						new MoveTurningToAngle(true),
+						new MoveRailToPosition(true)
 				),
 				new BackAndForth(),
 				new BackAndForth()

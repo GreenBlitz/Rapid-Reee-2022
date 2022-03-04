@@ -2,32 +2,29 @@ package edu.greenblitz.pegasus.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.SparkMaxPIDController;
 import edu.greenblitz.gblib.encoder.SparkEncoder;
+import edu.greenblitz.gblib.gears.GearDependentValue;
 import edu.greenblitz.pegasus.RobotMap;
+import org.greenblitz.motion.pid.PIDObject;
 
 public class Climb extends GBSubsystem {
 	private static Climb instance;
 
 	// Rail motor moves the system forward and backward
 	// Turning motor changes the angle of the system itself
-	private CANSparkMax RailMotor, turningMotor;
-	private SparkEncoder RailEncoder, turningEncoder;
+	private CANSparkMax railMotor, turningMotor;
+	private SparkEncoder railEncoder, turningEncoder;
 	private boolean turningMode = false;
 
 	private Climb() {
-<<<<<<< HEAD
-		motor = new CANSparkMax(RobotMap.Pegasus.Climb.Motor.MOTOR_ID, CANSparkMaxLowLevel.MotorType.kBrushless);
-		motor.setInverted(RobotMap.Pegasus.Climb.Motor.MOTOR_REVERSE);
-		encoder = new SparkEncoder(RobotMap.Pegasus.Climb.Motor.MOTOR_TICKS_PER_METER, motor);
-=======
-		RailMotor = new CANSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
-		RailMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_REVERSED);
-		RailEncoder = new SparkEncoder(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER, RailMotor);
+		railMotor = new CANSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
+		railMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_REVERSED);
+		railEncoder = new SparkEncoder(new GearDependentValue<>(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER, RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER), railMotor);
 
 		turningMotor = new CANSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
 		turningMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_REVERSED);
-		turningEncoder = new SparkEncoder(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_METER, turningMotor);
->>>>>>> c55f9c4 (Nitzan & Raz - started reworking climb, added basic functionality)
+		turningEncoder = new SparkEncoder(new GearDependentValue<>(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN, RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN), turningMotor);
 	}
 
 	@Override
@@ -48,7 +45,7 @@ public class Climb extends GBSubsystem {
 	}
 
 	public void moveRailMotor(double power) {
-		RailMotor.set(power);
+		railMotor.set(power);
 	}
 
 	public void moveTurningMotor(double power) {
@@ -56,10 +53,26 @@ public class Climb extends GBSubsystem {
 	}
 
 	public double getRailMotorTicks() {
-		return RailEncoder.getRawTicks();
+		return railEncoder.getRawTicks();
 	}
 
 	public double getTurningMotorTicks() {
 		return turningEncoder.getRawTicks();
+	}
+
+	public void setRailPIDValues(PIDObject pid) {
+		SparkMaxPIDController controller = railMotor.getPIDController();
+		controller.setP(pid.getKp());
+		controller.setI(pid.getKi());
+		controller.setD(pid.getKd());
+		controller.setFF(pid.getKf());
+	}
+
+	public void setTurningPIDValues(PIDObject pid) {
+		SparkMaxPIDController controller = turningMotor.getPIDController();
+		controller.setP(pid.getKp());
+		controller.setI(pid.getKi());
+		controller.setD(pid.getKd());
+		controller.setFF(pid.getKf());
 	}
 }
