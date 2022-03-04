@@ -1,7 +1,5 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.pegasus.commands.chassis.LineAuto;
-import edu.greenblitz.pegasus.commands.compressor.CompressorOff;
 import edu.greenblitz.pegasus.commands.chassis.auto.ShootAndGo;
 import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
 import edu.greenblitz.pegasus.subsystems.*;
@@ -26,29 +24,29 @@ public class Robot extends TimedRobot {
 //		ColorSensor.getInstance();
 		Chassis.getInstance(); // Must be last!
 	}
-
+	
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
 	}
-
+	
 	@Override
 	public void disabledInit() {
 		//VisionMaster.GameState.DISABLED.setAsCurrent();
 		CommandScheduler.getInstance().cancelAll();
 	}
-
+	
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
 		Chassis.getInstance().toCoast();
 	}
-
+	
 	@Override
 	public void teleopPeriodic() {
 	}
-
-
+	
+	
 	@Override
 	public void autonomousInit() {
 
@@ -59,16 +57,16 @@ public class Robot extends TimedRobot {
 				new RobotDotMove(-0.1) //auto line in the back of the robot
 		).schedule();
 		 */
-
+		
 		new ShootAndGo(5).schedule(); //Shoot and go
 //		new FourBallAuto(0.3).schedule(); // 2 ball auto
 	}
-
+	
 	@Override
 	public void testInit() {
 		CommandScheduler.getInstance().cancelAll();
 	}
-
+	
 	@Override
 	public void testPeriodic() {
 	}

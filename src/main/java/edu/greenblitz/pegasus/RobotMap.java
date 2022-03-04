@@ -76,8 +76,8 @@ public class RobotMap {
 			}
 
 			public static class Solenoid {
-				public static final int FORWARD = 2;
-				public static final int REVERSE = 0;
+				public static final int FORWARD_PORT = 2;
+				public static final int REVERSE_PORT = 0;
 			}
 
 			public static final double POWER = 0.7;
@@ -86,7 +86,7 @@ public class RobotMap {
 
 		public static class Climb {
 			public static class Motor {
-				public static final int MOTOR = -1;
+				public static final int MOTOR_ID = -1;
 				public static final boolean MOTOR_REVERSE = false;
 				public static final GearDependentValue<Double> MOTOR_TICKS_PER_METER = null;
 			}
@@ -145,7 +145,7 @@ public class RobotMap {
 		}
 
 		public static class Pneumatics {
-			public static final int PCM = 21;
+			public static final int PCM_ID = 21;
 
 			public static class PressureSensor {
 				public static final int PRESSURE = 3;

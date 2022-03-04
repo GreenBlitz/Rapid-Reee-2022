@@ -108,7 +108,7 @@ public class Intake {
 		private DoubleSolenoid extender;
 
 		private Extender() {
-			extender = new DoubleSolenoid(RobotMap.Pegasus.Intake.module, RobotMap.Pegasus.Intake.PCM, RobotMap.Pegasus.Intake.Solenoid.FORWARD, RobotMap.Pegasus.Intake.Solenoid.REVERSE);
+			extender = new DoubleSolenoid(RobotMap.Pegasus.Intake.module, RobotMap.Pegasus.Intake.PCM, RobotMap.Pegasus.Intake.Solenoid.FORWARD_PORT, RobotMap.Pegasus.Intake.Solenoid.REVERSE_PORT);
 		}
 
 		private void setValue(DoubleSolenoid.Value value) {

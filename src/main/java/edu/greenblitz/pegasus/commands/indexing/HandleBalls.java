@@ -9,6 +9,7 @@ import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+// Would you plz handle ma ballz?? A.T.
 public class HandleBalls extends IndexingCommand{
 	private Command lastCommand;
 	private boolean lastMacroSwitchPos;
@@ -16,6 +17,7 @@ public class HandleBalls extends IndexingCommand{
 	@Override
 	public void initialize() {
 		lastCommand = null;
+		lastMacroSwitchPos = indexing.isBallUp();
 	}
 
 	@Override
@@ -26,26 +28,33 @@ public class HandleBalls extends IndexingCommand{
 			indexing.removeBall();
 		}
 		lastMacroSwitchPos = indexing.isBallUp();
-		if(lastCommand == null || lastCommand.isFinished()) { //need to do an action
+		if(lastCommand == null || lastCommand.isFinished())
+		{ //need to do an action
 			System.out.println("Action needed");
-			if (indexing.getBallCount() >= 2){
+			if (indexing.getBallCount() >= 2)
+			{
 				System.out.println("Disabling Robot");
 				lastCommand = new StopRoller();
 				lastCommand.schedule();
-				return;
 			}
-			if (indexing.getPerceivedColor() == indexing.getAllianceColor()) { // same color
+			else if (indexing.getPerceivedColor() == indexing.getAllianceColor())
+			{ // same color
 				System.out.println("Adding a ball");
 				indexing.addBall();
 				lastCommand = new MoveBallUntilClick();
 				lastCommand.schedule();
-				
-			} else if(indexing.getPerceivedColor() != Indexing.BallColor.OTHER){ // other color
+			}
+			else if(indexing.getPerceivedColor() != Indexing.BallColor.OTHER)
+			{ // other color
 				System.out.println("Trying to eject");
-				if (!indexing.isBallUp()) {
+				if (!indexing.isBallUp())
+				{
 					System.out.println("Shooter");
+					indexing.addBall();
 					lastCommand = new EjectEnemyBallFromShooter();
-				}else{
+				}
+				else
+				{
 					System.out.println("Gripper");
 					lastCommand = new EjectEnemyBallFromGripper();
 				}
