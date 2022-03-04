@@ -20,18 +20,8 @@ public class RobotMap {
 			public static final double WHEEL_DIST = 0.0; //very accurate right now
 
 			public static class Motors {
-				public static final int RIGHT_LEADER = 1,
-										RIGHT_FOLLOWER_1 = 2,
-										RIGHT_FOLLOWER_2 = 3,
-										LEFT_LEADER = 4,
-										LEFT_FOLLOWER_1 = 5,
-										LEFT_FOLLOWER_2 = 6;
-				public static final boolean RIGHT_LEADER_REVERSED = true,
-											RIGHT_FOLLOWER_1_REVERSED = true,
-											RIGHT_FOLLOWER_2_REVERSED = true,
-											LEFT_LEADER_REVERSED = false,
-											LEFT_FOLLOWER_1_REVERSED = false,
-											LEFT_FOLLOWER_2_REVERSED = false;
+				public static final int RIGHT_LEADER = 1, RIGHT_FOLLOWER_1 = 2, RIGHT_FOLLOWER_2 = 3, LEFT_LEADER = 4, LEFT_FOLLOWER_1 = 5, LEFT_FOLLOWER_2 = 6;
+				public static final boolean RIGHT_LEADER_REVERSED = true, RIGHT_FOLLOWER_1_REVERSED = true, RIGHT_FOLLOWER_2_REVERSED = true, LEFT_LEADER_REVERSED = false, LEFT_FOLLOWER_1_REVERSED = false, LEFT_FOLLOWER_2_REVERSED = false;
 			}
 
 			public static class Encoders {
@@ -39,9 +29,10 @@ public class RobotMap {
 				public static final int RIGHT_ENCODER = -1, LEFT_ENCODER = -1;
 				public static final boolean RIGHT_ENCODER_REVERSED = false, LEFT_ENCODER_REVERSED = false;
 			}
-			
-			public static class Shifter{
+
+			public static class Shifter {
 				public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
+
 				public static class Solenoid {
 					public static final int FORWARD = 3;
 					public static final int REVERSE = 1;
@@ -50,10 +41,7 @@ public class RobotMap {
 
 			public static class MotionData { // TODO: calibrate this
 
-				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(
-						0.85, 1.0, .0005,
-						0.8, 0.0, 2.0, .01,
-						0.5 * 0, 0, 0, .01, 500);
+				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(0.85, 1.0, .0005, 0.8, 0.0, 2.0, .01, 0.5 * 0, 0, 0, .01, 500);
 				public static HashMap<String, ProfilingData> POWER;
 				public static HashMap<String, ProfilingData> SPEED;
 				public static GearDependentValue<HashMap<String, ProfilingData>> PROF;
@@ -64,8 +52,7 @@ public class RobotMap {
 					SPEED = new HashMap<>();
 					PROF = new GearDependentValue<>(null, null);
 
-					POWER.put("0.5",
-							new ProfilingData(1.4, 8.4, 4, 10));
+					POWER.put("0.5", new ProfilingData(1.4, 8.4, 4, 10));
 
 					PROF.setValue(Gear.POWER, POWER);
 					PROF.setValue(Gear.SPEED, SPEED);
@@ -76,7 +63,7 @@ public class RobotMap {
 
 		}
 
-		public static class Intake{
+		public static class Intake {
 			public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
 			public static final int module = 21;
 
@@ -103,6 +90,7 @@ public class RobotMap {
 
 
 				public static final Dataset RPM_TO_POWER = new Dataset(2);
+
 				static {
 					RPM_TO_POWER.addDatapoint(0, new double[]{0});
 					RPM_TO_POWER.addDatapoint(975, new double[]{0.2});
@@ -128,9 +116,13 @@ public class RobotMap {
 
 		public static class Climb {
 			public static class ClimbMotors {
-				public static final int RAIL_MOTOR_PORT = 8;
+				public static final int NEO_TICKS_PER_REVOLUTION = 42;
+
+				public static final int RAIL_MOTOR_PORT = 9;
 				public static final boolean RAIL_MOTOR_REVERSED = false;
-				public static final GearDependentValue<Double> RAIL_MOTOR_TICKS_PER_METER = new GearDependentValue<>(0.1,0.1);
+				public static final double RAIL_MOTOR_TICKS_PER_METER = 51040;
+				public static final double RAIL_LENGTH = 0.88;
+				public static final double START_LOCATION = 0.567;
 
 				public static final int TURNING_MOTOR_PORT = 6;
 				public static final boolean TURNING_MOTOR_REVERSED = false;
@@ -139,7 +131,18 @@ public class RobotMap {
 			}
 
 			public static class ClimbConstants {
-				public static class Hook {
+				public static class Rotation {
+					public static final double kp1 = 0.0;
+					public static final double kp2 = 0.0;
+
+					public static final double ki1 = 0.0;
+					public static final double ki2 = 0.0;
+
+					public static final double ff1 = 0.0;
+					public static final double ff2 = 0.0;
+
+					public static final double INITIAL_ANGLE = 0.0;
+
 					public static final double ROTATION_POWER = 0.3;
 					public static final double TICKS_GOAL_FORWARD = 0.0;
 					public static final double TICKS_GOAL_BACKWARD = 0.0;
@@ -147,7 +150,18 @@ public class RobotMap {
 				}
 
 				public static class Rail {
-					public static final double ROTATION_POWER = 0.3;
+					public static final double kp1 = 0.0;
+					public static final double kp2 = 0.0;
+
+					public static final double ki1 = 0.0;
+					public static final double ki2 = 0.0;
+
+					public static final double ff1 = 0.0;
+					public static final double ff2 = 0.0;
+
+					public static final double INITIAL_POSITION = 0.0;
+
+					public static final double RAIL_POWER = 0.3;
 					public static final double TICKS_GOAL_FORWARD = 0.0;
 					public static final double TICKS_GOAL_BACKWARD = 0.0;
 					public static final double EPSILON = 0.01;
@@ -163,7 +177,7 @@ public class RobotMap {
 			}
 		}
 
-		public static class DigitalInputMap{
+		public static class DigitalInputMap {
 			public static final int MACRO_SWITCH = 0;
 		}
 

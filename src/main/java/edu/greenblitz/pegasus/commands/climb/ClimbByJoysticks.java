@@ -1,9 +1,6 @@
 package edu.greenblitz.pegasus.commands.climb;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.subsystems.Climb;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ClimbByJoysticks extends ClimbCommand{
 
@@ -16,7 +13,7 @@ public class ClimbByJoysticks extends ClimbCommand{
 	@Override
 	public void execute() {
 		double railMotorPower = joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y);
-		climb.moveRailMotor(railMotorPower);
+		climb.safeMoveRailMotor(railMotorPower);
 
 		double turningMotorPower = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_Y);
 		climb.moveTurningMotor(turningMotorPower);

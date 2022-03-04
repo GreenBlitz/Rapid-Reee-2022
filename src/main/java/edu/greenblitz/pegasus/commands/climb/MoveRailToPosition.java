@@ -43,7 +43,7 @@ public class MoveRailToPosition extends ClimbCommand {
 
 	@Override
 	public void end(boolean interrupted) {
-		climb.moveRailMotor(0);
+		climb.safeMoveRailMotor(0);
 	}
 
 	@Override

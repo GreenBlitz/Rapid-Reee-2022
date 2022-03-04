@@ -11,11 +11,11 @@ public class MoveRailSlow extends ClimbCommand{
 
 	@Override
 	public void execute() {
-		climb.moveRailMotor(joystick.getAxisValue(SmartJoystick.Axis.LEFT_X));
+		climb.safeMoveRailMotor(joystick.getAxisValue(SmartJoystick.Axis.LEFT_X));
 	}
 
 	@Override
 	public void end(boolean interrupted) {
-		climb.moveRailMotor(0);
+		climb.safeMoveRailMotor(0);
 	}
 }
