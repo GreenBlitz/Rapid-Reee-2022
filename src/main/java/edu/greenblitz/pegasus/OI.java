@@ -1,8 +1,10 @@
 package edu.greenblitz.pegasus;
 
+import com.revrobotics.CANSparkMax;
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.climb.ClimbByJoysticks;
+import edu.greenblitz.pegasus.commands.climb.WhileHeldCoast;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.ExtendAndCollect;
@@ -53,26 +55,8 @@ public class OI {
 
 	private void initDebugButtons() {
 //		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		mainJoystick.A.whenPressed(new InstantCommand(){
-			@Override
-			public void initialize() {
-				System.out.println(Climb.getInstance().getRailMotorTicks());
-			}
-		});
-		mainJoystick.B.whenPressed(new InstantCommand(){
-			@Override
-			public void initialize() {
-				Climb.getInstance().resetTurningMotorTicks();
-			}
-		});
-		mainJoystick.A.whenPressed(new InstantCommand(){
-			@Override
-			public void initialize() {
-				Climb.getInstance().resetRailMotorTicks();
-			}
-		});
-		mainJoystick.Y.whileHeld(new ToggleRoller());
-		
+		mainJoystick.Y.whileHeld(new WhileHeldCoast());
+
 	}
 
 	private void initRealButtons() {
