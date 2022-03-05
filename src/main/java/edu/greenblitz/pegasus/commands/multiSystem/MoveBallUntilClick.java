@@ -1,33 +1,31 @@
 package edu.greenblitz.pegasus.commands.multiSystem;
 
 import edu.greenblitz.gblib.command.GBCommand;
+import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
+import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.subsystems.Funnel;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.Intake;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
-public class MoveBallUntilClick extends GBCommand {
-	private Funnel funnel;
-	private Intake intake;
+public class MoveBallUntilClick extends ParallelCommandGroup {
 	private Indexing indexing;
 
 	public MoveBallUntilClick(){
-		this.funnel = Funnel.getInstance();
-		this.intake = Intake.getInstance();
+		addCommands(new RunFunnel(), new RunRoller());
 		this.indexing = Indexing.getInstance();
 	}
 
 	@Override
 	public void execute() {
 		if (!indexing.isBallUp()) {
-			funnel.moveMotor();
-			intake.moveRoller();
+			super.execute();
 		}
 	}
 
 	@Override
 	public void end(boolean interrupted) {
-		intake.stopRoller();
-		funnel.stopMotor();
+		super.end(interrupted);
 	}
 
 	@Override
