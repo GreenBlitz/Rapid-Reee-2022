@@ -4,39 +4,29 @@ import com.revrobotics.*;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
-import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
-import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import edu.greenblitz.pegasus.commands.shooter.ShootByTrigger;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import org.greenblitz.motion.interpolation.Dataset;
 import org.greenblitz.motion.pid.PIDObject;
 
 public class Shooter extends GBSubsystem {
 
 	private static Shooter instance;
 
-	// Leader is left, follower is right
-	private CANSparkMax leader; //, follower;
-	private Dataset rpmToPowerMap;
+	private CANSparkMax leader;
 	private boolean preparedToShoot;
 	private boolean isShooter;
 	private static final double RPM = 3000;
 
 	private Shooter() {
 		leader = new CANSparkMax(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
-//		follower = new CANSparkMax(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_FOLLOWER, CANSparkMaxLowLevel.MotorType.kBrushless);
 
 		leader.setInverted(RobotMap.Pegasus.Shooter.ShooterMotor.LEADER_INVERTED);
-//		follower.follow(leader, RobotMap.Pegasus.Shooter.ShooterMotor.FOLLOWER_INVERTED);
 
 		leader.setIdleMode(CANSparkMax.IdleMode.kBrake);
-//		follower.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
 		leader.setSmartCurrentLimit(40);
-//		follower.setSmartCurrentLimit(40);
 
 		preparedToShoot = false;
 	}
@@ -52,18 +42,13 @@ public class Shooter extends GBSubsystem {
 		return instance;
 	}
 
-	public void initDefaultCommand(SmartJoystick joystick){
-		this.setDefaultCommand(
-				new ParallelCommandGroup(
-						new RunFunnel(),
-						new ShootByTrigger(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone,RPM, joystick, SmartJoystick.Axis.LEFT_TRIGGER)
-				) {
-					@Override
-					public boolean isFinished() {
-						return false;
-					}
-				}
-		);
+	public void initDefaultCommand(SmartJoystick joystick) {
+		this.setDefaultCommand(new ParallelCommandGroup(new RunFunnel(), new ShootByTrigger(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM, joystick, SmartJoystick.Axis.LEFT_TRIGGER)) {
+			@Override
+			public boolean isFinished() {
+				return false;
+			}
+		});
 	}
 
 	public void shoot(double power) {
@@ -74,11 +59,9 @@ public class Shooter extends GBSubsystem {
 		this.leader.set(power);
 	}
 
-	public double getDesiredPower(double rpm) {
-		return rpmToPowerMap.linearlyInterpolate(rpm)[0];
+	public void setIdleMode(CANSparkMax.IdleMode idleMode) {
+		leader.setIdleMode(idleMode);
 	}
-
-	public void setIdleMode(CANSparkMax.IdleMode idleMode){leader.setIdleMode(idleMode);}
 
 	public void setSpeedByPID(double target) {
 		leader.getPIDController().setReference(target, CANSparkMax.ControlType.kVelocity);
@@ -101,10 +84,6 @@ public class Shooter extends GBSubsystem {
 		return leader.getEncoder().getVelocity();
 	}
 
-	public double getAbsoluteShooterSpeed() {
-		return Math.abs(getShooterSpeed());
-	}
-
 	public void resetEncoder() {
 		leader.getEncoder().setPosition(0);
 	}
@@ -116,7 +95,6 @@ public class Shooter extends GBSubsystem {
 	public void setPreparedToShoot(boolean preparedToShoot) {
 		this.preparedToShoot = preparedToShoot;
 	}
-	
 
 	public boolean toggleShooter() {
 		System.out.println(isShooter);
@@ -128,7 +106,7 @@ public class Shooter extends GBSubsystem {
 		}
 		return isShooter;
 	}
-	
+
 	@Override
 	public void periodic() {
 
@@ -145,8 +123,5 @@ public class Shooter extends GBSubsystem {
 
 	public void toCoast() {
 		this.leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
-//		this.follower.setIdleMode(CANSparkMax.IdleMode.kCoast);
 	}
-
-
 }

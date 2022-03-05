@@ -45,7 +45,10 @@ public class Indexing extends GBSubsystem {
 	}
 
 	public Color getColor() {
-		return colorSensor.getColor();
+		Color color = colorSensor.getColor();
+		if(color.blue == color.red && color.red == color.green && color.green == 0)
+			System.out.println("Color Sensor is not connected");
+		return color;
 	}
 
 	public boolean isBallUp(){
@@ -72,9 +75,8 @@ public class Indexing extends GBSubsystem {
 			this.ballCount++;
 	}
 
-	public void removeBall(){
-		if(this.ballCount > 0)
-			this.ballCount--;
+	public void resetBallCount(){
+		this.ballCount = 0;
 	}
 
 	public int getBallCount(){

@@ -30,12 +30,9 @@ public class Shifter extends GBSubsystem {
 	 * This constructor constructs the piston.
 	 */
 	private Shifter() {
-		
 		piston = new GBDoubleSolenoid(RobotMap.Pegasus.Chassis.Shifter.PCM,
 				RobotMap.Pegasus.Chassis.Shifter.Solenoid.FORWARD_PORT,
 				RobotMap.Pegasus.Chassis.Shifter.Solenoid.REVERSE_PORT);
-		
-		
 	}
 	
 	/**

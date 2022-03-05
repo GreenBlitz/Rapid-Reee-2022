@@ -8,7 +8,6 @@ public class Funnel extends GBSubsystem{
 	private WPI_TalonSRX motor;
 	
 	private Funnel() {
-		super();
 		motor = new WPI_TalonSRX(RobotMap.Pegasus.Funnel.FunnelMotor.MOTOR_PORT);
 		motor.setInverted(RobotMap.Pegasus.Funnel.FunnelMotor.IS_REVERSED);
 	}
