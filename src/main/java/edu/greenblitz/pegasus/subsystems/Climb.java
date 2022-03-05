@@ -5,7 +5,10 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
 import edu.greenblitz.gblib.encoder.SparkEncoder;
 import edu.greenblitz.gblib.gears.GearDependentValue;
+import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.commands.climb.ClimbState;
+import edu.greenblitz.pegasus.commands.climb.ToggleClimbPosition;
 import org.greenblitz.motion.pid.PIDObject;
 
 public class Climb extends GBSubsystem {
@@ -135,8 +138,11 @@ public class Climb extends GBSubsystem {
 		controller.setFF(pid.getKf());
 	}
 	
-	public Turning getTurning(){
+	public Turning getTurning() {
 		return turning;
+	}
+	public void initDefaultCommand(SmartJoystick joystick){
+		setDefaultCommand(new ToggleClimbPosition(ClimbState.MID_GAME, joystick.B));
 	}
 	
 	public Rail getRail(){
@@ -162,7 +168,7 @@ public class Climb extends GBSubsystem {
 		}
 	}
 	
-	public class Turning extends ClimbSubsystem {
+	private class Turning extends ClimbSubsystem {
 		private CANSparkMax  turningMotor;
 		private SparkEncoder  turningEncoder;
 		
