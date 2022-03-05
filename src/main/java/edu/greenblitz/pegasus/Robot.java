@@ -19,7 +19,7 @@ public class Robot extends TimedRobot {
 		Shifter.getInstance();
 		Funnel.getInstance();
 		Shooter.init();
-		Climb.getInstance().setDefaultCommand(new ClimbByJoysticks(OI.getInstance().getMainJoystick()));
+		Climb.getInstance();//.setDefaultCommand(new ClimbByJoysticks(OI.getInstance().getMainJoystick()));
 		OI.getInstance();
 		Indexing.getInstance().setDefaultCommand(new HandleBalls());
 //      VisionMaster.getInstance().register();

@@ -21,12 +21,6 @@ public class HandleBalls extends IndexingCommand{
 		System.out.println("------------------");
 		if(lastCommand == null || lastCommand.isFinished()) { //need to do an action
 			System.out.println("Action needed");
-			if (indexing.getBallCount() >= 2){
-				System.out.println("Disabling Robot");
-//				lastCommand = new DisableRoller();
-				lastCommand.schedule();
-				return;
-			}
 			if (indexing.getPerceivedColor() == indexing.getAllianceColor()) { // same color
 				System.out.println("Adding a ball");
 				indexing.addBall();

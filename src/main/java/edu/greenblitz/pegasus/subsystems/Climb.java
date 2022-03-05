@@ -163,6 +163,6 @@ public class Climb extends GBSubsystem {
 	}
 
 	public void initDefaultCommand(SmartJoystick joystick){
-		instance.setDefaultCommand(new ToggleClimbPosition(ClimbState.MID_GAME, joystick.B));
+		//instance.setDefaultCommand(new ToggleClimbPosition(ClimbState.MID_GAME, joystick.B));
 	}
 }

@@ -59,12 +59,15 @@ public class OI {
 		//Intake.getInstance().initDefaultCommand(secondJoystick);
 		Shooter.getInstance().initDefaultCommand(secondJoystick); //change in the future
 
-		secondJoystick.L1.whileHeld(new HandleBalls());
+		secondJoystick.A.whileHeld(new ParallelCommandGroup(
+				new HandleBalls(),
+				new RollByConstant(0.8)
+		));
 
 		secondJoystick.X.whenPressed(new ToggleRoller());
 		secondJoystick.POV_LEFT.whenPressed(new InitManualOverride());
 
-//		Climb.getInstance().initDefaultCommand(secondJoystick);
+		Climb.getInstance().initDefaultCommand(secondJoystick);
 
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
 	}
