@@ -4,6 +4,7 @@ import edu.greenblitz.gblib.gears.Gear;
 import edu.greenblitz.gblib.gears.GearDependentValue;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
+import org.greenblitz.motion.pid.PIDObject;
 import org.greenblitz.motion.profiling.ProfilingConfiguration;
 import org.greenblitz.motion.profiling.ProfilingData;
 
@@ -67,19 +68,30 @@ public class RobotMap {
 			public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
 			public static final int module = 21;
 
+
 			public static class Motors {
 				public static final int ROLLER_PORT = 6;
 				public static final boolean IS_REVERSED = true;
+
 			}
 
 			public static class Solenoid {
-				public static final int FORWARD = 2;
-				public static final int REVERSE = 0;
+				public static final int FORWARD_PORT = 2;
+				public static final int REVERSE_PORT = 0;
 			}
 
 			public static final double POWER = 0.7;
 			public static final double REVERSE_POWER = -0.7;
 		}
+
+		public static class Climb {
+			public static class Motor {
+				public static final int MOTOR_ID = -1;
+				public static final boolean MOTOR_REVERSE = false;
+				public static final GearDependentValue<Double> MOTOR_TICKS_PER_METER = null;
+			}
+		}
+
 
 		public static class Shooter {
 			public static class ShooterMotor {
@@ -92,17 +104,23 @@ public class RobotMap {
 				public static final Dataset RPM_TO_POWER = new Dataset(2);
 
 				static {
-					RPM_TO_POWER.addDatapoint(0, new double[]{0});
-					RPM_TO_POWER.addDatapoint(975, new double[]{0.2});
-					RPM_TO_POWER.addDatapoint(2062.5, new double[]{0.4});
-					RPM_TO_POWER.addDatapoint(3075, new double[]{0.6});
-					RPM_TO_POWER.addDatapoint(3960, new double[]{0.8});
+					RPM_TO_POWER.addDatapoint(0, new double[]{-0.0000000001});
+					RPM_TO_POWER.addDatapoint(346.17146728515627, new double[]{0.1});
+					RPM_TO_POWER.addDatapoint(840.5715405273437, new double[]{0.2});
+					RPM_TO_POWER.addDatapoint(1352.4570483398438, new double[]{0.3});
+					RPM_TO_POWER.addDatapoint(1890.8568017578125, new double[]{0.4});
+					RPM_TO_POWER.addDatapoint(2411.9998046875, new double[]{0.5});
+					RPM_TO_POWER.addDatapoint(2904.800322265625, new double[]{0.6});
+					RPM_TO_POWER.addDatapoint(3518.057314453125, new double[]{0.7});
+					RPM_TO_POWER.addDatapoint(4140.91421875, new double[]{0.8});
+					RPM_TO_POWER.addDatapoint(4664.115322265625, new double[]{0.9});
+					RPM_TO_POWER.addDatapoint(5209.37181640625, new double[]{1.0});
 				}
-				// No fucking idea how much is 1.0, but 0.8 is already very fucking scary
-//        rpmToPowerMap.addDatapoint(5500, new double[]{1.0});
-
+				public static final PIDObject pid = new PIDObject(0.0001, 0.000003, 0);
+				public static final double iZone = 100;
 			}
 		}
+
 
 		public static class Funnel {
 			public static class FunnelMotor {
@@ -110,68 +128,30 @@ public class RobotMap {
 				public static final boolean IS_REVERSED = true;
 			}
 
-			public static final double POWER = 0.7;
-			public static final double REVERSE_POWER = -0.7;
+			public static final int MACRO_SWITCH_PORT = 0;
+			public static final double POWER = 0.8;
+			public static final double REVERSE_POWER = -0.8;
 		}
 
-		public static class Climb {
-			public static class SafetyZones {
-				public static final double RAIL_SAFETY = 0.07;
-				public static final double RAIL_ABSOLUTE_SAFETY = 0.025;
-				public static final double SAFETY_LOC = 0.6;
-				public static final double LOWEST_ANGLE = 0.25;
-				public static final double HIGHEST_ANGLE = Math.PI / 2 - 0.2;
-				public static final double TURN_SAFETY = 0.05;
-				public static final double TURN_ABSOLUTE_SAFETY = 0.01;
-				public static final double BATTERY_SAFETY_ANG = 0.51;
-			}
-
-			public static class ClimbMotors {
-
-				public static final int RAIL_MOTOR_PORT = 9;
-				public static final boolean RAIL_MOTOR_REVERSED = false;
-				public static final double RAIL_MOTOR_TICKS_PER_METER = 14240;
-				public static final double RAIL_LENGTH = 0.88;
-				public static final double START_LOCATION = 0.623;
-				public static final int TURNING_MOTOR_PORT = 11;
+		public static class ComplexClimb {
+			public static class ComplexClimbMotor {
+				public static final int HOOK_MOTOR_PORT = 8;
+				public static final boolean HOOK_MOTOR_REVERSED = false;
+				public static final GearDependentValue<Double> HOOK_MOTOR_TICKS_PER_METER = new GearDependentValue<>(0.1, 0.1);
+				public static final int TURNING_MOTOR_PORT = 6;
 				public static final boolean TURNING_MOTOR_REVERSED = false;
-				public static final double TURNING_MOTOR_TICKS_PER_RADIAN = 2139;
-				public static final double START_ANGLE = 0.279;
-
-			}
-
-			public static class ClimbConstants {
-				public static class Rotation {
-					public static final double kp = 0.4 / Math.PI * 2;
-
-					public static final double RADIANS_TO_SECOND_BAR = Math.toRadians(50.5);
-					public static final double RADIANS_TO_TRAVERSAL = Math.toRadians(0); //TODO: change this
-					public static final double RADIANS_TO_MID_GAME = Math.toRadians(35);
-					public static final double RADIANS_TO_HANGAR_ZONE = Math.toRadians(12);
-					public static final double EPSILON = 0.075;
-				}
-
-				public static class Rail {
-					public static final double kp = 10;
-
-					public static final double METERS_TO_SECOND_BAR = 0.0;
-					public static final double METERS_TO_TRAVERSAL = 0.0;
-					public static final double METERS_TO_MID_GAME = 0.4;
-					public static final double METERS_TO_HANGAR_ZONE = 0.41;
-					public static final double EPSILON = 0.02;
-				}
+				public static final GearDependentValue<Double> TURNING_MOTOR_TICKS_PER_METER = new GearDependentValue<>(0.1, 0.1);
 			}
 		}
 
 		public static class Pneumatics {
-			public static final int PCM = 21;
+			public static final int PCM_ID = 21;
 
 			public static class PressureSensor {
 				public static final int PRESSURE = 3;
 			}
 		}
-
-		public static class DigitalInputMap {
+		public static class DigitalInputMap{
 			public static final int MACRO_SWITCH = 0;
 		}
 
