@@ -5,7 +5,12 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
 import edu.greenblitz.gblib.encoder.SparkEncoder;
 import edu.greenblitz.gblib.gears.GearDependentValue;
+import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
+import edu.greenblitz.pegasus.commands.climb.ClimbState;
+import edu.greenblitz.pegasus.commands.climb.ToggleClimbPosition;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.greenblitz.motion.pid.PIDObject;
 
 public class Climb extends GBSubsystem {
@@ -156,6 +161,8 @@ public class Climb extends GBSubsystem {
 		controller.setD(pid.getKd());
 		controller.setFF(pid.getKf());
 	}
-	
-	
+
+	public void initDefaultCommand(SmartJoystick joystick){
+		instance.setDefaultCommand(new ToggleClimbPosition(ClimbState.MID_GAME, joystick.B));
+	}
 }
