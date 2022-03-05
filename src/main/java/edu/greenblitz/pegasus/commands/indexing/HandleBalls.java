@@ -16,27 +16,24 @@ public class HandleBalls extends IndexingCommand{
 
 	@Override
 	public void execute() {
-		//if(indexing.getAllianceColor() == Indexing.BallColor.RED) System.out.println("Red");
-		//else System.out.println("Blue");
-		System.out.println("------------------");
-		if(lastCommand == null || lastCommand.isFinished()) { //need to do an action
+		if(lastCommand == null || lastCommand.isFinished()) { //need to do an action - not action is active right now
 			System.out.println("Action needed");
-			if (indexing.getPerceivedColor() == indexing.getAllianceColor()) { // same color
+			if (indexing.getPerceivedColor() == indexing.getAllianceColor()) { //the incoming ball is the same color
 				System.out.println("Adding a ball");
 				indexing.addBall();
-				if (!indexing.isBallUp()) { //first ball
+				if (!indexing.isBallUp()) { //the incoming ball is the first ball
 					System.out.println("Moving until click");
 					lastCommand = new MoveBallUntilClick();
 					lastCommand.schedule();
 				}else{
-					//No need for action
+					//No need for action - the incoming ball is the second ball
 				}
-			} else if(indexing.getPerceivedColor() != Indexing.BallColor.OTHER){ // other color
+			} else if(indexing.getPerceivedColor() != Indexing.BallColor.OTHER){ //the incoming ball is the second ball
 				System.out.println("Trying to eject");
-				if (!indexing.isBallUp()) {
+				if (!indexing.isBallUp()) { // there are no balls in the system - shoot by shooter
 					System.out.println("Shooter");
 					lastCommand = new EjectEnemyBallFromShooter();
-				}else{
+				}else{ //there is one ball in the system - shoot by gripper
 					System.out.println("Gripper");
 					lastCommand = new EjectEnemyBallFromGripper();
 				}

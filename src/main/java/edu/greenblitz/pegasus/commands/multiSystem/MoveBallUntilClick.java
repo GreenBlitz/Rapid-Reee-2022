@@ -26,7 +26,6 @@ public class MoveBallUntilClick extends GBCommand {
 
 	@Override
 	public void end(boolean interrupted) {
-
 		intake.stopRoller();
 		funnel.stopMotor();
 	}
