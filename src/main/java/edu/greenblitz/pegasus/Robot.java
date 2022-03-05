@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
 		TODO: Dear @Orel, please for the love of god, use the very useful function: schedule(), this will help the
 		the code to actually work
 		*/
-		new ScheduleCommand(new ScheduleCommand(new ScheduleCommand(new ScheduleCommand(new ScheduleCommand(new NewTwoBallAuto()))))).schedule();
+		new NewTwoBallAuto().schedule();
 		//new ShootAndGo(5).schedule(); //Shoot and go
 //		new FourBallAuto(0.3).schedule(); // 2 ball auto
 	}

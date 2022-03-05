@@ -3,12 +3,14 @@ package edu.greenblitz.pegasus.subsystems;
 import com.revrobotics.*;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import edu.greenblitz.pegasus.commands.shooter.ShootByTrigger;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import org.greenblitz.motion.interpolation.Dataset;
 import org.greenblitz.motion.pid.PIDObject;
 
@@ -21,7 +23,7 @@ public class Shooter extends GBSubsystem {
 	private Dataset rpmToPowerMap;
 	private boolean preparedToShoot;
 	private boolean isShooter;
-	private static final double RPM = 2750;
+	private static final double RPM = 3000;
 
 	private Shooter() {
 		leader = new CANSparkMax(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -51,7 +53,17 @@ public class Shooter extends GBSubsystem {
 	}
 
 	public void initDefaultCommand(SmartJoystick joystick){
-		instance.setDefaultCommand(new ShootByTrigger(joystick));
+		this.setDefaultCommand(
+				new ParallelCommandGroup(
+						new RunFunnel(),
+						new ShootByTrigger(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone,RPM, joystick, SmartJoystick.Axis.LEFT_TRIGGER)
+				) {
+					@Override
+					public boolean isFinished() {
+						return false;
+					}
+				}
+		);
 	}
 
 	public void shoot(double power) {

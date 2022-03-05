@@ -10,9 +10,9 @@ public class MoveSimpleByPID extends ChassisCommand{
 		private Point startPos;
 		private double distanceTarget;
 		private CollapsingPIDController distancePID;
-		static private PIDObject defaultPIDObject = new PIDObject(0,0,0);
-		static private double defaultThresh = 0;
-		static private double defaultTolerance = 0;
+		static private PIDObject defaultPIDObject = new PIDObject(0.3,0.00001,0);
+		static private double defaultThresh = 0.3;
+		static private double defaultTolerance = 0.1;
 		public MoveSimpleByPID(double distanceTarget) {
 			startPos = chassis.getLocation();
 			this.distanceTarget = distanceTarget;
@@ -40,8 +40,8 @@ public class MoveSimpleByPID extends ChassisCommand{
 	public void execute() {
 			double currentDistance = Point.dist(startPos,chassis.getLocation());
 			chassis.arcadeDrive(distancePID.calculatePID(currentDistance), 0);
-
-
+		
+		System.out.println(Point.dist(startPos,chassis.getLocation()));
 
 		}
 		
