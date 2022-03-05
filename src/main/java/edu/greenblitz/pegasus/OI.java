@@ -5,6 +5,7 @@ import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
+import edu.greenblitz.pegasus.commands.indexing.PrintColor;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
@@ -27,7 +28,7 @@ public class OI {
 		DEBUG, REAL, NO_AUTO
 	}
 	
-	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
 	private static boolean isHandled = true;
 
 	private OI() {
@@ -53,6 +54,7 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
+		mainJoystick.A.whileHeld(new PrintColor());
 	}
 
 	private void initRealButtons() {
