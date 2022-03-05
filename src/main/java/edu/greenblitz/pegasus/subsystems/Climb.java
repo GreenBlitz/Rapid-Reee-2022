@@ -31,10 +31,18 @@ public class Climb extends GBSubsystem {
 		turningEncoder.reset();
 	}
 
+	
+	private boolean needsCoast = false;
 	@Override
 	public void periodic() {
 		super.periodic();
-		//Add data to smartdashboard here
+		if (getAng() > Math.PI/2 - 0.3){
+			needsCoast = true;
+			setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
+		}
+		if (getAng() < Math.PI/2 - 0.4 && needsCoast){
+			setTurningMotorIdle(CANSparkMax.IdleMode.kCoast);
+		}
 	}
 
 	private static void init() {
@@ -148,4 +156,6 @@ public class Climb extends GBSubsystem {
 		controller.setD(pid.getKd());
 		controller.setFF(pid.getKf());
 	}
+	
+	
 }
