@@ -16,7 +16,7 @@ public class Robot extends TimedRobot {
 		Shifter.getInstance();
 		Funnel.getInstance();
 		Shooter.init();
-		//ComplexClimb.getInstance();
+		Climb.getInstance();
 		OI.getInstance();
 		Indexing.getInstance();
 		Indexing.getInstance().setDefaultCommand(new HandleBalls());

@@ -84,15 +84,6 @@ public class RobotMap {
 			public static final double REVERSE_POWER = -0.7;
 		}
 
-		public static class Climb {
-			public static class Motor {
-				public static final int MOTOR_ID = -1;
-				public static final boolean MOTOR_REVERSE = false;
-				public static final GearDependentValue<Double> MOTOR_TICKS_PER_METER = null;
-			}
-		}
-
-
 		public static class Shooter {
 			public static class ShooterMotor {
 				public static final int PORT_LEADER = 7; /*,
@@ -121,7 +112,6 @@ public class RobotMap {
 			}
 		}
 
-
 		public static class Funnel {
 			public static class FunnelMotor {
 				public static final int MOTOR_PORT = 5;
@@ -133,14 +123,32 @@ public class RobotMap {
 			public static final double REVERSE_POWER = -0.8;
 		}
 
-		public static class ComplexClimb {
-			public static class ComplexClimbMotor {
-				public static final int HOOK_MOTOR_PORT = 8;
-				public static final boolean HOOK_MOTOR_REVERSED = false;
-				public static final GearDependentValue<Double> HOOK_MOTOR_TICKS_PER_METER = new GearDependentValue<>(0.1, 0.1);
+
+		public static class Climb {
+			public static class ClimbMotors {
+				public static final int RAIL_MOTOR_PORT = 8;
+				public static final boolean RAIL_MOTOR_REVERSED = false;
+				public static final GearDependentValue<Double> RAIL_MOTOR_TICKS_PER_METER = new GearDependentValue<>(0.1,0.1);
+
 				public static final int TURNING_MOTOR_PORT = 6;
 				public static final boolean TURNING_MOTOR_REVERSED = false;
 				public static final GearDependentValue<Double> TURNING_MOTOR_TICKS_PER_METER = new GearDependentValue<>(0.1, 0.1);
+			}
+
+			public static class ClimbConstants {
+				public static class Hook {
+					public static final double ROTATION_POWER = 0.3;
+					public static final double TICKS_GOAL_FORWARD = 0.0;
+					public static final double TICKS_GOAL_BACKWARD = 0.0;
+					public static final double EPSILON = 0.01;
+				}
+
+				public static class Rail {
+					public static final double ROTATION_POWER = 0.3;
+					public static final double TICKS_GOAL_FORWARD = 0.0;
+					public static final double TICKS_GOAL_BACKWARD = 0.0;
+					public static final double EPSILON = 0.01;
+				}
 			}
 		}
 
@@ -151,6 +159,7 @@ public class RobotMap {
 				public static final int PRESSURE = 3;
 			}
 		}
+
 		public static class DigitalInputMap{
 			public static final int MACRO_SWITCH = 0;
 		}
