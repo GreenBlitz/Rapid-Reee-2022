@@ -7,33 +7,16 @@ import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rotat
 
 public class MoveTurningToAngle extends ClimbCommand {
 
-	public enum State {
-		PULL_UP, TRAVERSE, MID_GAME, HANGAR
-	}
-
 	private double goal;
 	private boolean atAngle;
-
+	private ClimbState state;
 	public MoveTurningToAngle(double goalAngle) {
 		goal = goalAngle;
 
 	}
 
-	public MoveTurningToAngle(State state) {
-		switch (state){
-			case PULL_UP:
-				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_SECOND_BAR;
-				return;
-			case TRAVERSE:
-				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_TRAVERSAL;
-				return;
-			case MID_GAME:
-				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_MID_GAME;
-				return;
-			case HANGAR:
-				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_HANGAR_ZONE;
-				return;
-		}
+	public MoveTurningToAngle(ClimbState state) {
+		setState(state);
 	}
 
 	@Override
@@ -59,5 +42,27 @@ public class MoveTurningToAngle extends ClimbCommand {
 
 	public boolean isAtAngle() {
 		return atAngle;
+	}
+	
+	public ClimbState getState(){
+		return state;
+	}
+	
+	void setState(ClimbState state) {
+		this.state = state;
+		switch (state){
+			case PULL_UP:
+				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_SECOND_BAR;
+				return;
+			case TRAVERSE:
+				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_TRAVERSAL;
+				return;
+			case MID_GAME:
+				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_MID_GAME;
+				return;
+			case HANGAR:
+				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_HANGAR_ZONE;
+				return;
+		}
 	}
 }

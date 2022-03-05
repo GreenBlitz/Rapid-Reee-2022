@@ -7,33 +7,16 @@ import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rail.
 
 public class MoveRailToPosition extends ClimbCommand {
 
-	public enum State {
-		PULL_UP, TRAVERSE, MID_GAME, HANGAR
-	}
-
 	private double goal;
 	private boolean atLocation;
+	private ClimbState state;
 
 	public MoveRailToPosition(double goalPosition) {
 		goal = goalPosition;
-
 	}
 
-	public MoveRailToPosition(State state) {
-		switch (state){
-			case PULL_UP:
-				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR;
-				return;
-			case TRAVERSE:
-				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_TRAVERSAL;
-				return;
-			case MID_GAME:
-				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_MID_GAME;
-				return;
-			case HANGAR:
-				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_HANGAR_ZONE;
-				return;
-		}
+	public MoveRailToPosition(ClimbState state) {
+		setState(state);
 	}
 
 	@Override
@@ -59,5 +42,27 @@ public class MoveRailToPosition extends ClimbCommand {
 
 	public boolean isAtLocation() {
 		return atLocation;
+	}
+	
+	public ClimbState getState(){
+		return state;
+	}
+	
+	void setState(ClimbState state) {
+		this.state = state;
+		switch (state){
+			case PULL_UP:
+				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR;
+				break;
+			case TRAVERSE:
+				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_TRAVERSAL;
+				break;
+			case MID_GAME:
+				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_MID_GAME;
+				break;
+			case HANGAR:
+				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_HANGAR_ZONE;
+				break;
+		}
 	}
 }
