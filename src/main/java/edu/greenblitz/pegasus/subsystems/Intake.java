@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
+import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByTrigger;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -33,8 +34,8 @@ public class Intake {
 	}
 
 	public void initDefaultCommand(SmartJoystick joystick) {
-		instance.getRoller().setDefaultCommand(new RollByTrigger(joystick));
-		Funnel.getInstance().setDefaultCommand(new RunFunnel());
+		instance.getRoller().setDefaultCommand(new HandleBalls());
+//		Funnel.getInstance().setDefaultCommand(new RunFunnel());
 	}
 
 	public void moveRoller(double power) {

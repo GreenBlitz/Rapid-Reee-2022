@@ -4,6 +4,7 @@ import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
+import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
@@ -55,8 +56,10 @@ public class OI {
 	}
 
 	private void initRealButtons() {
-		Intake.getInstance().initDefaultCommand(secondJoystick);
+		//Intake.getInstance().initDefaultCommand(secondJoystick);
 		Shooter.getInstance().initDefaultCommand(secondJoystick); //change in the future
+
+		secondJoystick.L1.whileHeld(new HandleBalls());
 
 		secondJoystick.X.whenPressed(new ToggleRoller());
 		secondJoystick.POV_LEFT.whenPressed(new InitManualOverride());
