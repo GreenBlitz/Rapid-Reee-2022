@@ -9,6 +9,7 @@ import edu.greenblitz.pegasus.commands.indexing.PrintColor;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
+import edu.greenblitz.pegasus.commands.shooter.CalibratePID;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.subsystems.Chassis;
@@ -60,7 +61,8 @@ public class OI {
 	private void initRealButtons() {
 		//Intake.getInstance().initDefaultCommand(secondJoystick);
 		//Shooter.getInstance().initDefaultCommand(secondJoystick);
-		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 3000) {
+		secondJoystick.A.whileHeld(new CalibratePID(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 3100) {
+
 			@Override
 			public void end(boolean interrupted) {
 				super.end(interrupted);

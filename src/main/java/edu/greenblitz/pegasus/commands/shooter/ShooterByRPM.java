@@ -10,7 +10,7 @@ public class ShooterByRPM extends ShooterCommand {
 	protected RemoteCSVTarget logger;
 	protected double target;
 	protected double tStart;
-	private double epsilon = 15;
+	private double epsilon = 10;
 	private int inShootingSpeed;
 
 	public ShooterByRPM(PIDObject obj, double iZone, double target) {
@@ -40,12 +40,13 @@ public class ShooterByRPM extends ShooterCommand {
 		System.out.println(shooter.getShooterSpeed());
 		if (Math.abs(target - shooter.getShooterSpeed()) < epsilon) {
 			this.inShootingSpeed++;
-			System.out.println(this.inShootingSpeed);
 
 		} else {
 			this.inShootingSpeed = 0;
+			System.out.println("weird");
+			shooter.setPreparedToShoot(false);
 		}
-		if (this.inShootingSpeed >= 3) {
+		if (this.inShootingSpeed >= 7) {
 			shooter.setPreparedToShoot(true);
 		}
 		logger.report((System.currentTimeMillis()/1000.0 - tStart), shooter.getShooterSpeed());
@@ -58,9 +59,9 @@ public class ShooterByRPM extends ShooterCommand {
 
 	@Override
 	public void end(boolean interrupted) {
-		super.end(interrupted);
-		shooter.setPreparedToShoot(false);
-		System.out.println(System.currentTimeMillis()/1000.0 - tStart);
 
+		shooter.setPreparedToShoot(false);
+		this.inShootingSpeed = 0;
+		super.end(interrupted);
 	}
 }
