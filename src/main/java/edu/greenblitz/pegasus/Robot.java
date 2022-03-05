@@ -1,5 +1,6 @@
 package edu.greenblitz.pegasus;
 
+import edu.greenblitz.pegasus.commands.chassis.auto.NewTwoBallAuto;
 import edu.greenblitz.pegasus.commands.chassis.auto.ShootAndGo;
 import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
 import edu.greenblitz.pegasus.commands.climb.ClimbByJoysticks;
@@ -7,6 +8,7 @@ import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 
 public class Robot extends TimedRobot {
 	@Override
@@ -57,8 +59,13 @@ public class Robot extends TimedRobot {
 				new RobotDotMove(-0.1) //auto line in the back of the robot
 		).schedule();
 		 */
-		
-		new ShootAndGo(5).schedule(); //Shoot and go
+
+		/*
+		TODO: Dear @Orel, please for the love of god, use the very useful function: schedule(), this will help the
+		the code to actually work
+		*/
+		new ScheduleCommand(new ScheduleCommand(new ScheduleCommand(new ScheduleCommand(new ScheduleCommand(new NewTwoBallAuto()))))).schedule();
+		//new ShootAndGo(5).schedule(); //Shoot and go
 //		new FourBallAuto(0.3).schedule(); // 2 ball auto
 	}
 	

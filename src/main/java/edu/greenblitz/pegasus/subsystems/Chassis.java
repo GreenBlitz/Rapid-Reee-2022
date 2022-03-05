@@ -151,12 +151,9 @@ public class Chassis extends GBSubsystem {
 	
 	@Override
 	public void periodic() {
-		super.periodic();
-		putNumber("Left vel enc", leftEncoder.getNormalizedVelocity());
-		putNumber("Right vel enc", rightEncoder.getNormalizedVelocity());
-		putNumber("Angle vel by wheel", getAngularVelocityByWheels());
 		putNumber("Pigeon angle deg", Math.toDegrees(getAngle()));
 		putString("Location", Chassis.getInstance().getLocation().toString());
+
 	}
 
 	public void resetEncoders() {

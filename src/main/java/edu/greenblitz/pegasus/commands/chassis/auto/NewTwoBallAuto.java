@@ -7,13 +7,15 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class NewTwoBallAuto extends SequentialCommandGroup {
 
-	public NewTwoBallAuto(){
+	public NewTwoBallAuto() {
+
 		addCommands(
 				new ParallelCommandGroup(
 						new MoveSimpleByPID(-2),
 						new HandleBalls()
 				),
-				new MoveSimpleByPID(4),new DoubleShoot()
+				new MoveSimpleByPID(4),
+				new DoubleShoot()
 		);
 	}
 }

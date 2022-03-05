@@ -18,13 +18,31 @@ public class MoveSimpleByPID extends ChassisCommand{
 			this.distanceTarget = distanceTarget;
 			distancePID = new CollapsingPIDController(defaultPIDObject, defaultThresh);
 			distancePID.configure(Point.dist(startPos,chassis.getLocation()), distanceTarget, -0.2, 0.2, 0);
-			SmartDashboard.putNumber("distance target",Point.dist(startPos,chassis.getLocation()));
 			distancePID.setTolerance((goal, current) -> Math.abs(goal - current) < defaultTolerance);
+
+			chassis.putNumber("p", distancePID.getPidObject().getKp());
+			chassis.putNumber("i", distancePID.getPidObject().getKp());
+			chassis.putNumber("d", distancePID.getPidObject().getKp());
 		}
-		
-		public void execute() {
+
+	@Override
+	public void initialize() {
+
+		double p  = chassis.getNumber("p", distancePID.getPidObject().getKp());
+		double i  = chassis.getNumber("i", distancePID.getPidObject().getKi());
+		double d  = chassis.getNumber("d", distancePID.getPidObject().getKd());
+		distancePID.getPidObject().setKp(p);
+		distancePID.getPidObject().setKp(i);
+		distancePID.getPidObject().setKp(d);
+	}
+
+	@Override
+	public void execute() {
 			double currentDistance = Point.dist(startPos,chassis.getLocation());
 			chassis.arcadeDrive(distancePID.calculatePID(currentDistance), 0);
+
+
+
 		}
 		
 		@Override
