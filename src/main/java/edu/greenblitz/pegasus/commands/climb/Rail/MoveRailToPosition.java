@@ -1,11 +1,11 @@
-package edu.greenblitz.pegasus.commands.climb;
+package edu.greenblitz.pegasus.commands.climb.Rail;
 
 import edu.greenblitz.pegasus.RobotMap;
-import org.greenblitz.motion.pid.PIDObject;
+import edu.greenblitz.pegasus.commands.climb.ClimbState;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rail.kp;
 
-public class MoveRailToPosition extends ClimbCommand {
+public class MoveRailToPosition extends RailCommand {
 
 	private double goal;
 	private boolean atLocation;
@@ -48,7 +48,7 @@ public class MoveRailToPosition extends ClimbCommand {
 		return state;
 	}
 	
-	void setState(ClimbState state) {
+	public void setState(ClimbState state) {
 		this.state = state;
 		switch (state){
 			case PULL_UP:

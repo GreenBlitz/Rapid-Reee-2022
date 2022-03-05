@@ -2,7 +2,6 @@ package edu.greenblitz.pegasus.commands.climb;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.subsystems.Climb;
-import org.opencv.core.Mat;
 
 public class ClimbByJoysticks extends ClimbCommand{
 

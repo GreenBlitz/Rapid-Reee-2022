@@ -35,8 +35,8 @@ public class RobotMap {
 				public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
 
 				public static class Solenoid {
-					public static final int FORWARD_PORT = 3;
-					public static final int REVERSE_PORT = 1;
+					public static final int FORWARD = 3;
+					public static final int REVERSE = 1;
 				}
 			}
 
@@ -68,9 +68,11 @@ public class RobotMap {
 			public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
 			public static final int module = 21;
 
+
 			public static class Motors {
 				public static final int ROLLER_PORT = 6;
 				public static final boolean IS_REVERSED = true;
+
 			}
 
 			public static class Solenoid {
@@ -105,10 +107,11 @@ public class RobotMap {
 					RPM_TO_POWER.addDatapoint(4664.115322265625, new double[]{0.9});
 					RPM_TO_POWER.addDatapoint(5209.37181640625, new double[]{1.0});
 				}
-				public static final PIDObject pid = new PIDObject(0.0001, 0.0000005, 0);
+				public static final PIDObject pid = new PIDObject(0.0001, 0.000003, 0);
 				public static final double iZone = 100;
 			}
 		}
+
 
 		public static class Funnel {
 			public static class FunnelMotor {
@@ -116,11 +119,11 @@ public class RobotMap {
 				public static final boolean IS_REVERSED = true;
 			}
 
-			public static final double POWER = 0.7;
-			public static final double REVERSE_POWER = -0.7;
 			public static final int MACRO_SWITCH_PORT = 0;
+			public static final double POWER = 0.8;
+			public static final double REVERSE_POWER = -0.8;
 		}
-
+		
 		public static class Climb {
 			public static class SafetyZones {
 				public static final double RAIL_SAFETY = 0.07;
@@ -132,9 +135,9 @@ public class RobotMap {
 				public static final double TURN_ABSOLUTE_SAFETY = 0.01;
 				public static final double BATTERY_SAFETY_ANG = 0.51;
 			}
-
+			
 			public static class ClimbMotors {
-
+				
 				public static final int RAIL_MOTOR_PORT = 9;
 				public static final boolean RAIL_MOTOR_REVERSED = false;
 				public static final double RAIL_MOTOR_TICKS_PER_METER = 14240;
@@ -144,23 +147,23 @@ public class RobotMap {
 				public static final boolean TURNING_MOTOR_REVERSED = false;
 				public static final double TURNING_MOTOR_TICKS_PER_RADIAN = 2139;
 				public static final double START_ANGLE = 0.279;
-
+				
 			}
-
+			
 			public static class ClimbConstants {
 				public static class Rotation {
 					public static final double kp = 0.4 / Math.PI * 2;
-
+					
 					public static final double RADIANS_TO_SECOND_BAR = Math.toRadians(50.5);
 					public static final double RADIANS_TO_TRAVERSAL = Math.toRadians(0); //TODO: change this
 					public static final double RADIANS_TO_MID_GAME = Math.toRadians(35);
 					public static final double RADIANS_TO_HANGAR_ZONE = Math.toRadians(12);
 					public static final double EPSILON = 0.075;
 				}
-
+				
 				public static class Rail {
 					public static final double kp = 10;
-
+					
 					public static final double METERS_TO_SECOND_BAR = 0.0;
 					public static final double METERS_TO_TRAVERSAL = 0.0;
 					public static final double METERS_TO_MID_GAME = 0.4;
@@ -169,7 +172,7 @@ public class RobotMap {
 				}
 			}
 		}
-
+		
 		public static class Pneumatics {
 			public static final int PCM_ID = 21;
 
@@ -177,8 +180,7 @@ public class RobotMap {
 				public static final int PRESSURE = 3;
 			}
 		}
-
-		public static class DigitalInputMap {
+		public static class DigitalInputMap{
 			public static final int MACRO_SWITCH = 0;
 		}
 

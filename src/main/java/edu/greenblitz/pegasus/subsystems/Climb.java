@@ -5,49 +5,22 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
 import edu.greenblitz.gblib.encoder.SparkEncoder;
 import edu.greenblitz.gblib.gears.GearDependentValue;
-import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
-import edu.greenblitz.pegasus.commands.climb.ClimbState;
-import edu.greenblitz.pegasus.commands.climb.ToggleClimbPosition;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.greenblitz.motion.pid.PIDObject;
 
 public class Climb extends GBSubsystem {
 	private static Climb instance;
-
+	
 	// Rail motor moves the system forward and backward
 	// Turning motor changes the angle of the system itself
-	private CANSparkMax railMotor, turningMotor;
-	private SparkEncoder railEncoder, turningEncoder;
-	private boolean turningMode = false;
-
-
-	private Climb() {
-		railMotor = new CANSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
-		railMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_REVERSED);
-		railEncoder = new SparkEncoder(new GearDependentValue<>(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER, RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER), railMotor);
-		railEncoder.reset();
-
-		turningMotor = new CANSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
-		turningMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_REVERSED);
-		turningMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-		turningEncoder = new SparkEncoder(new GearDependentValue<>(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN, RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN), turningMotor);
-		turningEncoder.reset();
-	}
+	private Rail rail;
+	private Turning turning;
 
 	
-	private boolean needsCoast = false;
-	@Override
-	public void periodic() {
-		super.periodic();
-		if (getAng() > Math.PI/2 - 0.3){
-			needsCoast = true;
-			setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
-		}
-		if (getAng() < Math.PI/2 - 0.4 && needsCoast){
-			setTurningMotorIdle(CANSparkMax.IdleMode.kCoast);
-		}
+
+	private Climb() {
+		rail = new Rail();
+		turning = new Turning();
 	}
 
 	private static void init() {
@@ -95,7 +68,7 @@ public class Climb extends GBSubsystem {
 	}
 
 	public void unsafeMoveRailMotor(double power) {
-		railMotor.set(power);
+		rail.railMotor.set(power);
 	}
 
 	public void safeMoveTurningMotor(double power) {
@@ -119,35 +92,35 @@ public class Climb extends GBSubsystem {
 	}
 
 	public void unsafeMoveTurningMotor(double power) {
-		turningMotor.set(power);
+		turning.turningMotor.set(power);
 	}
 
 	public double getRailMotorTicks() {
-		return railEncoder.getRawTicks();
+		return rail.railEncoder.getRawTicks();
 	}
 
 	public void resetRailMotorTicks() {
-		railEncoder.reset();
+		rail.railEncoder.reset();
 	}
 
 	public double getTurningMotorTicks() {
-		return turningEncoder.getRawTicks();
+		return turning.turningEncoder.getRawTicks();
 	}
 
 	public void resetTurningMotorTicks() {
-		turningEncoder.reset();
+		turning.turningEncoder.reset();
 	}
 
 	public void setTurningMotorIdle(CANSparkMax.IdleMode mode) {
-		turningMotor.setIdleMode(mode);
+		turning.turningMotor.setIdleMode(mode);
 	}
 
 	public CANSparkMax.IdleMode getTurningMotorIdle() {
-		return turningMotor.getIdleMode();
+		return turning.turningMotor.getIdleMode();
 	}
 
 	public void setRailPIDValues(PIDObject pid) {
-		SparkMaxPIDController controller = railMotor.getPIDController();
+		SparkMaxPIDController controller = rail.railMotor.getPIDController();
 		controller.setP(pid.getKp());
 		controller.setI(pid.getKi());
 		controller.setD(pid.getKd());
@@ -155,14 +128,65 @@ public class Climb extends GBSubsystem {
 	}
 
 	public void setTurningPIDValues(PIDObject pid) {
-		SparkMaxPIDController controller = turningMotor.getPIDController();
+		SparkMaxPIDController controller = turning.turningMotor.getPIDController();
 		controller.setP(pid.getKp());
 		controller.setI(pid.getKi());
 		controller.setD(pid.getKd());
 		controller.setFF(pid.getKf());
 	}
-
-	public void initDefaultCommand(SmartJoystick joystick){
-		//instance.setDefaultCommand(new ToggleClimbPosition(ClimbState.MID_GAME, joystick.B));
+	
+	public Turning getTurning(){
+		return turning;
 	}
+	
+	public Rail getRail(){
+		return rail;
+	}
+	
+	private class ClimbSubsystem extends GBSubsystem {
+		public Climb getClimb() {
+			return Climb.this;
+		}
+	}
+	
+	private class Rail extends ClimbSubsystem {
+		
+		private CANSparkMax railMotor;
+		private SparkEncoder railEncoder;
+		
+		private Rail() {
+			railMotor = new CANSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
+			railMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_REVERSED);
+			railEncoder = new SparkEncoder(new GearDependentValue<>(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER, RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER), railMotor);
+			railEncoder.reset();
+		}
+	}
+	
+	public class Turning extends ClimbSubsystem {
+		private CANSparkMax  turningMotor;
+		private SparkEncoder  turningEncoder;
+		
+		private Turning() {
+			turningMotor = new CANSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
+			turningMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_REVERSED);
+			turningMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+			turningEncoder = new SparkEncoder(new GearDependentValue<>(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN, RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN), turningMotor);
+			turningEncoder.reset();
+		}
+		
+		private boolean needsCoast = false;
+		@Override
+		public void periodic() {
+			super.periodic();
+			if (getAng() > Math.PI/2 - 0.3){
+				needsCoast = true;
+				setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
+			}
+			if (getAng() < Math.PI/2 - 0.4 && needsCoast){
+				setTurningMotorIdle(CANSparkMax.IdleMode.kCoast);
+			}
+		}
+	}
+	
+	
 }

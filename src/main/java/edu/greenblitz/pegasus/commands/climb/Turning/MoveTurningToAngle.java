@@ -1,11 +1,11 @@
-package edu.greenblitz.pegasus.commands.climb;
+package edu.greenblitz.pegasus.commands.climb.Turning;
 
 import edu.greenblitz.pegasus.RobotMap;
-import org.greenblitz.motion.pid.PIDObject;
+import edu.greenblitz.pegasus.commands.climb.ClimbState;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rotation.kp;
 
-public class MoveTurningToAngle extends ClimbCommand {
+public class MoveTurningToAngle extends TurningCommand {
 
 	private double goal;
 	private boolean atAngle;
@@ -48,7 +48,7 @@ public class MoveTurningToAngle extends ClimbCommand {
 		return state;
 	}
 	
-	void setState(ClimbState state) {
+	public void setState(ClimbState state) {
 		this.state = state;
 		switch (state){
 			case PULL_UP:

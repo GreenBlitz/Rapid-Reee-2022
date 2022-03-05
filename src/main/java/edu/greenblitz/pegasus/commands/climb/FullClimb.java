@@ -1,4 +1,4 @@
-/*
+package edu.greenblitz.pegasus.commands.climb;/*
 package edu.greenblitz.pegasus.commands.climb;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
