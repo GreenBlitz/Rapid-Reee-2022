@@ -33,7 +33,7 @@ public class Chassis extends GBSubsystem {
 			RobotMap.Pegasus.Chassis.Motors.LEFT_LEADER_REVERSED,
 			RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_1_REVERSED,
 			RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_2_REVERSED
-	}
+	};
 
 	private Chassis() {
 		motors = new CANSparkMax[ports.length];
