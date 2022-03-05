@@ -18,7 +18,7 @@ public class EjectEnemyBallFromShooter extends SequentialCommandGroup {
 		addCommands(
 				new MoveBallUntilClick(),
 				new ParallelRaceGroup(
-						new WaitTillBallExit(),
+						new WaitTillBallExit(), // TODO: 05/03/2022  exchange this for wait till macroswitch off 
 						new RunFunnel(),
 						new ShootByConstant(OUT_POWER)
 				)
