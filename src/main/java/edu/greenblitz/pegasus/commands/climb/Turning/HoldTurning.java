@@ -55,8 +55,8 @@ public class HoldTurning extends TurningCommand {
 			case MID_GAME:
 				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_MID_GAME;
 				return;
-			case HANGAR:
-				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_HANGAR_ZONE;
+			case START:
+				goal = RobotMap.Pegasus.Climb.ClimbMotors.START_ANGLE;
 				return;
 		}
 	}
