@@ -7,11 +7,12 @@ import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
 import edu.greenblitz.pegasus.commands.indexing.PrintColor;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
+import edu.greenblitz.pegasus.commands.intake.roller.ReverseRunRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
+import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
-import edu.greenblitz.pegasus.commands.shooter.CalibratePID;
-import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
-import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
+import edu.greenblitz.pegasus.commands.shooter.*;
 import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -29,7 +30,7 @@ public class OI {
 		DEBUG, REAL, NO_AUTO
 	}
 	
-	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -55,7 +56,28 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		mainJoystick.A.whileHeld(new PrintColor());
+		mainJoystick.A.whileHeld(new ParallelCommandGroup(
+				new HandleBalls(),
+				new RunRoller()
+		));
+		/*
+		mainJoystick.B.whileHeld(
+				new ParallelCommandGroup(
+						new InsertIntoShooter(),
+					new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2700) {
+						
+						@Override
+					public void end(boolean interrupted) {
+						super.end(interrupted);
+						shooter.setSpeedByPID(0);
+					}}
+				)
+		);
+		mainJoystick.Y.whileHeld(new MoveBallUntilClick());
+		*/
+		mainJoystick.B.whileHeld(new DoubleShoot());
+		mainJoystick.X.whenPressed(new ToggleShooterByRPM());
+		mainJoystick.Y.whileHeld(new ReverseRunRoller());
 	}
 	
 	private void initRealButtons() {

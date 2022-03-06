@@ -23,7 +23,7 @@ public class Chassis extends GBSubsystem {
 			RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_2,
 			RobotMap.Pegasus.Chassis.Motors.LEFT_LEADER,
 			RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_1,
-			RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_2
+			RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_2
 	};
 
 	private static final boolean[] isReversed = {
