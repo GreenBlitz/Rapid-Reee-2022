@@ -56,7 +56,7 @@ public class OI {
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
 		secondJoystick.POV_UP.whenPressed(new ClimbByJoysticks(secondJoystick));
 		secondJoystick.START.whenPressed(new FullClimb(secondJoystick));
-		secondJoystick.BACK.whenPressed(new SafeExitStartCondition());
+		secondJoystick.BACK.whenPressed(new InstantCommand(new ToggleClimbPosition()));
 		secondJoystick.R1.whileHeld(new WhileHeldCoast());
 		
 	}

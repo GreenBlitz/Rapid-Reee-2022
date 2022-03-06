@@ -3,16 +3,21 @@ package edu.greenblitz.pegasus.commands.climb;
 import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
-public class ToggleClimbPosition extends InstantCommand {
+public class ToggleClimbPosition implements Runnable {
+	
+	public ToggleClimbPosition(){
+		super();
+	}
 
 
 	@Override
-	protected void initialize() {
-		if (Climb.getInstance().getAtStart()){
+	public void run() {
+		{if (Climb.getInstance().getAtStart()){
 			new SafeExitStartCondition().schedule();
 		}
 		else{
+			System.out.println("");
 			new SafeEnterStartCondition().schedule();
-		}
+		}}
 	}
 }
