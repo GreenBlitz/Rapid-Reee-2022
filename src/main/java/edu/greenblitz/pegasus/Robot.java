@@ -1,7 +1,11 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.chassis.auto.TwoBallAuto;
+import edu.greenblitz.pegasus.commands.climb.ClimbByJoysticks;
+import edu.greenblitz.pegasus.commands.climb.SafeExitStartCondition;
 import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
+import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
+import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -16,7 +20,7 @@ public class Robot extends TimedRobot {
 		Shifter.getInstance();
 		Funnel.getInstance();
 		Shooter.init();
-		Climb.getInstance();//.setDefaultCommand(new ClimbByJoysticks(OI.getInstance().getMainJoystick()));
+		Climb.getInstance().setDefaultCommand(new ClimbByJoysticks(OI.getInstance().getSecondJoystick()));
 		OI.getInstance();
 		Indexing.getInstance();
 		Chassis.getInstance(); // Must be last!
@@ -37,6 +41,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
 		Chassis.getInstance().toCoast();
+		new RetractRoller().schedule();
 	}
 	
 	@Override
@@ -46,7 +51,7 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void autonomousInit() {
-
+		new RetractRoller().schedule();
 		/*
 //		Line Auto
 		new ParallelRaceGroup(
