@@ -150,15 +150,13 @@ public class Climb extends GBSubsystem {
 		return rail;
 	}
 	
-	/*@Override
+	
+	
+	
+	@Override
 	public void periodic() {
-		if (OI.getInstance().getMainJoystick().R1.get()){
-			if(!this.getCurrentCommand().getClass().getSimpleName().equals("ClimbByJoysticks")){
-			this.getCurrentCommand().cancel();
-			rail.getCurrentCommand().cancel();
-			turning.getCurrentCommand().cancel();
-		}}
-	}*/
+	
+	}
 	
 	
 	private class ClimbSubsystem extends GBSubsystem {
