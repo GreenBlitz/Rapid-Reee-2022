@@ -81,7 +81,7 @@ public class OI {
 		Climb.getInstance().setDefaultCommand(new ClimbByJoysticks(mainJoystick));
 		mainJoystick.Y.whileHeld(new WhileHeldCoast());
 		mainJoystick.START.whenPressed(new FullClimb(mainJoystick));
-	}
+
 	
 	private void initRealButtons() {
 		//Intake.getInstance().initDefaultCommand(secondJoystick);

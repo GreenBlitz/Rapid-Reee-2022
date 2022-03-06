@@ -8,11 +8,6 @@ import edu.greenblitz.gblib.gears.GearDependentValue;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.ClimbState;
-<<<<<<< HEAD
-import edu.greenblitz.pegasus.commands.climb.ClimbMoveToPosition;
-=======
-import edu.greenblitz.pegasus.commands.climb.ToggleClimbPosition;
->>>>>>> d062ad3 (asaf - code now compiles)
 import org.greenblitz.motion.pid.PIDObject;
 
 public class Climb extends GBSubsystem {
@@ -150,12 +145,6 @@ public class Climb extends GBSubsystem {
 	public Turning getTurning() {
 		return turning;
 	}
-<<<<<<< HEAD
-=======
-	public void initDefaultCommand(SmartJoystick joystick){
-		setDefaultCommand(new ToggleClimbPosition(ClimbState.MID_GAME, joystick.B));
-	}
->>>>>>> d062ad3 (asaf - code now compiles)
 	
 	public Rail getRail(){
 		return rail;
