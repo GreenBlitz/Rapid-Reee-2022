@@ -53,34 +53,11 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-//		mainJoystick.R1.whileHeld(new ParallelCommandGroup(
-//				new HandleBalls(),
-//				new RunRoller()
-//		));
-		/*
-		mainJoystick.B.whileHeld(
-				new ParallelCommandGroup(
-						new InsertIntoShooter(),
-					new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2700) {
-						
-						@Override
-					public void end(boolean interrupted) {
-						super.end(interrupted);
-						shooter.setSpeedByPID(0);
-					}}
-				)
-		);
-		mainJoystick.Y.whileHeld(new MoveBallUntilClick());
-		*/
-		mainJoystick.B.whileHeld(new DoubleShoot());
-		mainJoystick.X.whenPressed(new ToggleShooterByRPM());
-		mainJoystick.POV_UP.whenPressed(new ClimbMoveToPosition(ClimbState.PULL_UP));
-		mainJoystick.POV_LEFT.whenPressed(new ClimbMoveToPosition(ClimbState.TRAVERSE));
-		mainJoystick.POV_RIGHT.whenPressed(new ClimbMoveToPosition(ClimbState.MID_GAME));
-		mainJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.HANGAR));
-		Climb.getInstance().setDefaultCommand(new ClimbByJoysticks(mainJoystick));
-		mainJoystick.Y.whileHeld(new WhileHeldCoast());
-		mainJoystick.START.whenPressed(new FullClimb(mainJoystick));
+		Chassis.getInstance().initDefaultCommand(mainJoystick);
+		secondJoystick.POV_UP.whenPressed(new ClimbByJoysticks(secondJoystick));
+		secondJoystick.START.whenPressed(new FullClimb(secondJoystick));
+		secondJoystick.BACK.whenPressed(new SafeExitStartCondition());
+		secondJoystick.R1.whileHeld(new WhileHeldCoast());
 		
 	}
 	private void initRealButtons() {

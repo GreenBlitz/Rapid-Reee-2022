@@ -6,6 +6,7 @@ import com.revrobotics.SparkMaxPIDController;
 import edu.greenblitz.gblib.encoder.SparkEncoder;
 import edu.greenblitz.gblib.gears.GearDependentValue;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.OI;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.ClimbState;
 import org.greenblitz.motion.pid.PIDObject;
@@ -61,10 +62,13 @@ public class Climb extends GBSubsystem {
 		}
 		else*/ if (loc < safety && power < 0) {
 			unsafeMoveRailMotor(Math.max(loc - absoluteSafety, 0) / safety * power);
+			System.out.println("min");
 		} else if (loc + safety > len && power > 0) {
 			unsafeMoveRailMotor(Math.max(len - loc - absoluteSafety, 0) / safety * power);
+			System.out.println("max");
 		} else {
 			unsafeMoveRailMotor(power);
+			System.out.println("standard");
 		}
 
 	}
@@ -85,15 +89,11 @@ public class Climb extends GBSubsystem {
 			unsafeMoveTurningMotor((ang - absoluteSafety - safetyAngle)/safety*power);
 		}
 		else*/
-		System.out.println(power);
 		if (ang - safety < min && power < 0) {
-			System.out.println("min");
 			unsafeMoveTurningMotor(Math.max(ang - absoluteSafety - min, 0) / safety * power);
 		} else if (ang + safety > max && power > 0) {
-			System.out.println("max");
 			unsafeMoveTurningMotor((Math.max(max - ang - absoluteSafety, 0) / safety * power));
 		} else {
-			System.out.println("standard");
 			unsafeMoveTurningMotor(power);
 		}
 	}
@@ -150,6 +150,17 @@ public class Climb extends GBSubsystem {
 		return rail;
 	}
 	
+	/*@Override
+	public void periodic() {
+		if (OI.getInstance().getMainJoystick().R1.get()){
+			if(!this.getCurrentCommand().getClass().getSimpleName().equals("ClimbByJoysticks")){
+			this.getCurrentCommand().cancel();
+			rail.getCurrentCommand().cancel();
+			turning.getCurrentCommand().cancel();
+		}}
+	}*/
+	
+	
 	private class ClimbSubsystem extends GBSubsystem {
 		public Climb getClimb() {
 			return Climb.this;
@@ -181,6 +192,15 @@ public class Climb extends GBSubsystem {
 			turningEncoder.reset();
 		}
 		
+		public void toCoast() {
+			this.turningMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+		}
+		
+		public void toBrake() {
+			this.turningMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+		}
+		
+		
 		private boolean needsCoast = false;
 		@Override
 		public void periodic() {
@@ -192,8 +212,8 @@ public class Climb extends GBSubsystem {
 			if (getAng() < Math.PI/2 - 0.4 && needsCoast){
 				setTurningMotorIdle(CANSparkMax.IdleMode.kCoast);
 			}
-			System.out.println("ang: " + (90 - getAng()*360/2/Math.PI));
-			System.out.println("loc: " + getLoc()*100);
+			System.out.println("ang: " + getAng());
+			System.out.println("loc: " + getLoc());
 			
 			
 		}
