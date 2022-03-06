@@ -53,10 +53,10 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		mainJoystick.R1.whileHeld(new ParallelCommandGroup(
-				new HandleBalls(),
-				new RunRoller()
-		));
+//		mainJoystick.R1.whileHeld(new ParallelCommandGroup(
+//				new HandleBalls(),
+//				new RunRoller()
+//		));
 		/*
 		mainJoystick.B.whileHeld(
 				new ParallelCommandGroup(
