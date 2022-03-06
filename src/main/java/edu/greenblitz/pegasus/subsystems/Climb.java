@@ -18,6 +18,8 @@ public class Climb extends GBSubsystem {
 	private Rail rail;
 	private Turning turning;
 
+	private boolean atStart;
+
 	
 
 	private Climb() {
@@ -149,7 +151,20 @@ public class Climb extends GBSubsystem {
 	public Rail getRail(){
 		return rail;
 	}
-	
+
+	public boolean getAtStart(){
+		return atStart;
+	}
+
+	@Override
+	public void periodic() {
+		if (Math.abs(getLoc() - RobotMap.Pegasus.Climb.ClimbMotors.START_LOCATION) < RobotMap.Pegasus.Climb.ClimbConstants.Rail.EPSILON){
+			if (Math.abs(getAng() - RobotMap.Pegasus.Climb.ClimbMotors.START_ANGLE) < RobotMap.Pegasus.Climb.ClimbConstants.Rotation.EPSILON) {
+				atStart = true;
+			}
+		}
+	}
+
 	private class ClimbSubsystem extends GBSubsystem {
 		public Climb getClimb() {
 			return Climb.this;

@@ -56,8 +56,8 @@ public class MoveRailToPosition extends RailCommand {
 			case MID_GAME:
 				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_MID_GAME;
 				break;
-			case HANGAR:
-				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_HANGAR_ZONE;
+			case START:
+				goal = RobotMap.Pegasus.Climb.ClimbMotors.START_LOCATION;
 				break;
 		}
 	}

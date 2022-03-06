@@ -153,7 +153,6 @@ public class RobotMap {
 					public static final double RADIANS_TO_SECOND_BAR = Math.toRadians(39.5);
 					public static final double RADIANS_TO_TRAVERSAL = Math.toRadians(0); //TODO: change this
 					public static final double RADIANS_TO_MID_GAME = Math.toRadians(54.4);
-					public static final double RADIANS_TO_HANGAR_ZONE = Math.toRadians(78);
 					public static final double EPSILON = 0.075;
 				}
 				
@@ -163,7 +162,6 @@ public class RobotMap {
 					public static final double METERS_TO_SECOND_BAR = 0.01;
 					public static final double METERS_TO_TRAVERSAL = 0.0;
 					public static final double METERS_TO_MID_GAME = 0.43;
-					public static final double METERS_TO_HANGAR_ZONE = 0.41;
 					public static final double EPSILON = 0.02;
 				}
 			}

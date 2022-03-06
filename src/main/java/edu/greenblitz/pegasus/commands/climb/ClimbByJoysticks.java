@@ -25,8 +25,6 @@ public class ClimbByJoysticks extends ClimbCommand{
 
 			double turningMotorPower = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_Y);
 			climb.unsafeMoveTurningMotor(turningMotorPower*0.4);
-			System.out.println("ang: " + (90 - climb.getAng()*360/2/Math.PI));
-			System.out.println("loc: " + climb.getLoc()*100);
 		}
 		else{
 		double railMotorPower = joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y);
@@ -34,8 +32,6 @@ public class ClimbByJoysticks extends ClimbCommand{
 
 		double turningMotorPower = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_Y);
 		climb.safeMoveTurningMotor(turningMotorPower*0.4);
-		System.out.println("ang: " + (90 - climb.getAng()*360/2/Math.PI));
-		System.out.println("loc: " + climb.getLoc()*100);
 		}
 	}
 
