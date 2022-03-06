@@ -2,34 +2,24 @@ package edu.greenblitz.pegasus.commands.climb;
 
 import edu.greenblitz.pegasus.commands.climb.Rail.MoveRailToPosition;
 import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;
+import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
-public class ToggleClimbPosition extends ParallelCommandGroup {
+public class ClimbMoveToPosition extends ParallelCommandGroup {
 	
-	JoystickButton toggleButton;
 	MoveRailToPosition extend;
 	MoveTurningToAngle turning;
 	
-	public ToggleClimbPosition(ClimbState state, JoystickButton button) {
+	public ClimbMoveToPosition(ClimbState state) {
+		addRequirements(Climb.getInstance());
 		turning = new MoveTurningToAngle(state);
 		extend = new MoveRailToPosition(state);
 		addCommands(extend, turning);
-		toggleButton = button;
 	}
 	
 	@Override
-	public void execute() {
-		if (toggleButton.get()) {
-			ClimbState state;
-			if (extend.getState() != ClimbState.HANGAR) {
-				state = ClimbState.HANGAR;
-			} else {
-				state = ClimbState.MID_GAME;
-			}
-			extend.setState(state);
-			turning.setState(state);
-		}
-		super.execute();
+	public boolean isFinished() {
+		return super.isFinished();
 	}
 }

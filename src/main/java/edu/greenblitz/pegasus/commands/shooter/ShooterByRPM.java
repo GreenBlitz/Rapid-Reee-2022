@@ -43,7 +43,6 @@ public class ShooterByRPM extends ShooterCommand {
 
 		} else {
 			this.inShootingSpeed = 0;
-			System.out.println("weird");
 			shooter.setPreparedToShoot(false);
 		}
 		if (this.inShootingSpeed >= 7) {

@@ -8,7 +8,7 @@ import edu.greenblitz.gblib.gears.GearDependentValue;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.ClimbState;
-import edu.greenblitz.pegasus.commands.climb.ToggleClimbPosition;
+import edu.greenblitz.pegasus.commands.climb.ClimbMoveToPosition;
 import org.greenblitz.motion.pid.PIDObject;
 
 public class Climb extends GBSubsystem {
@@ -85,11 +85,16 @@ public class Climb extends GBSubsystem {
 		/*if(getLoc() > safetyLoc && ang - safety < safetyAngle && power < 0){
 			unsafeMoveTurningMotor((ang - absoluteSafety - safetyAngle)/safety*power);
 		}
-		else*/ if (ang - safety < min && power < 0) {
+		else*/
+		System.out.println(power);
+		if (ang - safety < min && power < 0) {
+			System.out.println("min");
 			unsafeMoveTurningMotor(Math.max(ang - absoluteSafety - min, 0) / safety * power);
 		} else if (ang + safety > max && power > 0) {
+			System.out.println("max");
 			unsafeMoveTurningMotor((Math.max(max - ang - absoluteSafety, 0) / safety * power));
 		} else {
+			System.out.println("standard");
 			unsafeMoveTurningMotor(power);
 		}
 	}
@@ -141,9 +146,6 @@ public class Climb extends GBSubsystem {
 	public Turning getTurning() {
 		return turning;
 	}
-	public void initDefaultCommand(SmartJoystick joystick){
-		setDefaultCommand(new ToggleClimbPosition(ClimbState.MID_GAME, joystick.B));
-	}
 	
 	public Rail getRail(){
 		return rail;
@@ -184,13 +186,17 @@ public class Climb extends GBSubsystem {
 		@Override
 		public void periodic() {
 			super.periodic();
-			if (getAng() > Math.PI/2 - 0.3){
+			if (getAng() > Math.PI/2 - 0.3 && turningMotor.getIdleMode() == CANSparkMax.IdleMode.kCoast){
 				needsCoast = true;
 				setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
 			}
 			if (getAng() < Math.PI/2 - 0.4 && needsCoast){
 				setTurningMotorIdle(CANSparkMax.IdleMode.kCoast);
 			}
+			System.out.println("ang: " + (90 - getAng()*360/2/Math.PI));
+			System.out.println("loc: " + getLoc()*100);
+			
+			
 		}
 	}
 	

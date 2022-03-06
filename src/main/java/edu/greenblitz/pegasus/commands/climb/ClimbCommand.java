@@ -9,6 +9,8 @@ public abstract class ClimbCommand extends GBCommand {
 	public ClimbCommand() {
 		require(Climb.getInstance());
 		climb = Climb.getInstance();
+		require(climb.getTurning());
+		require(climb.getRail());
 	}
 
 }

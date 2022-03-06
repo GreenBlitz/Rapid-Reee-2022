@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.commands.climb.*;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
@@ -15,10 +16,7 @@ import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shooter.*;
 import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Climb;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.*;
 
 public class OI {
 	private static OI instance;
@@ -36,7 +34,6 @@ public class OI {
 	private OI() {
 		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.2);
 		secondJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.SECOND, 0.2);
-		System.out.println("In OI");
 		switch (IOMode) {
 			case DEBUG:
 				initDebugButtons();
@@ -56,7 +53,7 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		mainJoystick.A.whileHeld(new ParallelCommandGroup(
+		mainJoystick.R1.whileHeld(new ParallelCommandGroup(
 				new HandleBalls(),
 				new RunRoller()
 		));
@@ -77,7 +74,13 @@ public class OI {
 		*/
 		mainJoystick.B.whileHeld(new DoubleShoot());
 		mainJoystick.X.whenPressed(new ToggleShooterByRPM());
-		mainJoystick.Y.whileHeld(new ReverseRunRoller());
+		mainJoystick.POV_UP.whenPressed(new ClimbMoveToPosition(ClimbState.PULL_UP));
+		mainJoystick.POV_LEFT.whenPressed(new ClimbMoveToPosition(ClimbState.TRAVERSE));
+		mainJoystick.POV_RIGHT.whenPressed(new ClimbMoveToPosition(ClimbState.MID_GAME));
+		mainJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.HANGAR));
+		Climb.getInstance().setDefaultCommand(new ClimbByJoysticks(mainJoystick));
+		mainJoystick.Y.whileHeld(new WhileHeldCoast());
+		mainJoystick.START.whenPressed(new FullClimb(mainJoystick));
 	}
 	
 	private void initRealButtons() {
@@ -98,7 +101,6 @@ public class OI {
 		secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
 //		secondJoystick.POV_LEFT.whenPressed(new InitManualOverride());
 		
-		Climb.getInstance().initDefaultCommand(secondJoystick);
 		
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
 	}

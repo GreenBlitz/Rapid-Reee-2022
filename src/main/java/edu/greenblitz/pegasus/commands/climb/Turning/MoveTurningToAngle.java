@@ -3,6 +3,7 @@ package edu.greenblitz.pegasus.commands.climb.Turning;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.ClimbState;
 
+import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rotation.ff;
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rotation.kp;
 
 public class MoveTurningToAngle extends TurningCommand {
@@ -11,6 +12,7 @@ public class MoveTurningToAngle extends TurningCommand {
 	private boolean atAngle;
 	private ClimbState state;
 	public MoveTurningToAngle(double goalAngle) {
+		super();
 		goal = goalAngle;
 
 	}
@@ -26,8 +28,7 @@ public class MoveTurningToAngle extends TurningCommand {
 
 	@Override
 	public void execute() {
-		climb.safeMoveTurningMotor(kp * (climb.getAng() - goal));
-		atAngle = Math.abs(climb.getAng() - goal) < RobotMap.Pegasus.Climb.ClimbConstants.Rotation.EPSILON;
+		climb.safeMoveTurningMotor(kp * (goal - climb.getAng()) + ff * Math.signum(goal - climb.getAng()));
 	}
 
 	@Override
@@ -37,12 +38,9 @@ public class MoveTurningToAngle extends TurningCommand {
 
 	@Override
 	public boolean isFinished() {
-		return false;
+		return Math.abs(goal - climb.getAng()) < RobotMap.Pegasus.Climb.ClimbConstants.Rotation.EPSILON;
 	}
 
-	public boolean isAtAngle() {
-		return atAngle;
-	}
 	
 	public ClimbState getState(){
 		return state;

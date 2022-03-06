@@ -3,6 +3,7 @@ package edu.greenblitz.pegasus.commands.climb.Rail;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.ClimbState;
 
+import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rail.ff;
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rail.kp;
 
 public class MoveRailToPosition extends RailCommand {
@@ -26,8 +27,7 @@ public class MoveRailToPosition extends RailCommand {
 
 	@Override
 	public void execute() {
-		climb.safeMoveRailMotor(kp * (climb.getLoc() - goal));
-		atLocation = Math.abs(climb.getLoc() - goal) < RobotMap.Pegasus.Climb.ClimbConstants.Rail.EPSILON;
+		climb.safeMoveRailMotor(kp * (goal - climb.getLoc()) + ff * Math.signum(goal - climb.getLoc()));
 	}
 
 	@Override
@@ -37,11 +37,7 @@ public class MoveRailToPosition extends RailCommand {
 
 	@Override
 	public boolean isFinished() {
-		return false;
-	}
-
-	public boolean isAtLocation() {
-		return atLocation;
+		return Math.abs(goal - climb.getLoc()) < RobotMap.Pegasus.Climb.ClimbConstants.Rail.EPSILON;
 	}
 	
 	public ClimbState getState(){
