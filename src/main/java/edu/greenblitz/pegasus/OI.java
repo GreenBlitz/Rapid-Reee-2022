@@ -69,7 +69,19 @@ public class OI {
 		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2750));
 		secondJoystick.X.whileHeld(new InsertIntoShooter());
 
-		secondJoystick.B.whileHeld(new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0)));
+		secondJoystick.B.whileHeld(
+				new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0)) {
+					@Override
+					public void initialize() {
+						new ToggleRoller().schedule();
+					}
+
+					@Override
+					public void end(boolean interrupted) {
+						new ToggleRoller().schedule();
+					}
+				}
+		);
 		
 		secondJoystick.POV_UP.whenPressed(new ToggleRoller());
 		secondJoystick.POV_DOWN.whileHeld(new EjectFromShooter());
