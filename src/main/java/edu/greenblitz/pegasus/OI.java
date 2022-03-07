@@ -13,6 +13,7 @@ import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.ReverseRunRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
+import edu.greenblitz.pegasus.commands.multiSystem.EjectFromShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shooter.*;
@@ -30,7 +31,7 @@ public class OI {
 		DEBUG, REAL, NO_AUTO
 	}
 	
-	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -63,23 +64,25 @@ public class OI {
 		
 	}
 	private void initRealButtons() {
-		//Intake.getInstance().initDefaultCommand(secondJoystick);
-		//Shooter.getInstance().initDefaultCommand(secondJoystick);
-		secondJoystick.A.whileHeld(new CalibratePID(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 3100) {
+		secondJoystick.Y.whileHeld(new DoubleShoot());
 
-			@Override
-			public void end(boolean interrupted) {
-				super.end(interrupted);
-				shooter.setSpeedByPID(0);
-			}
-		});
+		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2750));
 		secondJoystick.X.whileHeld(new InsertIntoShooter());
+
+		secondJoystick.B.whileHeld(new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0)));
 		
-		secondJoystick.R1.whileHeld(new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0)));
-		
-		secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
-//		secondJoystick.POV_LEFT.whenPressed(new InitManualOverride());
-		
+		secondJoystick.POV_UP.whenPressed(new ToggleRoller());
+		secondJoystick.POV_DOWN.whileHeld(new EjectFromShooter());
+		secondJoystick.POV_LEFT.whenPressed(new InitManualOverride());
+
+		Climb.getInstance().initDefaultCommand(secondJoystick);
+
+		secondJoystick.BACK.whenPressed(new InstantCommand(new ToggleClimbPosition()));
+
+		secondJoystick.L1.whenPressed(new ParallelCommandGroup(
+				new RailByJoystick(secondJoystick),
+				new TurningByJoystick(secondJoystick)
+		));
 		
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
 	}
