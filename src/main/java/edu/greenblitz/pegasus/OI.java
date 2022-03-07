@@ -79,7 +79,7 @@ public class OI {
 		
 		secondJoystick.POV_UP.whenPressed(new ToggleRoller());
 		secondJoystick.POV_DOWN.whileHeld(new EjectFromShooter());
-		secondJoystick.POV_LEFT.whenPressed(new InitManualOverride());
+		secondJoystick.BACK.whenPressed(new InitManualOverride());
 
 		secondJoystick.R1.whileHeld(new WhileHeldCoast());
 
@@ -87,7 +87,8 @@ public class OI {
 
 		Climb.getInstance().initDefaultCommand(secondJoystick);
 
-		secondJoystick.BACK.whenPressed(new InstantCommand(new ToggleClimbPosition()));
+		secondJoystick.POV_LEFT.whenPressed(new ClimbMoveToPosition(ClimbState.MID_GAME));
+		secondJoystick.POV_RIGHT.whenPressed(new ClimbMoveToPosition(ClimbState.START));
 
 		secondJoystick.L1.whenPressed(new ParallelCommandGroup(
 				new RailByJoystick(secondJoystick),
