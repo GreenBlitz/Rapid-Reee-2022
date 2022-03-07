@@ -12,7 +12,7 @@ public class ClimbMoveToPosition extends ParallelCommandGroup {
 	MoveTurningToAngle turning;
 	
 	public ClimbMoveToPosition(ClimbState state) {
-		addRequirements(Climb.getInstance());
+		super();
 		turning = new MoveTurningToAngle(state);
 		extend = new MoveRailToPosition(state);
 		addCommands(extend, turning);

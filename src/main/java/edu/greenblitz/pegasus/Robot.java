@@ -1,11 +1,7 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.chassis.auto.TwoBallAuto;
-import edu.greenblitz.pegasus.commands.climb.ClimbByJoysticks;
-import edu.greenblitz.pegasus.commands.climb.SafeExitStartCondition;
-import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
 import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
-import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -20,7 +16,7 @@ public class Robot extends TimedRobot {
 		Shifter.getInstance();
 		Funnel.getInstance();
 		Shooter.init();
-		Climb.getInstance().setDefaultCommand(new ClimbByJoysticks(OI.getInstance().getSecondJoystick()));
+		Climb.getInstance().initDefaultCommand(OI.getInstance().getSecondJoystick());
 		OI.getInstance();
 		Indexing.getInstance();
 		Chassis.getInstance(); // Must be last!

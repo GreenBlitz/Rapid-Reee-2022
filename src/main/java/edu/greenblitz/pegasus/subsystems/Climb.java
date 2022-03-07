@@ -9,6 +9,8 @@ import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.OI;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.ClimbState;
+import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
+import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
 import org.greenblitz.motion.pid.PIDObject;
 
 public class Climb extends GBSubsystem {
@@ -155,6 +157,12 @@ public class Climb extends GBSubsystem {
 	public boolean getAtStart(){
 		return atStart;
 	}
+	
+	public void initDefaultCommand(SmartJoystick joystick){
+		turning.setDefaultCommand(new TurningByJoystick(joystick));
+		rail.setDefaultCommand(new RailByJoystick(joystick));
+		
+	}
 
 	@Override
 	public void periodic() {
@@ -164,6 +172,9 @@ public class Climb extends GBSubsystem {
 				atStart = true;
 			}
 		}
+		System.out.println("atStart:" + atStart);
+		System.out.println("ang: " + getAng());
+		System.out.println("loc: " + getLoc());
 		
 	}
 
@@ -218,8 +229,6 @@ public class Climb extends GBSubsystem {
 			if (getAng() < Math.PI/2 - 0.4 && needsCoast){
 				setTurningMotorIdle(CANSparkMax.IdleMode.kCoast);
 			}
-			System.out.println("ang: " + getAng());
-			System.out.println("loc: " + getLoc());
 			
 			
 		}

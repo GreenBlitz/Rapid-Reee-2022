@@ -13,9 +13,15 @@ public class HybridPullDown extends RailCommand {
 	
 	private SmartJoystick joystick;
 	private boolean scheduled = false;
+	private SequentialCommandGroup turn;
 	public HybridPullDown(SmartJoystick joystick){
+		super();
 		this.joystick = joystick;
 		require(Climb.getInstance());
+	}
+	
+	@Override
+	public void initialize() {
 	}
 	
 	@Override
@@ -28,9 +34,11 @@ public class HybridPullDown extends RailCommand {
 		}
 		if (!scheduled && Math.abs(RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR - climb.getLoc()) > RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_LOC){
 			climb.setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
-			new SequentialCommandGroup(new MoveTurningToAngle(RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_ANG), new HoldTurning(RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_ANG));
+			turn = new SequentialCommandGroup(new MoveTurningToAngle(RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_ANG), new HoldTurning(RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_ANG));
+			turn.schedule();
 			scheduled = true;
 		}
+		System.out.println((RobotMap.Pegasus.Climb.ClimbMotors.RAIL_LENGTH - RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR) - climb.getLoc());
 	}
 	
 	@Override
@@ -38,11 +46,11 @@ public class HybridPullDown extends RailCommand {
 		super.end(interrupted);
 		climb.setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
 		scheduled = false;
+		
 	}
 	
 	@Override
 	public boolean isFinished() {
-		
-		return climb.getLoc() > (RobotMap.Pegasus.Climb.ClimbMotors.RAIL_LENGTH - RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR);
+		return Math.abs((RobotMap.Pegasus.Climb.ClimbMotors.RAIL_LENGTH - RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR) - climb.getLoc()) < RobotMap.Pegasus.Climb.ClimbConstants.Rail.EPSILON;
 	}
 }

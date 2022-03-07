@@ -3,6 +3,8 @@ package edu.greenblitz.pegasus;
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.climb.*;
+import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
+import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
@@ -54,10 +56,10 @@ public class OI {
 	
 	private void initDebugButtons() {
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		secondJoystick.POV_UP.whenPressed(new ClimbByJoysticks(secondJoystick));
 		secondJoystick.START.whenPressed(new FullClimb(secondJoystick));
 		secondJoystick.BACK.whenPressed(new InstantCommand(new ToggleClimbPosition()));
 		secondJoystick.R1.whileHeld(new WhileHeldCoast());
+		secondJoystick.POV_UP.whenPressed(new ParallelCommandGroup(new TurningByJoystick(secondJoystick), new RailByJoystick(secondJoystick)));
 		
 	}
 	private void initRealButtons() {
@@ -90,6 +92,7 @@ public class OI {
 		
 		@Override
 		public void initialize() {
+			CommandScheduler.getInstance().cancelAll();
 			super.initialize();
 			secondJoystick.R1.whileHeld(new RollByConstant(0.8));
 			secondJoystick.L1.whileHeld(new RollByConstant(-0.8));

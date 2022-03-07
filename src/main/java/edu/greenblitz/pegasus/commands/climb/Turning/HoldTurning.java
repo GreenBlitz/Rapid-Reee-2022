@@ -16,6 +16,7 @@ public class HoldTurning extends TurningCommand {
 	}
 	
 	public HoldTurning(ClimbState state) {
+		super();
 		setState(state);
 	}
 	
@@ -35,7 +36,7 @@ public class HoldTurning extends TurningCommand {
 	
 	@Override
 	public boolean isFinished() {
-		return Math.abs(goal - climb.getAng()) < RobotMap.Pegasus.Climb.ClimbConstants.Rotation.EPSILON;
+		return false;
 	}
 	
 	
