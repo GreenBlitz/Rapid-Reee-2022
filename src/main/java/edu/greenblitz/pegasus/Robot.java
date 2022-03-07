@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void autonomousInit() {
-		new RetractRoller().schedule();
+		//new RetractRoller().schedule();
 		/*
 //		Line Auto
 		new ParallelRaceGroup(
