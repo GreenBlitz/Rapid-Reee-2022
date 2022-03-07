@@ -18,11 +18,11 @@ public class TwoBallAuto extends SequentialCommandGroup {
 				new ParallelRaceGroup(
 						new RobotDotMove(-0.1),
 						new RunRoller(),
-						new WaitCommand(3)
+						new WaitCommand(1.5)
 				),
 				new ParallelRaceGroup(
 						new RobotDotMove(0.1),
-						new WaitCommand(6)
+						new WaitCommand(3)
 				),
 				new DoubleShoot()
 		);

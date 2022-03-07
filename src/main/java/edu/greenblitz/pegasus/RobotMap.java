@@ -106,7 +106,7 @@ public class RobotMap {
 					RPM_TO_POWER.addDatapoint(5209.37181640625, new double[]{1.0});
 				}
 				public static final PIDObject pid = new PIDObject(0.0001, 0.0000005, 0);
-				public static final double iZone = 100;
+				public static final double iZone = 250;
 			}
 		}
 
@@ -153,7 +153,7 @@ public class RobotMap {
 
 					public static final double RADIANS_TO_SECOND_BAR = Math.toRadians(35.5);
 					public static final double RADIANS_TO_TRAVERSAL = Math.toRadians(0); //TODO: change this
-					public static final double RADIANS_TO_MID_GAME = Math.toRadians(60);
+					public static final double RADIANS_TO_MID_GAME = Math.toRadians(70);
 					public static final double EPSILON = 0.075;
 				}
 				
