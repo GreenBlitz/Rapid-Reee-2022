@@ -38,6 +38,7 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().cancelAll();
 		Chassis.getInstance().toCoast();
 		new RetractRoller().schedule();
+		Indexing.getInstance().initSetAlliance();
 	}
 	
 	@Override

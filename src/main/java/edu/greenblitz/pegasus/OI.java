@@ -13,9 +13,7 @@ import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.ReverseRunRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
-import edu.greenblitz.pegasus.commands.multiSystem.EjectFromShooter;
-import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
-import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
+import edu.greenblitz.pegasus.commands.multiSystem.*;
 import edu.greenblitz.pegasus.commands.shooter.*;
 import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Climb;
@@ -56,36 +54,36 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		secondJoystick.START.whenPressed(new FullClimb(secondJoystick));
-		secondJoystick.BACK.whenPressed(new InstantCommand(new ToggleClimbPosition()));
-		secondJoystick.R1.whileHeld(new WhileHeldCoast());
-		secondJoystick.POV_UP.whenPressed(new ParallelCommandGroup(new TurningByJoystick(secondJoystick), new RailByJoystick(secondJoystick)));
+		secondJoystick.A.whileHeld(new EjectEnemyBallFromShooter());
+		secondJoystick.B.whileHeld(new EjectEnemyBallFromGripper());
+		secondJoystick.Y.whileHeld(new MoveBallUntilClick());
+
+		secondJoystick.X.whileHeld(new PrintColor());
 		
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new DoubleShoot());
 
-		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2750));
+		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2750){
+			@Override
+			public void end(boolean interrupted) {
+				super.end(interrupted);
+				shooter.shoot(0);
+			}
+		});
 		secondJoystick.X.whileHeld(new InsertIntoShooter());
 
 		secondJoystick.B.whileHeld(
-				new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0)) {
-					@Override
-					public void initialize() {
-						new ToggleRoller().schedule();
-					}
-
-					@Override
-					public void end(boolean interrupted) {
-						new ToggleRoller().schedule();
-					}
-				}
+				new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0))
 		);
 		
 		secondJoystick.POV_UP.whenPressed(new ToggleRoller());
 		secondJoystick.POV_DOWN.whileHeld(new EjectFromShooter());
 		secondJoystick.POV_LEFT.whenPressed(new InitManualOverride());
+
+		secondJoystick.R1.whileHeld(new WhileHeldCoast());
+
+		secondJoystick.START.whenPressed(new FullClimb(secondJoystick));
 
 		Climb.getInstance().initDefaultCommand(secondJoystick);
 

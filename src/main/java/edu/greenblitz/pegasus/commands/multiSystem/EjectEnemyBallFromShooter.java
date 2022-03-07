@@ -14,10 +14,12 @@ public class EjectEnemyBallFromShooter extends SequentialCommandGroup {
 		addCommands(
 				new MoveBallUntilClick(),
 				new ParallelRaceGroup(
-						new WaitTillBallExit(),
+						new SequentialCommandGroup(
+								new WaitTillBallExit(),
+								new WaitCommand(0.5)
+						),
 						new RunFunnel(),
-						new ShootByConstant(OUT_POWER),
-						new WaitCommand(3)
+						new ShootByConstant(OUT_POWER)
 				)
 		);
 	}

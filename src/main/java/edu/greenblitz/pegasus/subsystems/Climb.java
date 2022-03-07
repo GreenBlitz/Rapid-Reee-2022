@@ -66,13 +66,10 @@ public class Climb extends GBSubsystem {
 		}
 		else*/ if (loc < safety && power < 0) {
 			unsafeMoveRailMotor(Math.max(loc - absoluteSafety, 0) / safety * power);
-			System.out.println("min");
 		} else if (loc + safety > len && power > 0) {
 			unsafeMoveRailMotor(Math.max(len - loc - absoluteSafety, 0) / safety * power);
-			System.out.println("max");
 		} else {
 			unsafeMoveRailMotor(power);
-			System.out.println("standard");
 		}
 
 	}
@@ -172,9 +169,6 @@ public class Climb extends GBSubsystem {
 				atStart = true;
 			}
 		}
-		System.out.println("atStart:" + atStart);
-		System.out.println("ang: " + getAng());
-		System.out.println("loc: " + getLoc());
 		
 	}
 

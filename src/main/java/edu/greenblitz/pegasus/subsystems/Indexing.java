@@ -30,7 +30,6 @@ public class Indexing extends GBSubsystem {
 		macroSwitch = DigitalInputMap.getInstance().getDigitalInput(RobotMap.Pegasus.Funnel.MACRO_SWITCH_PORT);
 		ballCount = 0;
 		System.out.println(DriverStation.getAlliance());
-		allianceColor = DriverStation.getAlliance() == DriverStation.Alliance.Blue ? BallColor.BLUE : BallColor.RED;
 	}
 
 	private static void init() {
@@ -81,5 +80,9 @@ public class Indexing extends GBSubsystem {
 
 	public int getBallCount(){
 		return this.ballCount;
+	}
+
+	public void initSetAlliance(){
+		allianceColor = DriverStation.getAlliance() == DriverStation.Alliance.Blue ? BallColor.BLUE : BallColor.RED;
 	}
 }

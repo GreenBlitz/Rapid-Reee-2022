@@ -17,14 +17,13 @@ public class HandleBalls extends IndexingCommand{
 	@Override
 	public void execute() {
 		if(lastCommand == null || lastCommand.isFinished()) { //need to do an action - not action is active right now
-			System.out.println("Action needed");
 			if (indexing.getPerceivedColor() == indexing.getAllianceColor()) { //the incoming ball is the same color
 				System.out.println("Adding a ball");
 				indexing.addBall();
 				if (!indexing.isBallUp()) { //the incoming ball is the first ball
 					System.out.println("Moving until click");
 					lastCommand = new MoveBallUntilClick();
-					lastCommand.schedule();
+					lastCommand.schedule(false);
 				}else{
 					//No need for action - the incoming ball is the second ball
 				}
@@ -37,7 +36,7 @@ public class HandleBalls extends IndexingCommand{
 					System.out.println("Gripper");
 					lastCommand = new EjectEnemyBallFromGripper();
 				}
-				lastCommand.schedule();
+				lastCommand.schedule(false);
 			}
 		}
 	}
