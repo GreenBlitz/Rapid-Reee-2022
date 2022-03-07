@@ -105,8 +105,8 @@ public class RobotMap {
 					RPM_TO_POWER.addDatapoint(4664.115322265625, new double[]{0.9});
 					RPM_TO_POWER.addDatapoint(5209.37181640625, new double[]{1.0});
 				}
-				public static final PIDObject pid = new PIDObject(0.0001, 0.0000005, 0);
-				public static final double iZone = 250;
+				public static final PIDObject pid = new PIDObject(0.0001, 0.0000003, 0);
+				public static final double iZone = 400;
 			}
 		}
 
@@ -151,9 +151,9 @@ public class RobotMap {
 					public static final double kp_static = 0.15 / Math.PI * 2;
 					public static final double ff = 0.2;
 
-					public static final double RADIANS_TO_SECOND_BAR = Math.toRadians(35.5);
+					public static final double RADIANS_TO_SECOND_BAR = Math.toRadians(41);
 					public static final double RADIANS_TO_TRAVERSAL = Math.toRadians(0); //TODO: change this
-					public static final double RADIANS_TO_MID_GAME = Math.toRadians(70);
+					public static final double RADIANS_TO_MID_GAME = Math.toRadians(75);
 					public static final double EPSILON = 0.075;
 				}
 				
@@ -162,7 +162,7 @@ public class RobotMap {
 					public static final double ff = 0.2;
 					public static final double METERS_TO_SECOND_BAR = 0.02;
 					public static final double METERS_TO_TRAVERSAL = 0.0;
-					public static final double METERS_TO_MID_GAME = 0.43;
+					public static final double METERS_TO_MID_GAME = 0.41;
 					public static final double EPSILON = 0.02;
 				}
 			}

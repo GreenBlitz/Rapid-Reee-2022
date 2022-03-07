@@ -12,7 +12,7 @@ public class SafeExitStartCondition extends SequentialCommandGroup {
 		addRequirements(Climb.getInstance());
 		
 		addCommands(
-				new MoveTurningToAngle(Climb.getInstance().getAng()+Math.toRadians(20)),
+				new MoveTurningToAngle(Climb.getInstance().getAng()+Math.toRadians(40)),
 				new ParallelCommandGroup(
 				new MoveRailToPosition(ClimbState.MID_GAME),
 				new MoveTurningToAngle(ClimbState.MID_GAME)

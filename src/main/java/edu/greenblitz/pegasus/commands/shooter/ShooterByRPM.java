@@ -10,7 +10,7 @@ public class ShooterByRPM extends ShooterCommand {
 	protected RemoteCSVTarget logger;
 	protected double target;
 	protected double tStart;
-	private double epsilon = 10;
+	private double epsilon = 50;
 	private int inShootingSpeed;
 
 	public ShooterByRPM(PIDObject obj, double iZone, double target) {
