@@ -47,7 +47,6 @@ public class DoubleShoot extends SequentialCommandGroup {
 	@Override
 	public void end(boolean interrupted) {
 		super.end(interrupted);
-		edu.greenblitz.pegasus.subsystems.Shooter.getInstance().setIdleMode(CANSparkMax.IdleMode.kBrake);
 		edu.greenblitz.pegasus.subsystems.Shooter.getInstance().setSpeedByPID(0);
 	}
 }

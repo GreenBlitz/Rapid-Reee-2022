@@ -13,10 +13,12 @@ public class MoveRailToPosition extends RailCommand {
 	private ClimbState state;
 
 	public MoveRailToPosition(double goalPosition) {
+		super();
 		goal = goalPosition;
 	}
 
 	public MoveRailToPosition(ClimbState state) {
+		super();
 		setState(state);
 	}
 

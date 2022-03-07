@@ -13,7 +13,7 @@ public class EjectFromShooter extends ParallelRaceGroup {
 		addCommands(
 				new WaitUntilCommand(() -> DigitalInputMap.getInstance().getValue(RobotMap.Pegasus.Funnel.MACRO_SWITCH_PORT)),
 				new ReverseRunFunnel(),
-				new RunRoller()
+				new ReverseRunRoller()
 		);
 	}
 }

@@ -18,6 +18,7 @@ public class MoveTurningToAngle extends TurningCommand {
 	}
 
 	public MoveTurningToAngle(ClimbState state) {
+		super();
 		setState(state);
 	}
 

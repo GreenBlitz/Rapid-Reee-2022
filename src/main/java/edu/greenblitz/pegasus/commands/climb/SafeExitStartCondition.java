@@ -12,7 +12,7 @@ public class SafeExitStartCondition extends SequentialCommandGroup {
 		addRequirements(Climb.getInstance());
 		
 		addCommands(
-				new MoveRailToPosition(RobotMap.Pegasus.Climb.ClimbMotors.START_LOCATION-0.02),
+				new MoveTurningToAngle(Climb.getInstance().getAng()+Math.toRadians(20)),
 				new ParallelCommandGroup(
 				new MoveRailToPosition(ClimbState.MID_GAME),
 				new MoveTurningToAngle(ClimbState.MID_GAME)

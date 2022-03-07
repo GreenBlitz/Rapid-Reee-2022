@@ -34,7 +34,7 @@ public class HybridPullDown extends RailCommand {
 		}
 		if (!scheduled && Math.abs(RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR - climb.getLoc()) > RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_LOC){
 			climb.setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
-			turn = new SequentialCommandGroup(new MoveTurningToAngle(RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_ANG), new HoldTurning(RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_ANG));
+			turn = new SequentialCommandGroup(new MoveTurningToAngle(RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_ANG), new HoldTurning    (RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_ANG));
 			turn.schedule();
 			scheduled = true;
 		}

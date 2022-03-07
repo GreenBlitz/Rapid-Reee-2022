@@ -16,7 +16,6 @@ public class ToggleClimbPosition implements Runnable {
 			new SafeExitStartCondition().schedule();
 		}
 		else{
-			System.out.println("");
 			new SafeEnterStartCondition().schedule();
 		}}
 	}

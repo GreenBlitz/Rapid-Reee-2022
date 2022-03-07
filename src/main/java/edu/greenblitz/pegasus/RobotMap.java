@@ -126,7 +126,7 @@ public class RobotMap {
 				public static final double RAIL_ABSOLUTE_SAFETY = 0;//0.025;
 				public static final double SAFETY_LOC = 0.6;
 				public static final double LOWEST_ANGLE = 0.25;
-				public static final double HIGHEST_ANGLE = Math.PI / 2 - 0.2;
+				public static final double HIGHEST_ANGLE = Math.PI / 2 - 0.3;
 				public static final double TURN_SAFETY = 0.05;
 				public static final double TURN_ABSOLUTE_SAFETY = 0.02;
 				public static final double BATTERY_SAFETY_ANG = 0.80; // Math.toDegrees(51.5)
@@ -153,7 +153,7 @@ public class RobotMap {
 
 					public static final double RADIANS_TO_SECOND_BAR = Math.toRadians(35.5);
 					public static final double RADIANS_TO_TRAVERSAL = Math.toRadians(0); //TODO: change this
-					public static final double RADIANS_TO_MID_GAME = Math.toRadians(54.4);
+					public static final double RADIANS_TO_MID_GAME = Math.toRadians(60);
 					public static final double EPSILON = 0.075;
 				}
 				
@@ -163,7 +163,7 @@ public class RobotMap {
 					public static final double METERS_TO_SECOND_BAR = 0.02;
 					public static final double METERS_TO_TRAVERSAL = 0.0;
 					public static final double METERS_TO_MID_GAME = 0.43;
-					public static final double EPSILON = 0.04;
+					public static final double EPSILON = 0.02;
 				}
 			}
 		}

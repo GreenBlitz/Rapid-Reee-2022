@@ -24,7 +24,7 @@ public class Shooter extends GBSubsystem {
 
 		leader.setInverted(RobotMap.Pegasus.Shooter.ShooterMotor.LEADER_INVERTED);
 
-		leader.setIdleMode(CANSparkMax.IdleMode.kBrake);
+		leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
 		leader.setSmartCurrentLimit(40);
 

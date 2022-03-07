@@ -1,5 +1,6 @@
 package edu.greenblitz.pegasus;
 
+import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.chassis.auto.TwoBallAuto;
 import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
 import edu.greenblitz.pegasus.subsystems.*;
@@ -25,7 +26,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
+		System.out.println(OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.LEFT_X));
+		System.out.println(OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.LEFT_Y));
+
 	}
+
 	
 	@Override
 	public void disabledInit() {

@@ -21,7 +21,7 @@ public class Shifter extends GBSubsystem {
 	private static Shifter instance;
 	
 	private GBDoubleSolenoid piston;
-	private Gear currentShift = Gear.POWER;
+	private Gear currentShift = Gear.SPEED;
 	private GearDependentValue<DoubleSolenoid.Value> shiftValue =
 			new GearDependentValue<>(DoubleSolenoid.Value.kForward, DoubleSolenoid.Value.kReverse);
 	

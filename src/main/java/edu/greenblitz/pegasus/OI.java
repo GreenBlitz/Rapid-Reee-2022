@@ -77,18 +77,18 @@ public class OI {
 				new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0))
 		);
 		
-		secondJoystick.POV_UP.whenPressed(new ToggleRoller());
-		secondJoystick.POV_DOWN.whileHeld(new EjectFromShooter());
-		secondJoystick.BACK.whenPressed(new InitManualOverride());
+		secondJoystick.START.whenPressed(new ToggleRoller());
+		secondJoystick.BACK.whileHeld(new EjectFromShooter());
+//		secondJoystick.POV_LEFT.whenPressed(new InitManualOverride());
 
 		secondJoystick.R1.whileHeld(new WhileHeldCoast());
 
-		secondJoystick.START.whenPressed(new FullClimb(secondJoystick));
+		secondJoystick.POV_UP.whenPressed(new FullClimb(secondJoystick));
 
 		Climb.getInstance().initDefaultCommand(secondJoystick);
 
-		secondJoystick.POV_LEFT.whenPressed(new ClimbMoveToPosition(ClimbState.MID_GAME));
-		secondJoystick.POV_RIGHT.whenPressed(new ClimbMoveToPosition(ClimbState.START));
+		secondJoystick.POV_RIGHT.whenPressed(new ClimbMoveToPosition(ClimbState.MID_GAME));
+		secondJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
 
 		secondJoystick.L1.whenPressed(new ParallelCommandGroup(
 				new RailByJoystick(secondJoystick),
