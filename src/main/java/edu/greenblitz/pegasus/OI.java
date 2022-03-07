@@ -64,7 +64,8 @@ public class OI {
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new DoubleShoot());
 
-		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2750){
+		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 3200){
+
 			@Override
 			public void end(boolean interrupted) {
 				super.end(interrupted);

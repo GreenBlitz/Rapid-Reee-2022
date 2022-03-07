@@ -6,7 +6,15 @@ import edu.greenblitz.pegasus.commands.climb.ClimbState;
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rotation.*;
 
 public class HoldTurning extends TurningCommand {
-	
+	/**
+	 * this command has been changed to be very specific it is advised to not use it in another place until a codee review is finished
+	 *
+	 *
+	 *
+	 *
+	 *
+	 *
+	 */
 	private double goal;
 	private ClimbState state;
 	public HoldTurning(double goalAngle) {
@@ -26,7 +34,7 @@ public class HoldTurning extends TurningCommand {
 	
 	@Override
 	public void execute() {
-		climb.safeMoveTurningMotor(kp_static * (goal - climb.getAng()));
+		climb.safeMoveTurningMotor(kp_static * (goal - climb.getAng()) + ff_static);
 	}
 	
 	@Override

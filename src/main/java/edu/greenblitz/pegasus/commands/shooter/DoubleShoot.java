@@ -14,7 +14,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 
 	private double RPM1;
 	private double RPM2;
-	private static final double TRIAL_AND_ERROR = 2750;
+	private static final double TRIAL_AND_ERROR = 3200;
 
 	public DoubleShoot(double RPM1, double RPM2) {
 		super();
