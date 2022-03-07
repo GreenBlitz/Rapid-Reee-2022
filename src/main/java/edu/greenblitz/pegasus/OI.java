@@ -109,15 +109,21 @@ public class OI {
 		public void initialize() {
 			CommandScheduler.getInstance().cancelAll();
 			super.initialize();
-			secondJoystick.R1.whileHeld(new RollByConstant(0.8));
-			secondJoystick.L1.whileHeld(new RollByConstant(-0.8));
-			
-			secondJoystick.X.whileHeld(new RunFunnel());
-			secondJoystick.B.whileHeld(new ReverseRunFunnel());
-			
-			secondJoystick.A.whileHeld(new ShootByConstant(0.6));
-			secondJoystick.Y.whileHeld(new ShootByConstant(0.4));
-			secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
+
+			secondJoystick.B.whileHeld(
+					new ParallelCommandGroup(new RunFunnel(), new RollByConstant(1.0)) {
+						@Override
+						public void initialize() {
+							new ToggleRoller().schedule();
+						}
+
+						@Override
+						public void end(boolean interrupted) {
+							new ToggleRoller().schedule();
+						}
+					}
+			);
+
 		}
 		
 		@Override
