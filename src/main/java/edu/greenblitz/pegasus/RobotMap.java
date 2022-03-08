@@ -152,7 +152,7 @@ public class RobotMap {
 					public static final double ff = 0.2;
 					public static final double ff_static = -0.05;
 
-					public static final double RADIANS_TO_SECOND_BAR = Math.toRadians(41);
+					public static final double RADIANS_TO_SECOND_BAR = Math.toRadians(40);
 					public static final double RADIANS_TO_TRAVERSAL = Math.toRadians(0); //TODO: change this
 					public static final double RADIANS_TO_MID_GAME = Math.toRadians(75);
 					public static final double EPSILON = 0.075;

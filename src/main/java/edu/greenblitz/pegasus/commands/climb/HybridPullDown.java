@@ -13,6 +13,7 @@ public class HybridPullDown extends RailCommand {
 	
 	private SmartJoystick joystick;
 	private boolean scheduled = false;
+	private boolean coast = false;
 	private SequentialCommandGroup turn;
 	public HybridPullDown(SmartJoystick joystick){
 		super();
@@ -29,8 +30,13 @@ public class HybridPullDown extends RailCommand {
 		super.execute();
 		double railMotorPower = joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y);
 		climb.safeMoveRailMotor(-railMotorPower);
+		if (!coast){
+			double turningMotorPower = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_Y);
+			climb.safeMoveTurningMotor(turningMotorPower*0.3);
+		}
 		if (!scheduled && Math.abs(RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR - climb.getLoc()) >0.10){
 			climb.setTurningMotorIdle(CANSparkMax.IdleMode.kCoast);
+			coast = true;
 		}
 		if (!scheduled && Math.abs(RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR - climb.getLoc()) > RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_LOC){
 			climb.setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
@@ -46,6 +52,7 @@ public class HybridPullDown extends RailCommand {
 		super.end(interrupted);
 		climb.setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
 		scheduled = false;
+		coast = false;
 		
 	}
 	
