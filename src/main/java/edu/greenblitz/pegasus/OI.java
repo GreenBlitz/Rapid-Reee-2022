@@ -4,6 +4,7 @@ import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.climb.*;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
+import edu.greenblitz.pegasus.commands.climb.Turning.SwitchTurning;
 import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
@@ -62,7 +63,7 @@ public class OI {
 		
 	}
 	private void initRealButtons() {
-		secondJoystick.Y.whileHeld(new DoubleShoot());
+		secondJoystick.Y.whileHeld(new EjectFromShooter());
 
 		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 3200){
 
@@ -79,7 +80,7 @@ public class OI {
 		);
 		
 		secondJoystick.START.whenPressed(new ToggleRoller());
-		secondJoystick.BACK.whileHeld(new EjectFromShooter());
+		secondJoystick.BACK.whenPressed(new HybridPullDown(secondJoystick));
 //		secondJoystick.POV_LEFT.whenPressed(new InitManualOverride());
 
 		secondJoystick.R1.whileHeld(new WhileHeldCoast());
@@ -97,6 +98,9 @@ public class OI {
 		));
 		
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
+
+		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
+		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
 	}
 	
 	private class InitManualOverride extends GBCommand {

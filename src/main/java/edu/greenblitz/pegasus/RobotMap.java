@@ -129,7 +129,7 @@ public class RobotMap {
 				public static final double HIGHEST_ANGLE = Math.PI / 2 - 0.3;
 				public static final double TURN_SAFETY = 0.05;
 				public static final double TURN_ABSOLUTE_SAFETY = 0.02;
-				public static final double BATTERY_SAFETY_ANG = 0.80; // Math.toDegrees(51.5)
+				public static final double BATTERY_SAFETY_ANG = Math.toRadians(51.5); // Math.toDegrees(51.5)
 				public static final double BATTERY_SAFETY_LOC = 0.45;
 			}
 			public static class ClimbMotors {
