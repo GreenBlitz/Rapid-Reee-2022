@@ -15,6 +15,9 @@ import edu.greenblitz.pegasus.commands.intake.roller.ReverseRunRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.*;
+import edu.greenblitz.pegasus.commands.shifter.ToPower;
+import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
+import edu.greenblitz.pegasus.commands.shifter.ToggleShifter;
 import edu.greenblitz.pegasus.commands.shooter.*;
 import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Climb;
@@ -65,7 +68,7 @@ public class OI {
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectFromShooter());
 
-		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 3200){
+		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 3300){
 
 			@Override
 			public void end(boolean interrupted) {
@@ -101,6 +104,9 @@ public class OI {
 
 		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
 		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
+		mainJoystick.BACK.whenPressed(new ToPower());
+		mainJoystick.START.whenPressed(new ToSpeed());
+
 	}
 	
 	private class InitManualOverride extends GBCommand {

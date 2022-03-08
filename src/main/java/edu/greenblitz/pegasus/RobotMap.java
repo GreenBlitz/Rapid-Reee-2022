@@ -122,7 +122,7 @@ public class RobotMap {
 		}
 		public static class Climb {
 			public static class SafetyZones {
-				public static final double RAIL_SAFETY = 0.03;
+				public static final double RAIL_SAFETY = 0.003;
 				public static final double RAIL_ABSOLUTE_SAFETY = 0;//0.025;
 				public static final double SAFETY_LOC = 0.6;
 				public static final double LOWEST_ANGLE = 0.25;
@@ -152,10 +152,10 @@ public class RobotMap {
 					public static final double ff = 0.2;
 					public static final double ff_static = -0.05;
 
-					public static final double RADIANS_TO_SECOND_BAR = Math.toRadians(40);
+					public static final double RADIANS_TO_SECOND_BAR = Math.toRadians(39);
 					public static final double RADIANS_TO_TRAVERSAL = Math.toRadians(0); //TODO: change this
 					public static final double RADIANS_TO_MID_GAME = Math.toRadians(75);
-					public static final double EPSILON = 0.075;
+					public static final double EPSILON = 0.01;
 				}
 				
 				public static class Rail {
@@ -164,7 +164,7 @@ public class RobotMap {
 					public static final double METERS_TO_SECOND_BAR = 0.0;
 					public static final double METERS_TO_TRAVERSAL = 0.0;
 					public static final double METERS_TO_MID_GAME = 0.41;
-					public static final double EPSILON = 0.02;
+					public static final double EPSILON = 0.001;
 				}
 			}
 		}

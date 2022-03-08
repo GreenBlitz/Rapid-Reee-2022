@@ -12,7 +12,7 @@ public class ShooterByRPM extends ShooterCommand {
 	protected double tStart;
 	private int inShootingSpeed;
 
-	private static final double EPSILON = 100;
+	private static final double EPSILON = 120;
 
 	public ShooterByRPM(PIDObject obj, double iZone, double target) {
 		this.obj = obj;
