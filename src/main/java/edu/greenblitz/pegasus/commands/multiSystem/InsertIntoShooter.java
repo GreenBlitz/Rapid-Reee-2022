@@ -38,9 +38,19 @@ public class InsertIntoShooter extends SequentialCommandGroup {
 	}
 
 
+	private boolean reported = false;
+	@Override
+	public void execute() {
+		super.execute();
+		if(Shooter.getInstance().isPreparedToShoot() && !reported){
+			Shooter.getInstance().putNumber("Time To Shoot", System.currentTimeMillis()/1000.0 - startTime);
+			reported = true;
+		}
+	}
+
 	@Override
 	public void end(boolean interrupted) {
 		super.end(interrupted);
-		System.out.println(System.currentTimeMillis()/1000.0 - startTime);
+		reported = false;
 	}
 }

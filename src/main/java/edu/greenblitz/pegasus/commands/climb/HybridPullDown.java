@@ -44,7 +44,6 @@ public class HybridPullDown extends RailCommand {
 			turn.schedule();
 			scheduled = true;
 		}
-		System.out.println((RobotMap.Pegasus.Climb.ClimbMotors.RAIL_LENGTH - RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR) - climb.getLoc());
 	}
 	
 	@Override

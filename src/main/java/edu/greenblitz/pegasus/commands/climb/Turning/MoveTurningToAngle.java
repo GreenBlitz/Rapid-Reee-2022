@@ -28,7 +28,6 @@ public class MoveTurningToAngle extends TurningCommand {
 
 	@Override
 	public void execute() {
-		System.out.print(goal);
 		climb.safeMoveTurningMotor(kp * (goal - climb.getAng()) + ff * Math.signum(goal - climb.getAng()));
 	}
 

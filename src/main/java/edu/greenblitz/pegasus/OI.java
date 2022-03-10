@@ -73,7 +73,7 @@ public class OI {
 			@Override
 			public void end(boolean interrupted) {
 				super.end(interrupted);
-				shooter.shoot(0);
+				shooter.setSpeedByPID(0);
 			}
 		});
 		secondJoystick.X.whileHeld(new InsertIntoShooter());

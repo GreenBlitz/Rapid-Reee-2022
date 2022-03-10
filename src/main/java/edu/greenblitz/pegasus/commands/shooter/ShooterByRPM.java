@@ -38,7 +38,6 @@ public class ShooterByRPM extends ShooterCommand {
 	@Override
 	public void execute() {
 		shooter.setSpeedByPID(target);
-		System.out.println(shooter.getShooterSpeed());
 		if (Math.abs(target - shooter.getShooterSpeed()) < EPSILON) {
 			this.inShootingSpeed++;
 

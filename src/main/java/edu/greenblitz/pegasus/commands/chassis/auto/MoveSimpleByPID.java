@@ -41,7 +41,6 @@ public class MoveSimpleByPID extends ChassisCommand{
 			double currentDistance = Point.dist(startPos,chassis.getLocation());
 			chassis.arcadeDrive(distancePID.calculatePID(currentDistance), 0);
 		
-		System.out.println(Point.dist(startPos,chassis.getLocation()));
 
 		}
 		
