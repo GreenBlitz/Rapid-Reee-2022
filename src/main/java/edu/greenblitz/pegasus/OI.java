@@ -68,7 +68,7 @@ public class OI {
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectFromShooter());
 
-		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 3300){
+		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM){
 
 			@Override
 			public void end(boolean interrupted) {
@@ -104,8 +104,6 @@ public class OI {
 
 		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
 		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
-		mainJoystick.BACK.whenPressed(new ToPower());
-		mainJoystick.START.whenPressed(new ToSpeed());
 
 	}
 	
