@@ -58,12 +58,7 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		secondJoystick.A.whileHeld(new EjectEnemyBallFromShooter());
-		secondJoystick.B.whileHeld(new EjectEnemyBallFromGripper());
-		secondJoystick.Y.whileHeld(new MoveBallUntilClick());
-
-		secondJoystick.X.whileHeld(new PrintColor());
-		
+		mainJoystick.START.whenPressed(new ToggleRoller());
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectFromShooter());
