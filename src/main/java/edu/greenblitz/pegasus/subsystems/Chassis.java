@@ -152,6 +152,9 @@ public class Chassis extends GBSubsystem {
 	public void periodic() {
 		putNumber("Pigeon angle deg", Math.toDegrees(getAngle()));
 		putString("Location", Chassis.getInstance().getLocation().toString());
+		putNumber("right dist", getRightMeters());
+		putNumber("left dist", getLeftMeters());
+
 
 	}
 

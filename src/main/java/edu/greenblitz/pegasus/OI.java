@@ -2,6 +2,8 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.gblib.threading.ThreadedCommand;
+import edu.greenblitz.pegasus.commands.chassis.profiling.Follow2DProfileCommand;
 import edu.greenblitz.pegasus.commands.climb.*;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
 import edu.greenblitz.pegasus.commands.climb.Turning.SwitchTurning;
@@ -58,11 +60,7 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		secondJoystick.A.whileHeld(new EjectEnemyBallFromShooter());
-		secondJoystick.B.whileHeld(new EjectEnemyBallFromGripper());
-		secondJoystick.Y.whileHeld(new MoveBallUntilClick());
-
-		secondJoystick.X.whileHeld(new PrintColor());
+		mainJoystick.A.whenPressed(new ThreadedCommand(new Follow2DProfileCommand()))
 		
 	}
 	private void initRealButtons() {
