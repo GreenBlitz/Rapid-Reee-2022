@@ -3,6 +3,7 @@ package edu.greenblitz.pegasus;
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.gblib.threading.ThreadedCommand;
+import edu.greenblitz.pegasus.commands.chassis.localizer.LocalizerCommand;
 import edu.greenblitz.pegasus.commands.chassis.profiling.Follow2DProfileCommand;
 import edu.greenblitz.pegasus.commands.chassis.test.CheckMaxLin;
 import edu.greenblitz.pegasus.commands.chassis.test.CheckMaxRot;
@@ -26,6 +27,7 @@ import edu.greenblitz.pegasus.commands.shooter.*;
 import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.wpi.first.wpilibj2.command.*;
+import org.greenblitz.motion.Localizer;
 import org.greenblitz.motion.base.State;
 
 import java.util.ArrayList;

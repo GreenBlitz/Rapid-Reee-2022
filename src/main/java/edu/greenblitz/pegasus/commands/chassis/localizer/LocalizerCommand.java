@@ -15,13 +15,11 @@ public class LocalizerCommand extends GBCommand {
 		chassis.resetGyro();
 		localizer = Localizer.getInstance();
 		localizer.configure(chassis.getWheelDistance(), 0, 0);
-		localizer.reset(chassis.getLeftMeters(), chassis.getRightMeters());
 	}
 	
 	@Override
 	public void execute() {
 		localizer.update(chassis.getLeftMeters(), chassis.getRightMeters(), chassis.getAngle());
-		SmartDashboard.putString("Location", localizer.getLocation().toString());
 	}
 	
 	@Override

@@ -1,11 +1,14 @@
 package edu.greenblitz.pegasus.subsystems;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.greenblitz.gblib.encoder.IEncoder;
 import edu.greenblitz.gblib.encoder.SparkEncoder;
 import edu.greenblitz.gblib.gears.Gear;
 import edu.greenblitz.gblib.gears.GlobalGearContainer;
+import edu.greenblitz.gblib.gyroscope.IGyroscope;
+import edu.greenblitz.gblib.gyroscope.PigeonGyro;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
@@ -16,7 +19,7 @@ public class Chassis extends GBSubsystem {
 	private static Chassis instance;
 
 	private final IEncoder leftEncoder, rightEncoder;
-//	private final IGyroscope gyroscope;
+	private final IGyroscope gyroscope;
 	private final CANSparkMax[] motors;
 
 	private static final int[] ports = {
@@ -56,9 +59,9 @@ public class Chassis extends GBSubsystem {
 		rightEncoder = new SparkEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, motors[0]);
 		rightEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.RIGHT_ENCODER_REVERSED);
 		rightEncoder.reset();
-//		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
-//		gyroscope.reset();
-//		gyroscope.inverse();
+		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
+		gyroscope.reset();
+		gyroscope.inverse();
 	}
 
 	public static Chassis getInstance() {
@@ -122,22 +125,19 @@ public class Chassis extends GBSubsystem {
 	}
 
 	public double getAngle() {
-//		return gyroscope.getNormalizedYaw();
-	return 0;
+		return gyroscope.getNormalizedYaw();
 	}
 
 	public double getRawAngle() {
-//		return gyroscope.getRawYaw();
-	return 0;
+		return gyroscope.getRawYaw();
 	}
 
 	public double getAngularVelocityByGyro() {
-//		return gyroscope.getYawRate();
-	return 0;
+		return gyroscope.getYawRate();
 	}
 
 	public void resetGyro() {
-//		gyroscope.reset();
+		gyroscope.reset();
 	}
 
 	public double getWheelDistance() {

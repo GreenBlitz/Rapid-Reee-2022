@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.chassis.auto.TwoBallAuto;
+import edu.greenblitz.pegasus.commands.chassis.localizer.LocalizerCommand;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
 		Chassis.getInstance().toCoast();
+		new LocalizerCommand().schedule();
 		new ExtendRoller().schedule();
 		Indexing.getInstance().initSetAlliance();
 		new SequentialCommandGroup(

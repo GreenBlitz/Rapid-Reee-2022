@@ -22,7 +22,6 @@ public class CheckMaxRot extends ChassisCommand {
     @Override
     public void initialize() {
         previousTime = System.currentTimeMillis() / 1000.0;
-        previousAngle = Chassis.getInstance().getLocation().getAngle();
         previousVel = 0;
         count = 0;
         tStart = System.currentTimeMillis();
@@ -34,12 +33,12 @@ public class CheckMaxRot extends ChassisCommand {
         count++;
         Chassis.getInstance().moveMotors(-power, power);
         double time = System.currentTimeMillis() / 1000.0;
-        double angle = Chassis.getInstance().getLocation().getAngle();
-        double V = (angle - previousAngle) / (time - previousTime);
-        target.report(time - tStart / 1000.0, V, (V - previousVel) / (time - previousTime));
-        previousAngle = angle;
-        previousTime = time;
-        previousVel = V;
+        if (time - previousTime > 0.05){
+            double V = chassis.getAngularVelocityByWheels();
+            target.report(time - tStart / 1000.0, V, (V - previousVel) / (time - previousTime));
+            previousTime = time;
+            previousVel = V;
+        }
 
 
         }

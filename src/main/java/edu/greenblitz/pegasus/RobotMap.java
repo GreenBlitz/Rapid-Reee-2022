@@ -18,7 +18,7 @@ public class RobotMap {
 		}
 
 		public static class Chassis {
-			public static final double WHEEL_DIST = 0.0; //very accurate right now
+			public static final double WHEEL_DIST = 0.564;
 
 			public static class Motors {
 				public static final int RIGHT_LEADER = 1, RIGHT_FOLLOWER_1 = 2, RIGHT_FOLLOWER_2 = 3, LEFT_LEADER = 4, LEFT_FOLLOWER_1 = 5, LEFT_FOLLOWER_2 = 6;
@@ -54,7 +54,7 @@ public class RobotMap {
 					SPEED = new HashMap<>();
 					PROF = new GearDependentValue<>(null, null);
 
-					SPEED.put("0.8", new ProfilingData(4.4, 5, 4, 10));
+					SPEED.put("0.8", new ProfilingData(4.4, 5, 10, 10));
 
 					PROF.setValue(Gear.POWER, POWER);
 					PROF.setValue(Gear.SPEED, SPEED);
