@@ -68,14 +68,20 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
+		mainJoystick.BACK.whenPressed(new InstantCommand(new Runnable() {
+			@Override
+			public void run() {
+				Chassis.getInstance().resetGyro();
+			}
+		}));
 		mainJoystick.START.whenPressed(new ToggleRoller());
-		mainJoystick.B.whileHeld(new CheckMaxLin(0.8));
-		mainJoystick.X.whileHeld(new CheckMaxRot(0.8));
 		State start = new State(0,0,0,0,0);
 		State end = new State(0,1.5,0,0,0);
 		ArrayList<State> list = new ArrayList<>(Arrays.asList(start, end));
 		mainJoystick.A.whenPressed(new ThreadedCommand(new Follow2DProfileCommand(list, RobotMap.Pegasus.Chassis.MotionData.CONFIG, 0.8, false)));
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
+		Climb.getInstance().initDefaultCommand(secondJoystick);
+
 
 	}
 	private void initRealButtons() {
