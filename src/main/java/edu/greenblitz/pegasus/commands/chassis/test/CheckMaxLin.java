@@ -49,6 +49,9 @@ public class CheckMaxLin extends ChassisCommand {
     @Override
     public void end(boolean interrupted) {
         Chassis.getInstance().moveMotors(0,0);
+<<<<<<< HEAD
         target.passToCSV(true);
+=======
+>>>>>>> c3091c8 (asaf &ido - calibrated wheel ratio)
     }
 }

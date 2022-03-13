@@ -92,7 +92,6 @@ public class OI {
 				new TurningByJoystick(secondJoystick)
 		));
 
-
 		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
 		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
 
