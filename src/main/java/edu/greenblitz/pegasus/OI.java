@@ -4,6 +4,7 @@ import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.gblib.threading.ThreadedCommand;
 import edu.greenblitz.pegasus.commands.chassis.profiling.Follow2DProfileCommand;
+import edu.greenblitz.pegasus.commands.chassis.test.CheckMaxLin;
 import edu.greenblitz.pegasus.commands.climb.*;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
 import edu.greenblitz.pegasus.commands.climb.Turning.SwitchTurning;
@@ -24,6 +25,10 @@ import edu.greenblitz.pegasus.commands.shooter.*;
 import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.wpi.first.wpilibj2.command.*;
+import org.greenblitz.motion.base.State;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class OI {
 	private static OI instance;
@@ -35,7 +40,7 @@ public class OI {
 		DEBUG, REAL, NO_AUTO
 	}
 	
-	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -60,8 +65,14 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		mainJoystick.A.whenPressed(new ThreadedCommand(new Follow2DProfileCommand()))
-		
+		mainJoystick.START.whenPressed(new ToggleRoller());
+		mainJoystick.B.whileHeld(new CheckMaxLin(0.8));
+		State start = new State(0,0,0,0,0);
+		State end = new State(0,1.5,0,0,0);
+		ArrayList<State> list = new ArrayList<>(Arrays.asList(start, end));
+		mainJoystick.A.whenPressed(new ThreadedCommand(new Follow2DProfileCommand(list, RobotMap.Pegasus.Chassis.MotionData.CONFIG, 0.8, false)));
+		Chassis.getInstance().initDefaultCommand(mainJoystick);
+
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectFromShooter());
@@ -77,12 +88,13 @@ public class OI {
 		secondJoystick.X.whileHeld(new InsertIntoShooter());
 
 		secondJoystick.B.whileHeld(
-				new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0))
+				new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0)
+				)
 		);
-		
 		secondJoystick.START.whenPressed(new ToggleRoller());
 		secondJoystick.BACK.whenPressed(new HybridPullDown(secondJoystick));
-//		secondJoystick.POV_LEFT.whenPressed(new InitManualOverride());
+//		secondJoystick.POV_LEFT.whenPressed(new InitManualOverride())\]]]]]]]]]]]]]]]]]]]]]][
+//		;
 
 		secondJoystick.R1.whileHeld(new WhileHeldCoast());
 
@@ -98,7 +110,6 @@ public class OI {
 				new TurningByJoystick(secondJoystick)
 		));
 		
-		Chassis.getInstance().initDefaultCommand(mainJoystick);
 
 		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
 		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());

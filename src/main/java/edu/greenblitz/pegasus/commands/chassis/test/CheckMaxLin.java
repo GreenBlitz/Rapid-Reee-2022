@@ -44,4 +44,9 @@ public class CheckMaxLin extends ChassisCommand {
     public boolean isFinished() {
         return System.currentTimeMillis() - tStart > 3000;
     }
+
+    @Override
+    public void end(boolean interrupted) {
+        Chassis.getInstance().moveMotors(0,0);
+    }
 }

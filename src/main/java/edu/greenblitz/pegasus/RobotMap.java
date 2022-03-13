@@ -26,8 +26,8 @@ public class RobotMap {
 			}
 
 			public static class Encoders {
-				public static final GearDependentValue<Double> NORM_CONST_SPARK = new GearDependentValue<>(2300.0 * 0.64, 1234.0 / 2.0); // TODO: check this, I copied it from Infinite Reeee
-				public static final int RIGHT_ENCODER = -1, LEFT_ENCODER = -1;
+				public static final GearDependentValue<Double> NORM_CONST_SPARK = new GearDependentValue<>(1622.0, 612.5); // TODO: check this, I copied it from Infinite Reeee
+
 				public static final boolean RIGHT_ENCODER_REVERSED = false, LEFT_ENCODER_REVERSED = false;
 			}
 
@@ -42,7 +42,8 @@ public class RobotMap {
 
 			public static class MotionData { // TODO: calibrate this
 
-				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(1.0, 1.0, .0005, 0.8, 0.002, 0.0, .01, 0.5 * 0, 0, 0, 0, 500);//0.85, 1.0, .0005, 0.8, 0.0, 2.0, .01, 0.5 * 0, 0, 0, .01, 500);
+				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(1.0, 1.0, .0005,
+						0.8, 0.002, 0.0, .01, 0.5 * 0, 0, 0, 0, 500);//0.85, 1.0, .0005, 0.8, 0.0, 2.0, .01, 0.5 * 0, 0, 0, .01, 500);
 				public static HashMap<String, ProfilingData> POWER;
 				public static HashMap<String, ProfilingData> SPEED;
 				public static GearDependentValue<HashMap<String, ProfilingData>> PROF;

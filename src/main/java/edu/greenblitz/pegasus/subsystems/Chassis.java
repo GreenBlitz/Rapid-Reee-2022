@@ -4,6 +4,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.greenblitz.gblib.encoder.IEncoder;
 import edu.greenblitz.gblib.encoder.SparkEncoder;
+import edu.greenblitz.gblib.gears.Gear;
+import edu.greenblitz.gblib.gears.GlobalGearContainer;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
@@ -50,8 +52,10 @@ public class Chassis extends GBSubsystem {
 
 		leftEncoder = new SparkEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, motors[3]);
 		leftEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.LEFT_ENCODER_REVERSED);
+		leftEncoder.reset();
 		rightEncoder = new SparkEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, motors[0]);
 		rightEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.RIGHT_ENCODER_REVERSED);
+		rightEncoder.reset();
 //		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
 //		gyroscope.reset();
 //		gyroscope.inverse();
@@ -154,7 +158,7 @@ public class Chassis extends GBSubsystem {
 		putString("Location", Chassis.getInstance().getLocation().toString());
 		putNumber("right dist", getRightMeters());
 		putNumber("left dist", getLeftMeters());
-
+		putBoolean("is power", GlobalGearContainer.getInstance().getGear() == Gear.POWER);
 
 	}
 
