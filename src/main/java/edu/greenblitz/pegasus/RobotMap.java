@@ -54,7 +54,7 @@ public class RobotMap {
 					SPEED = new HashMap<>();
 					PROF = new GearDependentValue<>(null, null);
 
-					SPEED.put("0.8", new ProfilingData(1.4, 8.4, 4, 10));
+					SPEED.put("0.8", new ProfilingData(4.4, 5, 4, 10));
 
 					PROF.setValue(Gear.POWER, POWER);
 					PROF.setValue(Gear.SPEED, SPEED);

@@ -5,6 +5,7 @@ import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.gblib.threading.ThreadedCommand;
 import edu.greenblitz.pegasus.commands.chassis.profiling.Follow2DProfileCommand;
 import edu.greenblitz.pegasus.commands.chassis.test.CheckMaxLin;
+import edu.greenblitz.pegasus.commands.chassis.test.CheckMaxRot;
 import edu.greenblitz.pegasus.commands.climb.*;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
 import edu.greenblitz.pegasus.commands.climb.Turning.SwitchTurning;
@@ -67,6 +68,7 @@ public class OI {
 	private void initDebugButtons() {
 		mainJoystick.START.whenPressed(new ToggleRoller());
 		mainJoystick.B.whileHeld(new CheckMaxLin(0.8));
+		mainJoystick.X.whileHeld(new CheckMaxRot(0.8));
 		State start = new State(0,0,0,0,0);
 		State end = new State(0,1.5,0,0,0);
 		ArrayList<State> list = new ArrayList<>(Arrays.asList(start, end));

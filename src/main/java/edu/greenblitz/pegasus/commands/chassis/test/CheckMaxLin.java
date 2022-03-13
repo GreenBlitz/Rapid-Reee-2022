@@ -3,6 +3,7 @@ package edu.greenblitz.pegasus.commands.chassis.test;
 import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
 import edu.greenblitz.pegasus.subsystems.Chassis;
 import org.greenblitz.debug.RemoteCSVTarget;
+import org.greenblitz.debug.RemoteCSVTargetBuffer;
 
 public class CheckMaxLin extends ChassisCommand {
 
@@ -10,7 +11,7 @@ public class CheckMaxLin extends ChassisCommand {
     private double power;
     private double previousVel;
     private double previousTime;
-    private RemoteCSVTarget target;
+    private RemoteCSVTargetBuffer target;
     private long tStart;
 
     public CheckMaxLin(double power) {
@@ -23,7 +24,7 @@ public class CheckMaxLin extends ChassisCommand {
         previousVel = 0;
         count = 0;
         tStart = System.currentTimeMillis();
-        target = RemoteCSVTarget.initTarget("LinearData", "time", "vel", "acc");
+        target = new RemoteCSVTargetBuffer("LinearData", "time", "vel", "acc");
     }
 
     @Override
@@ -48,5 +49,6 @@ public class CheckMaxLin extends ChassisCommand {
     @Override
     public void end(boolean interrupted) {
         Chassis.getInstance().moveMotors(0,0);
+        target.passToCSV(true);
     }
 }
