@@ -55,6 +55,7 @@ public class RobotMap {
 
 					SPEED.put("0.8", new ProfilingData(4.4, 5, 4, 3.5));
 
+
 					PROF.setValue(Gear.POWER, POWER);
 					PROF.setValue(Gear.SPEED, SPEED);
 				}
