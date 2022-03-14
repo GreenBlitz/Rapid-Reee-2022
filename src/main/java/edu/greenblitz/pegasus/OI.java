@@ -76,11 +76,13 @@ public class OI {
 		}));
 		mainJoystick.START.whenPressed(new ToggleRoller());
 		State start = new State(0,0,0,0,0);
-		State end = new State(0,1.5,0,0,0);
+		State end = new State(2,2,-Math.PI/2,0,1);
 		ArrayList<State> list = new ArrayList<>(Arrays.asList(start, end));
-		mainJoystick.A.whenPressed(new ThreadedCommand(new Follow2DProfileCommand(list, RobotMap.Pegasus.Chassis.MotionData.CONFIG, 0.8, false)));
+		mainJoystick.B.whenPressed(new ThreadedCommand(new Follow2DProfileCommand(list, RobotMap.Pegasus.Chassis.MotionData.CONFIG, 0.8, false)));
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
 		Climb.getInstance().initDefaultCommand(secondJoystick);
+		mainJoystick.A.whenPressed(new DoubleShoot());
+		mainJoystick.X.whileHeld(new ParallelCommandGroup(new RunRoller(), new HandleBalls()));
 
 
 	}

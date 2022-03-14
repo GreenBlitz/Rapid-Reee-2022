@@ -43,7 +43,7 @@ public class RobotMap {
 			public static class MotionData { // TODO: calibrate this
 
 				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(1.0, 1.0, .0005,
-						0.4, 0.000, 0.0, .0, 0.5 * 0, 0, 0, 0, 500);//0.85, 1.0, .0005, 0.8, 0.0, 2.0, .01, 0.5 * 0, 0, 0, .01, 500);
+						0.05, 0.000, 0.0, .0, 0.2, 0.003, 0, 0, 500);//0.85, 1.0, .0005, 0.8, 0.0, 2.0, .01, 0.5 * 0, 0, 0, .01, 500);
 				public static HashMap<String, ProfilingData> POWER;
 				public static HashMap<String, ProfilingData> SPEED;
 				public static GearDependentValue<HashMap<String, ProfilingData>> PROF;
@@ -54,7 +54,7 @@ public class RobotMap {
 					SPEED = new HashMap<>();
 					PROF = new GearDependentValue<>(null, null);
 
-					SPEED.put("0.8", new ProfilingData(4.4, 5, 10, 10));
+					SPEED.put("0.8", new ProfilingData(4.4, 5, 4, 3.5));
 
 					PROF.setValue(Gear.POWER, POWER);
 					PROF.setValue(Gear.SPEED, SPEED);
@@ -106,6 +106,7 @@ public class RobotMap {
 					RPM_TO_POWER.addDatapoint(4664.115322265625, new double[]{0.9});
 					RPM_TO_POWER.addDatapoint(5209.37181640625, new double[]{1.0});
 				}
+				public static final double EPSILON = 120;
 				public static  final double RPM = 3350;
 				public static final PIDObject pid = new PIDObject(0.0001, 0.0000003, 0);
 				public static final double iZone = 400;

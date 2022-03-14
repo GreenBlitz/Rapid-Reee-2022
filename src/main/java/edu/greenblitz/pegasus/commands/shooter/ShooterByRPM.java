@@ -4,6 +4,8 @@ import edu.greenblitz.pegasus.RobotMap;
 import org.greenblitz.debug.RemoteCSVTarget;
 import org.greenblitz.motion.pid.PIDObject;
 
+import static edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.EPSILON;
+
 public class ShooterByRPM extends ShooterCommand {
 	protected PIDObject obj;
 	protected double iZone;
@@ -12,7 +14,6 @@ public class ShooterByRPM extends ShooterCommand {
 	protected double tStart;
 	private int inShootingSpeed;
 
-	private static final double EPSILON = 120;
 
 	public ShooterByRPM(PIDObject obj, double iZone, double target) {
 		this.obj = obj;
