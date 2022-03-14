@@ -3,6 +3,7 @@ package edu.greenblitz.pegasus;
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.gblib.threading.ThreadedCommand;
+import edu.greenblitz.pegasus.commands.chassis.auto.FourBallAuto;
 import edu.greenblitz.pegasus.commands.chassis.localizer.LocalizerCommand;
 import edu.greenblitz.pegasus.commands.chassis.profiling.Follow2DProfileCommand;
 import edu.greenblitz.pegasus.commands.chassis.test.CheckMaxLin;
@@ -74,11 +75,11 @@ public class OI {
 				Chassis.getInstance().resetGyro();
 			}
 		}));
-		mainJoystick.START.whenPressed(new ToggleRoller());
+		mainJoystick.START.whenPressed(new ToggleRoller());/*
 		State start = new State(0,0,0,0,0);
 		State end = new State(2,2,-Math.PI/2,0,1);
-		ArrayList<State> list = new ArrayList<>(Arrays.asList(start, end));
-		mainJoystick.B.whenPressed(new ThreadedCommand(new Follow2DProfileCommand(list, RobotMap.Pegasus.Chassis.MotionData.CONFIG, 0.8, false)));
+		ArrayList<State> list = new ArrayList<>(Arrays.asList(start, end));*/
+		mainJoystick.B.whenPressed(new FourBallAuto());//new ThreadedCommand(new Follow2DProfileCommand(list, RobotMap.Pegasus.Chassis.MotionData.CONFIG, 0.8, false)));
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
 		Climb.getInstance().initDefaultCommand(secondJoystick);
 		mainJoystick.A.whenPressed(new DoubleShoot());

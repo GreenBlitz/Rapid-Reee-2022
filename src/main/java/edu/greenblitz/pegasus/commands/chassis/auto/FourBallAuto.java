@@ -14,17 +14,18 @@ import java.util.ArrayList;
 
 public class FourBallAuto extends SequentialCommandGroup {
 
-	public FourBallAuto(double maxPower) {
+	public FourBallAuto() {
 
 		//Path for the first 2 balls
 		ArrayList<State> firstTwo = new ArrayList<>();
-		firstTwo.add(new State(1, 1.78, -1.51, 0, 0)); //start pos
-		firstTwo.add(new State(3.1, 2.2, -1.11, 3.6, 4)); // ball 2
+		firstTwo.add(new State(0.696, 	1.724, 2.75762, 0, 0)); //start pos
+		firstTwo.add(new State(3.1, 2.2, 2.1851522, 3.6, 4)); // ball 2
 
 		addCommands(new ThreadedCommand(new Follow2DProfileCommand(firstTwo , RobotMap.Pegasus.Chassis.MotionData.CONFIG
-				, maxPower , false)));
+				, RobotMap.Pegasus.Chassis.MotionData.MAX_POWER, true)));
 
 
+/*
 
 		//Inorder to shoot, go back in a linear line for 3.13 meter
 		addCommands(new MoveToPointByPID(new Point(3.1, 2.2) // currant location at path
@@ -44,6 +45,7 @@ public class FourBallAuto extends SequentialCommandGroup {
 		//Shoot to nowhere
 		ShootByConstant fire = new ShootByConstant(100);
 		fire.schedule();
+*/
 
 	}
 }
