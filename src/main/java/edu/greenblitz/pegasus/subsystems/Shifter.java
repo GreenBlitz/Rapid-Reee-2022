@@ -20,7 +20,7 @@ public class Shifter extends GBSubsystem {
 	
 	private static Shifter instance;
 	
-	private GBDoubleSolenoid piston;
+	private DoubleSolenoid piston;
 	private Gear currentShift = Gear.SPEED;
 	private GearDependentValue<DoubleSolenoid.Value> shiftValue =
 			new GearDependentValue<>(DoubleSolenoid.Value.kForward, DoubleSolenoid.Value.kReverse);
@@ -30,7 +30,8 @@ public class Shifter extends GBSubsystem {
 	 * This constructor constructs the piston.
 	 */
 	private Shifter() {
-		piston = new GBDoubleSolenoid(RobotMap.Pegasus.Chassis.Shifter.PCM,
+		piston = new DoubleSolenoid(RobotMap.Pegasus.Pneumatics.PCM.PCM_ID,
+				RobotMap.Pegasus.Pneumatics.PCM.PCM_TYPE,
 				RobotMap.Pegasus.Chassis.Shifter.Solenoid.FORWARD_PORT,
 				RobotMap.Pegasus.Chassis.Shifter.Solenoid.REVERSE_PORT);
 	}
@@ -61,9 +62,12 @@ public class Shifter extends GBSubsystem {
 	 * @param state A value based off of the Gear enum. This value is then set as the state the piston is in.
 	 */
 	public void setShift(Gear state) {
-		currentShift = state;
-		Chassis.getInstance().changeGear();
-		GlobalGearContainer.getInstance().setGear(state);
+		/*if (!state.equals(currentShift)) {
+			currentShift = state;
+			Chassis.getInstance().changeGear();
+			GlobalGearContainer.getInstance().setGear(state);
+		}*/
+		System.out.println(state == Gear.POWER ? DoubleSolenoid.Value.kReverse: DoubleSolenoid.Value.kForward);
 		piston.set(state == Gear.POWER ? DoubleSolenoid.Value.kReverse: DoubleSolenoid.Value.kForward);
 	}
 	

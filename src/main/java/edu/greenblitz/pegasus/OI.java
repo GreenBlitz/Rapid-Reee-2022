@@ -10,6 +10,8 @@ import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
 import edu.greenblitz.pegasus.commands.indexing.PrintColor;
+import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
+import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.ReverseRunRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
@@ -33,7 +35,7 @@ public class OI {
 		DEBUG, REAL, NO_AUTO
 	}
 	
-	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -59,6 +61,11 @@ public class OI {
 	
 	private void initDebugButtons() {
 		mainJoystick.START.whenPressed(new ToggleRoller());
+		mainJoystick.B.whenPressed(new ToPower());
+		mainJoystick.A.whenPressed(new ToSpeed());
+		mainJoystick.BACK.whenPressed(new ToggleShifter());
+		Climb.getInstance().initDefaultCommand(secondJoystick);
+		Chassis.getInstance().initDefaultCommand(mainJoystick);
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectFromShooter());
