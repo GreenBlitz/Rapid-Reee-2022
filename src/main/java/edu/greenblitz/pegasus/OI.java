@@ -15,6 +15,8 @@ import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
 import edu.greenblitz.pegasus.commands.indexing.PrintColor;
+import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
+import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.ReverseRunRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;

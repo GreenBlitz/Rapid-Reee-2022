@@ -32,7 +32,6 @@ public class RobotMap {
 			}
 
 			public static class Shifter {
-				public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
 
 				public static class Solenoid {
 					public static final int FORWARD_PORT = 3;
@@ -66,8 +65,6 @@ public class RobotMap {
 		}
 
 		public static class Intake {
-			public static final PneumaticsModuleType PCM = PneumaticsModuleType.CTREPCM;
-			public static final int module = 21;
 
 			public static class Motors {
 				public static final int ROLLER_PORT = 6;
@@ -173,8 +170,10 @@ public class RobotMap {
 		}
 		
 		public static class Pneumatics {
-			public static final int PCM_ID = 21;
-
+			public static class PCM {
+				public static final int PCM_ID = 21;
+				public static final PneumaticsModuleType PCM_TYPE = PneumaticsModuleType.CTREPCM;
+			}
 			public static class PressureSensor {
 				public static final int PRESSURE = 3;
 			}
