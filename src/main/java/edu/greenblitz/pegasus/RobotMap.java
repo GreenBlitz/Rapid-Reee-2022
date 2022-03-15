@@ -55,10 +55,6 @@ public class RobotMap {
 					PROF = new GearDependentValue<>(null, null);
 
 					SPEED.put("0.8", new ProfilingData(4.4, 5, 4, 3.5));
-<<<<<<< HEAD
-
-=======
->>>>>>> bffc2a0 (asaf & ido - calibrated angular)
 
 					PROF.setValue(Gear.POWER, POWER);
 					PROF.setValue(Gear.SPEED, SPEED);
