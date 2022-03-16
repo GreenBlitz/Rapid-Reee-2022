@@ -41,12 +41,13 @@ public class RobotMap {
 
 			public static class MotionData { // TODO: calibrate this
 
-				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(1.0, 1.0, .0005,
-						0.05, 0.000, 0.0, .0, 0.2, 0.003, 0, 0, 500);
+				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(0.9, 1.0, .0005,
+						0.05, 0.000, 0.0, .0, 0.2, 0.002, 0, 0, 500);
 
 				public static HashMap<String, ProfilingData> POWER;
 				public static HashMap<String, ProfilingData> SPEED;
 				public static GearDependentValue<HashMap<String, ProfilingData>> PROF;
+				public static final double MAX_POWER = 0.8;
 
 				static {
 
