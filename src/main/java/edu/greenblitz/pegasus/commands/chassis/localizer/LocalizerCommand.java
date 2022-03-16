@@ -19,7 +19,7 @@ public class LocalizerCommand extends GBCommand {
 	
 	@Override
 	public void execute() {
-		localizer.update(chassis.getLeftMeters(), chassis.getRightMeters(), chassis.getAngle());
+		localizer.update(chassis.getLeftMeters(), chassis.getRightMeters());//, chassis.getAngle());
 	}
 	
 	@Override
