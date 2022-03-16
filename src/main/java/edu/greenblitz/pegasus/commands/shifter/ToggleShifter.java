@@ -6,10 +6,6 @@ import edu.greenblitz.pegasus.subsystems.Shifter;
 public class ToggleShifter extends ShifterCommand{
 	@Override
 	public void initialize() {
-		if(Shifter.getInstance().getCurrentGear() == Gear.POWER) {
-			new ToSpeed().schedule();
-		} else {
-			new ToPower().schedule();
-		}
+		shifter.toggleShift();
 	}
 }
