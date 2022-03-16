@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
 		Chassis.getInstance().toCoast();
 		new ToSpeed().schedule();
 		new LocalizerCommand().schedule();
-		new ExtendRoller().schedule();
+//		new ExtendRoller().schedule(); //TODO: remove before match!!!
 		Indexing.getInstance().initSetAlliance();
 		new SequentialCommandGroup(
 				new WaitCommand(0.4),

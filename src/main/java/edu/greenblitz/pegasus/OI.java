@@ -59,8 +59,10 @@ public class OI {
 	private void initDebugButtons() {
 		mainJoystick.START.whenPressed(new ToggleShifter());
 		mainJoystick.A.whenPressed(new TurnToAngleByPID(Math.PI));
-		mainJoystick.BACK.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
+		mainJoystick.BACK.whenPressed(new ToggleRoller());
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
+		mainJoystick.Y.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
+		
 	}
 	
 	private void initRealButtons() {

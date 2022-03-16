@@ -61,7 +61,7 @@ public class Chassis extends GBSubsystem {
 		rightEncoder.reset();
 		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
 		gyroscope.reset();
-		gyroscope.inverse();
+//		gyroscope.inverse();
 	}
 
 	public static Chassis getInstance() {
@@ -156,9 +156,7 @@ public class Chassis extends GBSubsystem {
 	@Override
 	public void periodic() {
 		putNumber("Pigeon angle deg", Math.toDegrees(getAngle()));
-		putString("Location", Chassis.getInstance().getLocation().toString());
-		putNumber("right dist", getRightMeters());
-		putNumber("left dist", getLeftMeters());
+		putNumber("Pigeon raw", getRawAngle());
 		putBoolean("is power", GlobalGearContainer.getInstance().getGear() == Gear.POWER);
 
 	}
