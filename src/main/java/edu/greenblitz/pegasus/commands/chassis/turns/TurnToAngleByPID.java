@@ -10,9 +10,9 @@ public class TurnToAngleByPID extends ChassisCommand { //TODO: might be buggy, f
 	
 	private double angleTarget;
 	private CollapsingPIDController anglePID;
-	static private PIDObject defaultPIDObject = new PIDObject(0,0,0);
+	static private PIDObject defaultPIDObject = new PIDObject(0.5,0,0);
 	static private double defaultThresh = 0;
-	static private double defaultTolerance = 0;
+	static private double defaultTolerance = 0.05;
 	public TurnToAngleByPID(double angleTarget) {
 		this.angleTarget = angleTarget;
 		

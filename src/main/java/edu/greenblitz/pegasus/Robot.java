@@ -1,11 +1,9 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.pegasus.commands.chassis.auto.TwoBallAuto;
 import edu.greenblitz.pegasus.commands.chassis.localizer.LocalizerCommand;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
-import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
+import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -46,6 +44,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
 		Chassis.getInstance().toCoast();
+		new ToSpeed().schedule();
 		new LocalizerCommand().schedule();
 		new ExtendRoller().schedule();
 		Indexing.getInstance().initSetAlliance();
@@ -77,7 +76,6 @@ public class Robot extends TimedRobot {
 		TODO: Dear @Orel, please for the love of god, use the very useful function: schedule(), this will help the
 		the code to actually work
 		*/
-		new TwoBallAuto().schedule();
 		//new ShootAndGo(5).schedule(); //Shoot and go
 //		new FourBallAuto(0.3).schedule(); // 2 ball auto
 	}

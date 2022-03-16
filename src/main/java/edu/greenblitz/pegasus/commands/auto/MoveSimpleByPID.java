@@ -1,7 +1,6 @@
-package edu.greenblitz.pegasus.commands.chassis.auto;
+package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.base.Point;
 import org.greenblitz.motion.pid.CollapsingPIDController;
 import org.greenblitz.motion.pid.PIDObject;
@@ -10,7 +9,7 @@ public class MoveSimpleByPID extends ChassisCommand{
 		private Point startPos;
 		private double distanceTarget;
 		private CollapsingPIDController distancePID;
-		static private PIDObject defaultPIDObject = new PIDObject(0.3,0.00001,0);
+		static private PIDObject defaultPIDObject = new PIDObject(0.5,0.0000,0);
 		static private double defaultThresh = 0.3;
 		static private double defaultTolerance = 0.1;
 		public MoveSimpleByPID(double distanceTarget) {

@@ -1,11 +1,10 @@
-package edu.greenblitz.pegasus.commands.chassis.auto;
+package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.gblib.threading.ThreadedCommand;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.chassis.profiling.Follow2DProfileCommand;
 import edu.greenblitz.pegasus.commands.chassis.turns.TurnToAngleByPID;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
-import edu.greenblitz.pegasus.commands.shooter.ShooterCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.greenblitz.motion.base.Point;
 import org.greenblitz.motion.base.State;

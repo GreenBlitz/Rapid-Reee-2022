@@ -1,4 +1,4 @@
-package edu.greenblitz.pegasus.commands.chassis.auto;
+package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.pegasus.commands.chassis.turns.TurnToAngleByPID;
 import edu.greenblitz.pegasus.subsystems.Chassis;

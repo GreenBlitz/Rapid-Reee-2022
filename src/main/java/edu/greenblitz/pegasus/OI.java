@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.commands.chassis.turns.TurnToAngleByPID;
 import edu.greenblitz.pegasus.commands.climb.*;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
 import edu.greenblitz.pegasus.commands.climb.Turning.SwitchTurning;
@@ -13,8 +14,10 @@ import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectFromShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
+import edu.greenblitz.pegasus.commands.shifter.ToggleShifter;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.commands.auto.MoveSimpleByPID;
 import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.wpi.first.wpilibj2.command.*;
@@ -54,6 +57,10 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
+		mainJoystick.START.whenPressed(new ToggleShifter());
+		mainJoystick.A.whenPressed(new TurnToAngleByPID(Math.PI));
+		mainJoystick.BACK.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
+		Chassis.getInstance().initDefaultCommand(mainJoystick);
 	}
 
 	private void initRealButtons() {
