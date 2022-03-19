@@ -14,6 +14,7 @@ public class RailByJoystick extends RailCommand{
 	
 	@Override
 	public void execute() {
+		super.execute();
 		if (joystick.L1.get()){
 			if (joystick.L3.get()){
 				Climb.getInstance().resetRailMotorTicks();

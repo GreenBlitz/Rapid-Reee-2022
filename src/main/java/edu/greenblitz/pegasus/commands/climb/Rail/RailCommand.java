@@ -11,4 +11,5 @@ public abstract class RailCommand extends GBCommand {
 		climb = Climb.getInstance();
 		require(climb.getRail());
 	}
+	
 }

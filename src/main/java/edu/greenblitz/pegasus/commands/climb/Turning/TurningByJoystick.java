@@ -13,6 +13,7 @@ public class TurningByJoystick extends TurningCommand {
 	
 	@Override
 	public void execute() {
+		super.execute();
 		if (joystick.L1.get()){
 			if (joystick.R3.get()){
 				Climb.getInstance().resetTurningMotorTicks();

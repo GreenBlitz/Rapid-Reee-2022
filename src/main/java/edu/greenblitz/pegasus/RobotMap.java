@@ -120,8 +120,8 @@ public class RobotMap {
 		}
 		public static class Climb {
 			public static class SafetyZones {
-				public static final double RAIL_SAFETY = 0.003;
-				public static final double RAIL_ABSOLUTE_SAFETY = 0;//0.025;
+				public static final double RAIL_SAFETY = 0.04;
+				public static final double RAIL_FF = 0.1;//0.025;
 				public static final double SAFETY_LOC = 0.6;
 				public static final double LOWEST_ANGLE = 0.25;
 				public static final double HIGHEST_ANGLE = Math.PI / 2 - 0.3;
@@ -133,8 +133,8 @@ public class RobotMap {
 			public static class ClimbMotors {
 				public static final int RAIL_MOTOR_PORT = 9;
 				public static final boolean RAIL_MOTOR_REVERSED = false;
-				public static final double RAIL_MOTOR_TICKS_PER_METER = 14240;
-				public static final double RAIL_LENGTH = 0.88;
+				public static final double RAIL_MOTOR_TICKS_PER_METER = 8544;
+				public static final double RAIL_LENGTH = 0.89;
 				public static final double START_LOCATION = 0.623;
 				public static final int TURNING_MOTOR_PORT = 11;
 				public static final boolean TURNING_MOTOR_REVERSED = false;

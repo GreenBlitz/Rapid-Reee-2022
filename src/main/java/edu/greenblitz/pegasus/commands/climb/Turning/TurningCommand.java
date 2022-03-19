@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus.commands.climb.Turning;
 
 import edu.greenblitz.gblib.command.GBCommand;
+import edu.greenblitz.pegasus.commands.climb.ClimbCommand;
 import edu.greenblitz.pegasus.subsystems.Climb;
 
 public abstract class TurningCommand extends GBCommand {
@@ -11,4 +12,5 @@ public abstract class TurningCommand extends GBCommand {
 		climb = Climb.getInstance();
 		require(climb.getTurning());
 	}
+	
 }

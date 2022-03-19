@@ -12,5 +12,4 @@ public abstract class ClimbCommand extends GBCommand {
 		require(climb.getTurning());
 		require(climb.getRail());
 	}
-
 }
