@@ -63,10 +63,10 @@ public class Climb extends GBSubsystem {
 		/*if(getLoc() + safety >= safetyLoc && getAng() < safetyAngle && power > 0){
 			unsafeMoveRailMotor((safetyLoc - loc - absoluteSafety)/safety*power);
 		}
-		else*/ if (loc < safety && power < 0) {
-			unsafeMoveRailMotor(Math.max(loc, 0) / safety * (power + RobotMap.Pegasus.Climb.SafetyZones.RAIL_FF) - RobotMap.Pegasus.Climb.SafetyZones.RAIL_FF);
-		} else if (loc + safety > len && power > 0) {
-			unsafeMoveRailMotor(Math.max(len - loc, 0) / safety * (power - RobotMap.Pegasus.Climb.SafetyZones.RAIL_FF) + RobotMap.Pegasus.Climb.SafetyZones.RAIL_FF);
+		else*/ if (loc - RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY_OFFSET < safety){// && power < 0) {
+			unsafeMoveRailMotor(((Math.max(loc - RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY_OFFSET, 0) / safety) + RobotMap.Pegasus.Climb.SafetyZones.RAIL_FF) * power);
+		} else if (loc + RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY_OFFSET + safety > len){// && power > 0) {
+			unsafeMoveRailMotor(((Math.max(len - loc - RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY_OFFSET, 0) / safety) + RobotMap.Pegasus.Climb.SafetyZones.RAIL_FF) * power);
 		} else {
 			unsafeMoveRailMotor(power);
 		}

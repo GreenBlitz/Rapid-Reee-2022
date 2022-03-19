@@ -10,7 +10,7 @@ public class FullClimb extends SequentialCommandGroup {
 	public FullClimb(SmartJoystick joystick){
 		addRequirements(Climb.getInstance(), Climb.getInstance().getRail(), Climb.getInstance().getTurning());
 		addCommands(
-				new ClimbMoveToPosition(ClimbState.PULL_UP),
+				new ClimbToSecondBar(),
 				new HybridPullDown(joystick));
 	}
 }

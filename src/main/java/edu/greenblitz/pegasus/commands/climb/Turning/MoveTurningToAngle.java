@@ -49,9 +49,6 @@ public class MoveTurningToAngle extends TurningCommand {
 	public void setState(ClimbState state) {
 		this.state = state;
 		switch (state){
-			case PULL_UP:
-				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_SECOND_BAR;
-				return;
 			case TRAVERSE:
 				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_TRAVERSAL;
 				return;

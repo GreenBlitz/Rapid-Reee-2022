@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailCommand;
+import edu.greenblitz.pegasus.commands.climb.Rail.RailToSecondBar;
 import edu.greenblitz.pegasus.commands.climb.Turning.HoldTurning;
 import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;
 import edu.greenblitz.pegasus.subsystems.Climb;
@@ -34,11 +35,11 @@ public class HybridPullDown extends RailCommand {
 			double turningMotorPower = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_Y);
 			climb.safeMoveTurningMotor(turningMotorPower*0.3);
 		}
-		if (!scheduled && Math.abs(RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR - climb.getLoc()) >0.10){
+		if (!scheduled && Math.abs(RailToSecondBar.GOAL - climb.getLoc()) >0.10){
 			climb.setTurningMotorIdle(CANSparkMax.IdleMode.kCoast);
 			coast = true;
 		}
-		if (!scheduled && Math.abs(RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR - climb.getLoc()) > RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_LOC){
+		if (!scheduled && Math.abs(RailToSecondBar.GOAL - climb.getLoc()) > RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_LOC){
 			climb.setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
 			turn = new SequentialCommandGroup(new MoveTurningToAngle(RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_ANG), new HoldTurning    (RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_ANG));
 			turn.schedule();
@@ -57,6 +58,6 @@ public class HybridPullDown extends RailCommand {
 	
 	@Override
 	public boolean isFinished() {
-		return Math.abs((RobotMap.Pegasus.Climb.ClimbMotors.RAIL_LENGTH - RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR) - climb.getLoc()) < RobotMap.Pegasus.Climb.ClimbConstants.Rail.EPSILON;
+		return Math.abs((RobotMap.Pegasus.Climb.ClimbMotors.RAIL_LENGTH - RailToSecondBar.GOAL) - climb.getLoc()) < RobotMap.Pegasus.Climb.ClimbConstants.Rail.EPSILON;
 	}
 }
