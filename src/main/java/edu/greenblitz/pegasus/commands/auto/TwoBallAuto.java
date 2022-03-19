@@ -25,10 +25,10 @@ public class TwoBallAuto extends SequentialCommandGroup {
 				new ParallelRaceGroup(
 						new RunRoller(),
 						new RobotDotMove(0.15),
-						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM),
+						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM_CLOSE),
 						new WaitCommand(5)
 				),
-				new DoubleShoot(RobotMap.Pegasus.Shooter.ShooterMotor.RPM)
+				new DoubleShoot(RobotMap.Pegasus.Shooter.ShooterMotor.RPM_CLOSE)
 		);
 	}
 }

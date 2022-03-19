@@ -7,14 +7,14 @@ import org.greenblitz.motion.pid.PIDObject;
 
 public class MoveSimpleByPID extends ChassisCommand{
 		private Point startPos;
-		private double distanceTarget;
+		private double reversed;
 		private CollapsingPIDController distancePID;
-		static private PIDObject defaultPIDObject = new PIDObject(0.5,0.0000,0);
+		static private PIDObject defaultPIDObject = new PIDObject(0.6,0.0000,0);
 		static private double defaultThresh = 0.3;
 		static private double defaultTolerance = 0.1;
-		public MoveSimpleByPID(double distanceTarget) {
+		public MoveSimpleByPID(double distanceTarget, double reverse) {
 			startPos = chassis.getLocation();
-			this.distanceTarget = distanceTarget;
+			this.reversed = reverse;
 			distancePID = new CollapsingPIDController(defaultPIDObject, defaultThresh);
 			distancePID.configure(Point.dist(startPos,chassis.getLocation()), distanceTarget, -0.2, 0.2, 0);
 			distancePID.setTolerance((goal, current) -> Math.abs(goal - current) < defaultTolerance);
@@ -22,6 +22,10 @@ public class MoveSimpleByPID extends ChassisCommand{
 			chassis.putNumber("p", distancePID.getPidObject().getKp());
 			chassis.putNumber("i", distancePID.getPidObject().getKp());
 			chassis.putNumber("d", distancePID.getPidObject().getKp());
+		}
+		
+		public MoveSimpleByPID(double distanceTarget){
+			this(Math.abs(distanceTarget), Math.signum(distanceTarget));
 		}
 
 	@Override
@@ -38,7 +42,7 @@ public class MoveSimpleByPID extends ChassisCommand{
 	@Override
 	public void execute() {
 			double currentDistance = Point.dist(startPos,chassis.getLocation());
-			chassis.arcadeDrive(distancePID.calculatePID(currentDistance), 0);
+			chassis.arcadeDrive(reversed * distancePID.calculatePID(currentDistance), 0);
 		
 
 		}

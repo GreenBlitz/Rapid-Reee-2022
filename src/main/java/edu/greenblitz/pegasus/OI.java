@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.commands.auto.MoveSimpleByPID;
 import edu.greenblitz.pegasus.commands.chassis.turns.TurnToAngleByPID;
 import edu.greenblitz.pegasus.commands.climb.*;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
@@ -15,9 +16,9 @@ import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectFromShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.shifter.ToggleShifter;
+import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
-import edu.greenblitz.pegasus.commands.auto.MoveSimpleByPID;
 import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.wpi.first.wpilibj2.command.*;
@@ -59,16 +60,16 @@ public class OI {
 	private void initDebugButtons() {
 		mainJoystick.START.whenPressed(new ToggleShifter());
 		mainJoystick.A.whenPressed(new TurnToAngleByPID(Math.PI));
+		mainJoystick.B.whenPressed(new MoveSimpleByPID(-1.524));
 		mainJoystick.BACK.whenPressed(new ToggleRoller());
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
 		mainJoystick.Y.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
-		
 	}
 	
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectFromShooter());
 		
-		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM) {
+		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM_CLOSE) {
 			
 			@Override
 			public void end(boolean interrupted) {

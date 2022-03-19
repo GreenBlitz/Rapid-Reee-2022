@@ -1,9 +1,6 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
 import com.revrobotics.CANSparkMax;
-import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.RobotMap.Pegasus.Funnel;
-import edu.greenblitz.pegasus.RobotMap.Pegasus.Intake;
 import edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
@@ -41,7 +38,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 	}
 
 	public DoubleShoot() {
-		this(Shooter.ShooterMotor.RPM);
+		this(Shooter.ShooterMotor.RPM_CLOSE);
 	}
 
 	@Override
