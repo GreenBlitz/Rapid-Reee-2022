@@ -1,4 +1,4 @@
-package edu.greenblitz.pegasus.commands.chassis.auto;
+package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.ToggleClimbPosition;

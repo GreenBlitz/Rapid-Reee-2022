@@ -1,4 +1,4 @@
-package edu.greenblitz.pegasus.commands.chassis.auto;
+package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;

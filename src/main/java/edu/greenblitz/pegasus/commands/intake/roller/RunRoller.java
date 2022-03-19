@@ -3,7 +3,7 @@ package edu.greenblitz.pegasus.commands.intake.roller;
 public class RunRoller extends RollerCommand{
 	@Override
 	public void execute() {
-		intake.moveRoller();
+		intake.moveRoller(1.0);
 	}
 	
 	@Override
