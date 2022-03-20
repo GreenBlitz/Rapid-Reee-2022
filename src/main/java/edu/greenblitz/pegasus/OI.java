@@ -35,7 +35,7 @@ public class OI {
 		DEBUG, REAL, NO_AUTO
 	}
 	
-	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -60,7 +60,72 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		mainJoystick.A.whileHeld(new DoubleShoot(3300));
+		mainJoystick.A.whileHeld(new GBCommand() {
+			@Override
+			public void execute() {
+				Chassis.getInstance().setMotorByID(0, 0.2);
+			}
+
+			@Override
+			public void end(boolean interrupted) {
+				Chassis.getInstance().setMotorByID(0, 0);
+			}
+		});
+		mainJoystick.B.whileHeld(new GBCommand() {
+			@Override
+			public void execute() {
+				Chassis.getInstance().setMotorByID(1, 0.2);
+			}
+
+			@Override
+			public void end(boolean interrupted) {
+				Chassis.getInstance().setMotorByID(1, 0);
+			}
+		});
+		mainJoystick.Y.whileHeld(new GBCommand() {
+			@Override
+			public void execute() {
+				Chassis.getInstance().setMotorByID(2, 0.2);
+			}
+
+			@Override
+			public void end(boolean interrupted) {
+				Chassis.getInstance().setMotorByID(2, 0);
+			}
+		});
+		mainJoystick.POV_UP.whileHeld(new GBCommand() {
+			@Override
+			public void execute() {
+				Chassis.getInstance().setMotorByID(3, 0.2);
+			}
+
+			@Override
+			public void end(boolean interrupted) {
+				Chassis.getInstance().setMotorByID(3, 0);
+			}
+		});
+		mainJoystick.POV_LEFT.whileHeld(new GBCommand() {
+			@Override
+			public void execute() {
+				Chassis.getInstance().setMotorByID(4, 0.2);
+			}
+
+			@Override
+			public void end(boolean interrupted) {
+				Chassis.getInstance().setMotorByID(4, 0);
+			}
+		});
+		mainJoystick.POV_DOWN.whileHeld(new GBCommand() {
+			@Override
+			public void execute() {
+				Chassis.getInstance().setMotorByID(5, 0.2);
+			}
+
+			@Override
+			public void end(boolean interrupted) {
+				Chassis.getInstance().setMotorByID(5, 0);
+			}
+		});
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectFromShooter());
