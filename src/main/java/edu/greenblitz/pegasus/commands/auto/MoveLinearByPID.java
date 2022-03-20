@@ -8,35 +8,29 @@ import org.greenblitz.motion.pid.PIDObject;
 
 public class MoveLinearByPID extends ChassisCommand {
 	private PIDController pidControllerLinear;
-	private PIDController pidControllerAngular;
 	private double distance;
-	private double startingDistance, startingAngle;
+	private double startingDistance;
 
-	private static final double EPSILON = 0.05;
+	private static final double EPSILON = 0.02;
 
-	public MoveLinearByPID(PIDObject linear, PIDObject angular, double distance){
+	public MoveLinearByPID(PIDObject linear, double distance){
 		this.distance = distance;
 		this.pidControllerLinear = new PIDController(linear);
-		this.pidControllerAngular = new PIDController(angular);
 	}
 
 	@Override
 	public void initialize() {
-		this.pidControllerLinear.configure(0,distance,-0.5, 0.5, 0);
-		this.pidControllerAngular.configure(0, 0, -0.5, 0.5, 0);
+		this.pidControllerLinear.configure(chassis.getMeters(), distance,-0.5, 0.5, 0);
 		this.startingDistance = chassis.getMeters();
-		this.startingAngle = chassis.getAngle();
 	}
 
 	@Override
 	public void execute() {
 		double distance = chassis.getMeters() - startingDistance;
-		double turn = chassis.getAngle() - startingAngle;
 		double power = pidControllerLinear.calculatePID(distance);
-		double powerTurn = pidControllerAngular.calculatePID(turn);
-		chassis.moveMotors(power + powerTurn, power - powerTurn);
+		chassis.arcadeDrive(power, 0);
 
-		SmartDashboard.putNumber("Distance", Chassis.getInstance().getMeters());
+		SmartDashboard.putNumber("Distance", chassis.getMeters() - startingDistance);
 		SmartDashboard.putNumber("Angle", Chassis.getInstance().getAngle());
 	}
 

@@ -2,6 +2,8 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.commands.auto.MoveAngleByPID;
+import edu.greenblitz.pegasus.commands.auto.MoveLinearByPID;
 import edu.greenblitz.pegasus.commands.climb.*;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
 import edu.greenblitz.pegasus.commands.climb.Turning.SwitchTurning;
@@ -12,10 +14,12 @@ import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.multiSystem.*;
+import edu.greenblitz.pegasus.commands.shifter.ToggleShifter;
 import edu.greenblitz.pegasus.commands.shooter.*;
 import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.wpi.first.wpilibj2.command.*;
+import org.greenblitz.motion.pid.PIDObject;
 
 public class OI {
 	private static OI instance;
@@ -27,7 +31,7 @@ public class OI {
 		DEBUG, REAL, DEBUG2
 	}
 	
-	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -55,6 +59,18 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
+		Chassis.getInstance().initDefaultCommand(mainJoystick);
+		mainJoystick.A.whenPressed(
+				new MoveLinearByPID(
+						new PIDObject(0.5,0,0,0),
+						-2 * 0.762));
+
+		Chassis.getInstance().initDefaultCommand(mainJoystick);
+		mainJoystick.B.whenPressed(
+				new MoveAngleByPID(
+						new PIDObject(0.3,0,0,0), Math.PI/2));
+		mainJoystick.BACK.whenPressed(new ToggleRoller());
+		mainJoystick.START.whenPressed(new ToggleShifter());
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectFromShooter());

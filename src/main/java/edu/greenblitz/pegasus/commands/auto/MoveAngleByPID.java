@@ -20,12 +20,12 @@ public class MoveAngleByPID extends ChassisCommand {
 	@Override
 	public void initialize() {
 		this.pidController.configure(0, angle,-0.5, 0.5, 0);
-		this.startingAngle = chassis.getAngle();
+//		this.startingAngle = chassis.getAngle();
 	}
 
 	@Override
 	public void execute() {
-		double angle = (chassis.getAngle() - startingAngle);
+		double angle = (chassis.getAngle());// - startingAngle);
 		double power = pidController.calculatePID(angle);
 		chassis.moveMotors(power, -power);
 
@@ -39,6 +39,6 @@ public class MoveAngleByPID extends ChassisCommand {
 
 	@Override
 	public boolean isFinished() {
-		return Math.abs(chassis.getAngle() - startingAngle - angle) < EPSILON;
+		return Math.abs(chassis.getAngle() - angle) < EPSILON;// - startingAngle - angle) < EPSILON;
 	}
 }

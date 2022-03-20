@@ -160,7 +160,7 @@ public class Chassis extends GBSubsystem {
 	
 	@Override
 	public void periodic() {
-		putNumber("Pigeon angle deg", Math.toDegrees(getAngle()));
+		SmartDashboard.putNumber("Pigeon angle deg", Math.toDegrees(getAngle()));
 		putString("Location", Chassis.getInstance().getLocation().toString());
 
 	}

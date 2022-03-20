@@ -33,18 +33,18 @@ public class FourBallAuto extends ParallelCommandGroup {
 							new MoveFunnelUntilClick(),
 							new RunRoller(),
 							new InstantCommand(new ToggleClimbPosition()),
-							new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT, FIRST_DISTANCE)
+							new MoveLinearByPID(LIN_OBJECT, FIRST_DISTANCE)
 					),
 					new DoubleShoot(5100),
 					new MoveAngleByPID(ANG_OBJECT, ANGLE),
 					new ParallelCommandGroup(
 							new MoveFunnelUntilClick(),
 							new RunRoller(),
-							new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT, SECOND_DISTANCE)
+							new MoveLinearByPID(LIN_OBJECT, SECOND_DISTANCE)
 					),
 					new ParallelCommandGroup(
 							new MoveBallUntilClick(),
-							new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT, SECOND_DISTANCE)
+							new MoveLinearByPID(LIN_OBJECT, SECOND_DISTANCE)
 					),
 					new MoveAngleByPID(ANG_OBJECT, -ANGLE),
 					new DoubleShoot(5100)

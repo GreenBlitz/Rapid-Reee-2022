@@ -7,6 +7,7 @@ import edu.greenblitz.pegasus.commands.auto.MoveLinearByPID;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
+import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -48,6 +49,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
 //		Chassis.getInstance().toCoast();
+		new ToSpeed().schedule();
 		new ExtendRoller().schedule();
 		Indexing.getInstance().initSetAlliance();
 		new SequentialCommandGroup(
@@ -79,10 +81,6 @@ public class Robot extends TimedRobot {
 		the code to actually work
 		*/
 		Chassis.getInstance().toBrake();
-		new MoveLinearByPID(
-				new PIDObject(0.3,0,0,0),
-				new PIDObject(0.3,0,0,0),
-				-4 * 0.762).schedule();
 //		new MoveAngleByPID(
 //				new PIDObject(0.2, 0, 0, 0),
 //				-Math.toRadians(15)).schedule();

@@ -21,9 +21,9 @@ public class Shifter extends GBSubsystem {
 	private static Shifter instance;
 	
 	private DoubleSolenoid piston;
-	private Gear currentShift = Gear.SPEED;
+	private Gear currentShift = Gear.SPEED;/*
 	private GearDependentValue<DoubleSolenoid.Value> shiftValue =
-			new GearDependentValue<>(DoubleSolenoid.Value.kForward, DoubleSolenoid.Value.kReverse);
+			new GearDependentValue<>(DoubleSolenoid.Value.kForward, DoubleSolenoid.Value.kReverse);*/
 	
 	
 	/**
@@ -67,8 +67,8 @@ public class Shifter extends GBSubsystem {
 			Chassis.getInstance().changeGear();
 			GlobalGearContainer.getInstance().setGear(state);
 		}*/
-		System.out.println(state == Gear.POWER ? DoubleSolenoid.Value.kReverse: DoubleSolenoid.Value.kForward);
-		piston.set(state == Gear.POWER ? DoubleSolenoid.Value.kReverse: DoubleSolenoid.Value.kForward);
+		System.out.println(state == Gear.POWER ? DoubleSolenoid.Value.kForward: DoubleSolenoid.Value.kReverse);
+		piston.set(state == Gear.POWER ? DoubleSolenoid.Value.kForward: DoubleSolenoid.Value.kReverse);
 	}
 	
 	@Override
