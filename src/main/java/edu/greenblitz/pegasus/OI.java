@@ -68,9 +68,11 @@ public class OI {
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
 		mainJoystick.B.whenPressed(
 				new MoveAngleByPID(
-						new PIDObject(0.3,0,0,0), Math.PI/2));
+						new PIDObject(0.4,0,0,0), Math.PI/2));
 		mainJoystick.BACK.whenPressed(new ToggleRoller());
 		mainJoystick.START.whenPressed(new ToggleShifter());
+		mainJoystick.Y.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
+		mainJoystick.X.whileHeld(new DoubleShoot(4500));
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectFromShooter());

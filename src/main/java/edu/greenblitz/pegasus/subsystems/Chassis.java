@@ -58,7 +58,6 @@ public class Chassis extends GBSubsystem {
 		rightEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.RIGHT_ENCODER_REVERSED);
 		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
 		gyroscope.reset();
-		gyroscope.inverse();
 		toBrake();
 	}
 
@@ -160,7 +159,7 @@ public class Chassis extends GBSubsystem {
 	
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("Pigeon angle deg", Math.toDegrees(getAngle()));
+		SmartDashboard.putNumber("Pigeon angle deg", getRawAngle());
 		putString("Location", Chassis.getInstance().getLocation().toString());
 
 	}

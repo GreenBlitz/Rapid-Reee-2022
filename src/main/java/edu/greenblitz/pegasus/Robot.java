@@ -4,10 +4,12 @@ import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.auto.FourBallAuto;
 import edu.greenblitz.pegasus.commands.auto.MoveAngleByPID;
 import edu.greenblitz.pegasus.commands.auto.MoveLinearByPID;
+import edu.greenblitz.pegasus.commands.auto.TwoBallAuto;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
+import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -69,27 +71,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		/*
-//		Line Auto
-		new ParallelRaceGroup(
-				new WaitCommand(5),
-				new RobotDotMove(-0.1) //auto line in the back of the robot
-		).schedule();
-		 */
-
-		/*
 		TODO: Dear @Orel, please for the love of god, use the very useful function: schedule(), this will help the
 		the code to actually work
 		*/
 		Chassis.getInstance().toBrake();
-//		new MoveAngleByPID(
-//				new PIDObject(0.2, 0, 0, 0),
-//				-Math.toRadians(15)).schedule();
-
-		//new FourBallAuto().schedule();
-		//new TwoBallAuto().schedule();
-		//new ShootAndGo(5).schedule(); //Shoot and go
-//		new FourBallAuto(0.3).schedule(); // 2 ball auto
-	}
+		new StopShooter().schedule();
+		new TwoBallAuto().schedule();
+}
 	
 	@Override
 	public void testInit() {

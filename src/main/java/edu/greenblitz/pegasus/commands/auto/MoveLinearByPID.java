@@ -7,9 +7,9 @@ import org.greenblitz.motion.pid.PIDController;
 import org.greenblitz.motion.pid.PIDObject;
 
 public class MoveLinearByPID extends ChassisCommand {
-	private PIDController pidControllerLinear;
+	PIDController pidControllerLinear;
 	private double distance;
-	private double startingDistance;
+	double startingDistance;
 
 	private static final double EPSILON = 0.02;
 

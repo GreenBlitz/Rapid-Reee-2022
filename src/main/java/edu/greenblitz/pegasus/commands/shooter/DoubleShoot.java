@@ -5,6 +5,7 @@ import edu.greenblitz.pegasus.RobotMap.Pegasus.Funnel;
 import edu.greenblitz.pegasus.RobotMap.Pegasus.Intake;
 import edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
+import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -23,15 +24,18 @@ public class DoubleShoot extends SequentialCommandGroup {
 		System.out.println("Command Activated");
 		addCommands(
 				new ParallelRaceGroup(
-						new InsertIntoShooter(),
+						new FirstInsertIntoShooter(),
 						new ShooterByRPM(Shooter.ShooterMotor.pid, Shooter.ShooterMotor.iZone, RPM1),
-						new WaitCommand(3)
+						new WaitCommand(2)
 				),
-				new WaitCommand(0.2),
+				new ParallelRaceGroup(
+						new WaitCommand(0.2),
+						new MoveBallUntilClick()
+				),
 				new ParallelRaceGroup(
 						new InsertIntoShooter(),
 						new ShooterByRPM(Shooter.ShooterMotor.pid, Shooter.ShooterMotor.iZone, RPM2),
-						new WaitCommand(3)
+						new WaitCommand(1)
 				),
 				new WaitCommand(0.2)
 
