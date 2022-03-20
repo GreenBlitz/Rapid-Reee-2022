@@ -75,6 +75,7 @@ public class Robot extends TimedRobot {
 		the code to actually work
 		*/
 		Chassis.getInstance().toBrake();
+		Chassis.getInstance().resetGyro();
 		new StopShooter().schedule();
 		new TwoBallAuto().schedule();
 }

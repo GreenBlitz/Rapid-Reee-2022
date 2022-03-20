@@ -63,6 +63,7 @@ public class OI {
 		mainJoystick.A.whenPressed(
 				new MoveLinearByPID(
 						new PIDObject(0.5,0,0,0),
+						new PIDObject(0.1,0.00000001,0,0),
 						-2 * 0.762));
 
 		Chassis.getInstance().initDefaultCommand(mainJoystick);

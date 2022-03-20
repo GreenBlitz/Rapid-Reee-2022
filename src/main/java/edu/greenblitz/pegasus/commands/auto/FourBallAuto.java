@@ -23,6 +23,7 @@ public class FourBallAuto extends ParallelCommandGroup {
 	private static final double ANGLE = Math.toRadians(15);
 
 	private static final PIDObject LIN_OBJECT = new PIDObject(0.5,0,0,0);
+	public static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.1,0.0000001,0,0);
 	private static final PIDObject ANG_OBJECT = new PIDObject(0.4,0,0,0);
 
 
@@ -36,18 +37,18 @@ public class FourBallAuto extends ParallelCommandGroup {
 							new MoveFunnelUntilClick(),
 							new RunRoller(),
 //							new ClimbMoveToPosition(ClimbState.MID_GAME),
-							new MoveLinearByPID(LIN_OBJECT, FIRST_DISTANCE)
+							new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, FIRST_DISTANCE)
 					),
 					new DoubleShoot(5100),
 					new MoveAngleByPID(ANG_OBJECT, ANGLE),
 					new ParallelCommandGroup(
 							new MoveFunnelUntilClick(),
 							new RunRoller(),
-							new MoveLinearByPID(LIN_OBJECT, SECOND_DISTANCE)
+							new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, SECOND_DISTANCE)
 					),
 					new ParallelCommandGroup(
 							new MoveBallUntilClick(),
-							new MoveLinearByPID(LIN_OBJECT, SECOND_DISTANCE)
+							new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, SECOND_DISTANCE)
 					),
 					new MoveAngleByPID(ANG_OBJECT, -ANGLE),
 					new DoubleShoot(5100)
