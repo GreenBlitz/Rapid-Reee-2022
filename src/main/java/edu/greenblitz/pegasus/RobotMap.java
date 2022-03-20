@@ -103,7 +103,7 @@ public class RobotMap {
 					RPM_TO_POWER.addDatapoint(5209.37181640625, new double[]{1.0});
 				}
 				public static  final double RPM = 3350;
-				public static final PIDObject pid = new PIDObject(0.0001, 0.0000003, 0);
+				public static final PIDObject pid = new PIDObject(0.0006, 0.0000003, 0); //d1: 0.0001, 0.0000003, 0
 				public static final double iZone = 400;
 			}
 		}

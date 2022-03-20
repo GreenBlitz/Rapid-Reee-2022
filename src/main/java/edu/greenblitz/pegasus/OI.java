@@ -60,15 +60,7 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		mainJoystick.START.whenPressed(new ToggleRoller());
-		mainJoystick.B.whenPressed(new ToPower());
-		mainJoystick.A.whenPressed(new ToSpeed());
-		mainJoystick.BACK.whenPressed(new ToggleShifter());
-		Climb.getInstance().initDefaultCommand(secondJoystick);
-		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		secondJoystick.POV_UP.whenPressed(new ClimbToSecondBar());
-		secondJoystick.POV_RIGHT.whenPressed(new ClimbMoveToPosition(ClimbState.MID_GAME));
-		secondJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));    
+		mainJoystick.A.whileHeld(new DoubleShoot(3300));
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectFromShooter());

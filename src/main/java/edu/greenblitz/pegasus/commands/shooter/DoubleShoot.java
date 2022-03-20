@@ -20,6 +20,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 		super();
 		this.RPM1 = RPM1;
 		this.RPM2 = RPM2;
+		System.out.println("Command Activated");
 		addCommands(
 				new ParallelRaceGroup(
 						new InsertIntoShooter(),
