@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.pid.PIDController;
 import org.greenblitz.motion.pid.PIDObject;
 
@@ -9,7 +10,7 @@ public class MoveAngleByPID extends ChassisCommand {
 	private double angle;
 	private double startingAngle;
 
-	private static final double EPSILON = 0.1;
+	private static final double EPSILON = Math.toRadians(2);
 
 	public MoveAngleByPID(PIDObject object, double angle){
 		this.angle = angle;
@@ -24,9 +25,11 @@ public class MoveAngleByPID extends ChassisCommand {
 
 	@Override
 	public void execute() {
-		double angle = chassis.getAngle() - startingAngle;
+		double angle = (chassis.getAngle() - startingAngle);
 		double power = pidController.calculatePID(angle);
-		chassis.moveMotors(power);
+		chassis.moveMotors(power, -power);
+
+		SmartDashboard.putNumber("Angle", Math.toDegrees(angle));
 	}
 
 	@Override

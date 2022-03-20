@@ -7,35 +7,37 @@ import org.greenblitz.motion.pid.PIDController;
 import org.greenblitz.motion.pid.PIDObject;
 
 public class MoveLinearByPID extends ChassisCommand {
-	private PIDController pidControllerLeft;
-	private PIDController pidControllerRight;
+	private PIDController pidControllerLinear;
+	private PIDController pidControllerAngular;
 	private double distance;
-	private double startingDistance;
+	private double startingDistance, startingAngle;
 
 	private static final double EPSILON = 0.05;
 
-	public MoveLinearByPID(PIDObject left, PIDObject right, double distance){
+	public MoveLinearByPID(PIDObject linear, PIDObject angular, double distance){
 		this.distance = distance;
-		this.pidControllerLeft = new PIDController(left);
-		this.pidControllerRight = new PIDController(right);
+		this.pidControllerLinear = new PIDController(linear);
+		this.pidControllerAngular = new PIDController(angular);
 	}
 
 	@Override
 	public void initialize() {
-		this.pidControllerLeft.configure(0,distance,-0.5, 0.5, 0);
-		this.pidControllerRight.configure(0, distance, -0.5, 0.5, 0);
+		this.pidControllerLinear.configure(0,distance,-0.5, 0.5, 0);
+		this.pidControllerAngular.configure(0, 0, -0.5, 0.5, 0);
 		this.startingDistance = chassis.getMeters();
+		this.startingAngle = chassis.getAngle();
 	}
 
 	@Override
 	public void execute() {
 		double distance = chassis.getMeters() - startingDistance;
-		double powerLeft = pidControllerLeft.calculatePID(distance);
-		double powerRight = pidControllerRight.calculatePID(distance);
-		chassis.moveMotors(powerLeft, powerRight);
+		double turn = chassis.getAngle() - startingAngle;
+		double power = pidControllerLinear.calculatePID(distance);
+		double powerTurn = pidControllerAngular.calculatePID(turn);
+		chassis.moveMotors(power + powerTurn, power - powerTurn);
 
-		SmartDashboard.putNumber("DistanceLeft", Chassis.getInstance().getLeftMeters());
-		SmartDashboard.putNumber("DistanceRight", Chassis.getInstance().getRightMeters());
+		SmartDashboard.putNumber("Distance", Chassis.getInstance().getMeters());
+		SmartDashboard.putNumber("Angle", Chassis.getInstance().getAngle());
 	}
 
 	@Override

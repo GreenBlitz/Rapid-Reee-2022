@@ -10,6 +10,7 @@ import edu.greenblitz.gblib.gyroscope.PigeonGyro;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.Localizer;
 import org.greenblitz.motion.base.Position;
 
@@ -73,8 +74,8 @@ public class Chassis extends GBSubsystem {
 	}
 
 	public void moveMotors(double left, double right) {
-		putNumber("Left Power", left);
-		putNumber("Right Power", right);
+		SmartDashboard.putNumber("Left Power", left);
+		SmartDashboard.putNumber("Right Power", right);
 		motors[0].set(right);
 		motors[3].set(left);
 	}

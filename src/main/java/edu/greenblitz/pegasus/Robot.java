@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.auto.FourBallAuto;
+import edu.greenblitz.pegasus.commands.auto.MoveAngleByPID;
 import edu.greenblitz.pegasus.commands.auto.MoveLinearByPID;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
@@ -81,7 +82,11 @@ public class Robot extends TimedRobot {
 		new MoveLinearByPID(
 				new PIDObject(0.3,0,0,0),
 				new PIDObject(0.3,0,0,0),
-				-1.12).schedule();
+				-4 * 0.762).schedule();
+//		new MoveAngleByPID(
+//				new PIDObject(0.2, 0, 0, 0),
+//				-Math.toRadians(15)).schedule();
+
 		//new FourBallAuto().schedule();
 		//new TwoBallAuto().schedule();
 		//new ShootAndGo(5).schedule(); //Shoot and go
