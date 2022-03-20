@@ -17,7 +17,7 @@ public class RobotMap {
 			public static final int SECOND = 1;
 		}
 
-		public static class Chassis {
+			public static class Chassis {
 			public static final double WHEEL_DIST = 0.0; //very accurate right now
 
 			public static class Motors {

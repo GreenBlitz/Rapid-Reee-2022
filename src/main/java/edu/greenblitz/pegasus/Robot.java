@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.auto.FourBallAuto;
+import edu.greenblitz.pegasus.commands.auto.MoveLinearByPID;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
@@ -12,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import org.greenblitz.motion.pid.PIDObject;
 
 public class Robot extends TimedRobot {
 	@Override
@@ -76,7 +78,8 @@ public class Robot extends TimedRobot {
 		the code to actually work
 		*/
 		Chassis.getInstance().toBrake();
-		new FourBallAuto().schedule();
+		new MoveLinearByPID(new PIDObject(0.6,0,0,0), -0.762 * 2).schedule();
+		//new FourBallAuto().schedule();
 		//new TwoBallAuto().schedule();
 		//new ShootAndGo(5).schedule(); //Shoot and go
 //		new FourBallAuto(0.3).schedule(); // 2 ball auto

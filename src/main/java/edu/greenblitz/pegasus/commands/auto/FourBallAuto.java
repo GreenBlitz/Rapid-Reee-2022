@@ -15,17 +15,17 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import org.greenblitz.motion.pid.PIDObject;
 
 public class FourBallAuto extends ParallelCommandGroup {
-	private static final double FIRST_DISTANCE = 0.0;
+	private static final double FIRST_DISTANCE = 0.762 * 2;
 	private static final double SECOND_DISTANCE = 0.0;
 	private static final double ANGLE = 0.0;
 
-	private static final PIDObject LIN_OBJECT = new PIDObject(0,0,0,0);
+	private static final PIDObject LIN_OBJECT = new PIDObject(0.6,0,0,0);
 	private static final PIDObject ANG_OBJECT = new PIDObject(0,0,0,0);
 
 
 	public FourBallAuto(){
 		addCommands(
-				new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 5100),
+				//new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 5100),
 				new SequentialCommandGroup(
 					new ToPower(),
 					new ExtendRoller(),
