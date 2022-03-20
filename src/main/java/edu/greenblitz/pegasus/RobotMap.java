@@ -74,9 +74,9 @@ public class RobotMap {
 				public static final int FORWARD_PORT = 2;
 				public static final int REVERSE_PORT = 0;
 			}
-
-			public static final double POWER = 1;
-			public static final double REVERSE_POWER = -1;
+			
+			public static final double POWER = 1.0;
+			public static final double REVERSE_POWER = -1.0;
 		}
 
 		public static class Shooter {

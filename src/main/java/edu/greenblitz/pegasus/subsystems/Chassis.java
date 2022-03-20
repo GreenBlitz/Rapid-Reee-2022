@@ -1,9 +1,12 @@
 package edu.greenblitz.pegasus.subsystems;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.greenblitz.gblib.encoder.IEncoder;
 import edu.greenblitz.gblib.encoder.SparkEncoder;
+import edu.greenblitz.gblib.gyroscope.IGyroscope;
+import edu.greenblitz.gblib.gyroscope.PigeonGyro;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
@@ -14,7 +17,7 @@ public class Chassis extends GBSubsystem {
 	private static Chassis instance;
 
 	private final IEncoder leftEncoder, rightEncoder;
-//	private final IGyroscope gyroscope;
+	private final IGyroscope gyroscope;
 	private final CANSparkMax[] motors;
 
 	private static final int[] ports = {
@@ -52,9 +55,9 @@ public class Chassis extends GBSubsystem {
 		leftEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.LEFT_ENCODER_REVERSED);
 		rightEncoder = new SparkEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, motors[0]);
 		rightEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.RIGHT_ENCODER_REVERSED);
-//		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
-//		gyroscope.reset();
-//		gyroscope.inverse();
+		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
+		gyroscope.reset();
+		gyroscope.inverse();
 	}
 
 	public static Chassis getInstance() {
@@ -74,6 +77,10 @@ public class Chassis extends GBSubsystem {
 		putNumber("Right Power", right);
 		motors[0].set(right);
 		motors[3].set(left);
+	}
+
+	public void moveMotors(double power){
+		moveMotors(power, power);
 	}
 
 	public void toBrake() {
@@ -100,6 +107,10 @@ public class Chassis extends GBSubsystem {
 		return rightEncoder.getNormalizedTicks();
 	}
 
+	public double getMeters(){
+		return (getLeftMeters() + getRightMeters()) / 2.0;
+	}
+
 	public double getLeftRate() {
 		return leftEncoder.getNormalizedVelocity();
 	}
@@ -118,22 +129,19 @@ public class Chassis extends GBSubsystem {
 	}
 
 	public double getAngle() {
-//		return gyroscope.getNormalizedYaw();
-	return 0;
+		return gyroscope.getNormalizedYaw();
 	}
 
 	public double getRawAngle() {
-//		return gyroscope.getRawYaw();
-	return 0;
+		return gyroscope.getRawYaw();
 	}
 
 	public double getAngularVelocityByGyro() {
-//		return gyroscope.getYawRate();
-	return 0;
+		return gyroscope.getYawRate();
 	}
 
 	public void resetGyro() {
-//		gyroscope.reset();
+		gyroscope.reset();
 	}
 
 	public double getWheelDistance() {
