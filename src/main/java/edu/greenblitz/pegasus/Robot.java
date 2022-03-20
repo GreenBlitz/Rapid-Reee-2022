@@ -78,7 +78,10 @@ public class Robot extends TimedRobot {
 		the code to actually work
 		*/
 		Chassis.getInstance().toBrake();
-		new MoveLinearByPID(new PIDObject(0.6,0,0,0), -0.762 * 2).schedule();
+		new MoveLinearByPID(
+				new PIDObject(0.3,0,0,0),
+				new PIDObject(0.3,0,0,0),
+				-1.12).schedule();
 		//new FourBallAuto().schedule();
 		//new TwoBallAuto().schedule();
 		//new ShootAndGo(5).schedule(); //Shoot and go
