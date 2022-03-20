@@ -9,17 +9,9 @@ import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
-import edu.greenblitz.pegasus.commands.indexing.PrintColor;
-import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
-import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
-import edu.greenblitz.pegasus.commands.intake.roller.ReverseRunRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
-import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.*;
-import edu.greenblitz.pegasus.commands.shifter.ToPower;
-import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
-import edu.greenblitz.pegasus.commands.shifter.ToggleShifter;
 import edu.greenblitz.pegasus.commands.shooter.*;
 import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Climb;
@@ -32,10 +24,10 @@ public class OI {
 	private SmartJoystick secondJoystick;
 	
 	private enum IOModes {
-		DEBUG, REAL, NO_AUTO
+		DEBUG, REAL, DEBUG2
 	}
 	
-	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -48,84 +40,21 @@ public class OI {
 			case REAL:
 				initRealButtons();
 				break;
-			case NO_AUTO:
-				initNoAutoButtons();
+			case DEBUG2:
+				initDebug2Buttons();
 				break;
 			
 		}
 	}
 	
-	private void initNoAutoButtons() {
+	private void initDebug2Buttons() {
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
+
+
+
 	}
 	
 	private void initDebugButtons() {
-		mainJoystick.A.whileHeld(new GBCommand() {
-			@Override
-			public void execute() {
-				Chassis.getInstance().setMotorByID(0, 0.2);
-			}
-
-			@Override
-			public void end(boolean interrupted) {
-				Chassis.getInstance().setMotorByID(0, 0);
-			}
-		});
-		mainJoystick.B.whileHeld(new GBCommand() {
-			@Override
-			public void execute() {
-				Chassis.getInstance().setMotorByID(1, 0.2);
-			}
-
-			@Override
-			public void end(boolean interrupted) {
-				Chassis.getInstance().setMotorByID(1, 0);
-			}
-		});
-		mainJoystick.Y.whileHeld(new GBCommand() {
-			@Override
-			public void execute() {
-				Chassis.getInstance().setMotorByID(2, 0.2);
-			}
-
-			@Override
-			public void end(boolean interrupted) {
-				Chassis.getInstance().setMotorByID(2, 0);
-			}
-		});
-		mainJoystick.POV_UP.whileHeld(new GBCommand() {
-			@Override
-			public void execute() {
-				Chassis.getInstance().setMotorByID(3, 0.2);
-			}
-
-			@Override
-			public void end(boolean interrupted) {
-				Chassis.getInstance().setMotorByID(3, 0);
-			}
-		});
-		mainJoystick.POV_LEFT.whileHeld(new GBCommand() {
-			@Override
-			public void execute() {
-				Chassis.getInstance().setMotorByID(4, 0.2);
-			}
-
-			@Override
-			public void end(boolean interrupted) {
-				Chassis.getInstance().setMotorByID(4, 0);
-			}
-		});
-		mainJoystick.POV_DOWN.whileHeld(new GBCommand() {
-			@Override
-			public void execute() {
-				Chassis.getInstance().setMotorByID(5, 0.2);
-			}
-
-			@Override
-			public void end(boolean interrupted) {
-				Chassis.getInstance().setMotorByID(5, 0);
-			}
-		});
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectFromShooter());

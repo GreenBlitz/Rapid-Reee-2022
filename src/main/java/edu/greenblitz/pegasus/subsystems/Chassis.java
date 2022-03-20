@@ -36,7 +36,7 @@ public class Chassis extends GBSubsystem {
 			RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_2_REVERSED,
 			RobotMap.Pegasus.Chassis.Motors.LEFT_LEADER_REVERSED,
 			RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_1_REVERSED,
-			RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_2_REVERSED
+			RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_2_REVERSED
 	};
 
 	private Chassis() {
@@ -47,10 +47,10 @@ public class Chassis extends GBSubsystem {
 			motors[i].setInverted(isReversed[i]);
 		}
 
-//		motors[1].follow(motors[0]);
-//		motors[2].follow(motors[0]);
-//		motors[4].follow(motors[3]);
-//		motors[5].follow(motors[3]);
+		motors[1].follow(motors[0]);
+		motors[2].follow(motors[0]);
+		motors[4].follow(motors[3]);
+		motors[5].follow(motors[3]);
 
 		leftEncoder = new SparkEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, motors[3]);
 		leftEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.LEFT_ENCODER_REVERSED);
