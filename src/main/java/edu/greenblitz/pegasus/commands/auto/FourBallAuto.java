@@ -16,12 +16,12 @@ public class FourBallAuto extends SequentialCommandGroup {
 	private static final double FIRST_DISTANCE = -1.5;
 	private static final double DISTANCE_TO_SHOOT = 1.5;
 	private static final double RPM_SHOOTING = 4000;
-	private static final double RPM_SHOOTING_2 = 4200;
+	private static final double RPM_SHOOTING_2 = 4500;
 
 	private static final double SECOND_DISTANCE = 0.0;
 	private static final double ANGLE = Math.toRadians(7);
 
-	public static final PIDObject LIN_OBJECT = new PIDObject(0.5,0,0.2,0);
+	public static final PIDObject LIN_OBJECT = new PIDObject(0.5,0,0.25,0);
 	public static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.1,0.0000001,0,0);
 	public static final PIDObject ANG_OBJECT = new PIDObject(0.4,0,0,0);
 	
@@ -95,7 +95,7 @@ public class FourBallAuto extends SequentialCommandGroup {
 						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING_2)
 				),
 				new ParallelDeadlineGroup(
-						new MoveAngleByPID(ANG_OBJECT,-Math.toRadians(15)),
+						new MoveAngleByPID(ANG_OBJECT,-Math.toRadians(12)),
 						new ToPower(),
 						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING_2)
 				),
