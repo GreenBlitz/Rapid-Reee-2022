@@ -66,7 +66,7 @@ public class OI {
 		mainJoystick.BACK.whenPressed(new ToggleShifter());
 		Climb.getInstance().initDefaultCommand(secondJoystick);
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		secondJoystick.POV_UP.whenPressed(new ClimbToSecondBar());
+		secondJoystick.POV_UP.whenPressed(new ClimbMoveToPosition(ClimbState.PULL_UP));
 		secondJoystick.POV_RIGHT.whenPressed(new ClimbMoveToPosition(ClimbState.MID_GAME));
 		secondJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));    
 	}
