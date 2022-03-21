@@ -69,6 +69,7 @@ public class Shifter extends GBSubsystem {
 		}*/
 		System.out.println(state == Gear.POWER ? DoubleSolenoid.Value.kForward: DoubleSolenoid.Value.kReverse);
 		piston.set(state == Gear.POWER ? DoubleSolenoid.Value.kForward: DoubleSolenoid.Value.kReverse);
+		GlobalGearContainer.getInstance().setGear(state);
 	}
 	
 	@Override

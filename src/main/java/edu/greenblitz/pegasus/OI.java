@@ -33,7 +33,7 @@ public class OI {
 		DEBUG, REAL, DEBUG2
 	}
 	
-	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -106,7 +106,7 @@ public class OI {
 
 		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
 		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
-
+		mainJoystick.L1.whenPressed(new ToggleShifter());
 	}
 	
 	private class InitManualOverride extends GBCommand {
