@@ -61,13 +61,11 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 	}
 	
-	
+	/*
+		TODO: Dear @Orel, please for the love of god, use the very useful function: schedule(), this will help the code to actually work
+	*/
 	@Override
 	public void autonomousInit() {
-		/*
-		TODO: Dear @Orel, please for the love of god, use the very useful function: schedule(), this will help the
-		the code to actually work
-		*/
 		Chassis.getInstance().toBrake();
 		Chassis.getInstance().resetGyro();
 		new StopShooter().schedule();

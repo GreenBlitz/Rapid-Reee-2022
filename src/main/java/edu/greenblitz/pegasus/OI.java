@@ -6,6 +6,7 @@ import edu.greenblitz.pegasus.commands.auto.MoveAngleByPID;
 import edu.greenblitz.pegasus.commands.auto.MoveLinearByPID;
 import edu.greenblitz.pegasus.commands.climb.*;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
+import edu.greenblitz.pegasus.commands.climb.Rail.RailToSecondBar;
 import edu.greenblitz.pegasus.commands.climb.Turning.SwitchTurning;
 import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
@@ -59,21 +60,13 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		mainJoystick.A.whenPressed(
-				new MoveLinearByPID(
-						new PIDObject(0.5,0,0,0),
-						new PIDObject(0.1,0.00000001,0,0),
-						-2 * 0.762));
-
-		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		mainJoystick.B.whenPressed(
-				new MoveAngleByPID(
-						new PIDObject(0.4,0,0,0), Math.toRadians(12)));
+//		Chassis.getInstance().initDefaultCommand(mainJoystick);
+		Climb.getInstance().initDefaultCommand(secondJoystick);
 		mainJoystick.BACK.whenPressed(new ToggleRoller());
 		mainJoystick.START.whenPressed(new ToggleShifter());
 		mainJoystick.Y.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
 		mainJoystick.X.whileHeld(new DoubleShoot(4500));
+		mainJoystick.B.whenPressed(new RailToSecondBar());
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectFromShooter());

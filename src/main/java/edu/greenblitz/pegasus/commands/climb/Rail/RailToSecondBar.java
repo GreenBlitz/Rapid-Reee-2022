@@ -8,6 +8,8 @@ import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rail.
 
 public class RailToSecondBar extends RailCommand{
 	public static final double GOAL = 0.0;
+	public static final double Kp = 0.1;
+	public static final double P_THRESHOLD = 0.1;
 	
 	@Override
 	public void initialize() {
@@ -16,7 +18,12 @@ public class RailToSecondBar extends RailCommand{
 	
 	@Override
 	public void execute() {
+		double error = GOAL - climb.getLoc();
+		if (Math.abs(error) < P_THRESHOLD) {
+			climb.safeMoveRailMotor(error * Kp);
+		} else {
 			climb.safeMoveRailMotor(-1);
+		}
 	}
 	
 	@Override

@@ -163,7 +163,7 @@ public class RobotMap {
 //					public static final double METERS_TO_SECOND_BAR = 0.0;
 					public static final double METERS_TO_TRAVERSAL = 0.0;
 					public static final double METERS_TO_MID_GAME = 0.41;
-					public static final double EPSILON = 0.001;
+					public static final double EPSILON = 0.02;
 				}
 			}
 		}
