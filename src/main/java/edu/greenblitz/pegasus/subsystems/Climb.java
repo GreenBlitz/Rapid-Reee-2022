@@ -161,6 +161,7 @@ public class Climb extends GBSubsystem {
 	
 	@Override
 	public void periodic() {
+		SmartDashboard.putNumber("climbAngle", getAng());
 		atStart = false;
 		if (Math.abs(getLoc() - RobotMap.Pegasus.Climb.ClimbMotors.START_LOCATION) < RobotMap.Pegasus.Climb.ClimbConstants.Rail.EPSILON) {
 			if (Math.abs(getAng() - RobotMap.Pegasus.Climb.ClimbMotors.START_ANGLE) < RobotMap.Pegasus.Climb.ClimbConstants.Rotation.EPSILON) {
