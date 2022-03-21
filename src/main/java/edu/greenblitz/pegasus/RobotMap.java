@@ -10,6 +10,9 @@ import org.greenblitz.motion.profiling.ProfilingData;
 
 import java.util.HashMap;
 
+import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.SafetyZones.HIGHEST_ANGLE;
+import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.SafetyZones.LOWEST_ANGLE;
+
 public class RobotMap {
 	public static class Pegasus {
 		public static class Joystick {
@@ -124,8 +127,8 @@ public class RobotMap {
 				public static final double RAIL_SAFETY = 0.17;
 				public static final double RAIL_FF = 0.1;
 				public static final double SAFETY_LOC = 0.6;
-				public static final double LOWEST_ANGLE = 0.25;
-				public static final double HIGHEST_ANGLE = Math.PI / 2 - 0.3;
+				public static final double LOWEST_ANGLE = Math.toRadians(14.3);
+				public static final double HIGHEST_ANGLE = Math.toRadians(72.7);
 				public static final double TURN_SAFETY = 0.05;
 				public static final double TURN_ABSOLUTE_SAFETY = 0.02;
 				public static final double BATTERY_SAFETY_ANG = Math.toRadians(51.5); // Math.toDegrees(51.5)
@@ -153,7 +156,7 @@ public class RobotMap {
 
 					public static final double RADIANS_TO_SECOND_BAR = Math.toRadians(39);
 					public static final double RADIANS_TO_TRAVERSAL = Math.toRadians(0); //TODO: change this
-					public static final double RADIANS_TO_MID_GAME = Math.toRadians(75);
+					public static final double RADIANS_TO_MID_GAME = HIGHEST_ANGLE - Math.toRadians(2.5);
 					public static final double EPSILON = Math.toRadians(2);
 				}
 				
