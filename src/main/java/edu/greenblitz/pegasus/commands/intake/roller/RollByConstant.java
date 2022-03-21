@@ -11,7 +11,7 @@ public class RollByConstant extends RollerCommand{
 
     @Override
     public void execute() {
-        SmartDashboard.putBoolean("RollByConstant", true);
+//        SmartDashboard.putBoolean("RollByConstant", true);
         intake.moveRoller(power);
     }
 

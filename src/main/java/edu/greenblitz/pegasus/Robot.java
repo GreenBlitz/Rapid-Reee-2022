@@ -1,12 +1,7 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.auto.FourBallAuto;
-import edu.greenblitz.pegasus.commands.auto.MoveAngleByPID;
-import edu.greenblitz.pegasus.commands.auto.MoveLinearByPID;
-import edu.greenblitz.pegasus.commands.auto.TwoBallAuto;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
-import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
@@ -17,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import org.greenblitz.motion.pid.PIDObject;
 
 public class Robot extends TimedRobot {
 	@Override
@@ -77,7 +71,7 @@ public class Robot extends TimedRobot {
 		Chassis.getInstance().toBrake();
 		Chassis.getInstance().resetGyro();
 		new StopShooter().schedule();
-		new TwoBallAuto().schedule();
+		new FourBallAuto().schedule();
 }
 	
 	@Override
