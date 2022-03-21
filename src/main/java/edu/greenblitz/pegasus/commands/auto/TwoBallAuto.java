@@ -20,7 +20,7 @@ public class TwoBallAuto extends SequentialCommandGroup {
 	private static final double RPM_SHOOTING = 4000;
 
 	private static final double SECOND_DISTANCE = 0.0;
-	private static final double ANGLE = Math.toRadians(11);
+	private static final double ANGLE = Math.toRadians(7);
 
 	public static final PIDObject LIN_OBJECT = new PIDObject(0.5,0,0.2,0);
 	public static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.1,0.0000001,0,0);
@@ -58,16 +58,16 @@ public class TwoBallAuto extends SequentialCommandGroup {
 				new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -4.5),
 				new ParallelDeadlineGroup(
 						new SequentialCommandGroup(
-								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -1.2){
+								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -1.3){
 									@Override
 									public void initialize() {
 										this.angle = chassis.getAngle();
-										this.pidControllerLinear.configure(chassis.getMeters(), -1.2,-0.2, 0.2, 0);
+										this.pidControllerLinear.configure(chassis.getMeters(), -1.3,-0.2, 0.2, 0);
 										this.pidControllerAngular.configure(chassis.getAngle(), 0,-0.2, 0.2, 0);
 										this.startingDistance = chassis.getMeters();
 									}
 								},
-								new WaitCommand(0.2)
+								new WaitCommand(1)
 						),
 						new MoveFunnelUntilClick(),
 						new RunRoller()
@@ -77,11 +77,11 @@ public class TwoBallAuto extends SequentialCommandGroup {
 				new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 4.5),
 				new ParallelDeadlineGroup(
 						new SequentialCommandGroup(
-								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 1.2){
+								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 1){
 									@Override
 									public void initialize() {
 										this.angle = chassis.getAngle();
-										this.pidControllerLinear.configure(chassis.getMeters(), 1.2,-0.2, 0.2, 0);
+										this.pidControllerLinear.configure(chassis.getMeters(), 1,-0.2, 0.2, 0);
 										this.pidControllerAngular.configure(chassis.getAngle(), 0,-0.2, 0.2, 0);
 										this.startingDistance = chassis.getMeters();
 									}
@@ -90,9 +90,9 @@ public class TwoBallAuto extends SequentialCommandGroup {
 						),
 						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
 				),
-				new ParallelCommandGroup(
-						new ToPower(),
+				new ParallelDeadlineGroup(
 						new MoveAngleByPID(ANG_OBJECT,-Math.toRadians(15)),
+						new ToPower(),
 						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
 				),
 				new DoubleShoot(RPM_SHOOTING),
