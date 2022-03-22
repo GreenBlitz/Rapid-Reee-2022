@@ -55,8 +55,6 @@ public class Robot extends TimedRobot {
 				new MoveBallUntilClick()
 			)
 		).schedule();
-		Climb.getInstance().resetRailMotorTicks();
-		Climb.getInstance().resetTurningMotorTicks();
 	}
 	
 	@Override

@@ -35,7 +35,7 @@ public class OI {
 		DEBUG, REAL, DEBUG2
 	}
 	
-	private static final IOModes IOMode = IOModes.DEBUG2; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {

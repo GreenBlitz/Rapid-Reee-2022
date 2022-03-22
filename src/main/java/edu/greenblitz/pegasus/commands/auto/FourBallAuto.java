@@ -102,15 +102,15 @@ public class FourBallAuto extends SequentialCommandGroup {
 						),
 						new SequentialCommandGroup(
 								new WaitCommand(0.5),
-								new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING_2)
+								new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
 						)
 				),
 				new ParallelDeadlineGroup(
 						new MoveAngleByPID(ANG_OBJECT, -Math.toRadians(12)),
 						new ToPower(),
-						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING_2)
+						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
 				),
-				new DoubleShoot(RPM_SHOOTING_2)
+				new DoubleShoot(RPM_SHOOTING)
 		);
 	}
 	
