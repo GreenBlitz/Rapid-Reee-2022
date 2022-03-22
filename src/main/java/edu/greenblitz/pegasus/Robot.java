@@ -70,6 +70,8 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		Chassis.getInstance().toBrake();
 		Chassis.getInstance().resetGyro();
+		Climb.getInstance().resetTurningMotorTicks();
+		Climb.getInstance().resetRailMotorTicks();
 		new StopShooter().schedule();
 		new FourBallAuto().schedule();
 }
