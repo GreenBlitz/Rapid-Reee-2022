@@ -16,7 +16,7 @@ public class RailByJoystick extends RailCommand{
 	public void execute() {
 		super.execute();
 		if (joystick.L1.get()){
-			if (joystick.L3.get()){
+			if (joystick.R1.get()){
 				Climb.getInstance().resetRailMotorTicks();
 			}
 			double railMotorPower = -joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y);

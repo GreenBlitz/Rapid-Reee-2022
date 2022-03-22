@@ -15,6 +15,7 @@ public class SwitchTurning extends TurningCommand {
 	@Override
 	public void execute() {
 		double turningMotorPower = joystick.getAxisValue(SmartJoystick.Axis.LEFT_TRIGGER) - joystick.getAxisValue(SmartJoystick.Axis.RIGHT_TRIGGER);
+		
 		climb.safeMoveTurningMotor(turningMotorPower * 0.3);
 	}
 

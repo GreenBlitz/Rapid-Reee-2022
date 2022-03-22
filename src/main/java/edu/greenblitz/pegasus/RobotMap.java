@@ -10,6 +10,8 @@ import org.greenblitz.motion.profiling.ProfilingData;
 
 import java.util.HashMap;
 
+import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.SafetyZones.HIGHEST_ANGLE;
+
 public class RobotMap {
 	public static class Pegasus {
 		public static class Joystick {
@@ -118,19 +120,21 @@ public class RobotMap {
 			public static final double REVERSE_POWER = -0.7;
 			public static final int MACRO_SWITCH_PORT = 0;
 		}
+		
 		public static class Climb {
 			public static class SafetyZones {
-				public static final double RAIL_SAFETY_OFFSET = 0.03;
-				public static final double RAIL_SAFETY = 0.27;
+				public static final double RAIL_SAFETY_OFFSET = 0.02;
+				public static final double RAIL_SAFETY = 0.17;
 				public static final double RAIL_FF = 0.1;
 				public static final double SAFETY_LOC = 0.6;
-				public static final double LOWEST_ANGLE = 0.25;
-				public static final double HIGHEST_ANGLE = Math.PI / 2 - 0.3;
+				public static final double LOWEST_ANGLE = Math.toRadians(14.3);
+				public static final double HIGHEST_ANGLE = Math.toRadians(72.7);
 				public static final double TURN_SAFETY = 0.05;
 				public static final double TURN_ABSOLUTE_SAFETY = 0.02;
 				public static final double BATTERY_SAFETY_ANG = Math.toRadians(51.5); // Math.toDegrees(51.5)
 				public static final double BATTERY_SAFETY_LOC = 0.45;
 			}
+			
 			public static class ClimbMotors {
 				public static final int RAIL_MOTOR_PORT = 9;
 				public static final boolean RAIL_MOTOR_REVERSED = false;
@@ -143,7 +147,7 @@ public class RobotMap {
 				public static final double START_ANGLE = 0.279;
 
 			}
-
+			
 			public static class ClimbConstants {
 				public static class Rotation {
 					public static final double kp = 0.3 / Math.PI * 2;
@@ -153,17 +157,18 @@ public class RobotMap {
 
 					public static final double RADIANS_TO_SECOND_BAR = Math.toRadians(39);
 					public static final double RADIANS_TO_TRAVERSAL = Math.toRadians(0); //TODO: change this
-					public static final double RADIANS_TO_MID_GAME = Math.toRadians(75);
-					public static final double EPSILON = 0.01;
+					public static final double RADIANS_TO_MID_GAME = HIGHEST_ANGLE - Math.toRadians(2.5);
+					public static final double EPSILON = Math.toRadians(2);
 				}
 				
 				public static class Rail {
 					public static final double kp = 3; //10
 					public static final double ff = 0.2;
-//					public static final double METERS_TO_SECOND_BAR = 0.0;
+					public static final double METERS_TO_SECOND_BAR = 0.0;
 					public static final double METERS_TO_TRAVERSAL = 0.0;
 					public static final double METERS_TO_MID_GAME = 0.41;
-					public static final double EPSILON = 0.02;
+					public static final double STOPPER_SAFETY_THRESH = 0.1;
+					public static final double EPSILON = 0.01;
 				}
 			}
 		}

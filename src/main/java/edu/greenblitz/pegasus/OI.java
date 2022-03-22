@@ -35,7 +35,7 @@ public class OI {
 		DEBUG, REAL, DEBUG2
 	}
 	
-	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -75,6 +75,7 @@ public class OI {
 		mainJoystick.B.whenPressed(new RailToSecondBar());
 		mainJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
 		mainJoystick.POV_RIGHT.whenPressed(new ClimbMoveToPosition(ClimbState.MID_GAME));
+
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectFromShooter());
@@ -95,7 +96,10 @@ public class OI {
 		
 		secondJoystick.START.whenPressed(new ToggleRoller());
 		secondJoystick.BACK.whenPressed(new HybridPullDown(secondJoystick));
-//		secondJoystick.POV_LEFT.whenPressed(new InitManualOverride());
+
+		secondJoystick.POV_UP.whenPressed(new ExtendFully());
+		secondJoystick.POV_RIGHT.whenPressed(new ClimbMoveToPosition(ClimbState.MID_GAME));
+		secondJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
 
 		secondJoystick.R1.whileHeld(new WhileHeldCoast());
 
@@ -112,6 +116,7 @@ public class OI {
 		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
 		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
 		mainJoystick.L1.whenPressed(new ToggleShifter());
+
 	}
 	
 	private class InitManualOverride extends GBCommand {

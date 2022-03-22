@@ -62,15 +62,12 @@ public class Shifter extends GBSubsystem {
 	 * @param state A value based off of the Gear enum. This value is then set as the state the piston is in.
 	 */
 	public void setShift(Gear state) {
-		/*if (!state.equals(currentShift)) {
-			currentShift = state;
-			Chassis.getInstance().changeGear();
-			GlobalGearContainer.getInstance().setGear(state);
-		}*/
+		currentShift = state;
+		Chassis.getInstance().changeGear();
+		GlobalGearContainer.getInstance().setGear(state);
 		System.out.println(state == Gear.POWER ? DoubleSolenoid.Value.kForward: DoubleSolenoid.Value.kReverse);
 		piston.set(state == Gear.POWER ? DoubleSolenoid.Value.kForward: DoubleSolenoid.Value.kReverse);
-		GlobalGearContainer.getInstance().setGear(state);
-	}
+}
 	
 	@Override
 	public void periodic() {

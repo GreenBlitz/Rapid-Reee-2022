@@ -1,5 +1,5 @@
 package edu.greenblitz.pegasus.commands.climb;
 
 public enum ClimbState {
-		TRAVERSE, MID_GAME, START
+		PULL_UP, TRAVERSE, MID_GAME, START
 }
