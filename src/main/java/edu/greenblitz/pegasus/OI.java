@@ -4,6 +4,8 @@ import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.auto.MoveAngleByPID;
 import edu.greenblitz.pegasus.commands.auto.MoveLinearByPID;
+import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
+import edu.greenblitz.pegasus.commands.chassis.driver.SmoothArcadeDrive;
 import edu.greenblitz.pegasus.commands.climb.*;
 import edu.greenblitz.pegasus.commands.climb.Rail.MoveRailToPosition;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
@@ -33,7 +35,7 @@ public class OI {
 		DEBUG, REAL, DEBUG2
 	}
 	
-	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.DEBUG2; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -54,7 +56,10 @@ public class OI {
 	}
 	
 	private void initDebug2Buttons() {
-		Chassis.getInstance().initDefaultCommand(mainJoystick);
+		Chassis.getInstance().setDefaultCommand(new SmoothArcadeDrive(mainJoystick));
+		mainJoystick.R1.whileHeld(new ArcadeDrive(mainJoystick));
+		mainJoystick.START.whenPressed(new ToggleShifter());
+
 
 
 

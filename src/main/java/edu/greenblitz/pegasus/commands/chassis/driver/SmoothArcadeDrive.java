@@ -24,8 +24,8 @@ public class SmoothArcadeDrive extends ChassisCommand {
 
 	@Override
 	public void execute() {
-		double forward = Math.pow(joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y), forwardsNonLinearityFactor.getValue());
-		double turn = Math.pow(joystick.getAxisValue(SmartJoystick.Axis.RIGHT_X), turnNonLinearityFactor.getValue());
+		double forward = Math.pow(joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y), forwardsNonLinearityFactor.getValue()) * Math.signum(joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y));
+		double turn = Math.pow(joystick.getAxisValue(SmartJoystick.Axis.RIGHT_X), turnNonLinearityFactor.getValue()) * Math.signum(joystick.getAxisValue(SmartJoystick.Axis.RIGHT_X));
 		chassis.arcadeDrive(forward * forwardsFactor.getValue(),
 				turn*turnFactor.getValue());
 	}
