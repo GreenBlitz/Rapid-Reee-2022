@@ -19,14 +19,14 @@ public class MoveBallUntilClick extends GBCommand {
 
 	@Override
 	public void execute() {
-		funnel.move();
-		intake.move();
+		funnel.moveMotor();
+		intake.moveRoller();
 	}
 
 	@Override
 	public void end(boolean interrupted) {
-		funnel.stop();
-		intake.stop();
+		funnel.stopMotor();
+		intake.stopRoller();
 	}
 
 	@Override

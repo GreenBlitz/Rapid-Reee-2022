@@ -1,15 +1,13 @@
 package edu.greenblitz.pegasus.commands.funnel;
 
-public class StopInserter extends ShootingMethod {
-
+public class StopFunnel extends FunnelCommand{
 	@Override
 	public void initialize() {
-		funnel.moveMotor(0);
+		funnel.stopMotor();
 	}
-
+	
 	@Override
 	public boolean isFinished() {
 		return true;
 	}
-
 }

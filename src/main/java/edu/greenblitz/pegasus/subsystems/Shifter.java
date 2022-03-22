@@ -5,7 +5,6 @@ import edu.greenblitz.gblib.gears.GearDependentValue;
 import edu.greenblitz.gblib.gears.GlobalGearContainer;
 import edu.greenblitz.gblib.sendables.GBDoubleSolenoid;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.utils.VisionMaster;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /**
@@ -21,8 +20,8 @@ public class Shifter extends GBSubsystem {
 	
 	private static Shifter instance;
 	
-	private GBDoubleSolenoid piston;
-	private Gear currentShift = Gear.POWER;
+	private DoubleSolenoid piston;
+	private Gear currentShift = Gear.SPEED;
 	private GearDependentValue<DoubleSolenoid.Value> shiftValue =
 			new GearDependentValue<>(DoubleSolenoid.Value.kForward, DoubleSolenoid.Value.kReverse);
 	
@@ -31,12 +30,10 @@ public class Shifter extends GBSubsystem {
 	 * This constructor constructs the piston.
 	 */
 	private Shifter() {
-		
-		piston = new GBDoubleSolenoid(RobotMap.Pegasus.Chassis.Shifter.PCM,
-				RobotMap.Pegasus.Chassis.Shifter.Solenoid.FORWARD,
-				RobotMap.Pegasus.Chassis.Shifter.Solenoid.REVERSE);
-		
-		
+		piston = new DoubleSolenoid(RobotMap.Pegasus.Pneumatics.PCM.PCM_ID,
+				RobotMap.Pegasus.Pneumatics.PCM.PCM_TYPE,
+				RobotMap.Pegasus.Chassis.Shifter.Solenoid.FORWARD_PORT,
+				RobotMap.Pegasus.Chassis.Shifter.Solenoid.REVERSE_PORT);
 	}
 	
 	/**
@@ -65,9 +62,12 @@ public class Shifter extends GBSubsystem {
 	 * @param state A value based off of the Gear enum. This value is then set as the state the piston is in.
 	 */
 	public void setShift(Gear state) {
-		currentShift = state;
-		Chassis.getInstance().changeGear();
-		GlobalGearContainer.getInstance().setGear(state);
+		/*if (!state.equals(currentShift)) {
+			currentShift = state;
+			Chassis.getInstance().changeGear();
+			GlobalGearContainer.getInstance().setGear(state);
+		}*/
+		System.out.println(state == Gear.POWER ? DoubleSolenoid.Value.kReverse: DoubleSolenoid.Value.kForward);
 		piston.set(state == Gear.POWER ? DoubleSolenoid.Value.kReverse: DoubleSolenoid.Value.kForward);
 	}
 	

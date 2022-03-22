@@ -1,11 +1,9 @@
 package edu.greenblitz.pegasus.commands.intake.roller;
 
-import edu.greenblitz.pegasus.RobotMap;
-
-public class ReverseRoller extends RollerCommand{
+public class ReverseRunRoller extends RollerCommand{
 	@Override
 	public void execute() {
-		intake.moveRoller(RobotMap.Pegasus.Intake.REVERSE_POWER);
+		intake.moveRoller(true);
 	}
 
 	@Override
@@ -15,6 +13,6 @@ public class ReverseRoller extends RollerCommand{
 
 	@Override
 	public void end(boolean interrupted) {
-		intake.stop();
-	}
+		intake.stopRoller();
+}
 }

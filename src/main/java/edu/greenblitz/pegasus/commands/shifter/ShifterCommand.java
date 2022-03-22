@@ -9,4 +9,9 @@ public class ShifterCommand extends GBCommand {
 	public ShifterCommand(){
 		this.shifter = Shifter.getInstance();
 	}
+
+	@Override
+	public boolean isFinished() {
+		return true;
+	}
 }

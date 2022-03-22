@@ -3,9 +3,9 @@ package edu.greenblitz.pegasus.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.gblib.sendables.GBDoubleSolenoid;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
-import edu.greenblitz.pegasus.commands.intake.roller.RollByTrigger;
+import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -33,14 +33,26 @@ public class Intake {
 	}
 
 	public void initDefaultCommand(SmartJoystick joystick) {
-		instance.getRoller().setDefaultCommand(new RollByTrigger(joystick));
-		Funnel.getInstance().setDefaultCommand(new RunFunnel());
+		instance.getRoller().setDefaultCommand(new HandleBalls());
+//		Funnel.getInstance().setDefaultCommand(new RunFunnel());
 	}
 
 	public void moveRoller(double power) {
 		roller.rollerMotor.set(power);
 	}
+	
+	public void stopRoller() {
+		moveRoller(0.0);
+	}
 
+	public void moveRoller(boolean reversed){
+		moveRoller(reversed ? RobotMap.Pegasus.Intake.REVERSE_POWER : RobotMap.Pegasus.Intake.POWER);
+	}
+	
+	public void moveRoller(){
+		moveRoller(false);
+	}
+	
 	public void extend() {
 		extender.extender.set(DoubleSolenoid.Value.kForward);
 	}
@@ -96,7 +108,7 @@ public class Intake {
 		private DoubleSolenoid extender;
 
 		private Extender() {
-			extender = new DoubleSolenoid(RobotMap.Pegasus.Intake.module, RobotMap.Pegasus.Intake.PCM, RobotMap.Pegasus.Intake.Solenoid.FORWARD, RobotMap.Pegasus.Intake.Solenoid.REVERSE);
+			extender = new DoubleSolenoid(RobotMap.Pegasus.Pneumatics.PCM.PCM_ID, RobotMap.Pegasus.Pneumatics.PCM.PCM_TYPE, RobotMap.Pegasus.Intake.Solenoid.FORWARD_PORT, RobotMap.Pegasus.Intake.Solenoid.REVERSE_PORT);
 		}
 
 		private void setValue(DoubleSolenoid.Value value) {

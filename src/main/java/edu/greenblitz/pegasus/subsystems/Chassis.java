@@ -1,15 +1,10 @@
 package edu.greenblitz.pegasus.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.greenblitz.gblib.encoder.IEncoder;
 import edu.greenblitz.gblib.encoder.SparkEncoder;
-import edu.greenblitz.gblib.gyroscope.IGyroscope;
-import edu.greenblitz.gblib.gyroscope.PigeonGyro;
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.pegasus.OI;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import org.greenblitz.motion.Localizer;
@@ -18,43 +13,48 @@ import org.greenblitz.motion.base.Position;
 public class Chassis extends GBSubsystem {
 	private static Chassis instance;
 
-	private final CANSparkMax rightLeader, rightFollower1, rightFollower2, leftLeader, leftFollower1, leftFollower2;
 	private final IEncoder leftEncoder, rightEncoder;
-	private final IGyroscope gyroscope;
-	private final CANSparkMax[] allMotors;
+//	private final IGyroscope gyroscope;
+	private final CANSparkMax[] motors;
+
+	private static final int[] ports = {
+			RobotMap.Pegasus.Chassis.Motors.RIGHT_LEADER,
+			RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_1,
+			RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_2,
+			RobotMap.Pegasus.Chassis.Motors.LEFT_LEADER,
+			RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_1,
+			RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_2
+	};
+
+	private static final boolean[] isReversed = {
+			RobotMap.Pegasus.Chassis.Motors.RIGHT_LEADER_REVERSED,
+			RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_1_REVERSED,
+			RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_2_REVERSED,
+			RobotMap.Pegasus.Chassis.Motors.LEFT_LEADER_REVERSED,
+			RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_1_REVERSED,
+			RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_2_REVERSED
+	};
 
 	private Chassis() {
-		rightLeader = new CANSparkMax(RobotMap.Pegasus.Chassis.Motors.RIGHT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
-		rightFollower1 = new CANSparkMax(RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_1, CANSparkMaxLowLevel.MotorType.kBrushless);
-		rightFollower2 = new CANSparkMax(RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_2, CANSparkMaxLowLevel.MotorType.kBrushless);
-		leftLeader = new CANSparkMax(RobotMap.Pegasus.Chassis.Motors.LEFT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
-		leftFollower1 = new CANSparkMax(RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_1, CANSparkMaxLowLevel.MotorType.kBrushless);
-		leftFollower2 = new CANSparkMax(RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_2, CANSparkMaxLowLevel.MotorType.kBrushless);   //big-haim
-		allMotors = new CANSparkMax[] {rightLeader, rightFollower1, rightFollower2, leftLeader, leftFollower1, leftFollower2};
-
-		for (CANSparkMax spark : allMotors){
-			spark.setSmartCurrentLimit(40);
+		motors = new CANSparkMax[ports.length];
+		for(int i = 0; i < ports.length; i++){
+			motors[i] = new CANSparkMax(ports[i], CANSparkMaxLowLevel.MotorType.kBrushless);
+			motors[i].setSmartCurrentLimit(40);
+			motors[i].setInverted(isReversed[i]);
 		}
 
-		leftFollower1.follow(leftLeader);
-		leftFollower2.follow(leftLeader);
-		rightFollower1.follow(rightLeader);
-		rightFollower2.follow(rightLeader);
+		motors[1].follow(motors[0]);
+		motors[2].follow(motors[0]);
+		motors[4].follow(motors[3]);
+		motors[5].follow(motors[3]);
 
-		rightLeader.setInverted(RobotMap.Pegasus.Chassis.Motors.RIGHT_LEADER_REVERSED);
-		rightFollower1.setInverted(RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_1_REVERSED);
-		rightFollower2.setInverted(RobotMap.Pegasus.Chassis.Motors.RIGHT_FOLLOWER_2_REVERSED);
-		leftLeader.setInverted(RobotMap.Pegasus.Chassis.Motors.LEFT_LEADER_REVERSED);
-		leftFollower1.setInverted(RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_1_REVERSED);
-		leftFollower2.setInverted(RobotMap.Pegasus.Chassis.Motors.LEFT_FOLLOWER_2_REVERSED);
-
-		leftEncoder = new SparkEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, leftLeader);
+		leftEncoder = new SparkEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, motors[3]);
 		leftEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.LEFT_ENCODER_REVERSED);
-		rightEncoder = new SparkEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, rightLeader);
+		rightEncoder = new SparkEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, motors[0]);
 		rightEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.RIGHT_ENCODER_REVERSED);
-		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
-		gyroscope.reset();
-		gyroscope.inverse();
+//		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
+//		gyroscope.reset();
+//		gyroscope.inverse();
 	}
 
 	public static Chassis getInstance() {
@@ -72,26 +72,20 @@ public class Chassis extends GBSubsystem {
 	public void moveMotors(double left, double right) {
 		putNumber("Left Power", left);
 		putNumber("Right Power", right);
-		rightLeader.set(right);
-		leftLeader.set(left);
+		motors[0].set(right);
+		motors[3].set(left);
 	}
 
 	public void toBrake() {
-		rightLeader.setIdleMode(CANSparkMax.IdleMode.kBrake);
-		rightFollower1.setIdleMode(CANSparkMax.IdleMode.kBrake);
-		rightFollower2.setIdleMode(CANSparkMax.IdleMode.kBrake);
-		leftLeader.setIdleMode(CANSparkMax.IdleMode.kBrake);
-		leftFollower1.setIdleMode(CANSparkMax.IdleMode.kBrake);
-		leftFollower2.setIdleMode(CANSparkMax.IdleMode.kBrake);
+		for(CANSparkMax spark : motors){
+			spark.setIdleMode(CANSparkMax.IdleMode.kBrake);
+		}
 	}
 
 	public void toCoast() {
-		rightLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);
-		rightFollower1.setIdleMode(CANSparkMax.IdleMode.kCoast);
-		rightFollower2.setIdleMode(CANSparkMax.IdleMode.kCoast);
-		leftLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);
-		leftFollower1.setIdleMode(CANSparkMax.IdleMode.kCoast);
-		leftFollower2.setIdleMode(CANSparkMax.IdleMode.kCoast);
+		for(CANSparkMax spark : motors){
+			spark.setIdleMode(CANSparkMax.IdleMode.kCoast);
+		}
 	}
 
 	public void arcadeDrive(double moveValue, double rotateValue) {
@@ -124,19 +118,22 @@ public class Chassis extends GBSubsystem {
 	}
 
 	public double getAngle() {
-		return gyroscope.getNormalizedYaw();
+//		return gyroscope.getNormalizedYaw();
+	return 0;
 	}
 
 	public double getRawAngle() {
-		return gyroscope.getRawYaw();
+//		return gyroscope.getRawYaw();
+	return 0;
 	}
 
 	public double getAngularVelocityByGyro() {
-		return gyroscope.getYawRate();
+//		return gyroscope.getYawRate();
+	return 0;
 	}
 
 	public void resetGyro() {
-		gyroscope.reset();
+//		gyroscope.reset();
 	}
 
 	public double getWheelDistance() {
@@ -153,12 +150,9 @@ public class Chassis extends GBSubsystem {
 	
 	@Override
 	public void periodic() {
-		super.periodic();
-		putNumber("Left vel enc", leftEncoder.getNormalizedVelocity());
-		putNumber("Right vel enc", rightEncoder.getNormalizedVelocity());
-		putNumber("Angle vel by wheel", getAngularVelocityByWheels());
 		putNumber("Pigeon angle deg", Math.toDegrees(getAngle()));
 		putString("Location", Chassis.getInstance().getLocation().toString());
+
 	}
 
 	public void resetEncoders() {
@@ -167,7 +161,7 @@ public class Chassis extends GBSubsystem {
 	}
 
 	public void setMotorByID(int id, double power){
-		allMotors[id].set(power);
+		motors[id].set(power);
 	}
 
 
