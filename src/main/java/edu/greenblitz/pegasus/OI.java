@@ -4,6 +4,7 @@ import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.auto.MoveAngleByPID;
 import edu.greenblitz.pegasus.commands.auto.MoveLinearByPID;
+import edu.greenblitz.pegasus.commands.chassis.WhileHeldChassisCoast;
 import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import edu.greenblitz.pegasus.commands.chassis.driver.SmoothArcadeDrive;
 import edu.greenblitz.pegasus.commands.climb.*;
@@ -116,7 +117,7 @@ public class OI {
 		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
 		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
 		mainJoystick.L1.whenPressed(new ToggleShifter());
-
+		mainJoystick.BACK.whileHeld(new WhileHeldChassisCoast());
 	}
 	
 	private class InitManualOverride extends GBCommand {

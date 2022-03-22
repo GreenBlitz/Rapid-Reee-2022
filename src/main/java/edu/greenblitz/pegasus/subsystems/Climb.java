@@ -26,6 +26,7 @@ public class Climb extends GBSubsystem {
 	private Climb() {
 		rail = new Rail();
 		turning = new Turning();
+
 	}
 	
 	private static void init() {
@@ -184,6 +185,7 @@ public class Climb extends GBSubsystem {
 		private Rail() {
 			railMotor = new CANSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
 			railMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_REVERSED);
+			railMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 			railEncoder = new SparkEncoder(new GearDependentValue<>(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER, RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER), railMotor);
 			railEncoder.reset();
 		}
@@ -219,6 +221,7 @@ public class Climb extends GBSubsystem {
 				setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
 			}
 			if (getAng() < Math.PI / 2 - 0.4 && needsCoast) {
+				needsCoast = false;
 				setTurningMotorIdle(CANSparkMax.IdleMode.kCoast);
 			}
 			SmartDashboard.putNumber("Rail loc", this.getClimb().getRailMotorTicks());
