@@ -1,8 +1,6 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.auto.FourBallAuto;
-import edu.greenblitz.pegasus.commands.auto.RobotDotMove;
-import edu.greenblitz.pegasus.commands.auto.TwoBallAuto;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
@@ -30,20 +28,20 @@ public class Robot extends TimedRobot {
 		Indexing.getInstance();
 		Chassis.getInstance(); // Must be last!
 	}
-	
+
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
 
 	}
 
-	
+
 	@Override
 	public void disabledInit() {
 		//VisionMaster.GameState.DISABLED.setAsCurrent();
 		CommandScheduler.getInstance().cancelAll();
 	}
-	
+
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
@@ -53,22 +51,22 @@ public class Robot extends TimedRobot {
 		Shooter.getInstance().toCoast();
 		new SequentialCommandGroup(
 				new ParallelRaceGroup(
-					new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 4000){
-						@Override
-						public void end(boolean interrupted) {
-							shooter.setSpeedByPID(0);
-						}
-					},
-					new MoveBallUntilClick(),
-					new WaitCommand(3)
+						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 4000) {
+							@Override
+							public void end(boolean interrupted) {
+								shooter.setSpeedByPID(0);
+							}
+						},
+						new MoveBallUntilClick(),
+						new WaitCommand(3)
 				)
 		).schedule();
 	}
-	
+
 	@Override
 	public void teleopPeriodic() {
 	}
-	
+
 	/*
 		TODO: Dear @Orel, please for the love of god, use the very useful function: schedule(), this will help the code to actually work
 	*/
@@ -79,14 +77,14 @@ public class Robot extends TimedRobot {
 		Climb.getInstance().resetTurningMotorTicks();
 		Climb.getInstance().resetRailMotorTicks();
 		new StopShooter().schedule();
-		new TwoBallAuto().schedule();
-}
-	
+		new FourBallAuto().schedule();
+	}
+
 	@Override
 	public void testInit() {
 		CommandScheduler.getInstance().cancelAll();
 	}
-	
+
 	@Override
 	public void testPeriodic() {
 	}
