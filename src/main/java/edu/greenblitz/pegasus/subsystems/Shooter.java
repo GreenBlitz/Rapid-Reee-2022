@@ -33,7 +33,7 @@ public class Shooter extends GBSubsystem {
 
 	public static void init() {
 		instance = new Shooter();
-	}
+	} //TODO why static?
 
 	public static Shooter getInstance() {
 		if (instance == null) {
@@ -65,6 +65,10 @@ public class Shooter extends GBSubsystem {
 
 	public void setSpeedByPID(double target) {
 		leader.getPIDController().setReference(target, CANSparkMax.ControlType.kVelocity);
+	}
+
+	public void stopPID(){
+		leader.getPIDController().setReference(0, CANSparkMax.ControlType.kCurrent);
 	}
 
 	public void setPIDConsts(PIDObject obj, double iZone) {

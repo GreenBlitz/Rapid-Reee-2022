@@ -26,6 +26,7 @@ import edu.greenblitz.pegasus.commands.shifter.ToggleShifter;
 import edu.greenblitz.pegasus.commands.shooter.*;
 import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Climb;
+import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.*;
 import org.greenblitz.motion.pid.PIDObject;
 
@@ -74,12 +75,8 @@ public class OI {
 	private void initDebugButtons() {
 //		Chassis.getInstance().initDefaultCommand(mainJoystick);
 		Climb.getInstance().initDefaultCommand(secondJoystick);
-		mainJoystick.BACK.whenPressed(new ToggleRoller());
-		mainJoystick.START.whenPressed(new ToggleShifter());
-		mainJoystick.Y.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
-		mainJoystick.X.whileHeld(new DoubleShoot(4500));
-		mainJoystick.B.whenPressed(new RailToSecondBar());
 		secondJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
+
 		secondJoystick.POV_RIGHT.whenPressed(
 				new SequentialCommandGroup(
 						new MoveRailToPosition(0.613),
@@ -87,8 +84,14 @@ public class OI {
 						new ClimbMoveToPosition(ClimbState.MID_GAME)
 				));
 		secondJoystick.POV_UP.whenPressed(new ExtendFully());
-		mainJoystick.A.whileHeld(new PrintColor());
-		mainJoystick.B.whileHeld(new PrintRGB());
+		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 4250){
+			@Override
+			public void end(boolean interrupted) {
+				super.end(interrupted);
+				shooter.setSpeedByPID(0);
+			}
+		});		secondJoystick.X.whileHeld(new InsertIntoShooter());
+		secondJoystick.B.whenPressed(new InstantCommand(() -> Shooter.getInstance().stopPID()));
 
 	}
 	private void initRealButtons() {
@@ -113,6 +116,7 @@ public class OI {
 
 		secondJoystick.POV_UP.whenPressed(new ExtendFully());
 		secondJoystick.POV_RIGHT.whenPressed(
+
 				new SequentialCommandGroup(
 						new MoveRailToPosition(0.613),
 						new MoveTurningToAngle(MID_START_ANGLE),

@@ -1,6 +1,8 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.auto.FourBallAuto;
+import edu.greenblitz.pegasus.commands.auto.RobotDotMove;
+import edu.greenblitz.pegasus.commands.auto.TwoBallAuto;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
@@ -77,7 +79,7 @@ public class Robot extends TimedRobot {
 		Climb.getInstance().resetTurningMotorTicks();
 		Climb.getInstance().resetRailMotorTicks();
 		new StopShooter().schedule();
-		new FourBallAuto().schedule();
+		new TwoBallAuto().schedule();
 }
 	
 	@Override

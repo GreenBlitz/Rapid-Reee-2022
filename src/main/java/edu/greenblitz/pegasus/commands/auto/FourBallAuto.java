@@ -19,10 +19,10 @@ import org.greenblitz.motion.pid.PIDObject;
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
 
 public class FourBallAuto extends SequentialCommandGroup {
-	private static final double FIRST_DISTANCE = -1.6;
+	private static final double FIRST_DISTANCE = -1.5;
 	private static final double DISTANCE_TO_SHOOT = 1.6;
-	private static final double RPM_SHOOTING = 4000;
-	private static final double RPM_SHOOTING_2 = 4500;
+	private static final double RPM_SHOOTING = 4250;
+	private static final double RPM_SHOOTING_2 = 5000;
 	
 	private static final double SECOND_DISTANCE = 0.0;
 	private static final double ANGLE = Math.toRadians(7);
@@ -74,11 +74,11 @@ public class FourBallAuto extends SequentialCommandGroup {
 				new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -4.5),
 				new ParallelDeadlineGroup(
 						new SequentialCommandGroup(
-								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -1.3) {
+								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -0.8) {
 									@Override
 									public void initialize() {
 										this.angle = chassis.getAngle();
-										this.pidControllerLinear.configure(chassis.getMeters(), -1.3, -0.2, 0.2, 0);
+										this.pidControllerLinear.configure(chassis.getMeters(), -0.8, -0.2, 0.2, 0);
 										this.pidControllerAngular.configure(chassis.getAngle(), 0, -0.2, 0.2, 0);
 										this.startingDistance = chassis.getMeters();
 									}
@@ -97,11 +97,11 @@ public class FourBallAuto extends SequentialCommandGroup {
 				),
 				new ParallelDeadlineGroup(
 						new SequentialCommandGroup(
-								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 0.8) {
+								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 0.3) {
 									@Override
 									public void initialize() {
 										this.angle = chassis.getAngle();
-										this.pidControllerLinear.configure(chassis.getMeters(), 0.8, -0.2, 0.2, 0);
+										this.pidControllerLinear.configure(chassis.getMeters(), 0.3, -0.2, 0.2, 0);
 										this.pidControllerAngular.configure(chassis.getAngle(), 0, -0.2, 0.2, 0);
 										this.startingDistance = chassis.getMeters();
 									}
