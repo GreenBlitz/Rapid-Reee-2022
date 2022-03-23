@@ -11,6 +11,7 @@ import edu.greenblitz.pegasus.commands.climb.*;
 import edu.greenblitz.pegasus.commands.climb.Rail.MoveRailToPosition;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailToSecondBar;
+import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;
 import edu.greenblitz.pegasus.commands.climb.Turning.SwitchTurning;
 import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
@@ -28,6 +29,8 @@ import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.wpi.first.wpilibj2.command.*;
 import org.greenblitz.motion.pid.PIDObject;
 
+import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
+
 public class OI {
 	private static OI instance;
 	
@@ -38,7 +41,7 @@ public class OI {
 		DEBUG, REAL, DEBUG2
 	}
 	
-	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -69,16 +72,21 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-////		Chassis.getInstance().initDefaultCommand(mainJoystick);
-//		Climb.getInstance().initDefaultCommand(mainJoystick);
-//		mainJoystick.BACK.whenPressed(new ToggleRoller());
-//		mainJoystick.START.whenPressed(new ToggleShifter());
-//		mainJoystick.Y.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
-//		mainJoystick.X.whileHeld(new DoubleShoot(4500));
-//		mainJoystick.B.whenPressed(new RailToSecondBar());
-//		mainJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
-//		mainJoystick.POV_RIGHT.whenPressed(new ClimbMoveToPosition(ClimbState.MID_GAME));
-
+//		Chassis.getInstance().initDefaultCommand(mainJoystick);
+		Climb.getInstance().initDefaultCommand(secondJoystick);
+		mainJoystick.BACK.whenPressed(new ToggleRoller());
+		mainJoystick.START.whenPressed(new ToggleShifter());
+		mainJoystick.Y.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
+		mainJoystick.X.whileHeld(new DoubleShoot(4500));
+		mainJoystick.B.whenPressed(new RailToSecondBar());
+		secondJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
+		secondJoystick.POV_RIGHT.whenPressed(
+				new SequentialCommandGroup(
+						new MoveRailToPosition(0.613),
+						new MoveTurningToAngle(MID_START_ANGLE),
+						new ClimbMoveToPosition(ClimbState.MID_GAME)
+				));
+		secondJoystick.POV_UP.whenPressed(new ExtendFully());
 		mainJoystick.A.whileHeld(new PrintColor());
 		mainJoystick.B.whileHeld(new PrintRGB());
 
@@ -104,8 +112,12 @@ public class OI {
 		secondJoystick.BACK.whenPressed(new HybridPullDown(secondJoystick));
 
 		secondJoystick.POV_UP.whenPressed(new ExtendFully());
-		secondJoystick.POV_RIGHT.whenPressed(new ClimbMoveToPosition(ClimbState.MID_GAME));
-		secondJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
+		secondJoystick.POV_RIGHT.whenPressed(
+				new SequentialCommandGroup(
+						new MoveRailToPosition(0.613),
+						new MoveTurningToAngle(MID_START_ANGLE),
+						new ClimbMoveToPosition(ClimbState.MID_GAME)
+				));		secondJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
 
 		secondJoystick.R1.whileHeld(new WhileHeldCoast());
 

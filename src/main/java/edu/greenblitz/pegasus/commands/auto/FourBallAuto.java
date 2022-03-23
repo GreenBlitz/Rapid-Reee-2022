@@ -3,6 +3,8 @@ package edu.greenblitz.pegasus.commands.auto;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.ClimbMoveToPosition;
 import edu.greenblitz.pegasus.commands.climb.ClimbState;
+import edu.greenblitz.pegasus.commands.climb.Rail.MoveRailToPosition;
+import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
@@ -13,6 +15,8 @@ import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import org.greenblitz.motion.pid.PIDObject;
+
+import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
 
 public class FourBallAuto extends SequentialCommandGroup {
 	private static final double FIRST_DISTANCE = -1.6;
@@ -42,7 +46,11 @@ public class FourBallAuto extends SequentialCommandGroup {
 										new WaitCommand(0.2)
 								)
 						),
-						new ClimbMoveToPosition(ClimbState.MID_GAME),
+						new SequentialCommandGroup(
+								new MoveRailToPosition(0.613),
+								new MoveTurningToAngle(MID_START_ANGLE),
+								new ClimbMoveToPosition(ClimbState.MID_GAME)
+						),
 						new RunRoller(),
 						new SequentialCommandGroup(
 								new WaitCommand(0.5),
@@ -66,11 +74,11 @@ public class FourBallAuto extends SequentialCommandGroup {
 				new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -4.5),
 				new ParallelDeadlineGroup(
 						new SequentialCommandGroup(
-								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -1.5) {
+								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -1.3) {
 									@Override
 									public void initialize() {
 										this.angle = chassis.getAngle();
-										this.pidControllerLinear.configure(chassis.getMeters(), -1.5, -0.2, 0.2, 0);
+										this.pidControllerLinear.configure(chassis.getMeters(), -1.3, -0.2, 0.2, 0);
 										this.pidControllerAngular.configure(chassis.getAngle(), 0, -0.2, 0.2, 0);
 										this.startingDistance = chassis.getMeters();
 									}
@@ -89,11 +97,11 @@ public class FourBallAuto extends SequentialCommandGroup {
 				),
 				new ParallelDeadlineGroup(
 						new SequentialCommandGroup(
-								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 1) {
+								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 0.8) {
 									@Override
 									public void initialize() {
 										this.angle = chassis.getAngle();
-										this.pidControllerLinear.configure(chassis.getMeters(), 1, -0.2, 0.2, 0);
+										this.pidControllerLinear.configure(chassis.getMeters(), 0.8, -0.2, 0.2, 0);
 										this.pidControllerAngular.configure(chassis.getAngle(), 0, -0.2, 0.2, 0);
 										this.startingDistance = chassis.getMeters();
 									}

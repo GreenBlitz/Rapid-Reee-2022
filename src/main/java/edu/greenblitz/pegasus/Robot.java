@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
 		new ToSpeed().schedule();
 		new ExtendRoller().schedule();
 		Indexing.getInstance().initSetAlliance();
+		Shooter.getInstance().toCoast();
 		new SequentialCommandGroup(
 				new ParallelRaceGroup(
 					new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 4000){

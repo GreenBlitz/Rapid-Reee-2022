@@ -7,6 +7,7 @@ import org.greenblitz.motion.interpolation.Dataset;
 import org.greenblitz.motion.pid.PIDObject;
 import org.greenblitz.motion.profiling.ProfilingConfiguration;
 import org.greenblitz.motion.profiling.ProfilingData;
+import org.opencv.core.Mat;
 
 import java.util.HashMap;
 
@@ -104,7 +105,7 @@ public class RobotMap {
 					RPM_TO_POWER.addDatapoint(4664.115322265625, new double[]{0.9});
 					RPM_TO_POWER.addDatapoint(5209.37181640625, new double[]{1.0});
 				}
-				public static  final double RPM = 3350;
+				public static  final double RPM = 3250;
 				public static final PIDObject pid = new PIDObject(0.0006, 0.0000003, 0); //d1: 0.0001, 0.0000003, 0
 				public static final double iZone = 400;
 			}
@@ -144,8 +145,8 @@ public class RobotMap {
 				public static final int TURNING_MOTOR_PORT = 11;
 				public static final boolean TURNING_MOTOR_REVERSED = false;
 				public static final double TURNING_MOTOR_TICKS_PER_RADIAN = 2139;
-				public static final double START_ANGLE = 0.279;
-
+				public static final double START_ANGLE = Math.toRadians(15.985);
+				public static final double MID_START_ANGLE = Math.toRadians(20) + START_ANGLE;
 			}
 			
 			public static class ClimbConstants {
