@@ -16,6 +16,8 @@ import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
+import edu.greenblitz.pegasus.commands.indexing.PrintColor;
+import edu.greenblitz.pegasus.commands.indexing.PrintRGB;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.multiSystem.*;
@@ -36,7 +38,7 @@ public class OI {
 		DEBUG, REAL, DEBUG2
 	}
 	
-	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -67,15 +69,18 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-//		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		Climb.getInstance().initDefaultCommand(mainJoystick);
-		mainJoystick.BACK.whenPressed(new ToggleRoller());
-		mainJoystick.START.whenPressed(new ToggleShifter());
-		mainJoystick.Y.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
-		mainJoystick.X.whileHeld(new DoubleShoot(4500));
-		mainJoystick.B.whenPressed(new RailToSecondBar());
-		mainJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
-		mainJoystick.POV_RIGHT.whenPressed(new ClimbMoveToPosition(ClimbState.MID_GAME));
+////		Chassis.getInstance().initDefaultCommand(mainJoystick);
+//		Climb.getInstance().initDefaultCommand(mainJoystick);
+//		mainJoystick.BACK.whenPressed(new ToggleRoller());
+//		mainJoystick.START.whenPressed(new ToggleShifter());
+//		mainJoystick.Y.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
+//		mainJoystick.X.whileHeld(new DoubleShoot(4500));
+//		mainJoystick.B.whenPressed(new RailToSecondBar());
+//		mainJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
+//		mainJoystick.POV_RIGHT.whenPressed(new ClimbMoveToPosition(ClimbState.MID_GAME));
+
+		mainJoystick.A.whileHeld(new PrintColor());
+		mainJoystick.B.whileHeld(new PrintRGB());
 
 	}
 	private void initRealButtons() {
