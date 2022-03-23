@@ -4,6 +4,7 @@ import edu.greenblitz.pegasus.commands.auto.FourBallAuto;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
+import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
@@ -44,16 +45,20 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
-//		Chassis.getInstance().toCoast();
 		new ToSpeed().schedule();
 		new ExtendRoller().schedule();
 		Indexing.getInstance().initSetAlliance();
 		new SequentialCommandGroup(
-				new WaitCommand(0.4),
-			new ParallelRaceGroup(
-				new WaitCommand(1),
-				new MoveBallUntilClick()
-			)
+				new ParallelRaceGroup(
+					new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 4000){
+						@Override
+						public void end(boolean interrupted) {
+							shooter.setSpeedByPID(0);
+						}
+					},
+					new MoveBallUntilClick(),
+					new WaitCommand(3)
+				)
 		).schedule();
 	}
 	
