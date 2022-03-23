@@ -19,7 +19,7 @@ import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_STAR
 
 public class FourBallAuto extends SequentialCommandGroup {
 	private static final double FIRST_DISTANCE = -1.45;
-	private static final double DISTANCE_TO_SHOOT = 1.5;
+	private static final double DISTANCE_TO_SHOOT = 1.4;
 	private static final double RPM_SHOOTING = 3600;
 
 	private static final double ANGLE_TO_THIRD_BALL = Math.toRadians(7);

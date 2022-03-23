@@ -106,7 +106,7 @@ public class OI {
 		);
 		
 		secondJoystick.START.whenPressed(new ToggleRoller());
-		secondJoystick.BACK.whenPressed(new HybridPullDown(secondJoystick));
+		secondJoystick.BACK.whileHeld(new EjectEnemyBallFromShooter());
 
 		secondJoystick.POV_UP.whenPressed(new ExtendFully());
 		secondJoystick.POV_RIGHT.whenPressed(
