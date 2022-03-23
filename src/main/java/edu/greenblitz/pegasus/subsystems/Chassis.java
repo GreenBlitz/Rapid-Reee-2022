@@ -96,6 +96,18 @@ public class Chassis extends GBSubsystem {
 		}
 	}
 
+	public void semiToCoast() {
+		for(int i = 1; i < 5; i++){
+			motors[i].setIdleMode(CANSparkMax.IdleMode.kCoast); //moves two thirds to coast
+		}
+	}
+
+	public void semiToBrake() {
+		for(int i = 1; i < 5; i++){
+			motors[i].setIdleMode(CANSparkMax.IdleMode.kBrake); //moves two thirds to brake
+		}
+	}
+
 	public void arcadeDrive(double moveValue, double rotateValue) {
 		moveMotors(moveValue - rotateValue, moveValue + rotateValue);
 	}
