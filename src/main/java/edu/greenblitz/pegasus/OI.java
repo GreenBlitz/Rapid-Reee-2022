@@ -95,7 +95,7 @@ public class OI {
 
 	}
 	private void initRealButtons() {
-		secondJoystick.Y.whileHeld(new EjectFromShooter());
+		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
 
 		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM){
 
@@ -108,7 +108,7 @@ public class OI {
 		secondJoystick.X.whileHeld(new InsertIntoShooter());
 
 		secondJoystick.B.whileHeld(
-				new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0))
+				new ParallelCommandGroup(new MoveBallUntilClick(), new RollByConstant(1.0))
 		);
 		
 		secondJoystick.START.whenPressed(new ToggleRoller());

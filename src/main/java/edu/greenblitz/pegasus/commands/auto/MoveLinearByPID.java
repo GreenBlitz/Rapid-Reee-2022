@@ -12,19 +12,25 @@ public class MoveLinearByPID extends ChassisCommand {
 	private double distance;
 	double angle;
 	double startingDistance;
+	double maxPower;
 
 	private static final double EPSILON = 0.02;
 
 	public MoveLinearByPID(PIDObject linear, PIDObject angular, double distance){
+		this(linear, angular, distance, 0.5);
+	}
+
+	public MoveLinearByPID(PIDObject linear, PIDObject angular, double distance, double maxPower){
 		this.distance = distance;
 		this.pidControllerLinear = new PIDController(linear);
 		this.pidControllerAngular = new PIDController(angular);
+		this.maxPower = maxPower;
 	}
 
 	@Override
 	public void initialize() {
 		this.angle = chassis.getAngle();
-		this.pidControllerLinear.configure(chassis.getMeters(), distance,-0.5, 0.5, 0);
+		this.pidControllerLinear.configure(chassis.getMeters(), distance,-maxPower, maxPower, 0);
 		this.pidControllerAngular.configure(chassis.getAngle(), 0,-0.2, 0.2, 0);
 		this.startingDistance = chassis.getMeters();
 	}
