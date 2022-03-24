@@ -105,7 +105,7 @@ public class RobotMap {
 					RPM_TO_POWER.addDatapoint(4664.115322265625, new double[]{0.9});
 					RPM_TO_POWER.addDatapoint(5209.37181640625, new double[]{1.0});
 				}
-				public static  final double RPM = 3100;
+				public static final double RPM = 3100;
 				public static final PIDObject pid = new PIDObject(0.0006, 0.0000003, 0); //d1: 0.0001, 0.0000003, 0
 				public static final double iZone = 400;
 			}
@@ -125,7 +125,7 @@ public class RobotMap {
 		public static class Climb {
 			public static class SafetyZones {
 				public static final double RAIL_SAFETY_OFFSET = 0.02;
-				public static final double RAIL_SAFETY = 0.17;
+				public static final double RAIL_SAFETY = 0.12;
 				public static final double RAIL_FF = 0.1;
 				public static final double SAFETY_LOC = 0.6;
 				public static final double LOWEST_ANGLE = Math.toRadians(14.3);
