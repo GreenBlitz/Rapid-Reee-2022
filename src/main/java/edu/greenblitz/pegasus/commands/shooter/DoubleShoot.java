@@ -15,7 +15,6 @@ public class DoubleShoot extends SequentialCommandGroup {
 
 	private double RPM1;
 	private double RPM2;
-	private static final double TRIAL_AND_ERROR = 3200;
 
 	public DoubleShoot(double RPM1, double RPM2) {
 		super();
@@ -48,7 +47,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 	}
 
 	public DoubleShoot() {
-		this(TRIAL_AND_ERROR);
+		this(Shooter.ShooterMotor.RPM);
 	}
 
 	@Override

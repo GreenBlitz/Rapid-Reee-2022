@@ -12,7 +12,7 @@ public class ShooterByRPM extends ShooterCommand {
 	protected double tStart;
 	private int inShootingSpeed;
 
-	private static final double EPSILON = 120;
+	private static final double EPSILON = 50;
 
 	public ShooterByRPM(PIDObject obj, double iZone, double target) {
 		this.obj = obj;
@@ -45,7 +45,7 @@ public class ShooterByRPM extends ShooterCommand {
 			this.inShootingSpeed = 0;
 			shooter.setPreparedToShoot(false);
 		}
-		if (this.inShootingSpeed >= 3) {
+		if (this.inShootingSpeed >= 35) {
 			shooter.setPreparedToShoot(true);
 		}
 		logger.report((System.currentTimeMillis()/1000.0 - tStart), shooter.getShooterSpeed());
