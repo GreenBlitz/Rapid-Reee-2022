@@ -23,29 +23,37 @@ public class TwoBallAuto extends SequentialCommandGroup {
 				new ToSpeed(),
 				new ParallelCommandGroup(
 						new ExtendRoller(),
-						new SequentialCommandGroup(
-								new MoveRailToPosition(0.613),
-								new MoveTurningToAngle(MID_START_ANGLE),
-								new ClimbMoveToPosition(ClimbState.MID_GAME)
+						new ParallelRaceGroup(
+							new SequentialCommandGroup(
+									new MoveRailToPosition(0.613),
+									new MoveTurningToAngle(MID_START_ANGLE),
+									new ClimbMoveToPosition(ClimbState.MID_GAME)
+							),
+							new WaitCommand(3)
 						),
 						new MoveBallUntilClick()
 				),
 				new ParallelRaceGroup(
 						new RobotDotMove(-0.1),
 						new RunRoller(),
-						new WaitCommand(2)
+						new WaitCommand(3)
 				),
 				new ParallelRaceGroup(
-						new RunRoller(),
+						new SequentialCommandGroup(
+							new ParallelRaceGroup(
+									new WaitCommand(2),
+									new RunRoller()
+							),
+							new WaitCommand(4)
+						),
 						new RobotDotMove(0.15),
-						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2900),
-						new WaitCommand(5)
+						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2400)
 				),
-				new DoubleShoot(),
+				new DoubleShoot(2400),
 				new ParallelCommandGroup(
 						new RunRoller(),
 						new RunFunnel(),
-						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2900)
+						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2400)
 				)
 		);
 	}
