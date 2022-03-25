@@ -9,15 +9,6 @@ import java.util.Queue;
 public class CalibratePID extends ShooterByRPM {
 	
 	Queue<Double> lastValues = new ArrayDeque<>(50);
-	
-	public CalibratePID(PIDObject obj, double target) {
-		super(obj, target);
-		shooter.putNumber("p", obj.getKp());
-		shooter.putNumber("i", obj.getKi());
-		shooter.putNumber("d", obj.getKd());
-		shooter.putNumber("iZone", 0);
-		shooter.putNumber("target", target);
-	}
 
 
 	public CalibratePID(PIDObject obj, double iZone, double target) {

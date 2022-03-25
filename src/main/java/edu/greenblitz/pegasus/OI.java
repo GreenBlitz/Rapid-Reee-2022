@@ -35,7 +35,7 @@ public class OI {
 		DEBUG, REAL, DEBUG2
 	}
 	
-	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -56,37 +56,22 @@ public class OI {
 	}
 	
 	private void initDebug2Buttons() {
-		Chassis.getInstance().setDefaultCommand(new SmoothArcadeDrive(mainJoystick));
-		mainJoystick.R1.whileHeld(new ArcadeDrive(mainJoystick));
-		mainJoystick.START.whenPressed(new ToggleShifter());
-
 
 
 
 	}
 	
 	private void initDebugButtons() {
-//		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		Climb.getInstance().initDefaultCommand(secondJoystick);
-		secondJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
+		mainJoystick.A.whileHeld(new ShooterByRPM(2000){
 
-		secondJoystick.POV_RIGHT.whenPressed(
-				new SequentialCommandGroup(
-						new MoveRailToPosition(0.613),
-						new MoveTurningToAngle(MID_START_ANGLE),
-						new ClimbMoveToPosition(ClimbState.MID_GAME)
-				));
-		secondJoystick.POV_UP.whenPressed(new ExtendFully());
-		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 4250){
 			@Override
 			public void end(boolean interrupted) {
 				super.end(interrupted);
 				shooter.setSpeedByPID(0);
 			}
-		});		secondJoystick.X.whileHeld(new InsertIntoShooter());
-		secondJoystick.B.whenPressed(new InstantCommand(() -> Shooter.getInstance().stopPID()));
-
-
+		});
+		Chassis.getInstance().initDefaultCommand(mainJoystick);
+		mainJoystick.START.whenPressed(new ToggleRoller());
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());

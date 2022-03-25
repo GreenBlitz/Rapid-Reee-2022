@@ -7,6 +7,7 @@ import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShootByTrigger;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import org.greenblitz.motion.pid.PIDObject;
 
@@ -27,6 +28,8 @@ public class Shooter extends GBSubsystem {
 		leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
 		leader.setSmartCurrentLimit(40);
+
+		leader.setClosedLoopRampRate(1);
 
 		preparedToShoot = false;
 	}
@@ -65,10 +68,6 @@ public class Shooter extends GBSubsystem {
 
 	public void setSpeedByPID(double target) {
 		leader.getPIDController().setReference(target, CANSparkMax.ControlType.kVelocity);
-	}
-
-	public void stopPID(){
-		leader.getPIDController().setReference(0, CANSparkMax.ControlType.kCurrent);
 	}
 
 	public void setPIDConsts(PIDObject obj, double iZone) {
@@ -114,9 +113,8 @@ public class Shooter extends GBSubsystem {
 	@Override
 	public void periodic() {
 
-		putNumber("Position", leader.getEncoder().getPosition());
-		putNumber("Velocity", leader.getEncoder().getVelocity());
-		putNumber("Output", leader.getAppliedOutput());
+		SmartDashboard.putNumber("Velocity", leader.getEncoder().getVelocity());
+		SmartDashboard.putNumber("Output", leader.getAppliedOutput());
 		putBoolean("ReadyToShoot", preparedToShoot);
 
 	}

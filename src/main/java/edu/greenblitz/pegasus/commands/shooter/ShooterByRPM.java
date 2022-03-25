@@ -23,8 +23,8 @@ public class ShooterByRPM extends ShooterCommand {
 		this.inShootingSpeed = 0;
 	}
 
-	public ShooterByRPM(PIDObject obj, double target) {
-		this(obj, 0, target);
+	public ShooterByRPM(double target) {
+		this(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, target);
 	}
 
 	@Override
