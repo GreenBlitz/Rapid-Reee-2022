@@ -132,8 +132,8 @@ public class RobotMap {
 				public static final double HIGHEST_ANGLE = Math.toRadians(72.7);
 				public static final double TURN_SAFETY = 0.05;
 				public static final double TURN_ABSOLUTE_SAFETY = 0.02;
-				public static final double BATTERY_SAFETY_ANG = Math.toRadians(51.5); // Math.toDegrees(51.5)
-				public static final double BATTERY_SAFETY_LOC = 0.45;
+				public static final double BATTERY_SAFETY_ANG = Math.toRadians(45.5); // Math.toDegrees(51.5)
+				public static final double BATTERY_SAFETY_LOC = 0.35;
 			}
 			
 			public static class ClimbMotors {
@@ -154,12 +154,13 @@ public class RobotMap {
 					public static final double kp = 0.3 / Math.PI * 2;
 					public static final double kp_static = 0.2 / Math.PI * 2;
 					public static final double ff = 0.2;
-					public static final double ff_static = -0.05;
+					public static final double ff_static = 0.15;
 
 					public static final double RADIANS_TO_SECOND_BAR = Math.toRadians(39);
 					public static final double RADIANS_TO_TRAVERSAL = Math.toRadians(0); //TODO: change this
 					public static final double RADIANS_TO_MID_GAME = HIGHEST_ANGLE - Math.toRadians(2.5);
 					public static final double EPSILON = Math.toRadians(2);
+					public static final double EPSILON_STATIC = Math.toRadians(2);
 				}
 				
 				public static class Rail {
