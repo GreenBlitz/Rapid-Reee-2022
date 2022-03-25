@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.commands.auto.MoveAngleByPID;
 import edu.greenblitz.pegasus.commands.multiSystem.CoastWhileClimb;
 import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import edu.greenblitz.pegasus.commands.chassis.driver.SmoothArcadeDrive;
@@ -22,6 +23,7 @@ import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.*;
+import org.greenblitz.motion.pid.PIDObject;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
 
@@ -62,37 +64,6 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
-
-		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM){
-
-			@Override
-			public void end(boolean interrupted) {
-				super.end(interrupted);
-				shooter.setSpeedByPID(0);
-			}
-		});
-		secondJoystick.X.whileHeld(new InsertIntoShooter());
-
-		secondJoystick.B.whileHeld(
-				new ParallelCommandGroup(new MoveBallUntilClick(), new RollByConstant(1.0))
-		);
-
-		secondJoystick.START.whenPressed(new ToggleRoller());
-		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter());
-
-		secondJoystick.POV_UP.whenPressed(new FullClimb(secondJoystick));
-		secondJoystick.POV_RIGHT.whenPressed(
-
-				new SequentialCommandGroup(
-						new MoveRailToPosition(0.613),
-						new MoveTurningToAngle(MID_START_ANGLE),
-						new ClimbMoveToPosition(ClimbState.MID_GAME)
-				));		secondJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
-
-		secondJoystick.R1.whileHeld(new WhileHeldCoast());
-
-
 		Climb.getInstance().initDefaultCommand(secondJoystick);
 
 		secondJoystick.L1.whenPressed(new ParallelCommandGroup(

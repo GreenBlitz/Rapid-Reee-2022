@@ -26,7 +26,7 @@ public class FourBallAuto extends SequentialCommandGroup {
 	
 	public static final PIDObject LIN_OBJECT = new PIDObject(0.5, 0, 0.25, 0);
 	public static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.1, 0.0000001, 0, 0);
-	public static final PIDObject ANG_OBJECT = new PIDObject(0.4, 0, 0, 0);
+	public static final PIDObject ANG_OBJECT = new PIDObject(0.4, 0, 0, 0.035, 0);
 	
 	private long tStart;
 	
