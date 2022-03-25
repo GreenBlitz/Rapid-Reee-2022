@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.commands.auto.MoveAngleByPID;
 import edu.greenblitz.pegasus.commands.multiSystem.CoastWhileClimb;
 import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import edu.greenblitz.pegasus.commands.chassis.driver.SmoothArcadeDrive;
@@ -22,6 +23,7 @@ import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.*;
+import org.greenblitz.motion.pid.PIDObject;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
 
@@ -35,7 +37,7 @@ public class OI {
 		DEBUG, REAL, DEBUG2
 	}
 	
-	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -66,26 +68,10 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-//		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		Climb.getInstance().initDefaultCommand(secondJoystick);
-		secondJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
-
-		secondJoystick.POV_RIGHT.whenPressed(
-				new SequentialCommandGroup(
-						new MoveRailToPosition(0.613),
-						new MoveTurningToAngle(MID_START_ANGLE),
-						new ClimbMoveToPosition(ClimbState.MID_GAME)
-				));
-		secondJoystick.POV_UP.whenPressed(new ExtendFully());
-		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 4250){
-			@Override
-			public void end(boolean interrupted) {
-				super.end(interrupted);
-				shooter.setSpeedByPID(0);
-			}
-		});		secondJoystick.X.whileHeld(new InsertIntoShooter());
-		secondJoystick.B.whenPressed(new InstantCommand(() -> Shooter.getInstance().stopPID()));
-
+		mainJoystick.A.whenPressed(new MoveAngleByPID(new PIDObject(0.0, 0, 0, 0.1, 0),Math.toRadians(90), true));
+		Chassis.getInstance().initDefaultCommand(mainJoystick);
+		mainJoystick.Y.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
+		mainJoystick.L1.whenPressed(new ToggleShifter());
 
 	}
 	private void initRealButtons() {

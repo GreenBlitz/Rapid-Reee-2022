@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
 import edu.greenblitz.pegasus.subsystems.Chassis;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.pid.CollapsingPIDController;
 import org.greenblitz.motion.pid.PIDObject;
 
@@ -9,19 +10,28 @@ public class MoveAngleByPID extends ChassisCommand {
 	private double originalAngleTarget;
 	private double angleTarget;
 	private double angleCycle;
+	private boolean sendData;
 	private CollapsingPIDController anglePID;
 
-	private static final double EPSILON = Math.toRadians(3);
+	private static final double EPSILON = Math.toRadians(0.5);
 
-	public MoveAngleByPID(PIDObject pid, double angleTarget) {
+	public MoveAngleByPID(PIDObject pid, double angleTarget, boolean sendData) {
 		this.originalAngleTarget = angleTarget;
+		this.sendData = sendData;
 
 		anglePID = new CollapsingPIDController(pid, 0);
 		anglePID.setTolerance((goal, current) -> Math.abs(goal - current) < EPSILON);
+		if(sendData) {
+			SmartDashboard.putNumber("p", anglePID.getPidObject().getKp());
+			SmartDashboard.putNumber("i", anglePID.getPidObject().getKi());
+			SmartDashboard.putNumber("d", anglePID.getPidObject().getKd());
+			SmartDashboard.putNumber("ff", anglePID.getPidObject().getKf());
 
-		chassis.putNumber("p", anglePID.getPidObject().getKp());
-		chassis.putNumber("i", anglePID.getPidObject().getKi());
-		chassis.putNumber("d", anglePID.getPidObject().getKd());
+		}
+	}
+
+	public MoveAngleByPID(PIDObject pid, double angleTarget){
+		this(pid, angleTarget, false);
 	}
 
 	public double bestErrorCycle(double angleTargetA, double angleTargetB, double curr) {
@@ -34,21 +44,27 @@ public class MoveAngleByPID extends ChassisCommand {
 		angleTarget = bestErrorCycle(originalAngleTarget, originalAngleTarget + Math.PI * 2, chassis.getRawAngle() - angleCycle);
 		angleTarget = bestErrorCycle(angleTarget, originalAngleTarget - Math.PI * 2, chassis.getRawAngle() - angleCycle);
 		anglePID.configure(chassis.getRawAngle() - angleCycle, angleTarget, -0.5, 0.5, 0);
-		double p = chassis.getNumber("p", anglePID.getPidObject().getKp());
-		double i = chassis.getNumber("i", anglePID.getPidObject().getKi());
-		double d = chassis.getNumber("d", anglePID.getPidObject().getKd());
-		chassis.putNumber("target", angleTarget);
-		PIDObject pid = new PIDObject(p, i, d, 0, 1);
-		anglePID.setPidObject(pid);
+		if (sendData) {
+			double p = SmartDashboard.getNumber("p", anglePID.getPidObject().getKp());
+			double i = SmartDashboard.getNumber("i", anglePID.getPidObject().getKi());
+			double d = SmartDashboard.getNumber("d", anglePID.getPidObject().getKd());
+			double ff = SmartDashboard.getNumber("ff", anglePID.getPidObject().getKf());
+			chassis.putNumber("target", angleTarget);
+			PIDObject pid = new PIDObject(p, i, d, ff, 1);
+			anglePID.setPidObject(pid);
+		}
 	}
 
 	public void execute() {
-		double p = chassis.getNumber("p", anglePID.getPidObject().getKp());
-		double i = chassis.getNumber("i", anglePID.getPidObject().getKi());
-		double d = chassis.getNumber("d", anglePID.getPidObject().getKd());
-		chassis.putNumber("curr", chassis.getRawAngle() - angleCycle);
-		PIDObject pid = new PIDObject(p, i, d, 0, 1);
-		anglePID.setPidObject(pid);
+		if(sendData) {
+			double p = SmartDashboard.getNumber("p", anglePID.getPidObject().getKp());
+			double i = SmartDashboard.getNumber("i", anglePID.getPidObject().getKi());
+			double d = SmartDashboard.getNumber("d", anglePID.getPidObject().getKd());
+			double ff = SmartDashboard.getNumber("ff", anglePID.getPidObject().getKf());
+			SmartDashboard.putNumber("curr", chassis.getRawAngle() - angleCycle);
+			PIDObject pid = new PIDObject(p, i, d, ff, 1);
+			anglePID.setPidObject(pid);
+		}
 		double currentAngle = Chassis.getInstance().getRawAngle() - angleCycle;
 		double anglePower = anglePID.calculatePID(currentAngle);
 		chassis.arcadeDrive(0, anglePower);
