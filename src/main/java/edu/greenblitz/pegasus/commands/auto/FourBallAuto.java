@@ -26,7 +26,7 @@ public class FourBallAuto extends SequentialCommandGroup {
 	
 	public static final PIDObject LIN_OBJECT = new PIDObject(0.5, 0, 0.25, 0);
 	public static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.1, 0.0000001, 0, 0);
-	public static final PIDObject ANG_OBJECT = new PIDObject(0.4, 0, 0, 0.035, 0);
+	public static final PIDObject ANG_OBJECT = new PIDObject(0.2, 0, 0, 0.035, 0);
 	
 	private long tStart;
 	
@@ -51,12 +51,12 @@ public class FourBallAuto extends SequentialCommandGroup {
 									new WaitCommand(0.5),
 									new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
 							)
-					),
+					)/*,
 					new SequentialCommandGroup(
 						new MoveRailToPosition(0.613),
 						new MoveTurningToAngle(MID_START_ANGLE),
 						new ClimbMoveToPosition(ClimbState.MID_GAME)
-					)
+					)*/
 				),
 
 				// Go back
@@ -69,18 +69,18 @@ public class FourBallAuto extends SequentialCommandGroup {
 				new ToPower(),
 				new ParallelRaceGroup(
 						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING),
-						new MoveAngleByPID(ANG_OBJECT, -Math.toRadians(15))
+						new MoveAngleByPID(ANG_OBJECT, -Math.toRadians(15), true)
 				),
 
 				//Shoot
-				new DoubleShoot(RPM_SHOOTING - 100, RPM_SHOOTING + 100),
+				new DoubleShoot(RPM_SHOOTING),
 
 				//Turn to third ball
 				new MoveAngleByPID(ANG_OBJECT, ANGLE_TO_THIRD_BALL),
 				new ToSpeed(),
 
 				//Go to Third Ball
-				new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -5),
+				new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -4.0),
 				new ParallelDeadlineGroup(
 						new SequentialCommandGroup(
 								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -0.8, 0.2),
@@ -92,7 +92,7 @@ public class FourBallAuto extends SequentialCommandGroup {
 
 				//Go back
 				new ParallelDeadlineGroup(
-						new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 4.5),
+						new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 3.55),
 						new RunRoller().withTimeout(1),
 						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
 				),
@@ -111,7 +111,7 @@ public class FourBallAuto extends SequentialCommandGroup {
 						new ToPower(),
 						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
 				),
-				new DoubleShoot(RPM_SHOOTING - 100, RPM_SHOOTING + 100)
+				new DoubleShoot(RPM_SHOOTING)
 		);
 	}
 	

@@ -33,6 +33,8 @@ public class RobotMap {
 				public static final int RIGHT_ENCODER = -1, LEFT_ENCODER = -1;
 				public static final boolean RIGHT_ENCODER_REVERSED = false, LEFT_ENCODER_REVERSED = false;
 			}
+			
+			public static final double startAngle = Math.toRadians(23);
 
 			public static class Shifter {
 
