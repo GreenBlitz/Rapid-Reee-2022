@@ -25,7 +25,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 				new ParallelRaceGroup(
 						new FirstInsertIntoShooter(),
 						new ShooterByRPM(Shooter.ShooterMotor.pid, Shooter.ShooterMotor.iZone, RPM1),
-						new WaitCommand(2)
+						new WaitCommand(3)
 				),
 				new ParallelRaceGroup(
 						new WaitCommand(0.2),
@@ -34,7 +34,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 				new ParallelRaceGroup(
 						new InsertIntoShooter(),
 						new ShooterByRPM(Shooter.ShooterMotor.pid, Shooter.ShooterMotor.iZone, RPM2),
-						new WaitCommand(1)
+						new WaitCommand(3)
 				),
 				new WaitCommand(0.2)
 

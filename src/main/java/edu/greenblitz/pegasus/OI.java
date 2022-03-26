@@ -62,21 +62,15 @@ public class OI {
 
 
 	}
-	
-	private void initDebugButtons() {
-		Climb.getInstance().initDefaultCommand(secondJoystick);
-
-		secondJoystick.L1.whenPressed(new ParallelCommandGroup(
-				new RailByJoystick(secondJoystick),
-				new TurningByJoystick(secondJoystick)
-		));
-
+	private void initDebugButtons() {/*
+		mainJoystick.A.whenPressed(new MoveAngleByPID(new PIDObject(0.4, 0, 0, 0.035, 0),Math.toRadians(90), true));
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
-
-		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
-		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
-		mainJoystick.L1.whenPressed(new ToggleShifter());
-		mainJoystick.BACK.whileHeld(new CoastWhileClimb());
+		mainJoystick.Y.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
+		mainJoystick.L1.whenPressed(new ToggleShifter());*/
+		mainJoystick.BACK.whenPressed(new ToggleRoller());
+		mainJoystick.B.whenPressed(new DoubleShoot(3600));
+		Chassis.getInstance().initDefaultCommand(mainJoystick);
+		mainJoystick.A.whileHeld(new RollByConstant(1));
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());

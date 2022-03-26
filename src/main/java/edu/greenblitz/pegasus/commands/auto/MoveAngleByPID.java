@@ -12,8 +12,9 @@ public class MoveAngleByPID extends ChassisCommand {
 	private double angleCycle;
 	private boolean sendData;
 	private CollapsingPIDController anglePID;
+	private double ff;
 
-	private static final double EPSILON = Math.toRadians(0.5);
+	private static final double EPSILON = Math.toRadians(2);
 
 	public MoveAngleByPID(PIDObject pid, double angleTarget, boolean sendData) {
 		this.originalAngleTarget = angleTarget;
@@ -21,6 +22,7 @@ public class MoveAngleByPID extends ChassisCommand {
 
 		anglePID = new CollapsingPIDController(pid, 0);
 		anglePID.setTolerance((goal, current) -> Math.abs(goal - current) < EPSILON);
+		ff = pid.getKf();
 		if(sendData) {
 			SmartDashboard.putNumber("p", anglePID.getPidObject().getKp());
 			SmartDashboard.putNumber("i", anglePID.getPidObject().getKi());
@@ -48,9 +50,9 @@ public class MoveAngleByPID extends ChassisCommand {
 			double p = SmartDashboard.getNumber("p", anglePID.getPidObject().getKp());
 			double i = SmartDashboard.getNumber("i", anglePID.getPidObject().getKi());
 			double d = SmartDashboard.getNumber("d", anglePID.getPidObject().getKd());
-			double ff = SmartDashboard.getNumber("ff", anglePID.getPidObject().getKf());
+			ff = SmartDashboard.getNumber("ff", anglePID.getPidObject().getKf());
 			chassis.putNumber("target", angleTarget);
-			PIDObject pid = new PIDObject(p, i, d, ff, 1);
+			PIDObject pid = new PIDObject(p, i, d, 0, 1);
 			anglePID.setPidObject(pid);
 		}
 	}
@@ -60,13 +62,14 @@ public class MoveAngleByPID extends ChassisCommand {
 			double p = SmartDashboard.getNumber("p", anglePID.getPidObject().getKp());
 			double i = SmartDashboard.getNumber("i", anglePID.getPidObject().getKi());
 			double d = SmartDashboard.getNumber("d", anglePID.getPidObject().getKd());
-			double ff = SmartDashboard.getNumber("ff", anglePID.getPidObject().getKf());
+			ff = SmartDashboard.getNumber("ff", anglePID.getPidObject().getKf());
 			SmartDashboard.putNumber("curr", chassis.getRawAngle() - angleCycle);
-			PIDObject pid = new PIDObject(p, i, d, ff, 1);
+			PIDObject pid = new PIDObject(p, i, d, 0, 1);
 			anglePID.setPidObject(pid);
 		}
 		double currentAngle = Chassis.getInstance().getRawAngle() - angleCycle;
 		double anglePower = anglePID.calculatePID(currentAngle);
+		anglePower = anglePower + ff * Math.signum(anglePower);
 		chassis.arcadeDrive(0, anglePower);
 	}
 
@@ -75,8 +78,16 @@ public class MoveAngleByPID extends ChassisCommand {
 		chassis.arcadeDrive(0, 0);
 	}
 
+	
+	private int stable = 0;
 	@Override
 	public boolean isFinished() {
-		return anglePID.isFinished(chassis.getRawAngle() - angleCycle);
+		if (anglePID.isFinished(chassis.getRawAngle() - angleCycle)){
+			stable++;
+		}
+		else{
+			stable = 0;
+		}
+		return stable > 5;
 	}
 }
