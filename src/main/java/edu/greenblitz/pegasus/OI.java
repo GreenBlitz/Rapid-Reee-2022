@@ -37,7 +37,7 @@ public class OI {
 		DEBUG, REAL, DEBUG2
 	}
 	
-	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -62,15 +62,15 @@ public class OI {
 
 
 	}
-	private void initDebugButtons() {/*
+	private void initDebugButtons() {
 		mainJoystick.A.whenPressed(new MoveAngleByPID(new PIDObject(0.4, 0, 0, 0.035, 0),Math.toRadians(90), true));
 		Chassis.getInstance().initDefaultCommand(mainJoystick);
 		mainJoystick.Y.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
-		mainJoystick.L1.whenPressed(new ToggleShifter());*/
-		mainJoystick.BACK.whenPressed(new ToggleRoller());
-		mainJoystick.B.whenPressed(new DoubleShoot(3600));
-		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		mainJoystick.A.whileHeld(new RollByConstant(1));
+		mainJoystick.L1.whenPressed(new ToggleShifter());
+//		mainJoystick.BACK.whenPressed(new ToggleRoller());
+//		mainJoystick.B.whenPressed(new DoubleShoot(3600));
+//		Chassis.getInstance().initDefaultCommand(mainJoystick);
+//		mainJoystick.A.whileHeld(new RollByConstant(1));
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());

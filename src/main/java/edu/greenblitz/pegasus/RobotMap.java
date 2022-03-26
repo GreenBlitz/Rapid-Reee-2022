@@ -20,7 +20,7 @@ public class RobotMap {
 			public static final int SECOND = 1;
 		}
 
-			public static class Chassis {
+		public static class Chassis {
 			public static final double WHEEL_DIST = 0.564; //very accurate right now
 
 			public static class Motors {
@@ -72,7 +72,7 @@ public class RobotMap {
 
 			public static class Motors {
 				public static final int ROLLER_PORT = 6;
-				public static final boolean IS_REVERSED = true;
+				public static final boolean IS_REVERSED = false;
 			}
 
 			public static class Solenoid {
