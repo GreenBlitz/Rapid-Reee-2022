@@ -37,8 +37,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 						new SequentialCommandGroup(
 								new WaitUntilCommand(() -> edu.greenblitz.pegasus.subsystems.Shooter.getInstance().isPreparedToShoot()),
 								new WaitCommand(1)
-						)
-				),
+						)),
 				new WaitCommand(0.2)
 
 		);

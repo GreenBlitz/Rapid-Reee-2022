@@ -58,7 +58,7 @@ public class MoveAngleByPID extends ChassisCommand {
 	}
 	
 	public void execute() {
-		if (sendData) {
+		if(sendData) {
 			double p = SmartDashboard.getNumber("p", anglePID.getPidObject().getKp());
 			double i = SmartDashboard.getNumber("i", anglePID.getPidObject().getKi());
 			double d = SmartDashboard.getNumber("d", anglePID.getPidObject().getKd());
@@ -78,11 +78,8 @@ public class MoveAngleByPID extends ChassisCommand {
 	@Override
 	public void end(boolean interrupted) {
 		chassis.arcadeDrive(0, 0);
-	}
-	
-	
-	@Override
+	}@Override
 	public boolean isFinished() {
-		return anglePID.isFinished(chassis.getRawAngle() - angleCycle);
+	return (anglePID.isFinished(chassis.getRawAngle() - angleCycle));
 	}
 }

@@ -26,7 +26,7 @@ public class FourBallAuto extends SequentialCommandGroup {
 	
 	public static final PIDObject LIN_OBJECT = new PIDObject(0.4, 0, 0.25, 0);
 	public static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.1, 0.000001, 0, 0);
-	public static final PIDObject ANG_OBJECT = new PIDObject(0.2, 0, 0, 0.035, 0);
+public static final PIDObject ANG_OBJECT = new PIDObject(0.2, 0, 0, 0.035, 0);
 	
 	private long tStart;
 	
@@ -92,7 +92,8 @@ public class FourBallAuto extends SequentialCommandGroup {
 
 				//Go back
 				new ParallelDeadlineGroup(
-						new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 3.75, 0.5, -Math.toRadians(0)),
+
+						new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 3.55),
 						new RunRoller().withTimeout(1),
 						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
 				),
