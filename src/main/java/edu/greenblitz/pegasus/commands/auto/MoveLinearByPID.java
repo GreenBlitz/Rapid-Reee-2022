@@ -20,6 +20,10 @@ public class MoveLinearByPID extends ChassisCommand {
 		this(linear, angular, distance, 0.5, -10);
 	}
 
+	public MoveLinearByPID(PIDObject linear, PIDObject angular, double distance, double angle){
+		this(linear, angular, distance, 0.5, angle);
+	}
+
 	public MoveLinearByPID(PIDObject linear, PIDObject angular, double distance, double maxPower, double angle){
 		this.distance = distance;
 		this.pidControllerLinear = new PIDController(linear);
