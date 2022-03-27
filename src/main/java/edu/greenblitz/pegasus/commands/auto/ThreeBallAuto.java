@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
+import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
@@ -29,7 +30,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 				// Go to the first
 				new ParallelDeadlineGroup(
 						new ParallelCommandGroup(
-								new ExtendRoller(),
+								new ToggleRoller(),
 								new ClimbToMidGame(),
 								new ToSpeed(),
 								new MoveFunnelUntilClick(),
