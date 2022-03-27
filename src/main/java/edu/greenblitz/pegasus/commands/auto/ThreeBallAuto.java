@@ -80,24 +80,26 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 				new MoveAndPrepShooterWithoutPID(LIN_OBJECT_ANG, -GO_BACK_DISTANCE, ANGLE_TO_SHOOTING,0.3),
 
 				// Go to new angle for the third ball
-				new MoveAndPrepShooterWithoutPID(LIN_OBJECT_ANG, -DISTANCE_TO_THIRD_BALL, ANGLE_TO_THIRD_BALL, 0.3),
+				new MoveAndPrepShooterWithoutPID(LIN_OBJECT_ANG, -DISTANCE_TO_THIRD_BALL / 2.0, ANGLE_TO_THIRD_BALL / 2.0, 0.3),
+				new MoveAndPrepShooterWithoutPID(LIN_OBJECT_ANG, -DISTANCE_TO_THIRD_BALL / 2.0, ANGLE_TO_THIRD_BALL, 0.3),
 
 				// Final distance
 				new ParallelDeadlineGroup(
-						new MoveAndPrepShooter(LIN_OBJECT, LIN_OBJECT_ANG, -FINAL_DISTANCE),
+						new MoveAndPrepShooterWithoutPID(LIN_OBJECT_ANG, -FINAL_DISTANCE, ANGLE_TO_THIRD_BALL, 0.3),
 						new RunRoller(),
 						new MoveFunnelUntilClick()
 				),
 
 				// Start to go back
 				new ParallelDeadlineGroup(
-						new MoveAndPrepShooter(LIN_OBJECT, LIN_OBJECT_ANG, FINAL_DISTANCE),
+						new MoveAndPrepShooterWithoutPID(LIN_OBJECT_ANG, FINAL_DISTANCE, ANGLE_TO_THIRD_BALL, 0.3),
 						new RunRoller(),
 						new MoveFunnelUntilClick()
 				),
 
 				// Turn back
-				new MoveAndPrepShooterWithoutPID(LIN_OBJECT_ANG, DISTANCE_TO_THIRD_BALL, ANGLE_TO_SHOOTING, 0.3),
+				new MoveAndPrepShooterWithoutPID(LIN_OBJECT_ANG, DISTANCE_TO_THIRD_BALL / 2.0, ANGLE_TO_THIRD_BALL / 2.0, 0.3),
+				new MoveAndPrepShooterWithoutPID(LIN_OBJECT_ANG, DISTANCE_TO_THIRD_BALL / 2.0, ANGLE_TO_SHOOTING, 0.3),
 
 				// Go to shooting
 				new ParallelRaceGroup(
