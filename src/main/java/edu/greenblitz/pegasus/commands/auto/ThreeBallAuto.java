@@ -11,7 +11,7 @@ import org.greenblitz.motion.pid.PIDObject;
 
 public class ThreeBallAuto extends SequentialCommandGroup {
 	private static final PIDObject LIN_OBJECT = new PIDObject(0.4, 0, 0.25, 0);
-	private static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.4, 0, 0, 0); //0.2, 0, 0
+	private static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.3, 0, 0, 0); //0.2, 0, 0
 
 	private static final double FIRST_LINEAR_DISTANCE = 1;
 	private static final double DISTANCE_TO_SHOOTING = 0.87;
@@ -68,7 +68,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 
 				// Shoot!
 				new ParallelCommandGroup(
-						new DoubleShoot(1600),
+						new DoubleShoot(2300),
 						new ParallelRaceGroup(
 								new WaitCommand(1.5),
 								new RobotDotMove(0.1)
@@ -116,7 +116,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 
 				// Shoot!
 				new ParallelCommandGroup(
-						new DoubleShoot(1600),
+						new DoubleShoot(2300),
 						new ParallelRaceGroup(
 								new WaitCommand(1.5),
 								new RobotDotMove(0.1)
