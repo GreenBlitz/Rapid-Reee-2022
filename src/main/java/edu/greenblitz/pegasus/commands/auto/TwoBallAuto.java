@@ -23,14 +23,14 @@ public class TwoBallAuto extends SequentialCommandGroup {
 				new ToSpeed(),
 				new ParallelCommandGroup(
 						new ExtendRoller(),
-						new ParallelRaceGroup(
-							new SequentialCommandGroup(
-									new MoveRailToPosition(0.613),
-									new MoveTurningToAngle(MID_START_ANGLE),
-									new ClimbMoveToPosition(ClimbState.MID_GAME)
-							),
-							new WaitCommand(3)
-						),
+//						new ParallelRaceGroup(
+//							new SequentialCommandGroup(
+//									new MoveRailToPosition(0.613),
+//									new MoveTurningToAngle(MID_START_ANGLE),
+//									new ClimbMoveToPosition(ClimbState.MID_GAME)
+//							),
+//							new WaitCommand(3)
+//						),
 						new MoveBallUntilClick()
 				),
 				new ParallelRaceGroup(

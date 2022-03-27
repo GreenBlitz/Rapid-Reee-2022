@@ -3,6 +3,8 @@ package edu.greenblitz.pegasus;
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.auto.MoveAngleByPID;
+import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
+import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.CoastWhileClimb;
 import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import edu.greenblitz.pegasus.commands.chassis.driver.SmoothArcadeDrive;
@@ -37,7 +39,7 @@ public class OI {
 		DEBUG, REAL, DEBUG2
 	}
 	
-	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
 	private static boolean isHandled = true;
 	
 	private OI() {
@@ -63,14 +65,9 @@ public class OI {
 
 	}
 	private void initDebugButtons() {
-		mainJoystick.A.whenPressed(new MoveAngleByPID(new PIDObject(0.4, 0, 0, 0.035, 0),Math.toRadians(90), true));
-		Chassis.getInstance().initDefaultCommand(mainJoystick);
-		mainJoystick.Y.whenPressed(new InstantCommand(() -> Chassis.getInstance().resetGyro()));
-		mainJoystick.L1.whenPressed(new ToggleShifter());
-//		mainJoystick.BACK.whenPressed(new ToggleRoller());
-//		mainJoystick.B.whenPressed(new DoubleShoot(3600));
-//		Chassis.getInstance().initDefaultCommand(mainJoystick);
-//		mainJoystick.A.whileHeld(new RollByConstant(1));
+		mainJoystick.A.whenPressed(new DoubleShoot());
+		mainJoystick.B.whileHeld(new RunFunnel());
+		mainJoystick.Y.whileHeld(new RunRoller());
 	}
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
@@ -86,7 +83,7 @@ public class OI {
 		secondJoystick.X.whileHeld(new InsertIntoShooter());
 
 		secondJoystick.B.whileHeld(
-				new ParallelCommandGroup(new MoveBallUntilClick(), new RollByConstant(1.0))
+				new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0))
 		);
 		
 		secondJoystick.START.whenPressed(new ToggleRoller());
