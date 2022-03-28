@@ -1,7 +1,6 @@
 package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
@@ -24,7 +23,8 @@ public class StealBallAuto extends SequentialCommandGroup {
 
 	public StealBallAuto(){
 		addCommands(
-
+				new ToSpeed(),
+				new ToggleRoller(),
 
 				// Start to go to third ball
 				new MoveAndPrepShooterWithoutPID(LIN_OBJECT_ANG, -GO_BACK_DISTANCE, ANGLE_TO_SHOOTING,0.3),
@@ -58,9 +58,10 @@ public class StealBallAuto extends SequentialCommandGroup {
 				),
 
 				// Robot.move();
-				new ParallelRaceGroup(
-						new RobotDotMove(0.1),
+				new ParallelDeadlineGroup(
 						new WaitCommand(0.5),
+						new ClimbToMidGame(),
+						new RobotDotMove(0.1),
 						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM)
 				),
 
@@ -76,9 +77,6 @@ public class StealBallAuto extends SequentialCommandGroup {
 				// Go to the first
 				new ParallelDeadlineGroup(
 						new ParallelCommandGroup(
-								new ToggleRoller(),
-								new ClimbToMidGame(),
-								new ToSpeed(),
 								new MoveFunnelUntilClick(),
 								new SequentialCommandGroup(
 										new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -2 * FIRST_LINEAR_DISTANCE), //first you go back
