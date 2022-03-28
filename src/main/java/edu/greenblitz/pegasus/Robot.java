@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
 		Climb.getInstance().resetTurningMotorTicks();
 		Climb.getInstance().resetRailMotorTicks();
 		new StopShooter().schedule();
-		new TwoBallAuto().schedule();
+		new ThreeBallAuto().schedule();
 		//chooser.getSelected().schedule();
 	}
 

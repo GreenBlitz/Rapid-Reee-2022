@@ -22,8 +22,9 @@ public class TwoBallAuto extends SequentialCommandGroup {
 	public TwoBallAuto(){
 		addCommands(
 				new ToSpeed(),
+				new ExtendRoller(),
+				new WaitCommand(0.3),
 				new ParallelCommandGroup(
-						new ExtendRoller(),
 						new ParallelRaceGroup(
 							new SequentialCommandGroup(
 									new MoveRailToPosition(0.613),
