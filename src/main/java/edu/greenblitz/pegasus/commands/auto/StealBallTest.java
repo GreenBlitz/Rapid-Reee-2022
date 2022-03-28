@@ -10,20 +10,20 @@ import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.wpi.first.wpilibj2.command.*;
 import org.greenblitz.motion.pid.PIDObject;
 
-public class StealBallAuto extends SequentialCommandGroup {
+public class StealBallTest extends SequentialCommandGroup {
 	private static final PIDObject LIN_OBJECT = new PIDObject(0.4, 0, 0.25, 0);
 	private static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.3, 0, 0, 0); //0.2, 0, 0
 
-	private static final double FIRST_LINEAR_DISTANCE = 1;
-	private static final double DISTANCE_TO_SHOOTING = 0.87;
+	private static final double FIRST_LINEAR_DISTANCE = 0.5;
+	private static final double DISTANCE_TO_SHOOTING = 0.435;
 	private static final double ANGLE_TO_SHOOTING = Math.toRadians(21);
-	private static final double GO_BACK_DISTANCE = 0.4;
-	private static final double DISTANCE_TO_THIRD_BALL = 1.3;
+	private static final double GO_BACK_DISTANCE = 0.2;
+	private static final double DISTANCE_TO_THIRD_BALL = 0.65;
 	private static final double ANGLE_TO_THIRD_BALL = Math.toRadians(90);
-	private static final double FINAL_DISTANCE = 1.2;
-	private static final double MAX_POWER = 0.3;
+	private static final double FINAL_DISTANCE = 0.6;
+	private static final double MAX_POWER = 0.2;
 
-	public StealBallAuto(){
+	public StealBallTest(){
 		addCommands(
 				// Go to the first
 				new ParallelDeadlineGroup(

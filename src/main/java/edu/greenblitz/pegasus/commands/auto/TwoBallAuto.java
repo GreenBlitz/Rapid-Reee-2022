@@ -13,6 +13,7 @@ import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.*;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
@@ -23,21 +24,21 @@ public class TwoBallAuto extends SequentialCommandGroup {
 				new ToSpeed(),
 				new ParallelCommandGroup(
 						new ExtendRoller(),
-//						new ParallelRaceGroup(
-//							new SequentialCommandGroup(
-//									new MoveRailToPosition(0.613),
-//									new MoveTurningToAngle(MID_START_ANGLE),
-//									new ClimbMoveToPosition(ClimbState.MID_GAME)
-//							),
-//							new WaitCommand(3)
-//						),
-						new MoveBallUntilClick()
-				),
+						new ParallelRaceGroup(
+							new SequentialCommandGroup(
+									new MoveRailToPosition(0.613),
+									new MoveTurningToAngle(MID_START_ANGLE),
+									new ClimbMoveToPosition(ClimbState.MID_GAME)
+							),
+							new WaitCommand(3)
+						),
+						new MoveBallUntilClick(),
+
 				new ParallelRaceGroup(
 						new RobotDotMove(-0.1),
 						new RunRoller(),
 						new WaitCommand(3)
-				),
+				)),
 				new ParallelRaceGroup(
 						new SequentialCommandGroup(
 							new ParallelRaceGroup(
@@ -57,4 +58,11 @@ public class TwoBallAuto extends SequentialCommandGroup {
 				)
 		);
 	}
+
+	/*@Override
+	public void end(boolean interrupted) {
+		super.end(interrupted);
+		Intake.getInstance().stopRoller();
+
+	}*/
 }

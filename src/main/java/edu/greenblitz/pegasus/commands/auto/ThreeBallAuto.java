@@ -20,7 +20,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 	private static final double GO_BACK_DISTANCE = 0.4;
 	private static final double DISTANCE_TO_THIRD_BALL = 1.3;
 	private static final double ANGLE_TO_THIRD_BALL = Math.toRadians(90);
-	private static final double FINAL_DISTANCE = 1.2;
+	private static final double FINAL_DISTANCE = 1.7;
 
 	public ThreeBallAuto(){
 		addCommands(
