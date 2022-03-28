@@ -1,6 +1,8 @@
 package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.commands.climb.ExtendFully;
+import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
@@ -24,7 +26,7 @@ public class StealBallAuto extends SequentialCommandGroup {
 	public StealBallAuto(){
 		addCommands(
 				new ToSpeed(),
-				new ToggleRoller(),
+				new ExtendRoller(),
 
 				// Start to go to third ball
 				new MoveAndPrepShooterWithoutPID(LIN_OBJECT_ANG, -GO_BACK_DISTANCE, ANGLE_TO_SHOOTING,0.3),
