@@ -14,20 +14,22 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 	private static final PIDObject LIN_OBJECT = new PIDObject(0.4, 0, 0.25, 0);
 	private static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.3, 0, 0, 0); //0.2, 0, 0
 
-	private static final double FIRST_LINEAR_DISTANCE = 1;
+	private static final double FIRST_LINEAR_DISTANCE = 1.3;
 	private static final double DISTANCE_TO_SHOOTING = 0.87;
 	private static final double ANGLE_TO_SHOOTING = Math.toRadians(21);
 	private static final double GO_BACK_DISTANCE = 0.4;
 	private static final double DISTANCE_TO_THIRD_BALL = 1.3;
 	private static final double ANGLE_TO_THIRD_BALL = Math.toRadians(90);
-	private static final double FINAL_DISTANCE = 1.7;
+	private static final double FINAL_DISTANCE = 1.5;
+	private static final double FINAL_DISTANCE_BACKWARDS = 1.2;
 
 	public ThreeBallAuto(){
 		addCommands(
 				// Go to the first
+				new ToggleRoller(),
+				new WaitCommand(0.3),
 				new ParallelDeadlineGroup(
 						new ParallelCommandGroup(
-								new ToggleRoller(),
 								new ClimbToMidGame(),
 								new ToSpeed(),
 								new MoveFunnelUntilClick(),
@@ -66,7 +68,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 
 				// Shoot!
 				new ParallelCommandGroup(
-						new DoubleShoot(2300),
+						new DoubleShoot(),
 						new ParallelRaceGroup(
 								new WaitCommand(1.5),
 								new RobotDotMove(0.1)
@@ -90,7 +92,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 
 				// Start to go back
 				new ParallelDeadlineGroup(
-						new MoveAndPrepShooterWithoutPID(LIN_OBJECT_ANG, FINAL_DISTANCE, ANGLE_TO_THIRD_BALL, 0.3),
+						new MoveAndPrepShooterWithoutPID(LIN_OBJECT_ANG, FINAL_DISTANCE_BACKWARDS, ANGLE_TO_THIRD_BALL, 0.3),
 						new RunRoller(),
 						new MoveFunnelUntilClick()
 				),
@@ -114,7 +116,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 
 				// Shoot!
 				new ParallelCommandGroup(
-						new DoubleShoot(2300),
+						new DoubleShoot(),
 						new ParallelRaceGroup(
 								new WaitCommand(1.5),
 								new RobotDotMove(0.1)

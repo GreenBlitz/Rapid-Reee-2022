@@ -45,7 +45,7 @@ public class ShooterByRPM extends ShooterCommand {
 			this.inShootingSpeed = 0;
 			shooter.setPreparedToShoot(false);
 		}
-		if (this.inShootingSpeed >= 35) {
+		if (this.inShootingSpeed >= 5) {
 			shooter.setPreparedToShoot(true);
 		}
 		logger.report((System.currentTimeMillis()/1000.0 - tStart), shooter.getShooterSpeed());

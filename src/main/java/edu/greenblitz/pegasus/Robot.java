@@ -8,13 +8,16 @@ import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.*;
 
 public class Robot extends TimedRobot {
+
+	private final SendableChooser<CommandBase> chooser = new SendableChooser<>();
+
 	@Override
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
@@ -27,6 +30,9 @@ public class Robot extends TimedRobot {
 		OI.getInstance();
 		Indexing.getInstance();
 		Chassis.getInstance(); // Must be last!
+		chooser.setDefaultOption("TwoBall", new TwoBallAuto());
+		chooser.addOption("ThreeBall", new ThreeBallAuto());
+		SmartDashboard.putData(chooser);
 	}
 
 	@Override
@@ -60,7 +66,7 @@ public class Robot extends TimedRobot {
 						new MoveBallUntilClick(),
 						new WaitCommand(3)
 				)
-		).schedule();
+		);//.schedule();
 	}
 
 	@Override
@@ -77,8 +83,8 @@ public class Robot extends TimedRobot {
 		Climb.getInstance().resetTurningMotorTicks();
 		Climb.getInstance().resetRailMotorTicks();
 		new StopShooter().schedule();
-		//todo two ball auto is too slow
-		new StealBallTest().schedule();
+		new TwoBallAuto().schedule();
+		//chooser.getSelected().schedule();
 	}
 
 	@Override

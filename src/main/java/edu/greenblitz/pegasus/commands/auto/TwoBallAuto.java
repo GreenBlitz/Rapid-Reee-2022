@@ -35,9 +35,9 @@ public class TwoBallAuto extends SequentialCommandGroup {
 						new MoveBallUntilClick(),
 
 				new ParallelRaceGroup(
-						new RobotDotMove(-0.1),
+						new RobotDotMove(-0.15),
 						new RunRoller(),
-						new WaitCommand(3)
+						new WaitCommand(2)
 				)),
 				new ParallelRaceGroup(
 						new SequentialCommandGroup(
@@ -45,12 +45,12 @@ public class TwoBallAuto extends SequentialCommandGroup {
 									new WaitCommand(2),
 									new RunRoller()
 							),
-							new WaitCommand(4)
+							new WaitCommand(2.5)
 						),
-						new RobotDotMove(0.15),
-						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2400)
+						new RobotDotMove(0.2)
+//						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2400)
 				),
-				new DoubleShoot(2400),
+				new DoubleShoot(),
 				new ParallelCommandGroup(
 						new RunRoller(),
 						new RunFunnel(),
