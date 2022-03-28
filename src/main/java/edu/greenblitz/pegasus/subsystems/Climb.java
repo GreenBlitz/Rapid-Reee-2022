@@ -213,11 +213,11 @@ public class Climb extends GBSubsystem {
 			this.turningMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 		}
 		
-		private boolean needsCoast = false;
+//		private boolean needsCoast = false;
 		
 		@Override
 		public void periodic() {
-			super.periodic();
+			super.periodic();/*
 			if (getAng() > Math.PI / 2 - 0.3 && turningMotor.getIdleMode() == CANSparkMax.IdleMode.kCoast) {
 				needsCoast = true;
 				setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
@@ -225,7 +225,7 @@ public class Climb extends GBSubsystem {
 			if (getAng() < Math.PI / 2 - 0.4 && needsCoast) {
 				needsCoast = false;
 				setTurningMotorIdle(CANSparkMax.IdleMode.kCoast);
-			}
+			}*/
 			SmartDashboard.putNumber("Rail loc", this.getClimb().getLoc());
 		}
 	}

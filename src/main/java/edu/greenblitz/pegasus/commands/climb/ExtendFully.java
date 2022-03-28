@@ -1,5 +1,6 @@
 package edu.greenblitz.pegasus.commands.climb;
 
+import com.revrobotics.CANSparkMax;
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.pegasus.commands.climb.Rail.MoveRailToPosition;
 import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;
@@ -54,5 +55,10 @@ public class ExtendFully extends SequentialCommandGroup {
 				)
 		);
 	}
-	
+
+	@Override
+	public void end(boolean interrupted) {
+		super.end(interrupted);
+		Climb.getInstance().setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
+	}
 }

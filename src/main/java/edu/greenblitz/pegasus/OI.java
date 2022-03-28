@@ -83,13 +83,13 @@ public class OI {
 		secondJoystick.X.whileHeld(new InsertIntoShooter());
 
 		secondJoystick.B.whileHeld(
-				new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0))
+				new ParallelCommandGroup(new MoveBallUntilClick(), new RollByConstant(1.0))//new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0))
 		);
 		
 		secondJoystick.START.whenPressed(new ToggleRoller());
 		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter());
 
-		secondJoystick.POV_UP.whenPressed(new ExtendFully());
+		secondJoystick.POV_UP.whenPressed(new FullClimb(secondJoystick));
 		secondJoystick.POV_RIGHT.whenPressed(
 
 				new SequentialCommandGroup(
@@ -98,6 +98,7 @@ public class OI {
 						new ClimbMoveToPosition(ClimbState.MID_GAME)
 				));		secondJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
 
+		secondJoystick.POV_LEFT.whenPressed(new ExtendFully());
 		secondJoystick.R1.whileHeld(new WhileHeldCoast());
 
 
@@ -113,7 +114,7 @@ public class OI {
 		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
 		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
 		mainJoystick.L1.whenPressed(new ToggleShifter());
-		mainJoystick.BACK.whileHeld(new CoastWhileClimb());
+		mainJoystick.A.whileHeld(new CoastWhileClimb());
 	}
 	
 	private class InitManualOverride extends GBCommand {
