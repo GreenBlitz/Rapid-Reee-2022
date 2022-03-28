@@ -10,7 +10,7 @@ import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.wpi.first.wpilibj2.command.*;
 import org.greenblitz.motion.pid.PIDObject;
 
-public class ThreeBallAuto extends SequentialCommandGroup {
+public class StealBallAuto extends SequentialCommandGroup {
 	private static final PIDObject LIN_OBJECT = new PIDObject(0.4, 0, 0.25, 0);
 	private static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.3, 0, 0, 0); //0.2, 0, 0
 
@@ -22,56 +22,8 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 	private static final double ANGLE_TO_THIRD_BALL = Math.toRadians(90);
 	private static final double FINAL_DISTANCE = 1.2;
 
-	public ThreeBallAuto(){
+	public StealBallAuto(){
 		addCommands(
-				// Go to the first
-				new ParallelDeadlineGroup(
-						new ParallelCommandGroup(
-								new ToggleRoller(),
-								new ClimbToMidGame(),
-								new ToSpeed(),
-								new MoveFunnelUntilClick(),
-								new SequentialCommandGroup(
-										new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -FIRST_LINEAR_DISTANCE), //first you go back
-										new WaitCommand(0.2),
-										new InstantCommand(() -> System.out.println("Finished moving"))
-								)
-						),
-						new RunRoller(),
-						new SequentialCommandGroup(
-								new WaitCommand(0.5),
-								new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM)
-						)
-				),
-
-				// Start to go back
-				new ParallelDeadlineGroup(
-						new ParallelCommandGroup(
-								new MoveFunnelUntilClick(),
-								new MoveLinearWithoutPID(LIN_OBJECT_ANG, FIRST_LINEAR_DISTANCE + DISTANCE_TO_SHOOTING, ANGLE_TO_SHOOTING, 0.3)
-						),
-						new ParallelDeadlineGroup(
-							new WaitCommand(0.5),
-							new RunRoller()
-						),
-						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM)
-				),
-
-				// Robot.move();
-				new ParallelRaceGroup(
-					new RobotDotMove(0.1),
-					new WaitCommand(0.5),
-					new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM)
-				),
-
-				// Shoot!
-				new ParallelCommandGroup(
-						new DoubleShoot(2300),
-						new ParallelRaceGroup(
-								new WaitCommand(1.5),
-								new RobotDotMove(0.1)
-						)
-				),
 
 
 				// Start to go to third ball
@@ -101,8 +53,57 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 
 				// Go to shooting
 				new ParallelRaceGroup(
-					new MoveAndPrepShooter(LIN_OBJECT, LIN_OBJECT_ANG, GO_BACK_DISTANCE),
-					new WaitCommand(1)
+						new MoveAndPrepShooter(LIN_OBJECT, LIN_OBJECT_ANG, GO_BACK_DISTANCE),
+						new WaitCommand(1)
+				),
+
+				// Robot.move();
+				new ParallelRaceGroup(
+						new RobotDotMove(0.1),
+						new WaitCommand(0.5),
+						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM)
+				),
+
+				// Shoot!
+				new ParallelCommandGroup(
+						new DoubleShoot(2300),
+						new ParallelRaceGroup(
+								new WaitCommand(1.5),
+								new RobotDotMove(0.1)
+						)
+				),
+
+				// Go to the first
+				new ParallelDeadlineGroup(
+						new ParallelCommandGroup(
+								new ToggleRoller(),
+								new ClimbToMidGame(),
+								new ToSpeed(),
+								new MoveFunnelUntilClick(),
+								new SequentialCommandGroup(
+										new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -2 * FIRST_LINEAR_DISTANCE), //first you go back
+										new WaitCommand(0.2),
+										new InstantCommand(() -> System.out.println("Finished moving"))
+								)
+						),
+						new RunRoller(),
+						new SequentialCommandGroup(
+								new WaitCommand(0.5),
+								new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM)
+						)
+				),
+
+				// Start to go back
+				new ParallelDeadlineGroup(
+						new ParallelCommandGroup(
+								new MoveFunnelUntilClick(),
+								new MoveLinearWithoutPID(LIN_OBJECT_ANG, FIRST_LINEAR_DISTANCE + DISTANCE_TO_SHOOTING, ANGLE_TO_SHOOTING, 0.3)
+						),
+						new ParallelDeadlineGroup(
+								new WaitCommand(0.5),
+								new RunRoller()
+						),
+						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM)
 				),
 
 				// Robot.move();
