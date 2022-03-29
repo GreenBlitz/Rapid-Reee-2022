@@ -8,7 +8,6 @@ import edu.greenblitz.pegasus.subsystems.Climb;
 public class CoastWhileClimb extends GBCommand {
 
 	public CoastWhileClimb(){
-		require(Chassis.getInstance());
 	}
 
 	@Override
