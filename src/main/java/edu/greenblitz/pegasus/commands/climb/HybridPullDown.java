@@ -9,6 +9,7 @@ import edu.greenblitz.pegasus.commands.climb.Rail.RailToSecondBar;
 import edu.greenblitz.pegasus.commands.climb.Turning.HoldTurning;
 import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;
 import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
+import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -26,7 +27,11 @@ public class HybridPullDown extends ParallelRaceGroup {
 				new SequentialCommandGroup(
 						new ParallelRaceGroup(
 								new RailByJoystick(joystick, 0.5),
-								new WaitUntilCommand(() -> Math.abs(RailToSecondBar.GOAL - climb.getLoc()) >0.23)
+								new WaitUntilCommand(() -> Math.abs(RailToSecondBar.GOAL - climb.getLoc()) >0.23),
+								new SequentialCommandGroup(
+										new WaitUntilCommand(() -> Math.abs(RailToSecondBar.GOAL - climb.getLoc()) >0.07),
+										new InstantCommand(() -> Chassis.getInstance().toCoast())
+										)
 						),
 						new ParallelRaceGroup(
 								new RailByJoystick(joystick, 0.2),
@@ -65,6 +70,7 @@ public class HybridPullDown extends ParallelRaceGroup {
 	public void end(boolean interrupted) {
 		super.end(interrupted);
 		Climb.getInstance().setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
+		Chassis.getInstance().toBrake();
 		System.out.println("finished pulling:  " + interrupted);
 	}
 
