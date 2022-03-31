@@ -1,6 +1,9 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.pegasus.commands.auto.*;
+import edu.greenblitz.pegasus.commands.auto.DCMPAuto;
+import edu.greenblitz.pegasus.commands.auto.StealBallAuto;
+import edu.greenblitz.pegasus.commands.auto.ThreeBallAuto;
+import edu.greenblitz.pegasus.commands.auto.TwoBallAuto;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
@@ -8,15 +11,12 @@ import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
-import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 
 public class Robot extends TimedRobot {
-
-	private final SendableChooser<CommandBase> chooser = new SendableChooser<>();
 
 	@Override
 	public void robotInit() {
@@ -30,9 +30,6 @@ public class Robot extends TimedRobot {
 		OI.getInstance();
 		Indexing.getInstance();
 		Chassis.getInstance(); // Must be last!
-		chooser.setDefaultOption("TwoBall", new TwoBallAuto());
-		chooser.addOption("ThreeBall", new ThreeBallAuto());
-		SmartDashboard.putData(chooser);
 	}
 
 	@Override
@@ -73,6 +70,9 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 	}
 
+	
+	
+	
 	/*
 		TODO: Dear @Orel, please for the love of god, use the very useful function: schedule(), this will help the code to actually work
 	*/
@@ -84,7 +84,6 @@ public class Robot extends TimedRobot {
 		Climb.getInstance().resetRailMotorTicks();
 		new StopShooter().schedule();
 		new DCMPAuto().schedule();
-		//chooser.getSelected().schedule();
 	}
 
 	@Override
