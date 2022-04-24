@@ -1,7 +1,6 @@
-package edu.greenblitz.pegasus.commands;
+package edu.greenblitz.pegasus.commands.shooterCommands;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.pegasus.OI;
 import edu.greenblitz.pegasus.RobotMap;
 
 public class ShootByTrigger extends ShooterCommand {

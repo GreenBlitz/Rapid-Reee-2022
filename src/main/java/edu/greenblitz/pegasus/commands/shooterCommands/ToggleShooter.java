@@ -1,4 +1,4 @@
-package edu.greenblitz.pegasus.commands;
+package edu.greenblitz.pegasus.commands.shooterCommands;
 
 public class ToggleShooter extends ShooterCommand {
 

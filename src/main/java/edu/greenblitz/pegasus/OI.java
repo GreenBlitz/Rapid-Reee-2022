@@ -3,13 +3,10 @@ package edu.greenblitz.pegasus;
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 
-import edu.greenblitz.pegasus.commands.ShootByPower;
-import edu.greenblitz.pegasus.commands.ShootByTrigger;
-import edu.greenblitz.pegasus.commands.ToggleShooter;
+import edu.greenblitz.pegasus.commands.shooterCommands.ShootByPower;
+import edu.greenblitz.pegasus.commands.shooterCommands.ToggleShooter;
 import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.*;
-
-import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
 
 public class OI {
 	private static OI instance;

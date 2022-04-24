@@ -8,8 +8,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.commands.ShootByPower;
-import edu.greenblitz.pegasus.commands.ShootByTrigger;
+import edu.greenblitz.pegasus.commands.shooterCommands.ShootByPower;
+import edu.greenblitz.pegasus.commands.shooterCommands.ShootByTrigger;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 

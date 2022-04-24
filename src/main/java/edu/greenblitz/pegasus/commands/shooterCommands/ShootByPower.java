@@ -1,4 +1,4 @@
-package edu.greenblitz.pegasus.commands;
+package edu.greenblitz.pegasus.commands.shooterCommands;
 
 public class ShootByPower extends ShooterCommand {
 	private double power;

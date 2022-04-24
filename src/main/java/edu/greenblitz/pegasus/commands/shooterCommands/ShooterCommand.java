@@ -1,4 +1,4 @@
-package edu.greenblitz.pegasus.commands;
+package edu.greenblitz.pegasus.commands.shooterCommands;
 
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.pegasus.subsystems.Shooter;
