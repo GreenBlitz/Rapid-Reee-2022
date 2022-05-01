@@ -34,7 +34,12 @@ public class HoldTurning extends TurningCommand {
 	
 	@Override
 	public void execute() {
-		climb.safeMoveTurningMotor(kp_static * (goal - climb.getAng()) + ff_static);
+		if (!(Math.abs(goal - climb.getAng()) < EPSILON_STATIC)) {
+			climb.safeMoveTurningMotor(kp_static * (goal - climb.getAng()) + ff_static * Math.signum(goal - climb.getAng()));
+		}
+		else{
+			climb.safeMoveTurningMotor(0);
+		}
 	}
 	
 	@Override

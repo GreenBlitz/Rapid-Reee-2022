@@ -6,39 +6,38 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.pid.PIDController;
 import org.greenblitz.motion.pid.PIDObject;
 
-public class MoveLinearByPID extends ChassisCommand {
-	PIDController pidControllerLinear;
+public class MoveLinearWithoutPID extends ChassisCommand {
 	PIDController pidControllerAngular;
 	private double distance;
 	double angle;
 	double startingDistance;
 	double maxPower;
+	double power;
 
 	private static final double EPSILON = 0.05;
 
-	public MoveLinearByPID(PIDObject linear, PIDObject angular, double distance){
-		this(linear, angular, distance, 0.5, -10);
+	public MoveLinearWithoutPID(PIDObject angular, double distance, double power){
+		this(angular, distance, 0.5, -10, power);
 	}
 
-	public MoveLinearByPID(PIDObject linear, PIDObject angular, double distance, double angle){
-		this(linear, angular, distance, 0.5, angle);
+	public MoveLinearWithoutPID(PIDObject angular, double distance, double angle, double power){
+		this(angular, distance, 0.5, angle, power);
 	}
 
-	public MoveLinearByPID(PIDObject linear, PIDObject angular, double distance, double maxPower, double angle){
+	public MoveLinearWithoutPID(PIDObject angular, double distance, double maxPower, double angle, double power){
 		this.distance = distance;
-		this.pidControllerLinear = new PIDController(linear);
 		this.pidControllerAngular = new PIDController(angular);
 		this.maxPower = maxPower;
 		this.angle = angle;
+		this.power = power;
 	}
-	
+
 	@Override
 	public void initialize() {
 		if (angle == -10){
 			this.angle = chassis.getAngle();
 		}
-		this.pidControllerLinear.configure(chassis.getMeters(), distance,-maxPower, maxPower, 0);
-		this.pidControllerAngular.configure(chassis.getAngle(), 0,-0.4, 0.4, 0);
+		this.pidControllerAngular.configure(chassis.getAngle(), 0,-0.2, 0.2, 0);
 		this.startingDistance = chassis.getMeters();
 	}
 
@@ -46,7 +45,7 @@ public class MoveLinearByPID extends ChassisCommand {
 	public void execute() {
 		double distance = chassis.getMeters() - startingDistance;
 		double ang = chassis.getAngle() - angle;
-		double power = pidControllerLinear.calculatePID(distance);
+		double power = this.power * Math.signum(this.distance);
 		double turn = pidControllerAngular.calculatePID(ang);
 		chassis.arcadeDrive(power, turn);
 

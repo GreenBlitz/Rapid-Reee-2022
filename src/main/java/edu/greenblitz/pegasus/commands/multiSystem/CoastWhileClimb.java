@@ -8,14 +8,12 @@ import edu.greenblitz.pegasus.subsystems.Climb;
 public class CoastWhileClimb extends GBCommand {
 
 	public CoastWhileClimb(){
-		require(Chassis.getInstance());
-		require(Climb.getInstance().getTurning());
 	}
 
 	@Override
 	public void initialize() {
 		super.initialize();
-		Chassis.getInstance().semiToCoast();
+		Chassis.getInstance().toCoast();
 //		Climb.getInstance().setTurningMotorIdle(CANSparkMax.IdleMode.kCoast);
 	}
 

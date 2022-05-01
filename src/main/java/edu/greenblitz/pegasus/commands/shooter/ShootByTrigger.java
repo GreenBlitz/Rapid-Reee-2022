@@ -14,12 +14,6 @@ public class ShootByTrigger extends ShooterByRPM {
 		this.axis = axis;
 	}
 	
-	public ShootByTrigger(PIDObject obj, double target, SmartJoystick joystick, SmartJoystick.Axis axis) {
-		super(obj, target);
-		this.joystick = joystick;
-		this.axis = axis;
-	}
-	
 	
 	private static final double DEADZONE = 0.1;
 	

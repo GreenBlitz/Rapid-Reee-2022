@@ -13,6 +13,7 @@ import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.*;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
@@ -21,8 +22,9 @@ public class TwoBallAuto extends SequentialCommandGroup {
 	public TwoBallAuto(){
 		addCommands(
 				new ToSpeed(),
+				new ExtendRoller(),
+				new WaitCommand(0.3),
 				new ParallelCommandGroup(
-						new ExtendRoller(),
 						new ParallelRaceGroup(
 							new SequentialCommandGroup(
 									new MoveRailToPosition(0.613),
@@ -31,25 +33,25 @@ public class TwoBallAuto extends SequentialCommandGroup {
 							),
 							new WaitCommand(3)
 						),
-						new MoveBallUntilClick()
-				),
+						new MoveBallUntilClick(),
+
 				new ParallelRaceGroup(
-						new RobotDotMove(-0.1),
+						new RobotDotMove(-0.15),
 						new RunRoller(),
-						new WaitCommand(3)
-				),
+						new WaitCommand(2)
+				)),
 				new ParallelRaceGroup(
 						new SequentialCommandGroup(
 							new ParallelRaceGroup(
 									new WaitCommand(2),
 									new RunRoller()
 							),
-							new WaitCommand(4)
+							new WaitCommand(2.5)
 						),
-						new RobotDotMove(0.15),
-						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2400)
+						new RobotDotMove(0.2)
+//						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2400)
 				),
-				new DoubleShoot(2400),
+				new DoubleShoot(),
 				new ParallelCommandGroup(
 						new RunRoller(),
 						new RunFunnel(),
@@ -57,4 +59,11 @@ public class TwoBallAuto extends SequentialCommandGroup {
 				)
 		);
 	}
+
+	/*@Override
+	public void end(boolean interrupted) {
+		super.end(interrupted);
+		Intake.getInstance().stopRoller();
+
+	}*/
 }

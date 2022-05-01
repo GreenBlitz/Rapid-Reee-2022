@@ -1,13 +1,11 @@
 package edu.greenblitz.pegasus.commands.climb;
 
+import com.revrobotics.CANSparkMax;
 import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.pegasus.commands.climb.Rail.MoveRailToPosition;
 import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;
 import edu.greenblitz.pegasus.subsystems.Climb;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import edu.wpi.first.wpilibj2.command.*;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rail.*;
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_SECOND_BAR;
@@ -36,11 +34,11 @@ public class ExtendFully extends SequentialCommandGroup {
 						new SequentialCommandGroup(
 								new WaitUntilCommand(() -> Climb.getInstance().getLoc() < 0.03),
 								new MoveTurningToAngle(RADIANS_TO_SECOND_BAR),
-								new WaitCommand(0.5){
+								new ScheduleCommand(new WaitCommand(1){
 									@Override
 									public void execute() {
 										super.execute();
-										Climb.getInstance().safeMoveTurningMotor(-0.05);
+										Climb.getInstance().safeMoveTurningMotor(-0.1);
 									}
 
 									@Override
@@ -48,11 +46,16 @@ public class ExtendFully extends SequentialCommandGroup {
 										super.end(interrupted);
 										Climb.getInstance().safeMoveTurningMotor(0);
 									}
-								}
+								})
 
 						)
 				)
 		);
 	}
-	
+
+	@Override
+	public void end(boolean interrupted) {
+		super.end(interrupted);
+		Climb.getInstance().setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
+	}
 }

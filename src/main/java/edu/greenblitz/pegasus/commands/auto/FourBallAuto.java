@@ -18,15 +18,15 @@ import org.greenblitz.motion.pid.PIDObject;
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
 
 public class FourBallAuto extends SequentialCommandGroup {
-	private static final double FIRST_DISTANCE = -1.45;
-	private static final double DISTANCE_TO_SHOOT = 1.35;
-	private static final double RPM_SHOOTING = 3600;
+	private static final double FIRST_DISTANCE = -1.46;
+	private static final double DISTANCE_TO_SHOOT = 0.71;
+	private static final double RPM_SHOOTING = 3900;//3600;
 
 	private static final double ANGLE_TO_THIRD_BALL = Math.toRadians(7);
 	
-	public static final PIDObject LIN_OBJECT = new PIDObject(0.5, 0, 0.25, 0);
-	public static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.1, 0.0000001, 0, 0);
-	public static final PIDObject ANG_OBJECT = new PIDObject(0.4, 0, 0, 0);
+	public static final PIDObject LIN_OBJECT = new PIDObject(0.4, 0, 0.25, 0);
+	public static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.1, 0.000001, 0, 0);
+public static final PIDObject ANG_OBJECT = new PIDObject(0.2, 0, 0, 0.035, 0);
 	
 	private long tStart;
 	
@@ -51,12 +51,12 @@ public class FourBallAuto extends SequentialCommandGroup {
 									new WaitCommand(0.5),
 									new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
 							)
-					),
+					)/*,
 					new SequentialCommandGroup(
 						new MoveRailToPosition(0.613),
 						new MoveTurningToAngle(MID_START_ANGLE),
 						new ClimbMoveToPosition(ClimbState.MID_GAME)
-					)
+					)*/
 				),
 
 				// Go back
@@ -69,21 +69,21 @@ public class FourBallAuto extends SequentialCommandGroup {
 				new ToPower(),
 				new ParallelRaceGroup(
 						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING),
-						new MoveAngleByPID(ANG_OBJECT, -Math.toRadians(15))
+						new MoveAngleByPID(ANG_OBJECT, -Math.toRadians(15), true)
 				),
 
 				//Shoot
-				new DoubleShoot(RPM_SHOOTING - 100, RPM_SHOOTING + 100),
+				new DoubleShoot(RPM_SHOOTING),
 
 				//Turn to third ball
 				new MoveAngleByPID(ANG_OBJECT, ANGLE_TO_THIRD_BALL),
 				new ToSpeed(),
 
 				//Go to Third Ball
-				new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -5),
+				new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -4.1, 0.5, ANGLE_TO_THIRD_BALL),
 				new ParallelDeadlineGroup(
 						new SequentialCommandGroup(
-								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -0.8, 0.2),
+								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, -0.8, 0.2, ANGLE_TO_THIRD_BALL),
 								new WaitCommand(1)
 						),
 						new MoveFunnelUntilClick(),
@@ -92,13 +92,14 @@ public class FourBallAuto extends SequentialCommandGroup {
 
 				//Go back
 				new ParallelDeadlineGroup(
-						new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 4.5),
+
+						new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 3.55),
 						new RunRoller().withTimeout(1),
 						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
 				),
 				new ParallelDeadlineGroup(
 						new SequentialCommandGroup(
-								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 0.3, 0.2),
+								new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 0.3, 0.2, -Math.toRadians(0)),
 								new WaitCommand(0.2)
 						),
 						new SequentialCommandGroup(
@@ -107,13 +108,14 @@ public class FourBallAuto extends SequentialCommandGroup {
 						)
 				),
 				new ParallelDeadlineGroup(
-						new MoveAngleByPID(ANG_OBJECT, -Math.toRadians(14)),
+						new MoveAngleByPID(ANG_OBJECT, -Math.toRadians(0)),
 						new ToPower(),
 						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
 				),
-				new DoubleShoot(RPM_SHOOTING - 100, RPM_SHOOTING + 100)
+				new DoubleShoot(RPM_SHOOTING)
 		);
 	}
+	
 	
 	@Override
 	public void initialize() {

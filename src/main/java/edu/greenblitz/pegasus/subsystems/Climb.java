@@ -54,6 +54,7 @@ public class Climb extends GBSubsystem {
 	}
 	
 	public void safeMoveRailMotor(double power) {
+		power = Math.min(Math.abs(power), 1) * Math.signum(power);
 		double loc = getLoc();
 		double len = RobotMap.Pegasus.Climb.ClimbMotors.RAIL_LENGTH;
 		double safety = RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY;
@@ -63,9 +64,9 @@ public class Climb extends GBSubsystem {
 			unsafeMoveRailMotor((safetyLoc - loc - absoluteSafety)/safety*power);
 		}
 		else*/
-		if (loc - RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY_OFFSET < safety) {// && power < 0) {
+		if (loc - RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY_OFFSET < safety && power < 0) {
 			unsafeMoveRailMotor(((Math.max(loc - RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY_OFFSET, 0) / safety) + RobotMap.Pegasus.Climb.SafetyZones.RAIL_FF) * power);
-		} else if (loc + RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY_OFFSET + safety > len) {// && power > 0) {
+		} else if (loc + RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY_OFFSET + safety > len && power > 0) {
 			unsafeMoveRailMotor(((Math.max(len - loc - RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY_OFFSET, 0) / safety) + RobotMap.Pegasus.Climb.SafetyZones.RAIL_FF) * power);
 		} else {
 			unsafeMoveRailMotor(power);
@@ -78,6 +79,7 @@ public class Climb extends GBSubsystem {
 	}
 	
 	public void safeMoveTurningMotor(double power) {
+		power = Math.min(Math.abs(power), 1) * Math.signum(power);
 		double ang = getAng();
 		double safety = RobotMap.Pegasus.Climb.SafetyZones.TURN_SAFETY;
 		double absoluteSafety = RobotMap.Pegasus.Climb.SafetyZones.TURN_ABSOLUTE_SAFETY;
@@ -211,11 +213,11 @@ public class Climb extends GBSubsystem {
 			this.turningMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 		}
 		
-		private boolean needsCoast = false;
+//		private boolean needsCoast = false;
 		
 		@Override
 		public void periodic() {
-			super.periodic();
+			super.periodic();/*
 			if (getAng() > Math.PI / 2 - 0.3 && turningMotor.getIdleMode() == CANSparkMax.IdleMode.kCoast) {
 				needsCoast = true;
 				setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
@@ -223,8 +225,8 @@ public class Climb extends GBSubsystem {
 			if (getAng() < Math.PI / 2 - 0.4 && needsCoast) {
 				needsCoast = false;
 				setTurningMotorIdle(CANSparkMax.IdleMode.kCoast);
-			}
-			SmartDashboard.putNumber("Rail loc", this.getClimb().getRailMotorTicks());
+			}*/
+			SmartDashboard.putNumber("Rail loc", this.getClimb().getLoc());
 		}
 	}
 }

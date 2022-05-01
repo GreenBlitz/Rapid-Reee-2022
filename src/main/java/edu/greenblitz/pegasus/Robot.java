@@ -1,6 +1,8 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.pegasus.commands.auto.FourBallAuto;
+import edu.greenblitz.pegasus.commands.auto.DCMPAuto;
+import edu.greenblitz.pegasus.commands.auto.StealBallAuto;
+import edu.greenblitz.pegasus.commands.auto.ThreeBallAuto;
 import edu.greenblitz.pegasus.commands.auto.TwoBallAuto;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
@@ -10,12 +12,12 @@ import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.*;
 
 public class Robot extends TimedRobot {
+
 	@Override
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
@@ -61,13 +63,16 @@ public class Robot extends TimedRobot {
 						new MoveBallUntilClick(),
 						new WaitCommand(3)
 				)
-		).schedule();
+		);//.schedule();
 	}
 
 	@Override
 	public void teleopPeriodic() {
 	}
 
+	
+	
+	
 	/*
 		TODO: Dear @Orel, please for the love of god, use the very useful function: schedule(), this will help the code to actually work
 	*/
@@ -78,7 +83,7 @@ public class Robot extends TimedRobot {
 		Climb.getInstance().resetTurningMotorTicks();
 		Climb.getInstance().resetRailMotorTicks();
 		new StopShooter().schedule();
-		new TwoBallAuto().schedule();
+		new DCMPAuto().schedule();
 	}
 
 	@Override

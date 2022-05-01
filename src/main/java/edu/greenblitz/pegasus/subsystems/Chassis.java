@@ -109,6 +109,7 @@ public class Chassis extends GBSubsystem {
 	}
 
 	public void arcadeDrive(double moveValue, double rotateValue) {
+		SmartDashboard.putNumber("rotate power", rotateValue);
 		moveMotors(moveValue - rotateValue, moveValue + rotateValue);
 	}
 
@@ -171,7 +172,7 @@ public class Chassis extends GBSubsystem {
 	
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("Pigeon angle deg", getRawAngle());
+		SmartDashboard.putNumber("Pigeon angle deg", Math.toDegrees(getAngle()));
 		putString("Location", Chassis.getInstance().getLocation().toString());
 
 	}

@@ -23,8 +23,8 @@ public class ShooterByRPM extends ShooterCommand {
 		this.inShootingSpeed = 0;
 	}
 
-	public ShooterByRPM(PIDObject obj, double target) {
-		this(obj, 0, target);
+	public ShooterByRPM(double target) {
+		this(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, target);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class ShooterByRPM extends ShooterCommand {
 			this.inShootingSpeed = 0;
 			shooter.setPreparedToShoot(false);
 		}
-		if (this.inShootingSpeed >= 35) {
+		if (this.inShootingSpeed >= 5) {
 			shooter.setPreparedToShoot(true);
 		}
 		logger.report((System.currentTimeMillis()/1000.0 - tStart), shooter.getShooterSpeed());
