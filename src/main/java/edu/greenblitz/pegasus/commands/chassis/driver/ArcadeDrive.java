@@ -1,7 +1,6 @@
 package edu.greenblitz.pegasus.commands.chassis.driver;
 
 import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
-import edu.greenblitz.gblib.gears.GearDependentValue;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 
 public class ArcadeDrive extends ChassisCommand {

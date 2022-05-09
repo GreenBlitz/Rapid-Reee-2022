@@ -1,7 +1,8 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.gblib.gears.Gear;
-import edu.greenblitz.gblib.gears.GearDependentValue;
+
+import edu.greenblitz.gblib.gear.GearState;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
 import org.greenblitz.motion.pid.PIDObject;
@@ -37,7 +38,8 @@ public class RobotMap {
 			public static final double startAngle = Math.toRadians(23);
 
 			public static class Shifter {
-
+				public static final DoubleSolenoid.Value POWER_VALUE = DoubleSolenoid.Value.kForward;
+				public static final DoubleSolenoid.Value SPEED_VALUE = DoubleSolenoid.Value.kReverse;
 				public static class Solenoid {
 					public static final int FORWARD_PORT = 3;
 					public static final int REVERSE_PORT = 1;
@@ -59,8 +61,8 @@ public class RobotMap {
 
 					POWER.put("0.5", new ProfilingData(1.4, 8.4, 4, 10));
 
-					PROF.setValue(Gear.POWER, POWER);
-					PROF.setValue(Gear.SPEED, SPEED);
+					PROF.setValue(GearState.POWER, POWER);
+					PROF.setValue(GearState.SPEED, SPEED);
 				}
 
 			}

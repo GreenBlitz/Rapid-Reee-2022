@@ -1,9 +1,8 @@
 package edu.greenblitz.pegasus.subsystems;
 
-import edu.greenblitz.gblib.gears.Gear;
-import edu.greenblitz.gblib.gears.GearDependentValue;
-import edu.greenblitz.gblib.gears.GlobalGearContainer;
-import edu.greenblitz.gblib.sendables.GBDoubleSolenoid;
+
+import edu.greenblitz.gblib.gear.Gear;
+import edu.greenblitz.gblib.gear.GearState;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
@@ -21,9 +20,6 @@ public class Shifter extends GBSubsystem {
 	private static Shifter instance;
 	
 	private DoubleSolenoid piston;
-	private Gear currentShift = Gear.SPEED;/*
-	private GearDependentValue<DoubleSolenoid.Value> shiftValue =
-			new GearDependentValue<>(DoubleSolenoid.Value.kForward, DoubleSolenoid.Value.kReverse);*/
 	
 	
 	/**
@@ -61,30 +57,22 @@ public class Shifter extends GBSubsystem {
 	 *
 	 * @param state A value based off of the Gear enum. This value is then set as the state the piston is in.
 	 */
-	public void setShift(Gear state) {
-		currentShift = state;
+	public void setShift(GearState state) {
 		Chassis.getInstance().changeGear();
-		GlobalGearContainer.getInstance().setGear(state);
-		System.out.println(state == Gear.POWER ? DoubleSolenoid.Value.kForward: DoubleSolenoid.Value.kReverse);
-		piston.set(state == Gear.POWER ? DoubleSolenoid.Value.kForward: DoubleSolenoid.Value.kReverse);
+		Gear.getInstance().setGear(state);
+		piston.set(state == GearState.POWER ?
+				RobotMap.Pegasus.Chassis.Shifter.POWER_VALUE :
+				RobotMap.Pegasus.Chassis.Shifter.SPEED_VALUE);
 }
 	
 	@Override
 	public void periodic() {
 		super.periodic();
-		putString("Shift", currentShift.name());
+		putString("Shift", Gear.getInstance().getState().name());
 	}
 	
 	public void toggleShift() {
-		setShift(getCurrentGear() == Gear.POWER ? Gear.SPEED : Gear.POWER);
+		setShift(Gear.getInstance().getInverseState());
 	}
-	
-	/**
-	 * This function returns the current state of the piston through the Gear enum.
-	 *
-	 * @return The state of the piston through the Gear enum
-	 */
-	public Gear getCurrentGear() {
-		return GlobalGearContainer.getInstance().getGear();
-	}
+
 }
