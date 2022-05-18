@@ -3,10 +3,9 @@ package edu.greenblitz.pegasus.subsystems;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
-import edu.greenblitz.gblib.encoder.IEncoder;
-import edu.greenblitz.gblib.encoder.SparkEncoder;
-import edu.greenblitz.gblib.gyroscope.IGyroscope;
-import edu.greenblitz.gblib.gyroscope.PigeonGyro;
+import edu.greenblitz.gblib.encoder.AbstractEncoder;
+import edu.greenblitz.gblib.encoder.SparkMaxEncoder;
+import edu.greenblitz.gblib.gyro.PigeonGyro;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
@@ -17,8 +16,8 @@ import org.greenblitz.motion.base.Position;
 public class Chassis extends GBSubsystem {
 	private static Chassis instance;
 
-	private final IEncoder leftEncoder, rightEncoder;
-	private final IGyroscope gyroscope;
+	private final AbstractEncoder leftEncoder, rightEncoder;
+	private final PigeonGyro gyroscope;
 	private final CANSparkMax[] motors;
 
 	private static final int[] ports = {
@@ -52,9 +51,9 @@ public class Chassis extends GBSubsystem {
 		motors[4].follow(motors[3]);
 		motors[5].follow(motors[3]);
 
-		leftEncoder = new SparkEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, motors[3]);
+		leftEncoder = new SparkMaxEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, motors[3]);
 		leftEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.LEFT_ENCODER_REVERSED);
-		rightEncoder = new SparkEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, motors[0]);
+		rightEncoder = new SparkMaxEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, motors[0]);
 		rightEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.RIGHT_ENCODER_REVERSED);
 		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
 		gyroscope.reset();

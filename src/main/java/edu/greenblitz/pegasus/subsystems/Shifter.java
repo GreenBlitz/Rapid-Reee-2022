@@ -2,9 +2,9 @@ package edu.greenblitz.pegasus.subsystems;
 
 
 import edu.greenblitz.gblib.gear.Gear;
-import edu.greenblitz.gblib.gear.GearState;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is in charge of the shifter subsystem of the robot.
@@ -55,12 +55,12 @@ public class Shifter extends GBSubsystem {
 	/**
 	 * This function sets the state of the piston based on the value received.
 	 *
-	 * @param state A value based off of the Gear enum. This value is then set as the state the piston is in.
+	 * @param isPower A value based off of the Gear enum. This value is then set as the state the piston is in.
 	 */
-	public void setShift(GearState state) {
+	public void setShift(boolean isPower) {
 		Chassis.getInstance().changeGear();
-		Gear.getInstance().setGear(state);
-		piston.set(state == GearState.POWER ?
+		Gear.getInstance().setState(isPower);
+		piston.set(isPower?
 				RobotMap.Pegasus.Chassis.Shifter.POWER_VALUE :
 				RobotMap.Pegasus.Chassis.Shifter.SPEED_VALUE);
 }
@@ -68,11 +68,11 @@ public class Shifter extends GBSubsystem {
 	@Override
 	public void periodic() {
 		super.periodic();
-		putString("Shift", Gear.getInstance().getState().name());
+		SmartDashboard.putString("is Power" ,Boolean.toString(Gear.getInstance().getState()));
 	}
 	
 	public void toggleShift() {
-		setShift(Gear.getInstance().getInverseState());
+		setShift(!Gear.getInstance().getState());
 	}
 
 }
