@@ -1,7 +1,7 @@
 package edu.greenblitz.pegasus.commands.compressor;
 
+import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.pegasus.subsystems.Pneumatics;
-import edu.greenblitz.gblib.command.GBCommand;
 
 public abstract class CompressorCommand extends GBCommand {
 

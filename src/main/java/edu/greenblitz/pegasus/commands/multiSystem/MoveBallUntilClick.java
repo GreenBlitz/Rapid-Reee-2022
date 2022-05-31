@@ -1,7 +1,7 @@
 package edu.greenblitz.pegasus.commands.multiSystem;
 
-import edu.greenblitz.gblib.command.GBCommand;
-import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.gblib.base.GBCommand;
+
 import edu.greenblitz.pegasus.subsystems.Funnel;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.Intake;

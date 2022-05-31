@@ -1,21 +1,20 @@
 package edu.greenblitz.pegasus.commands.climb;
 
 import com.revrobotics.CANSparkMax;
-import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.pegasus.commands.climb.Rail.MoveRailToPosition;
 import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;
 import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.wpi.first.wpilibj2.command.*;
 
-import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rail.*;
+import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR;
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_SECOND_BAR;
 
 public class ExtendFully extends SequentialCommandGroup {
-	
+
 	public ExtendFully() {
 		addCommands(
 				new ParallelCommandGroup(
-						new MoveRailToPosition(METERS_TO_SECOND_BAR + 0.15){
+						new MoveRailToPosition(METERS_TO_SECOND_BAR + 0.15) {
 							@Override
 							public void execute() {
 								climb.safeMoveRailMotor(-1);
@@ -34,7 +33,7 @@ public class ExtendFully extends SequentialCommandGroup {
 						new SequentialCommandGroup(
 								new WaitUntilCommand(() -> Climb.getInstance().getLoc() < 0.03),
 								new MoveTurningToAngle(RADIANS_TO_SECOND_BAR),
-								new ScheduleCommand(new WaitCommand(1){
+								new ScheduleCommand(new WaitCommand(1) {
 									@Override
 									public void execute() {
 										super.execute();

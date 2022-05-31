@@ -3,7 +3,6 @@ package edu.greenblitz.pegasus.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.gblib.sendables.GBDoubleSolenoid;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
 import edu.wpi.first.wpilibj.DoubleSolenoid;

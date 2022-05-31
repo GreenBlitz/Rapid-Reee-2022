@@ -3,8 +3,8 @@ package edu.greenblitz.pegasus.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
-import edu.greenblitz.gblib.encoder.SparkEncoder;
-import edu.greenblitz.gblib.gears.GearDependentValue;
+import edu.greenblitz.gblib.encoder.SparkMaxEncoder;
+import edu.greenblitz.gblib.gear.GearDependentValue;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
@@ -182,26 +182,26 @@ public class Climb extends GBSubsystem {
 	private class Rail extends ClimbSubsystem {
 		
 		private CANSparkMax railMotor;
-		private SparkEncoder railEncoder;
+		private SparkMaxEncoder railEncoder;
 		
 		private Rail() {
 			railMotor = new CANSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
 			railMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_REVERSED);
 			railMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-			railEncoder = new SparkEncoder(new GearDependentValue<>(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER, RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER), railMotor);
+			railEncoder = new SparkMaxEncoder(() -> RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN, railMotor);
 			railEncoder.reset();
 		}
 	}
 	
 	private class Turning extends ClimbSubsystem {
 		private CANSparkMax turningMotor;
-		private SparkEncoder turningEncoder;
+		private SparkMaxEncoder turningEncoder;
 		
 		private Turning() {
 			turningMotor = new CANSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
 			turningMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_REVERSED);
 			turningMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-			turningEncoder = new SparkEncoder(new GearDependentValue<>(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN, RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN), turningMotor);
+			turningEncoder = new SparkMaxEncoder(() -> RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN, turningMotor);
 			turningEncoder.reset();
 		}
 		

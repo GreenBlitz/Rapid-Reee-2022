@@ -1,13 +1,11 @@
 package edu.greenblitz.pegasus.commands.multiSystem;
 
-import com.revrobotics.CANSparkMax;
-import edu.greenblitz.gblib.command.GBCommand;
+import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.pegasus.subsystems.Chassis;
-import edu.greenblitz.pegasus.subsystems.Climb;
 
 public class CoastWhileClimb extends GBCommand {
 
-	public CoastWhileClimb(){
+	public CoastWhileClimb() {
 	}
 
 	@Override

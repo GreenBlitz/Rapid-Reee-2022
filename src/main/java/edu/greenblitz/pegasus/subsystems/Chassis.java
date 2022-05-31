@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.Localizer;
 import org.greenblitz.motion.base.Position;
 
+import java.util.function.DoubleSupplier;
+
 public class Chassis extends GBSubsystem {
 	private static Chassis instance;
 
@@ -51,9 +53,9 @@ public class Chassis extends GBSubsystem {
 		motors[4].follow(motors[3]);
 		motors[5].follow(motors[3]);
 
-		leftEncoder = new SparkMaxEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, motors[3]);
+		leftEncoder = new SparkMaxEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK::getValue, motors[3]);
 		leftEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.LEFT_ENCODER_REVERSED);
-		rightEncoder = new SparkMaxEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK, motors[0]);
+		rightEncoder = new SparkMaxEncoder(RobotMap.Pegasus.Chassis.Encoders.NORM_CONST_SPARK::getValue, motors[0]);
 		rightEncoder.invert(RobotMap.Pegasus.Chassis.Encoders.RIGHT_ENCODER_REVERSED);
 		gyroscope = new PigeonGyro(new PigeonIMU(12)); //Pigeon connects to talon/CAN bus
 		gyroscope.reset();
