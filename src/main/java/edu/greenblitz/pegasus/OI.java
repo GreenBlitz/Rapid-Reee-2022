@@ -4,7 +4,7 @@ import edu.greenblitz.gblib.command.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 
 import edu.greenblitz.pegasus.commands.shooterCommands.ShootByPower;
-import edu.greenblitz.pegasus.commands.shooterCommands.ToggleShooter;
+import edu.greenblitz.pegasus.commands.shooterCommands.ToggleIsOn;
 import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.*;
 
@@ -44,10 +44,10 @@ public class OI {
 
 	}
 	private void initDebugButtons() {
-		mainJoystick.A.whileHeld(new ShootByPower(0.1));
-//		mainJoystick.B.whileHeld(new ShootByTrigger());
-		Shooter.getInstance().initDefaultCommand();
-		mainJoystick.X.whenPressed(new ToggleShooter());
+		Shooter.getInstance().InitDefaultCommand();
+		mainJoystick.X.whileHeld(new ShootByPower(0.3));
+		mainJoystick.A.whenPressed(new ToggleIsOn());
+
 	}
 	private void initRealButtons() {
 	}

@@ -1,11 +1,13 @@
 package edu.greenblitz.pegasus.commands.shooterCommands;
 
-public class ToggleShooter extends ShooterCommand {
+public class ToggleIsOn extends ShooterCommand{
+	public ToggleIsOn(){
+
+	}
 
 	@Override
 	public void initialize() {
 		shooter.toggle();
-		System.out.println("damn");
 	}
 
 	@Override
