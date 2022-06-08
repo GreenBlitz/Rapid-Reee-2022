@@ -1,9 +1,9 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.pegasus.commands.auto.DCMPAuto;
-import edu.greenblitz.pegasus.commands.auto.StealBallAuto;
-import edu.greenblitz.pegasus.commands.auto.ThreeBallAuto;
-import edu.greenblitz.pegasus.commands.auto.TwoBallAuto;
+import edu.greenblitz.gblib.motors.AbstractMotor;
+import edu.greenblitz.gblib.motors.GBSparkMax;
+import edu.greenblitz.gblib.motors.MotorType;
+import edu.greenblitz.gblib.subsystems.Chassis;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
@@ -29,7 +29,11 @@ public class Robot extends TimedRobot {
 //		Climb.getInstance().initDefaultCommand(OI.getInstance().getSecondJoystick());
 		OI.getInstance();
 		Indexing.getInstance();
-		Chassis.getInstance(); // Must be last!
+		Chassis.create(
+				MotorType.GBSparkMax,
+				RobotMap.Pegasus.Chassis.Motors.motors,
+				RobotMap.Pegasus.Chassis.Motors.isInverted,
+				RobotMap.Pegasus.Chassis.WHEEL_DIST);
 	}
 
 	@Override
@@ -78,12 +82,12 @@ public class Robot extends TimedRobot {
 	*/
 	@Override
 	public void autonomousInit() {
-		Chassis.getInstance().toBrake();
+		Chassis.getInstance().setIdleMode(AbstractMotor.IdleMode.Brake);
 		Chassis.getInstance().resetGyro();
-		Climb.getInstance().resetTurningMotorTicks();
-		Climb.getInstance().resetRailMotorTicks();
+		//Climb.getInstance().resetTurningMotorTicks();
+		//Climb.getInstance().resetRailMotorTicks();
 		new StopShooter().schedule();
-		new DCMPAuto().schedule();
+		//new DCMPAuto().schedule();
 	}
 
 	@Override

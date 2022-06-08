@@ -1,7 +1,8 @@
 package edu.greenblitz.pegasus.commands.auto;
 
+import edu.greenblitz.gblib.subsystems.Chassis;
 import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
-import edu.greenblitz.pegasus.subsystems.Chassis;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.pid.PIDController;
 import org.greenblitz.motion.pid.PIDObject;
@@ -51,7 +52,7 @@ public class MoveLinearByPID extends ChassisCommand {
 		chassis.arcadeDrive(power, turn);
 
 		SmartDashboard.putNumber("Distance", chassis.getMeters() - startingDistance);
-		SmartDashboard.putNumber("Angle", Chassis.getInstance().getAngle());
+		SmartDashboard.putNumber("Angle", chassis.getAngle());
 	}
 
 	@Override

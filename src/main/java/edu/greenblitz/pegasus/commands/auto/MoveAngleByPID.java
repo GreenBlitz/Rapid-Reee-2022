@@ -1,7 +1,7 @@
 package edu.greenblitz.pegasus.commands.auto;
 
+import edu.greenblitz.gblib.subsystems.Chassis;
 import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
-import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.pid.CollapsingPIDController;
 import org.greenblitz.motion.pid.PIDObject;
@@ -51,7 +51,7 @@ public class MoveAngleByPID extends ChassisCommand {
 			double i = SmartDashboard.getNumber("i", anglePID.getPidObject().getKi());
 			double d = SmartDashboard.getNumber("d", anglePID.getPidObject().getKd());
 			ff = SmartDashboard.getNumber("ff", anglePID.getPidObject().getKf());
-			chassis.putNumber("target", angleTarget);
+//			chassis.putNumber("target", angleTarget);
 			PIDObject pid = new PIDObject(p, i, d, 0, 1);
 			anglePID.setPidObject(pid);
 		}
@@ -67,7 +67,7 @@ public class MoveAngleByPID extends ChassisCommand {
 			PIDObject pid = new PIDObject(p, i, d, 0, 1);
 			anglePID.setPidObject(pid);
 		}
-		double currentAngle = Chassis.getInstance().getRawAngle() - angleCycle;
+		double currentAngle = chassis.getRawAngle() - angleCycle;
 		double anglePower = anglePID.calculatePID(currentAngle);
 		if(anglePower != 0) {
 			anglePower = anglePower + ff * Math.signum(anglePower);

@@ -1,11 +1,14 @@
+/*
+
 package edu.greenblitz.pegasus.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
-import edu.greenblitz.gblib.encoder.SparkMaxEncoder;
-import edu.greenblitz.gblib.gear.GearDependentValue;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.gblib.motors.AbstractMotor;
+import edu.greenblitz.gblib.motors.GBSparkMax;
+import edu.greenblitz.gblib.motors.Motor;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
 import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
@@ -26,7 +29,7 @@ public class Climb extends GBSubsystem {
 	private Climb() {
 		rail = new Rail();
 		turning = new Turning();
-
+		
 	}
 	
 	private static void init() {
@@ -60,10 +63,10 @@ public class Climb extends GBSubsystem {
 		double safety = RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY;
 		double safetyAngle = RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_ANG;
 		double safetyLoc = RobotMap.Pegasus.Climb.ClimbMotors.START_LOCATION;
-		/*if(getLoc() + safety >= safetyLoc && getAng() < safetyAngle && power > 0){
-			unsafeMoveRailMotor((safetyLoc - loc - absoluteSafety)/safety*power);
-		}
-		else*/
+//		if(getLoc() + safety >= safetyLoc && getAng() < safetyAngle && power > 0){
+//			unsafeMoveRailMotor((safetyLoc - loc - absoluteSafety)/safety*power);
+//		}
+//		else
 		if (loc - RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY_OFFSET < safety && power < 0) {
 			unsafeMoveRailMotor(((Math.max(loc - RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY_OFFSET, 0) / safety) + RobotMap.Pegasus.Climb.SafetyZones.RAIL_FF) * power);
 		} else if (loc + RobotMap.Pegasus.Climb.SafetyZones.RAIL_SAFETY_OFFSET + safety > len && power > 0) {
@@ -75,7 +78,7 @@ public class Climb extends GBSubsystem {
 	}
 	
 	public void unsafeMoveRailMotor(double power) {
-		rail.railMotor.set(power);
+		rail.railMotor.setPower(power);
 	}
 	
 	public void safeMoveTurningMotor(double power) {
@@ -87,10 +90,10 @@ public class Climb extends GBSubsystem {
 		double max = RobotMap.Pegasus.Climb.SafetyZones.HIGHEST_ANGLE;
 		double safetyAngle = RobotMap.Pegasus.Climb.SafetyZones.BATTERY_SAFETY_ANG;
 		double safetyLoc = RobotMap.Pegasus.Climb.SafetyZones.SAFETY_LOC;
-		/*if(getLoc() > safetyLoc && ang - safety < safetyAngle && power < 0){
-			unsafeMoveTurningMotor((ang - absoluteSafety - safetyAngle)/safety*power);
-		}
-		else*/
+//		if(getLoc() > safetyLoc && ang - safety < safetyAngle && power < 0){
+//			unsafeMoveTurningMotor((ang - absoluteSafety - safetyAngle)/safety*power);
+//		}
+//		else
 		if (ang - safety < min && power < 0) {
 			unsafeMoveTurningMotor(Math.max(ang - absoluteSafety - min, 0) / safety * power);
 		} else if (ang + safety > max && power > 0) {
@@ -101,30 +104,30 @@ public class Climb extends GBSubsystem {
 	}
 	
 	public void unsafeMoveTurningMotor(double power) {
-		turning.turningMotor.set(power);
+		turning.turningMotor.setPower(power);
 	}
 	
 	public double getRailMotorTicks() {
-		return rail.railEncoder.getRawTicks();
+		return rail.railMotor.getRawTicks();
 	}
 	
 	public void resetRailMotorTicks() {
-		rail.railEncoder.reset();
+		rail.railMotor.resetEncoder();
 	}
 	
 	public double getTurningMotorTicks() {
-		return turning.turningEncoder.getRawTicks();
+		return turning.turningMotor.getRawTicks();
 	}
 	
 	public void resetTurningMotorTicks() {
-		turning.turningEncoder.reset();
+		turning.turningMotor.resetEncoder();
 	}
 	
-	public void setTurningMotorIdle(CANSparkMax.IdleMode mode) {
+	public void setTurningMotorIdle(AbstractMotor.IdleMode mode) {
 		turning.turningMotor.setIdleMode(mode);
 	}
 	
-	public CANSparkMax.IdleMode getTurningMotorIdle() {
+	public AbstractMotor.IdleMode getTurningMotorIdle() {
 		return turning.turningMotor.getIdleMode();
 	}
 	
@@ -137,11 +140,13 @@ public class Climb extends GBSubsystem {
 	}
 	
 	public void setTurningPIDValues(PIDObject pid) {
-		SparkMaxPIDController controller = turning.turningMotor.getPIDController();
-		controller.setP(pid.getKp());
-		controller.setI(pid.getKi());
-		controller.setD(pid.getKd());
-		controller.setFF(pid.getKf());
+//		SparkMaxPIDController controller = turning.turningMotor.getPIDController();
+//		controller.setP(pid.getKp());
+//		controller.setI(pid.getKi());
+//		controller.setD(pid.getKd());
+//		controller.setFF(pid.getKf());
+		
+		turning.turningMotor.set
 	}
 	
 	public Turning getTurning() {
@@ -181,52 +186,52 @@ public class Climb extends GBSubsystem {
 	
 	private class Rail extends ClimbSubsystem {
 		
-		private CANSparkMax railMotor;
-		private SparkMaxEncoder railEncoder;
+		private Motor railMotor;
+
 		
 		private Rail() {
-			railMotor = new CANSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
+			railMotor = new GBSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_PORT); //(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
 			railMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_REVERSED);
-			railMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+			railMotor.setIdleMode(AbstractMotor.IdleMode.Brake);
 			railEncoder = new SparkMaxEncoder(() -> RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN, railMotor);
 			railEncoder.reset();
 		}
 	}
 	
 	private class Turning extends ClimbSubsystem {
-		private CANSparkMax turningMotor;
-		private SparkMaxEncoder turningEncoder;
+		private Motor turningMotor;
 		
 		private Turning() {
-			turningMotor = new CANSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
+			turningMotor = new GBSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_PORT);
 			turningMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_REVERSED);
-			turningMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+			turningMotor.setIdleMode(AbstractMotor.IdleMode.Brake);
 			turningEncoder = new SparkMaxEncoder(() -> RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN, turningMotor);
 			turningEncoder.reset();
 		}
 		
 		public void toCoast() {
-			this.turningMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+			this.turningMotor.setIdleMode(AbstractMotor.IdleMode.Coast);
 		}
 		
 		public void toBrake() {
-			this.turningMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+			this.turningMotor.setIdleMode(AbstractMotor.IdleMode.Brake);
 		}
-		
+
 //		private boolean needsCoast = false;
 		
 		@Override
 		public void periodic() {
-			super.periodic();/*
-			if (getAng() > Math.PI / 2 - 0.3 && turningMotor.getIdleMode() == CANSparkMax.IdleMode.kCoast) {
-				needsCoast = true;
-				setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
-			}
-			if (getAng() < Math.PI / 2 - 0.4 && needsCoast) {
-				needsCoast = false;
-				setTurningMotorIdle(CANSparkMax.IdleMode.kCoast);
-			}*/
+			super.periodic();
+//			if (getAng() > Math.PI / 2 - 0.3 && turningMotor.getIdleMode() == CANSparkMax.IdleMode.kCoast) {
+//				needsCoast = true;
+//				setTurningMotorIdle(CANSparkMax.IdleMode.kBrake);
+//			}
+//			if (getAng() < Math.PI / 2 - 0.4 && needsCoast) {
+//				needsCoast = false;
+//				setTurningMotorIdle(CANSparkMax.IdleMode.kCoast);
+//			}
 			SmartDashboard.putNumber("Rail loc", this.getClimb().getLoc());
 		}
 	}
 }
+*/

@@ -3,12 +3,10 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.gblib.subsystems.Chassis;
+import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import edu.greenblitz.pegasus.commands.climb.*;
-import edu.greenblitz.pegasus.commands.climb.Rail.MoveRailToPosition;
-import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
-import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;
-import edu.greenblitz.pegasus.commands.climb.Turning.SwitchTurning;
-import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
+
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
@@ -19,8 +17,7 @@ import edu.greenblitz.pegasus.commands.shifter.ToggleShifter;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
-import edu.greenblitz.pegasus.subsystems.Chassis;
-import edu.greenblitz.pegasus.subsystems.Climb;
+
 import edu.wpi.first.wpilibj2.command.*;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
@@ -68,7 +65,6 @@ public class OI {
 
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
-
 		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM) {
 
 			@Override
@@ -85,7 +81,8 @@ public class OI {
 
 		secondJoystick.START.whenPressed(new ToggleRoller());
 		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter());
-
+		
+		/*
 		secondJoystick.POV_UP.whenPressed(new FullClimb(secondJoystick));
 		secondJoystick.POV_RIGHT.whenPressed(
 
@@ -106,13 +103,13 @@ public class OI {
 				new RailByJoystick(secondJoystick),
 				new TurningByJoystick(secondJoystick)
 		));
-
-		Chassis.getInstance().initDefaultCommand(mainJoystick);
+		
+		Chassis.getInstance().setDefaultCommand(new ArcadeDrive(mainJoystick));
 
 		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
 		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
 		mainJoystick.L1.whenPressed(new ToggleShifter());
-		mainJoystick.A.whileHeld(new CoastWhileClimb());
+		mainJoystick.A.whileHeld(new CoastWhileClimb());*/
 	}
 
 	private class InitManualOverride extends GBCommand {
@@ -155,8 +152,8 @@ public class OI {
 		secondJoystick.R1.whileHeld(new RollByConstant(0.8));
 		secondJoystick.L1.whileHeld(new RollByConstant(-0.8));
 		secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
-
-		Chassis.getInstance().initDefaultCommand(mainJoystick);
+		
+		Chassis.getInstance().setDefaultCommand(new ArcadeDrive(mainJoystick));
 	}
 
 	public static OI getInstance() {

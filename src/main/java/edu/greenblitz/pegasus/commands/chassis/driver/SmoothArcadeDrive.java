@@ -1,16 +1,17 @@
 package edu.greenblitz.pegasus.commands.chassis.driver;
 
 import edu.greenblitz.gblib.gear.GearDependentValue;
+import edu.greenblitz.gblib.motors.AbstractMotor;
 import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 
 public class SmoothArcadeDrive extends ChassisCommand {
 
 	private SmartJoystick joystick;
-	private static final GearDependentValue<Double> forwardsFactor = new GearDependentValue<>(0.6, 0.6);
-	private static final GearDependentValue<Double> turnFactor = new GearDependentValue<>(0.2 , 0.2);
-	private static final GearDependentValue<Double> forwardsNonLinearityFactor = new GearDependentValue<>(2.0, 2.0);
-	private static final GearDependentValue<Double> turnNonLinearityFactor = new GearDependentValue<>(2.0, 2.0);
+	private static final GearDependentValue forwardsFactor = new GearDependentValue(0.6, 0.6);
+	private static final GearDependentValue turnFactor = new GearDependentValue(0.2 , 0.2);
+	private static final GearDependentValue forwardsNonLinearityFactor = new GearDependentValue(2.0, 2.0);
+	private static final GearDependentValue turnNonLinearityFactor = new GearDependentValue(2.0, 2.0);
 
 
 	public SmoothArcadeDrive(SmartJoystick joystick) {
@@ -19,7 +20,7 @@ public class SmoothArcadeDrive extends ChassisCommand {
 
 	@Override
 	public void initialize() {
-		chassis.toBrake();
+		chassis.setIdleMode(AbstractMotor.IdleMode.Brake);
 	}
 
 	@Override

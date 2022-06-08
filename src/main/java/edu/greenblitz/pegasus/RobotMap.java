@@ -24,12 +24,14 @@ public class RobotMap {
 			public static final double WHEEL_DIST = 0.564; //very accurate right now
 
 			public static class Motors {
+				public static final int[] motors = {1,2,3,4,5,6};
+				public static final boolean[] isInverted = {true,true,true,false,false,false};
 				public static final int RIGHT_LEADER = 1, RIGHT_FOLLOWER_1 = 2, RIGHT_FOLLOWER_2 = 3, LEFT_LEADER = 4, LEFT_FOLLOWER_1 = 5, LEFT_FOLLOWER_2 = 6;
 				public static final boolean RIGHT_LEADER_REVERSED = true, RIGHT_FOLLOWER_1_REVERSED = true, RIGHT_FOLLOWER_2_REVERSED = true, LEFT_LEADER_REVERSED = false, LEFT_FOLLOWER_1_REVERSED = false, LEFT_FOLLOWER_2_REVERSED = false;
 			}
 
 			public static class Encoders {
-				public static final GearDependentValue<Double> NORM_CONST_SPARK = new GearDependentValue<>(2300.0 * 0.64, 1234.0 / 2.0); // TODO: check this, I copied it from Infinite Reeee
+				public static final GearDependentValue NORM_CONST_SPARK = new GearDependentValue(2300.0 * 0.64, 1234.0 / 2.0); // TODO: check this, I copied it from Infinite Reeee
 				public static final int RIGHT_ENCODER = -1, LEFT_ENCODER = -1;
 				public static final boolean RIGHT_ENCODER_REVERSED = false, LEFT_ENCODER_REVERSED = false;
 			}
@@ -46,26 +48,26 @@ public class RobotMap {
 				}
 			}
 
-			public static class MotionData { // TODO: calibrate this
-
-				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(0.85, 1.0, .0005, 0.8, 0.0, 2.0, .01, 0.5 * 0, 0, 0, .01, 500);
-				public static HashMap<String, ProfilingData> POWER;
-				public static HashMap<String, ProfilingData> SPEED;
-				public static GearDependentValue<HashMap<String, ProfilingData>> PROF;
-
-				static {
-
-					POWER = new HashMap<>();
-					SPEED = new HashMap<>();
-					PROF = new GearDependentValue<>(null, null);
-
-					POWER.put("0.5", new ProfilingData(1.4, 8.4, 4, 10));
-
-					PROF.setValue(true, POWER);
-					PROF.setValue(false, SPEED);
-				}
-
-			}
+//			public static class MotionData { // TODO: calibrate this
+//
+//				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(0.85, 1.0, .0005, 0.8, 0.0, 2.0, .01, 0.5 * 0, 0, 0, .01, 500);
+//				public static HashMap<String, ProfilingData> POWER;
+//				public static HashMap<String, ProfilingData> SPEED;
+//				public static GearDependentValue<HashMap<String, ProfilingData>> PROF;
+//
+//				static {
+//
+//					POWER = new HashMap<>();
+//					SPEED = new HashMap<>();
+//					PROF = new GearDependentValue<>(null, null);
+//
+//					POWER.put("0.5", new ProfilingData(1.4, 8.4, 4, 10));
+//
+//					PROF.setValue(true, POWER);
+//					PROF.setValue(false, SPEED);
+//				}
+//
+//			}
 
 
 		}
@@ -88,6 +90,7 @@ public class RobotMap {
 
 		public static class Shooter {
 			public static class ShooterMotor {
+				public static final int PORT_LEADER = 7; /*,
 				public static final int PORT_LEADER = 7; /*,
 						PORT_FOLLOWER = 2;*/
 				public static final boolean LEADER_INVERTED = true;  /*,

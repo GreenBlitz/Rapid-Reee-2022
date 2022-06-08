@@ -1,10 +1,7 @@
 package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.commands.climb.ClimbMoveToPosition;
-import edu.greenblitz.pegasus.commands.climb.ClimbState;
-import edu.greenblitz.pegasus.commands.climb.Rail.MoveRailToPosition;
-import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;
+
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.shifter.ToPower;

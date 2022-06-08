@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus.subsystems;
 
 
 import edu.greenblitz.gblib.gear.Gear;
+import edu.greenblitz.gblib.subsystems.Chassis;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -58,7 +59,6 @@ public class Shifter extends GBSubsystem {
 	 * @param isPower A value based off of the Gear enum. This value is then set as the state the piston is in.
 	 */
 	public void setShift(boolean isPower) {
-		Chassis.getInstance().changeGear();
 		Gear.getInstance().setState(isPower);
 		piston.set(isPower?
 				RobotMap.Pegasus.Chassis.Shifter.POWER_VALUE :

@@ -1,7 +1,6 @@
 package edu.greenblitz.pegasus.commands.chassis.turns;
 
 import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
-import edu.greenblitz.pegasus.subsystems.Chassis;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.pid.CollapsingPIDController;
 import org.greenblitz.motion.pid.PIDObject;
@@ -10,9 +9,10 @@ public class TurnToAngleByPID extends ChassisCommand { //TODO: might be buggy, f
 	
 	private double angleTarget;
 	private CollapsingPIDController anglePID;
-	static private PIDObject defaultPIDObject = new PIDObject(0,0,0);
+	static private PIDObject defaultPIDObject = new PIDObject(0, 0, 0);
 	static private double defaultThresh = 0;
 	static private double defaultTolerance = 0;
+	
 	public TurnToAngleByPID(double angleTarget) {
 		this.angleTarget = angleTarget;
 		
@@ -23,13 +23,13 @@ public class TurnToAngleByPID extends ChassisCommand { //TODO: might be buggy, f
 	}
 	
 	public void execute() {
-		double currentAngle = Chassis.getInstance().getAngle();
+		double currentAngle = chassis.getAngle();
 		chassis.arcadeDrive(0, anglePID.calculatePID(currentAngle));
 	}
 	
 	@Override
 	public void end(boolean interrupted) {
-		chassis.arcadeDrive(0,0);
+		chassis.arcadeDrive(0, 0);
 	}
 	
 	@Override
