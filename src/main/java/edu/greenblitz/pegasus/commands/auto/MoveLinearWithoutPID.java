@@ -1,6 +1,6 @@
 package edu.greenblitz.pegasus.commands.auto;
 
-import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
+import edu.greenblitz.gblib.subsystems.Chassis.ChassisCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.pid.PIDController;
 import org.greenblitz.motion.pid.PIDObject;

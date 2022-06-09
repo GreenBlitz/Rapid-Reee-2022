@@ -3,8 +3,8 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.gblib.subsystems.Chassis;
-import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
+import edu.greenblitz.gblib.subsystems.Chassis.ArcadeDrive;
+import edu.greenblitz.gblib.subsystems.Chassis.Chassis;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;

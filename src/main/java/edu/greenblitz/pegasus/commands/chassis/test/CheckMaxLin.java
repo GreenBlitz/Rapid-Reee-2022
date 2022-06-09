@@ -1,6 +1,6 @@
 package edu.greenblitz.pegasus.commands.chassis.test;
 
-import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
+import edu.greenblitz.gblib.subsystems.Chassis.ChassisCommand;
 import org.greenblitz.debug.RemoteCSVTarget;
 
 public class CheckMaxLin extends ChassisCommand {

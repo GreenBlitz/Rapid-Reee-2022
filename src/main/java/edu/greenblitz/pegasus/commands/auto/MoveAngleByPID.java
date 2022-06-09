@@ -1,7 +1,6 @@
 package edu.greenblitz.pegasus.commands.auto;
 
-import edu.greenblitz.gblib.subsystems.Chassis;
-import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
+import edu.greenblitz.gblib.subsystems.Chassis.ChassisCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.pid.CollapsingPIDController;
 import org.greenblitz.motion.pid.PIDObject;
@@ -58,7 +57,7 @@ public class MoveAngleByPID extends ChassisCommand {
 	}
 	
 	public void execute() {
-		if(sendData) {
+		if (sendData) {
 			double p = SmartDashboard.getNumber("p", anglePID.getPidObject().getKp());
 			double i = SmartDashboard.getNumber("i", anglePID.getPidObject().getKi());
 			double d = SmartDashboard.getNumber("d", anglePID.getPidObject().getKd());
@@ -69,7 +68,7 @@ public class MoveAngleByPID extends ChassisCommand {
 		}
 		double currentAngle = chassis.getRawAngle() - angleCycle;
 		double anglePower = anglePID.calculatePID(currentAngle);
-		if(anglePower != 0) {
+		if (anglePower != 0) {
 			anglePower = anglePower + ff * Math.signum(anglePower);
 		}
 		chassis.arcadeDrive(0, anglePower);
@@ -78,8 +77,10 @@ public class MoveAngleByPID extends ChassisCommand {
 	@Override
 	public void end(boolean interrupted) {
 		chassis.arcadeDrive(0, 0);
-	}@Override
+	}
+	
+	@Override
 	public boolean isFinished() {
-	return (anglePID.isFinished(chassis.getRawAngle() - angleCycle));
+		return (anglePID.isFinished(chassis.getRawAngle() - angleCycle));
 	}
 }

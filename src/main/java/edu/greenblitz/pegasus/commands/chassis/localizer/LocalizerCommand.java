@@ -1,7 +1,7 @@
 package edu.greenblitz.pegasus.commands.chassis.localizer;
 
 import edu.greenblitz.gblib.base.GBCommand;
-import edu.greenblitz.gblib.subsystems.Chassis;
+import edu.greenblitz.gblib.subsystems.Chassis.Chassis;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.Localizer;
 

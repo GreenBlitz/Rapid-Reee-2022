@@ -1,5 +1,7 @@
 package edu.greenblitz.pegasus.commands.chassis;
 
+import edu.greenblitz.gblib.subsystems.Chassis.ChassisCommand;
+
 public class MoveMotorByID extends ChassisCommand {
 	private double power;
 	private int id;
