@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
 import com.revrobotics.CANSparkMax;
+import edu.greenblitz.gblib.motors.AbstractMotor;
 import edu.greenblitz.pegasus.RobotMap.Pegasus.Funnel;
 import edu.greenblitz.pegasus.RobotMap.Pegasus.Intake;
 import edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter;
@@ -54,7 +55,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 
 	@Override
 	public void initialize() {
-		edu.greenblitz.pegasus.subsystems.Shooter.getInstance().setIdleMode(CANSparkMax.IdleMode.kCoast);
+		edu.greenblitz.pegasus.subsystems.Shooter.getInstance().setIdleMode(AbstractMotor.IdleMode.Coast);
 		super.initialize();
 	}
 

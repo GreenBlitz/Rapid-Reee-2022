@@ -2,6 +2,9 @@ package edu.greenblitz.pegasus.subsystems;
 
 import com.revrobotics.*;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.gblib.motors.AbstractMotor;
+import edu.greenblitz.gblib.motors.GBSparkMax;
+import edu.greenblitz.gblib.motors.Motor;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
@@ -15,21 +18,21 @@ public class Shooter extends GBSubsystem {
 
 	private static Shooter instance;
 
-	private CANSparkMax leader;
+	private Motor leader;
 	private boolean preparedToShoot;
 	private boolean isShooter;
 	private static final double RPM = 3000;
 
 	private Shooter() {
-		leader = new CANSparkMax(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER, CANSparkMaxLowLevel.MotorType.kBrushless);
+		leader = new GBSparkMax(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
 
 		leader.setInverted(RobotMap.Pegasus.Shooter.ShooterMotor.LEADER_INVERTED);
 
-		leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
+		leader.setIdleMode(AbstractMotor.IdleMode.Coast);
 
-		leader.setSmartCurrentLimit(40);
+		leader.setCurrentLimit(40);
 
-		leader.setClosedLoopRampRate(1);
+		//leader.setClosedLoopRampRate(1);
 
 		preparedToShoot = false;
 	}
@@ -59,36 +62,37 @@ public class Shooter extends GBSubsystem {
 		if (power == 0) {
 			this.toCoast();
 		}
-		this.leader.set(power);
+		this.leader.setPower(power);
 	}
 
-	public void setIdleMode(CANSparkMax.IdleMode idleMode) {
+	public void setIdleMode(AbstractMotor.IdleMode idleMode) {
 		leader.setIdleMode(idleMode);
 	}
 
 	public void setSpeedByPID(double target) {
-		leader.getPIDController().setReference(target, CANSparkMax.ControlType.kVelocity);
+//		leader.getPIDController().setReference(target, CANSparkMax.ControlType.kVelocity); //todo fix
+		System.out.println("plz fix me- set speed by PID in shooter");
 	}
 
-	public void setPIDConsts(PIDObject obj, double iZone) {
-		SparkMaxPIDController controller = leader.getPIDController();
-		controller.setP(obj.getKp());
-		controller.setI(obj.getKi());
-		controller.setD(obj.getKd());
-		controller.setFF(obj.getKf());
-		controller.setIZone(iZone);
-	}
+//	public void setPIDConsts(PIDObject obj, double iZone) {
+//		SparkMaxPIDController controller = leader.getPIDController();
+//		controller.setP(obj.getKp());
+//		controller.setI(obj.getKi());
+//		controller.setD(obj.getKd());
+//		controller.setFF(obj.getKf());
+//		controller.setIZone(iZone);
+//	}
 
-	public void setPIDConsts(PIDObject obj) {
-		setPIDConsts(obj, 0);
-	}
+//	public void setPIDConsts(PIDObject obj) {
+//		setPIDConsts(obj, 0);
+//	}
 
 	public double getShooterSpeed() {
-		return leader.getEncoder().getVelocity();
+		return leader.getNormalizedVelocity();
 	}
 
 	public void resetEncoder() {
-		leader.getEncoder().setPosition(0);
+		leader.resetEncoder();
 	}
 
 	public boolean isPreparedToShoot() {
@@ -113,17 +117,17 @@ public class Shooter extends GBSubsystem {
 	@Override
 	public void periodic() {
 
-		SmartDashboard.putNumber("Velocity", leader.getEncoder().getVelocity());
-		SmartDashboard.putNumber("Output", leader.getAppliedOutput());
+		SmartDashboard.putNumber("Velocity", leader.getNormalizedVelocity());
+		//SmartDashboard.putNumber("Output", leader.getAppliedOutput());
 		putBoolean("ReadyToShoot", preparedToShoot);
 
 	}
 
-	public SparkMaxPIDController getPIDController() {
-		return leader.getPIDController();
-	}
+//	public SparkMaxPIDController getPIDController() {
+//		return leader.getPIDController();
+//	}
 
 	public void toCoast() {
-		this.leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
+		this.leader.setIdleMode(AbstractMotor.IdleMode.Coast);
 	}
 }

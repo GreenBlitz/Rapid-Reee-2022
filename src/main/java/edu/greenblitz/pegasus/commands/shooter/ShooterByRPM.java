@@ -30,8 +30,8 @@ public class ShooterByRPM extends ShooterCommand {
 	@Override
 	public void initialize() {
 		shooter.setPreparedToShoot(false);
-		shooter.getPIDController().setIAccum(0.0);
-		shooter.setPIDConsts(obj, iZone);
+//		shooter.getPIDController().setIAccum(0.0);
+//		shooter.setPIDConsts(obj, iZone);
 		tStart = System.currentTimeMillis()/1000.0;
 	}
 

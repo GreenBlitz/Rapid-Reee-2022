@@ -6,10 +6,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
 import org.greenblitz.motion.pid.PIDObject;
-import org.greenblitz.motion.profiling.ProfilingConfiguration;
-import org.greenblitz.motion.profiling.ProfilingData;
-
-import java.util.HashMap;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.SafetyZones.HIGHEST_ANGLE;
 
@@ -24,7 +20,7 @@ public class RobotMap {
 			public static final double WHEEL_DIST = 0.564; //very accurate right now
 
 			public static class Motors {
-				public static final int[] motors = {1,2,3,4,5,6};
+				public static final int[] ports = {1,2,3,4,5,6};
 				public static final boolean[] isInverted = {true,true,true,false,false,false};
 				public static final int RIGHT_LEADER = 1, RIGHT_FOLLOWER_1 = 2, RIGHT_FOLLOWER_2 = 3, LEFT_LEADER = 4, LEFT_FOLLOWER_1 = 5, LEFT_FOLLOWER_2 = 6;
 				public static final boolean RIGHT_LEADER_REVERSED = true, RIGHT_FOLLOWER_1_REVERSED = true, RIGHT_FOLLOWER_2_REVERSED = true, LEFT_LEADER_REVERSED = false, LEFT_FOLLOWER_1_REVERSED = false, LEFT_FOLLOWER_2_REVERSED = false;

@@ -1,9 +1,10 @@
 package edu.greenblitz.pegasus;
 
+import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.gblib.motors.AbstractMotor;
-import edu.greenblitz.gblib.motors.GBSparkMax;
 import edu.greenblitz.gblib.motors.MotorType;
 import edu.greenblitz.gblib.subsystems.Chassis;
+import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
@@ -12,8 +13,6 @@ import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 
 public class Robot extends TimedRobot {
@@ -27,13 +26,13 @@ public class Robot extends TimedRobot {
 		Funnel.getInstance();
 		Shooter.init();
 //		Climb.getInstance().initDefaultCommand(OI.getInstance().getSecondJoystick());
-		OI.getInstance();
 		Indexing.getInstance();
 		Chassis.create(
 				MotorType.GBSparkMax,
-				RobotMap.Pegasus.Chassis.Motors.motors,
+				RobotMap.Pegasus.Chassis.Motors.ports,
 				RobotMap.Pegasus.Chassis.Motors.isInverted,
 				RobotMap.Pegasus.Chassis.WHEEL_DIST);
+		OI.getInstance();
 	}
 
 	@Override
