@@ -1,3 +1,4 @@
+/*
 package edu.greenblitz.pegasus.commands.shooter;
 
 import edu.greenblitz.pegasus.RobotMap;
@@ -64,3 +65,4 @@ public class ShooterByRPM extends ShooterCommand {
 		super.end(interrupted);
 	}
 }
+*/

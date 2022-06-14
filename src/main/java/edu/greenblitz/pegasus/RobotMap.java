@@ -5,7 +5,7 @@ import edu.greenblitz.gblib.gear.GearDependentValue;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
-import org.greenblitz.motion.pid.PIDObject;
+import edu.greenblitz.gblib.motion.pid.PIDObject;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.SafetyZones.HIGHEST_ANGLE;
 

@@ -1,11 +1,11 @@
 package edu.greenblitz.pegasus.commands.multiSystem;
 
+import edu.greenblitz.gblib.subsystems.shooter.Shooter;
+import edu.greenblitz.gblib.subsystems.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.indexing.WaitTillBallExit;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
-import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
-import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;

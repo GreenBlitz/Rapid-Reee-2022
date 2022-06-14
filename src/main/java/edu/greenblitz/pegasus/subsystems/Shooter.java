@@ -1,10 +1,11 @@
+/*
 package edu.greenblitz.pegasus.subsystems;
 
 import com.revrobotics.*;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.gblib.motors.AbstractMotor;
 import edu.greenblitz.gblib.motors.GBSparkMax;
-import edu.greenblitz.gblib.motors.Motor;
+import edu.greenblitz.gblib.motors.GBMotor;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
@@ -131,3 +132,4 @@ public class Shooter extends GBSubsystem {
 		this.leader.setIdleMode(AbstractMotor.IdleMode.Coast);
 	}
 }
+*/

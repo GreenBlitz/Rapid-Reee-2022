@@ -1,7 +1,8 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import org.greenblitz.motion.pid.PIDObject;
+import edu.greenblitz.gblib.subsystems.shooter.ShooterByRPM;
+import edu.greenblitz.gblib.motion.pid.PIDObject;
 
 public class ShootByTrigger extends ShooterByRPM {
 	

@@ -1,5 +1,6 @@
 package edu.greenblitz.pegasus.commands.auto;
 
+import edu.greenblitz.gblib.subsystems.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.RobotMap;
 
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
@@ -7,7 +8,7 @@ import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.shifter.ToPower;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
-import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import org.greenblitz.motion.pid.PIDObject;

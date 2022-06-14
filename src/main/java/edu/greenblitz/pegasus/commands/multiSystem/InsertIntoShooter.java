@@ -1,10 +1,11 @@
 package edu.greenblitz.pegasus.commands.multiSystem;
 
+import edu.greenblitz.gblib.subsystems.shooter.Shooter;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
-import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 
 public class InsertIntoShooter extends SequentialCommandGroup {
@@ -43,7 +44,7 @@ public class InsertIntoShooter extends SequentialCommandGroup {
 	public void execute() {
 		super.execute();
 		if(Shooter.getInstance().isPreparedToShoot() && !reported){
-			Shooter.getInstance().putNumber("Time To Shoot", System.currentTimeMillis()/1000.0 - startTime);
+			SmartDashboard.putNumber("Time To Shoot", System.currentTimeMillis()/1000.0 - startTime);
 			reported = true;
 		}
 	}

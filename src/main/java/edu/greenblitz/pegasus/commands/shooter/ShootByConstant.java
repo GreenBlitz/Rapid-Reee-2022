@@ -21,13 +21,13 @@ public class ShootByConstant extends ShooterCommand {
 
 	@Override
 	public void execute() {
-		shooter.shoot(power);
+		shooter.setPower(power);
 		logger.report((System.currentTimeMillis() - tStart) / 1000.0, shooter.getShooterSpeed());
 	}
 
 	@Override
 	public void end(boolean interrupted) {
-		shooter.shoot(0);
+		shooter.setPower(0);
 	}
 
 	@Override

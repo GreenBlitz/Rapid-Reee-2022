@@ -2,9 +2,10 @@ package edu.greenblitz.pegasus.commands.shooter;
 
 import com.revrobotics.CANSparkMax;
 import edu.greenblitz.gblib.motors.AbstractMotor;
+import edu.greenblitz.gblib.subsystems.shooter.Shooter;
+import edu.greenblitz.gblib.subsystems.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.RobotMap.Pegasus.Funnel;
 import edu.greenblitz.pegasus.RobotMap.Pegasus.Intake;
-import edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.wpi.first.wpilibj2.command.*;
@@ -22,9 +23,9 @@ public class DoubleShoot extends SequentialCommandGroup {
 		addCommands(
 				new ParallelRaceGroup(
 						new FirstInsertIntoShooter(),
-						new ShooterByRPM(Shooter.ShooterMotor.pid, Shooter.ShooterMotor.iZone, RPM1),
+						new ShooterByRPM(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.pid, edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM1),
 						new SequentialCommandGroup(
-								new WaitUntilCommand(() -> edu.greenblitz.pegasus.subsystems.Shooter.getInstance().isPreparedToShoot()),
+								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 								new WaitCommand(1)
 						)
 				),
@@ -34,9 +35,9 @@ public class DoubleShoot extends SequentialCommandGroup {
 				),
 				new ParallelRaceGroup(
 						new InsertIntoShooter(),
-						new ShooterByRPM(Shooter.ShooterMotor.pid, Shooter.ShooterMotor.iZone, RPM2),
+						new ShooterByRPM(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.pid, edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM2),
 						new SequentialCommandGroup(
-								new WaitUntilCommand(() -> edu.greenblitz.pegasus.subsystems.Shooter.getInstance().isPreparedToShoot()),
+								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 								new WaitCommand(1)
 						)),
 				new WaitCommand(0.2)
@@ -50,18 +51,18 @@ public class DoubleShoot extends SequentialCommandGroup {
 	}
 
 	public DoubleShoot() {
-		this(Shooter.ShooterMotor.RPM);
+		this(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.RPM);
 	}
 
 	@Override
 	public void initialize() {
-		edu.greenblitz.pegasus.subsystems.Shooter.getInstance().setIdleMode(AbstractMotor.IdleMode.Coast);
+		Shooter.getInstance().setIdleMode(AbstractMotor.IdleMode.Coast);
 		super.initialize();
 	}
 
 	@Override
 	public void end(boolean interrupted) {
 		super.end(interrupted);
-		edu.greenblitz.pegasus.subsystems.Shooter.getInstance().setSpeedByPID(0);
+		Shooter.getInstance().setSpeedByPID(0);
 	}
 }
