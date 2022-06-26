@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.SparkMaxPIDController;
 import edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.commands.shooterCommands.ShootByJoystick;
 import edu.greenblitz.pegasus.commands.shooterCommands.ShootByPower;
@@ -26,7 +27,7 @@ public class Shooter extends GBSubsystem {
 		motor.set(power);
 	}
 
-	public void InitDefaultCommand() {
+	public void initDefaultCommand() {
 		instance.setDefaultCommand(new ShootByJoystick());
 	}
 
@@ -34,6 +35,18 @@ public class Shooter extends GBSubsystem {
 		isOn = !isOn;
 	}
 
+	public void setSpeedByPID(double kp, double ki, double kd, double ff, double target){
+		SparkMaxPIDController controller = motor.getPIDController();
+		controller.setP(kp);
+		controller.setI(ki);
+		controller.setD(kd);
+		controller.setFF(ff);
+		controller.setReference(target, CANSparkMax.ControlType.kVelocity);
+	}
+
+	public void stopPID(){
+		motor.getPIDController().setReference(0, CANSparkMax.ControlType.kVoltage);
+	}
 	@Override
 	public void periodic() {
 		if (isOn){
