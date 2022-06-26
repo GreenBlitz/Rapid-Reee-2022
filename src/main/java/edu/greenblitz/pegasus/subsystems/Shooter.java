@@ -9,7 +9,7 @@ import edu.greenblitz.pegasus.commands.shooterCommands.ShootByPower;
 
 public class Shooter extends GBSubsystem {
 	private static Shooter instance;
-	private CANSparkMax motor;
+	private final CANSparkMax motor;
 	private boolean isOn = false;
 
 	private Shooter() {
@@ -35,7 +35,7 @@ public class Shooter extends GBSubsystem {
 		isOn = !isOn;
 	}
 
-	public void setSpeedByPID(double kp, double ki, double kd, double ff, double target){
+	public void setSpeedByPID(double kp, double ki, double kd, double ff, double target) {
 		SparkMaxPIDController controller = motor.getPIDController();
 		controller.setP(kp);
 		controller.setI(ki);
@@ -44,12 +44,13 @@ public class Shooter extends GBSubsystem {
 		controller.setReference(target, CANSparkMax.ControlType.kVelocity);
 	}
 
-	public void stopPID(){
+	public void stopPID() {
 		motor.getPIDController().setReference(0, CANSparkMax.ControlType.kVoltage);
 	}
+
 	@Override
 	public void periodic() {
-		if (isOn){
+		if (isOn) {
 			new ShootByPower(0.15).schedule();
 		}
 	}

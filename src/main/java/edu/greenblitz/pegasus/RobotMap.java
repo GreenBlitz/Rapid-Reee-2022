@@ -7,7 +7,6 @@ import org.greenblitz.motion.interpolation.Dataset;
 import org.greenblitz.motion.pid.PIDObject;
 import org.greenblitz.motion.profiling.ProfilingConfiguration;
 import org.greenblitz.motion.profiling.ProfilingData;
-import org.opencv.core.Mat;
 
 import java.util.HashMap;
 
@@ -22,6 +21,7 @@ public class RobotMap {
 
 		public static class Chassis {
 			public static final double WHEEL_DIST = 0.564; //very accurate right now
+			public static final double startAngle = Math.toRadians(23);
 
 			public static class Motors {
 				public static final int RIGHT_LEADER = 1, RIGHT_FOLLOWER_1 = 2, RIGHT_FOLLOWER_2 = 3, LEFT_LEADER = 4, LEFT_FOLLOWER_1 = 5, LEFT_FOLLOWER_2 = 6;
@@ -33,8 +33,6 @@ public class RobotMap {
 				public static final int RIGHT_ENCODER = -1, LEFT_ENCODER = -1;
 				public static final boolean RIGHT_ENCODER_REVERSED = false, LEFT_ENCODER_REVERSED = false;
 			}
-			
-			public static final double startAngle = Math.toRadians(23);
 
 			public static class Shifter {
 
@@ -70,6 +68,9 @@ public class RobotMap {
 
 		public static class Intake {
 
+			public static final double POWER = 1.0;
+			public static final double REVERSE_POWER = -1.0;
+
 			public static class Motors {
 				public static final int ROLLER_PORT = 6;
 				public static final boolean IS_REVERSED = false;
@@ -79,9 +80,6 @@ public class RobotMap {
 				public static final int FORWARD_PORT = 2;
 				public static final int REVERSE_PORT = 0;
 			}
-			
-			public static final double POWER = 1.0;
-			public static final double REVERSE_POWER = -1.0;
 		}
 
 		public static class Shooter {
@@ -93,6 +91,9 @@ public class RobotMap {
 
 
 				public static final Dataset RPM_TO_POWER = new Dataset(2);
+				public static final double RPM = 2350; // Should be 2300
+				public static final PIDObject pid = new PIDObject(0.0002, 0.0000003, 0); //d1: 0.0001, 0.0000003, 0
+				public static final double iZone = 300;
 
 				static {
 					RPM_TO_POWER.addDatapoint(0, new double[]{-0.0000000001});
@@ -107,23 +108,20 @@ public class RobotMap {
 					RPM_TO_POWER.addDatapoint(4664.115322265625, new double[]{0.9});
 					RPM_TO_POWER.addDatapoint(5209.37181640625, new double[]{1.0});
 				}
-				public static final double RPM = 2350; // Should be 2300
-				public static final PIDObject pid = new PIDObject(0.0002, 0.0000003, 0); //d1: 0.0001, 0.0000003, 0
-				public static final double iZone = 300;
 			}
 		}
 
 		public static class Funnel {
+			public static final double POWER = 0.7;
+			public static final double REVERSE_POWER = -0.7;
+			public static final int MACRO_SWITCH_PORT = 0;
+
 			public static class FunnelMotor {
 				public static final int MOTOR_PORT = 5;
 				public static final boolean IS_REVERSED = true;
 			}
-
-			public static final double POWER = 0.7;
-			public static final double REVERSE_POWER = -0.7;
-			public static final int MACRO_SWITCH_PORT = 0;
 		}
-		
+
 		public static class Climb {
 			public static class SafetyZones {
 				public static final double RAIL_SAFETY_OFFSET = 0.02;
@@ -137,7 +135,7 @@ public class RobotMap {
 				public static final double BATTERY_SAFETY_ANG = Math.toRadians(45.5); // Math.toDegrees(51.5)
 				public static final double BATTERY_SAFETY_LOC = 0.35;
 			}
-			
+
 			public static class ClimbMotors {
 				public static final int RAIL_MOTOR_PORT = 9;
 				public static final boolean RAIL_MOTOR_REVERSED = false;
@@ -150,7 +148,7 @@ public class RobotMap {
 				public static final double START_ANGLE = Math.toRadians(15.985);
 				public static final double MID_START_ANGLE = Math.toRadians(20) + START_ANGLE;
 			}
-			
+
 			public static class ClimbConstants {
 				public static class Rotation {
 					public static final double kp = 0.3 / Math.PI * 2;
@@ -164,7 +162,7 @@ public class RobotMap {
 					public static final double EPSILON = Math.toRadians(2);
 					public static final double EPSILON_STATIC = Math.toRadians(2);
 				}
-				
+
 				public static class Rail {
 					public static final double kp = 3; //10
 					public static final double ff = 0.2;
@@ -176,12 +174,13 @@ public class RobotMap {
 				}
 			}
 		}
-		
+
 		public static class Pneumatics {
 			public static class PCM {
 				public static final int PCM_ID = 21;
 				public static final PneumaticsModuleType PCM_TYPE = PneumaticsModuleType.CTREPCM;
 			}
+
 			public static class PressureSensor {
 				public static final int PRESSURE = 3;
 			}

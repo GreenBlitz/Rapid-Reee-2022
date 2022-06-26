@@ -3,9 +3,10 @@ package edu.greenblitz.pegasus.commands.shooterCommands;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
 
-public class ShootByJoystick extends ShooterCommand{
+public class ShootByJoystick extends ShooterCommand {
 	SmartJoystick mainJoystick;
-	public ShootByJoystick(){
+
+	public ShootByJoystick() {
 		this.mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.2);
 	}
 

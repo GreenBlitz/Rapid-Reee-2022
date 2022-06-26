@@ -1,7 +1,7 @@
 package edu.greenblitz.pegasus.commands.shooterCommands;
 
-public class ToggleIsOn extends ShooterCommand{
-	public ToggleIsOn(){
+public class ToggleIsOn extends ShooterCommand {
+	public ToggleIsOn() {
 
 	}
 

@@ -4,16 +4,16 @@ import edu.greenblitz.gblib.command.GBCommand;
 
 public class WaitCommand extends GBCommand {
 
-    private double timeout;
-    private long tStart;
+	private final double timeout;
+	private final long tStart;
 
 
-    public WaitCommand(double timeout) {
-        this.timeout = timeout; // Wait period in milliseconds.
-        this.tStart = System.currentTimeMillis();
-    }
+	public WaitCommand(double timeout) {
+		this.timeout = timeout; // Wait period in milliseconds.
+		this.tStart = System.currentTimeMillis();
+	}
 
-    public boolean isFinished() {
-        return System.currentTimeMillis() - tStart >= timeout;
-    }
+	public boolean isFinished() {
+		return System.currentTimeMillis() - tStart >= timeout;
+	}
 }
