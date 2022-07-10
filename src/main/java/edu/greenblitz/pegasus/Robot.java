@@ -11,6 +11,7 @@ import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
+import edu.wpi.first.util.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,6 +30,12 @@ public class Robot extends TimedRobot {
 		Climb.getInstance().initDefaultCommand(OI.getInstance().getSecondJoystick());
 		OI.getInstance();
 		Indexing.getInstance();
+		PortForwarder.add(5800, "limelight.local", 5800);
+		PortForwarder.add(5801, "limelight.local", 5801);
+		PortForwarder.add(5802, "limelight.local", 5802);
+		PortForwarder.add(5803, "limelight.local", 5803);
+		PortForwarder.add(5804, "limelight.local", 5804);
+		PortForwarder.add(5805, "limelight.local", 5805);
 		Chassis.getInstance(); // Must be last!
 	}
 
