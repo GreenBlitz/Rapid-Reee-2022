@@ -1,14 +1,9 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.gblib.gears.Gear;
-import edu.greenblitz.gblib.gears.GearDependentValue;
+import edu.greenblitz.gblib.gear.GearDependentValue;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
 import org.greenblitz.motion.pid.PIDObject;
-import org.greenblitz.motion.profiling.ProfilingConfiguration;
-import org.greenblitz.motion.profiling.ProfilingData;
-
-import java.util.HashMap;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.SafetyZones.HIGHEST_ANGLE;
 
@@ -29,7 +24,7 @@ public class RobotMap {
 			}
 
 			public static class Encoders {
-				public static final GearDependentValue<Double> NORM_CONST_SPARK = new GearDependentValue<>(2300.0 * 0.64, 1234.0 / 2.0); // TODO: check this, I copied it from Infinite Reeee
+				public static final GearDependentValue NORM_CONST_SPARK = new GearDependentValue(2300.0 * 0.64, 1234.0 / 2.0); // TODO: check this, I copied it from Infinite Reeee
 				public static final int RIGHT_ENCODER = -1, LEFT_ENCODER = -1;
 				public static final boolean RIGHT_ENCODER_REVERSED = false, LEFT_ENCODER_REVERSED = false;
 			}
@@ -42,26 +37,26 @@ public class RobotMap {
 				}
 			}
 
-			public static class MotionData { // TODO: calibrate this
-
-				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(0.85, 1.0, .0005, 0.8, 0.0, 2.0, .01, 0.5 * 0, 0, 0, .01, 500);
-				public static HashMap<String, ProfilingData> POWER;
-				public static HashMap<String, ProfilingData> SPEED;
-				public static GearDependentValue<HashMap<String, ProfilingData>> PROF;
-
-				static {
-
-					POWER = new HashMap<>();
-					SPEED = new HashMap<>();
-					PROF = new GearDependentValue<>(null, null);
-
-					POWER.put("0.5", new ProfilingData(1.4, 8.4, 4, 10));
-
-					PROF.setValue(Gear.POWER, POWER);
-					PROF.setValue(Gear.SPEED, SPEED);
-				}
-
-			}
+//			public static class MotionData { // TODO: calibrate this
+//
+//				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(0.85, 1.0, .0005, 0.8, 0.0, 2.0, .01, 0.5 * 0, 0, 0, .01, 500);
+//				public static HashMap<String, ProfilingData> POWER;
+//				public static HashMap<String, ProfilingData> SPEED;
+//				public static GearDependentValue<HashMap<String, ProfilingData>> PROF;
+//
+//				static {
+//
+//					POWER = new HashMap<>();
+//					SPEED = new HashMap<>();
+//					PROF = new GearDependentValue<>(null, null);
+//
+//					POWER.put("0.5", new ProfilingData(1.4, 8.4, 4, 10));
+//
+//					PROF.setValue(true, POWER);
+//					PROF.setValue(false, SPEED);
+//				}
+//
+//			}
 
 
 		}

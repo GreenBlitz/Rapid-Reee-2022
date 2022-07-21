@@ -1,8 +1,9 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.gblib.command.GBCommand;
+
+import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.pegasus.commands.shooterCommands.ShootByPID;
+
 import edu.greenblitz.pegasus.commands.shooterCommands.ShootByPower;
 import edu.greenblitz.pegasus.commands.shooterCommands.ToggleIsOn;
 import edu.greenblitz.pegasus.subsystems.Shooter;
@@ -55,8 +56,6 @@ public class OI {
 		Shooter.getInstance().initDefaultCommand();
 		mainJoystick.X.whileHeld(new ShootByPower(0.3));
 		mainJoystick.A.whenPressed(new ToggleIsOn());
-		mainJoystick.Y.whileHeld(new ShootByPID(1000));
-
 	}
 
 	private void initRealButtons() {

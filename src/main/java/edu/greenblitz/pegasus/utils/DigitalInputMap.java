@@ -3,6 +3,8 @@ package edu.greenblitz.pegasus.utils;
 import edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
 
+import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putBoolean;
+
 // This is GBSubsystem for periodic and the dashboard. this isn't a real subsystem.
 public class DigitalInputMap extends GBSubsystem {
 

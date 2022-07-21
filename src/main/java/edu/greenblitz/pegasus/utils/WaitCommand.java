@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus.utils;
 
-import edu.greenblitz.gblib.command.GBCommand;
+
+import edu.greenblitz.gblib.base.GBCommand;
 
 public class WaitCommand extends GBCommand {
 

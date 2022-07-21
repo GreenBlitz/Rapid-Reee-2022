@@ -1,6 +1,6 @@
 package edu.greenblitz.pegasus.utils;
 
-import edu.greenblitz.gblib.command.GBCommand;
+import edu.greenblitz.gblib.base.GBCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LogTime extends GBCommand {

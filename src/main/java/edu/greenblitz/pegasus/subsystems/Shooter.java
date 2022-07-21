@@ -3,17 +3,19 @@ package edu.greenblitz.pegasus.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
+import edu.greenblitz.gblib.motors.GBMotor;
+import edu.greenblitz.gblib.motors.GBSparkMax;
 import edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.commands.shooterCommands.ShootByJoystick;
 import edu.greenblitz.pegasus.commands.shooterCommands.ShootByPower;
 
 public class Shooter extends GBSubsystem {
 	private static Shooter instance;
-	private final CANSparkMax motor;
+	private final GBMotor motor;
 	private boolean isOn = false;
 
 	private Shooter() {
-		this.motor = new CANSparkMax(7, CANSparkMaxLowLevel.MotorType.kBrushless);
+		this.motor = new GBSparkMax(7);
 	}
 
 	public static Shooter getInstance() {
@@ -24,7 +26,7 @@ public class Shooter extends GBSubsystem {
 	}
 
 	public void setPower(double power) {
-		motor.set(power);
+		motor.setPower(power);
 	}
 
 	public void initDefaultCommand() {
@@ -35,18 +37,18 @@ public class Shooter extends GBSubsystem {
 		isOn = !isOn;
 	}
 
-	public void setSpeedByPID(double kp, double ki, double kd, double ff, double target) {
-		SparkMaxPIDController controller = motor.getPIDController();
-		controller.setP(kp);
-		controller.setI(ki);
-		controller.setD(kd);
-		controller.setFF(ff);
-		controller.setReference(target, CANSparkMax.ControlType.kVelocity);
-	}
+//	public void setSpeedByPID(double kp, double ki, double kd, double ff, double target) {
+//		SparkMaxPIDController controller = motor.getPIDController();
+//		controller.setP(kp);
+//		controller.setI(ki);
+//		controller.setD(kd);
+//		controller.setFF(ff);
+//		controller.setReference(target, CANSparkMax.ControlType.kVelocity);
+//	}
 
-	public void stopPID() {
-		motor.getPIDController().setReference(0, CANSparkMax.ControlType.kVoltage);
-	}
+//	public void stopPID() {
+//		motor.getPIDController().setReference(0, CANSparkMax.ControlType.kVoltage);
+//	}
 
 	@Override
 	public void periodic() {
