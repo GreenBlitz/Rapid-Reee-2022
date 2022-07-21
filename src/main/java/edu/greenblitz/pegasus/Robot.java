@@ -22,21 +22,21 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
-		DigitalInputMap.getInstance();
-		Intake.getInstance();
-		Shifter.getInstance();
-		Funnel.getInstance();
-		Shooter.init();
-		Climb.getInstance().initDefaultCommand(OI.getInstance().getSecondJoystick());
+//		DigitalInputMap.getInstance();
+//		Intake.getInstance();
+//		Shifter.getInstance();
+//		Funnel.getInstance();
+//		Shooter.init();
+//		Climb.getInstance().initDefaultCommand(OI.getInstance().getSecondJoystick());
 		OI.getInstance();
-		Indexing.getInstance();
+//		Indexing.getInstance();
 		PortForwarder.add(5800, "limelight.local", 5800);
 		PortForwarder.add(5801, "limelight.local", 5801);
 		PortForwarder.add(5802, "limelight.local", 5802);
 		PortForwarder.add(5803, "limelight.local", 5803);
 		PortForwarder.add(5804, "limelight.local", 5804);
 		PortForwarder.add(5805, "limelight.local", 5805);
-		Chassis.getInstance(); // Must be last!
+//		Chassis.getInstance(); // Must be last!
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
-		new ToSpeed().schedule();
+		/*new ToSpeed().schedule();
 		new ExtendRoller().schedule();
 		Indexing.getInstance().initSetAlliance();
 		Shooter.getInstance().toCoast();
@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
 						new MoveBallUntilClick(),
 						new WaitCommand(3)
 				)
-		);//.schedule();
+		);//.schedule();*/
 	}
 
 	@Override
