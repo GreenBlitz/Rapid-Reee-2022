@@ -1,7 +1,6 @@
 package edu.greenblitz.pegasus;
 
 
-import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -12,7 +11,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
 		DigitalInputMap.getInstance();
-		Shooter.getInstance();
+
 		OI.getInstance();
 	}
 
@@ -30,7 +29,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		Shooter.getInstance();
+
 	}
 
 	@Override

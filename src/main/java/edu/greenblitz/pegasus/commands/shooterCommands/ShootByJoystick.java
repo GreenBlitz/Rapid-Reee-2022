@@ -1,22 +1,17 @@
 package edu.greenblitz.pegasus.commands.shooterCommands;
 
+import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.OI;
 
-public class ShootByJoystick extends ShooterCommand {
-	SmartJoystick mainJoystick;
+public class ShootByJoystick extends ShooterCommand{
 
-	public ShootByJoystick() {
-		this.mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.2);
+	public ShootByJoystick(){
+
 	}
 
 	@Override
 	public void execute() {
-		shooter.setPower(mainJoystick.getAxisValue(SmartJoystick.Axis.LEFT_Y));
-	}
-
-	@Override
-	public void end(boolean interrupted) {
-		shooter.setPower(0);
+		shooter.setPower(OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.RIGHT_Y)*0.5);
 	}
 }
