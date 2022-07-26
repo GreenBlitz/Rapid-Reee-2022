@@ -1,19 +1,17 @@
-/*
 
 package edu.greenblitz.pegasus.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.gblib.motors.AbstractMotor;
-import edu.greenblitz.gblib.motors.GBSparkMax;
-import edu.greenblitz.gblib.motors.Motor;
+import edu.greenblitz.gblib.motors.GBMotor;
+import edu.greenblitz.gblib.motors.SparkMax.SparkMaxFactory;
+import edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
 import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.greenblitz.motion.pid.PIDObject;
+import edu.greenblitz.gblib.motion.pid.PIDObject;
 
 public class Climb extends GBSubsystem {
 	private static Climb instance;
@@ -132,21 +130,11 @@ public class Climb extends GBSubsystem {
 	}
 	
 	public void setRailPIDValues(PIDObject pid) {
-		SparkMaxPIDController controller = rail.railMotor.getPIDController();
-		controller.setP(pid.getKp());
-		controller.setI(pid.getKi());
-		controller.setD(pid.getKd());
-		controller.setFF(pid.getKf());
+		rail.railMotor.configurePID(pid);
 	}
 	
 	public void setTurningPIDValues(PIDObject pid) {
-//		SparkMaxPIDController controller = turning.turningMotor.getPIDController();
-//		controller.setP(pid.getKp());
-//		controller.setI(pid.getKi());
-//		controller.setD(pid.getKd());
-//		controller.setFF(pid.getKf());
-		
-		turning.turningMotor.set
+		turning.turningMotor.configurePID(pid);
 	}
 	
 	public Turning getTurning() {
@@ -186,27 +174,27 @@ public class Climb extends GBSubsystem {
 	
 	private class Rail extends ClimbSubsystem {
 		
-		private Motor railMotor;
-
+		private GBMotor railMotor;
+		
 		
 		private Rail() {
-			railMotor = new GBSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_PORT); //(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_PORT, CANSparkMaxLowLevel.MotorType.kBrushless);
-			railMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_REVERSED);
-			railMotor.setIdleMode(AbstractMotor.IdleMode.Brake);
-			railEncoder = new SparkMaxEncoder(() -> RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN, railMotor);
-			railEncoder.reset();
+			railMotor = new SparkMaxFactory()
+					.withInverted(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_REVERSED)
+					.withIdleMode(AbstractMotor.IdleMode.Brake)
+					.generate(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_PORT);
+			railMotor.resetEncoder();
 		}
 	}
 	
 	private class Turning extends ClimbSubsystem {
-		private Motor turningMotor;
+		private GBMotor turningMotor;
 		
 		private Turning() {
-			turningMotor = new GBSparkMax(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_PORT);
-			turningMotor.setInverted(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_REVERSED);
-			turningMotor.setIdleMode(AbstractMotor.IdleMode.Brake);
-			turningEncoder = new SparkMaxEncoder(() -> RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN, turningMotor);
-			turningEncoder.reset();
+			turningMotor = new SparkMaxFactory()
+					.withInverted(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_REVERSED)
+					.withIdleMode(AbstractMotor.IdleMode.Brake)
+					.generate(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_PORT);
+			turningMotor.resetEncoder();
 		}
 		
 		public void toCoast() {
@@ -234,4 +222,4 @@ public class Climb extends GBSubsystem {
 		}
 	}
 }
-*/
+

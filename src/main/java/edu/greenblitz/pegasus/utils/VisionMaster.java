@@ -1,6 +1,5 @@
 package edu.greenblitz.pegasus.utils;
 
-import edu.greenblitz.pegasus.subsystems.GBSubsystem;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;

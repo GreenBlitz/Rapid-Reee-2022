@@ -1,7 +1,7 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.motors.AbstractMotor;
-import edu.greenblitz.gblib.motors.MotorType;
+import edu.greenblitz.gblib.motors.SparkMax.SparkMaxFactory;
 import edu.greenblitz.gblib.subsystems.Chassis.ArcadeDrive;
 import edu.greenblitz.gblib.subsystems.Chassis.Chassis;
 import edu.greenblitz.gblib.subsystems.shooter.Shooter;
@@ -27,11 +27,19 @@ public class Robot extends TimedRobot {
 		Intake.getInstance();
 		Shifter.getInstance();
 		Funnel.getInstance();
-		Shooter.create(MotorType.GBSparkMax,RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER,RobotMap.Pegasus.Shooter.ShooterMotor.LEADER_INVERTED);
-//		Climb.getInstance().initDefaultCommand(OI.getInstance().getSecondJoystick());
+		
+		Shooter.create(new SparkMaxFactory()
+				.withInverted(RobotMap.Pegasus.Shooter.ShooterMotor.LEADER_INVERTED)
+				.withIdleMode(AbstractMotor.IdleMode.Coast)
+				.withCurrentLimit(40)
+				.withRampRate(1),
+				RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
+		
+		Climb.getInstance().initDefaultCommand(OI.getInstance().getSecondJoystick());
 		Indexing.getInstance();
+		
 		Chassis.create(
-				MotorType.GBSparkMax,
+				new SparkMaxFactory().withCurrentLimit(40),
 				RobotMap.Pegasus.Chassis.Motors.ports,
 				RobotMap.Pegasus.Chassis.Motors.isInverted,
 				RobotMap.Pegasus.Chassis.WHEEL_DIST);

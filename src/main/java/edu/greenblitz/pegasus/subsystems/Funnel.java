@@ -1,9 +1,10 @@
 package edu.greenblitz.pegasus.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.RobotMap;
 
-public class Funnel extends GBSubsystem{
+public class Funnel extends GBSubsystem {
 	private static Funnel instance;
 	private WPI_TalonSRX motor;
 	

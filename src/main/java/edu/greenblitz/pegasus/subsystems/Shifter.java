@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus.subsystems;
 
 
 import edu.greenblitz.gblib.gear.Gear;
+import edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

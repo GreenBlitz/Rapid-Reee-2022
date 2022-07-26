@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus.subsystems;
 
 import com.revrobotics.ColorSensorV3;
+import edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.DigitalInput;
