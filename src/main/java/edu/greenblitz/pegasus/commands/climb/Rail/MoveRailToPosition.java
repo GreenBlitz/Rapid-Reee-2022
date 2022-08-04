@@ -42,13 +42,13 @@ public class MoveRailToPosition extends RailCommand {
 		return Math.abs(goal - climb.getLoc()) < RobotMap.Pegasus.Climb.ClimbConstants.Rail.EPSILON;
 	}
 
-	public ClimbState getState(){
+	public ClimbState getState() {
 		return state;
 	}
 
 	public void setState(ClimbState state) {
 		this.state = state;
-		switch (state){
+		switch (state) {
 			case PULL_UP:
 				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR;
 				break;

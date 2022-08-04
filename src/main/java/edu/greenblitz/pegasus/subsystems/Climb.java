@@ -1,8 +1,7 @@
-
 package edu.greenblitz.pegasus.subsystems;
 
-import com.revrobotics.SparkMaxPIDController;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.greenblitz.gblib.motors.AbstractMotor;
 import edu.greenblitz.gblib.motors.GBMotor;
 import edu.greenblitz.gblib.motors.SparkMax.SparkMaxFactory;
@@ -11,49 +10,48 @@ import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
 import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.greenblitz.gblib.motion.pid.PIDObject;
 
 public class Climb extends GBSubsystem {
 	private static Climb instance;
-	
+
 	// Rail motor moves the system forward and backward
 	// Turning motor changes the angle of the system itself
-	private Rail rail;
-	private Turning turning;
-	
+	private final Rail rail;
+	private final Turning turning;
+
 	private boolean atStart;
-	
-	
+
+
 	private Climb() {
 		rail = new Rail();
 		turning = new Turning();
-		
+
 	}
-	
+
 	private static void init() {
 		instance = new Climb();
 	}
-	
+
 	public static Climb getInstance() {
 		if (instance == null) {
 			init();
 		}
 		return instance;
 	}
-	
+
 	public double getLoc() {
 		double delta = getRailMotorTicks() / RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER;
 		double loc = delta + RobotMap.Pegasus.Climb.ClimbMotors.START_LOCATION;
 		loc += (getAng() - RobotMap.Pegasus.Climb.ClimbMotors.START_ANGLE) * 0.022;
 		return loc;
 	}
-	
+
 	public double getAng() {
 		double delta = getTurningMotorTicks() / RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN;
 		double ang = delta + RobotMap.Pegasus.Climb.ClimbMotors.START_ANGLE;
 		return ang;
 	}
-	
+
 	public void safeMoveRailMotor(double power) {
 		power = Math.min(Math.abs(power), 1) * Math.signum(power);
 		double loc = getLoc();
@@ -72,13 +70,13 @@ public class Climb extends GBSubsystem {
 		} else {
 			unsafeMoveRailMotor(power);
 		}
-		
+
 	}
-	
+
 	public void unsafeMoveRailMotor(double power) {
 		rail.railMotor.setPower(power);
 	}
-	
+
 	public void safeMoveTurningMotor(double power) {
 		power = Math.min(Math.abs(power), 1) * Math.signum(power);
 		double ang = getAng();
@@ -100,61 +98,61 @@ public class Climb extends GBSubsystem {
 			unsafeMoveTurningMotor(power);
 		}
 	}
-	
+
 	public void unsafeMoveTurningMotor(double power) {
 		turning.turningMotor.setPower(power);
 	}
-	
+
 	public double getRailMotorTicks() {
 		return rail.railMotor.getRawTicks();
 	}
-	
+
 	public void resetRailMotorTicks() {
 		rail.railMotor.resetEncoder();
 	}
-	
+
 	public double getTurningMotorTicks() {
 		return turning.turningMotor.getRawTicks();
 	}
-	
+
 	public void resetTurningMotorTicks() {
 		turning.turningMotor.resetEncoder();
 	}
-	
-	public void setTurningMotorIdle(AbstractMotor.IdleMode mode) {
-		turning.turningMotor.setIdleMode(mode);
-	}
-	
+
 	public AbstractMotor.IdleMode getTurningMotorIdle() {
 		return turning.turningMotor.getIdleMode();
 	}
-	
+
+	public void setTurningMotorIdle(AbstractMotor.IdleMode mode) {
+		turning.turningMotor.setIdleMode(mode);
+	}
+
 	public void setRailPIDValues(PIDObject pid) {
 		rail.railMotor.configurePID(pid);
 	}
-	
+
 	public void setTurningPIDValues(PIDObject pid) {
 		turning.turningMotor.configurePID(pid);
 	}
-	
+
 	public Turning getTurning() {
 		return turning;
 	}
-	
+
 	public Rail getRail() {
 		return rail;
 	}
-	
+
 	public boolean getAtStart() {
 		return atStart;
 	}
-	
+
 	public void initDefaultCommand(SmartJoystick joystick) {
 		turning.setDefaultCommand(new TurningByJoystick(joystick));
 		rail.setDefaultCommand(new RailByJoystick(joystick));
-		
+
 	}
-	
+
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("climbAngle", getAng());
@@ -165,18 +163,18 @@ public class Climb extends GBSubsystem {
 			}
 		}
 	}
-	
+
 	private class ClimbSubsystem extends GBSubsystem {
 		public Climb getClimb() {
 			return Climb.this;
 		}
 	}
-	
+
 	private class Rail extends ClimbSubsystem {
-		
-		private GBMotor railMotor;
-		
-		
+
+		private final GBMotor railMotor;
+
+
 		private Rail() {
 			railMotor = new SparkMaxFactory()
 					.withInverted(RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_REVERSED)
@@ -185,10 +183,10 @@ public class Climb extends GBSubsystem {
 			railMotor.resetEncoder();
 		}
 	}
-	
+
 	private class Turning extends ClimbSubsystem {
-		private GBMotor turningMotor;
-		
+		private final GBMotor turningMotor;
+
 		private Turning() {
 			turningMotor = new SparkMaxFactory()
 					.withInverted(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_REVERSED)
@@ -196,17 +194,17 @@ public class Climb extends GBSubsystem {
 					.generate(RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_PORT);
 			turningMotor.resetEncoder();
 		}
-		
+
 		public void toCoast() {
 			this.turningMotor.setIdleMode(AbstractMotor.IdleMode.Coast);
 		}
-		
+
 		public void toBrake() {
 			this.turningMotor.setIdleMode(AbstractMotor.IdleMode.Brake);
 		}
 
 //		private boolean needsCoast = false;
-		
+
 		@Override
 		public void periodic() {
 			super.periodic();

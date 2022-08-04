@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Intake {
 	private static Intake instance;
-	private Roller roller;
-	private Extender extender;
+	private final Roller roller;
+	private final Extender extender;
 
 	private Intake() {
 		roller = new Intake.Roller();
@@ -40,19 +40,19 @@ public class Intake {
 	public void moveRoller(double power) {
 		roller.rollerMotor.set(power);
 	}
-	
+
 	public void stopRoller() {
 		moveRoller(0.0);
 	}
 
-	public void moveRoller(boolean reversed){
+	public void moveRoller(boolean reversed) {
 		moveRoller(reversed ? RobotMap.Pegasus.Intake.REVERSE_POWER : RobotMap.Pegasus.Intake.POWER);
 	}
-	
-	public void moveRoller(){
+
+	public void moveRoller() {
 		moveRoller(false);
 	}
-	
+
 	public void extend() {
 		extender.extender.set(DoubleSolenoid.Value.kForward);
 	}
@@ -90,7 +90,7 @@ public class Intake {
 
 	private class Roller extends IntakeSubsystem {
 
-		private WPI_TalonSRX rollerMotor;
+		private final WPI_TalonSRX rollerMotor;
 
 		private Roller() {
 			rollerMotor = new WPI_TalonSRX(RobotMap.Pegasus.Intake.Motors.ROLLER_PORT);
@@ -105,7 +105,7 @@ public class Intake {
 
 	public class Extender extends IntakeSubsystem {
 
-		private DoubleSolenoid extender;
+		private final DoubleSolenoid extender;
 
 		private Extender() {
 			extender = new DoubleSolenoid(RobotMap.Pegasus.Pneumatics.PCM.PCM_ID, RobotMap.Pegasus.Pneumatics.PCM.PCM_TYPE, RobotMap.Pegasus.Intake.Solenoid.FORWARD_PORT, RobotMap.Pegasus.Intake.Solenoid.REVERSE_PORT);

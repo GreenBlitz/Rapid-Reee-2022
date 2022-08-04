@@ -17,22 +17,15 @@ import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
-
 import edu.wpi.first.wpilibj2.command.*;
 
 public class OI {
-	private static OI instance;
-	
-	private SmartJoystick mainJoystick;
-	private SmartJoystick secondJoystick;
-	
-	private enum IOModes {
-		DEBUG, REAL, DEBUG2
-	}
-	
 	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+	private static OI instance;
 	private static boolean isHandled = true;
-	
+	private final SmartJoystick mainJoystick;
+	private final SmartJoystick secondJoystick;
+
 	private OI() {
 		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.2);
 		secondJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.SECOND, 0.2);
@@ -46,25 +39,40 @@ public class OI {
 			case DEBUG2:
 				initDebug2Buttons();
 				break;
-			
+
 		}
 	}
-	
+
+	public static OI getInstance() {
+		if (instance == null) {
+			instance = new OI();
+		}
+		return instance;
+	}
+
+	public static boolean isIsHandled() {
+		return isHandled;
+	}
+
+	public static void disableHandling() {
+		isHandled = false;
+	}
+
 	private void initDebug2Buttons() {
 		mainJoystick.A.whileHeld(new ShootByConstant(0.3));
 		Chassis.getInstance().setDefaultCommand(new ArcadeDrive(mainJoystick));
 	}
-	
+
 	private void initDebugButtons() {
 		mainJoystick.A.whenPressed(new DoubleShoot());
 		mainJoystick.B.whileHeld(new RunFunnel());
 		mainJoystick.Y.whileHeld(new RunRoller());
 	}
-	
+
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
 		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM) {
-			
+
 			@Override
 			public void end(boolean interrupted) {
 				super.end(interrupted);
@@ -72,14 +80,14 @@ public class OI {
 			}
 		});
 		secondJoystick.X.whileHeld(new InsertIntoShooter());
-		
+
 		secondJoystick.B.whileHeld(
 				new ParallelCommandGroup(new MoveBallUntilClick(), new RollByConstant(1.0))//new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0))
 		);
-		
+
 		secondJoystick.START.whenPressed(new ToggleRoller());
 		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter());
-		
+
 		/*
 		secondJoystick.POV_UP.whenPressed(new FullClimb(secondJoystick));
 		secondJoystick.POV_RIGHT.whenPressed(
@@ -101,7 +109,7 @@ public class OI {
 				new RailByJoystick(secondJoystick),
 				new TurningByJoystick(secondJoystick)
 		));
-		
+
 		Chassis.getInstance().setDefaultCommand(new ArcadeDrive(mainJoystick));
 
 		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
@@ -109,40 +117,7 @@ public class OI {
 		mainJoystick.L1.whenPressed(new ToggleShifter());
 		mainJoystick.A.whileHeld(new CoastWhileClimb());*/
 	}
-	
-	private class InitManualOverride extends GBCommand {
-		
-		private InitManualOverride() {
-			super();
-		}
-		
-		@Override
-		public void initialize() {
-			CommandScheduler.getInstance().cancelAll();
-			super.initialize();
-			
-			secondJoystick.B.whileHeld(
-					new ParallelCommandGroup(new RunFunnel(), new RollByConstant(1.0)) {
-						@Override
-						public void initialize() {
-							new ToggleRoller().schedule();
-						}
-						
-						@Override
-						public void end(boolean interrupted) {
-							new ToggleRoller().schedule();
-						}
-					}
-			);
-			
-		}
-		
-		@Override
-		public boolean isFinished() {
-			return true;
-		}
-	}
-	
+
 	private void initTalButtons() {
 		secondJoystick.X.whenPressed(new SequentialCommandGroup(new ParallelRaceGroup(new WaitCommand(1), new ShootByConstant(0.7)), new ParallelRaceGroup(new WaitCommand(4), new ShootByConstant(0.7), new RunFunnel())));
 		secondJoystick.B.whenPressed(new SequentialCommandGroup(new ParallelRaceGroup(new WaitCommand(1), new ShootByConstant(0.4)), new ParallelRaceGroup(new WaitCommand(4), new ShootByConstant(0.4), new RunFunnel())));
@@ -150,30 +125,52 @@ public class OI {
 		secondJoystick.R1.whileHeld(new RollByConstant(0.8));
 		secondJoystick.L1.whileHeld(new RollByConstant(-0.8));
 		secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
-		
+
 		Chassis.getInstance().setDefaultCommand(new ArcadeDrive(mainJoystick));
 	}
-	
-	public static OI getInstance() {
-		if (instance == null) {
-			instance = new OI();
-		}
-		return instance;
-	}
-	
+
 	public SmartJoystick getMainJoystick() {
 		return mainJoystick;
 	}
-	
+
 	public SmartJoystick getSecondJoystick() {
 		return secondJoystick;
 	}
-	
-	public static boolean isIsHandled() {
-		return isHandled;
+
+	private enum IOModes {
+		DEBUG, REAL, DEBUG2
 	}
-	
-	public static void disableHandling() {
-		isHandled = false;
+
+	private class InitManualOverride extends GBCommand {
+
+		private InitManualOverride() {
+			super();
+		}
+
+		@Override
+		public void initialize() {
+			CommandScheduler.getInstance().cancelAll();
+			super.initialize();
+
+			secondJoystick.B.whileHeld(
+					new ParallelCommandGroup(new RunFunnel(), new RollByConstant(1.0)) {
+						@Override
+						public void initialize() {
+							new ToggleRoller().schedule();
+						}
+
+						@Override
+						public void end(boolean interrupted) {
+							new ToggleRoller().schedule();
+						}
+					}
+			);
+
+		}
+
+		@Override
+		public boolean isFinished() {
+			return true;
+		}
 	}
 }

@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class LogTime extends GBCommand {
 
 	private static long timeStartedLast = 0;
-	private String name;
+	private final String name;
 
 	public LogTime(String n) {
 		name = n;

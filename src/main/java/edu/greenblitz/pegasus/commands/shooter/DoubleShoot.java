@@ -1,19 +1,19 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
-import com.revrobotics.CANSparkMax;
 import edu.greenblitz.gblib.motors.AbstractMotor;
 import edu.greenblitz.gblib.subsystems.shooter.Shooter;
 import edu.greenblitz.gblib.subsystems.shooter.ShooterByRPM;
-import edu.greenblitz.pegasus.RobotMap.Pegasus.Funnel;
-import edu.greenblitz.pegasus.RobotMap.Pegasus.Intake;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
-import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 public class DoubleShoot extends SequentialCommandGroup {
 
-	private double RPM1;
-	private double RPM2;
+	private final double RPM1;
+	private final double RPM2;
 
 	public DoubleShoot(double RPM1, double RPM2) {
 		super();

@@ -4,7 +4,7 @@ import edu.greenblitz.pegasus.commands.funnel.FunnelCommand;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 
 public class MoveFunnelUntilClick extends FunnelCommand {
-	private Indexing indexing;
+	private final Indexing indexing;
 
 	public MoveFunnelUntilClick() {
 		this.indexing = Indexing.getInstance();

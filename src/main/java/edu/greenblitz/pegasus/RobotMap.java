@@ -2,10 +2,10 @@ package edu.greenblitz.pegasus;
 
 
 import edu.greenblitz.gblib.gear.GearDependentValue;
+import edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
-import edu.greenblitz.gblib.motion.pid.PIDObject;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.SafetyZones.HIGHEST_ANGLE;
 
@@ -18,10 +18,11 @@ public class RobotMap {
 
 		public static class Chassis {
 			public static final double WHEEL_DIST = 0.564; //very accurate right now
+			public static final double startAngle = Math.toRadians(23);
 
 			public static class Motors {
-				public static final int[] ports = {1,2,3,4,5,6};
-				public static final boolean[] isInverted = {true,true,true,false,false,false};
+				public static final int[] ports = {1, 2, 3, 4, 5, 6};
+				public static final boolean[] isInverted = {true, true, true, false, false, false};
 				public static final int RIGHT_LEADER = 1, RIGHT_FOLLOWER_1 = 2, RIGHT_FOLLOWER_2 = 3, LEFT_LEADER = 4, LEFT_FOLLOWER_1 = 5, LEFT_FOLLOWER_2 = 6;
 				public static final boolean RIGHT_LEADER_REVERSED = true, RIGHT_FOLLOWER_1_REVERSED = true, RIGHT_FOLLOWER_2_REVERSED = true, LEFT_LEADER_REVERSED = false, LEFT_FOLLOWER_1_REVERSED = false, LEFT_FOLLOWER_2_REVERSED = false;
 			}
@@ -31,8 +32,6 @@ public class RobotMap {
 				public static final int RIGHT_ENCODER = -1, LEFT_ENCODER = -1;
 				public static final boolean RIGHT_ENCODER_REVERSED = false, LEFT_ENCODER_REVERSED = false;
 			}
-
-			public static final double startAngle = Math.toRadians(23);
 
 			public static class Shifter {
 				public static final DoubleSolenoid.Value POWER_VALUE = DoubleSolenoid.Value.kForward;
@@ -70,6 +69,9 @@ public class RobotMap {
 
 		public static class Intake {
 
+			public static final double POWER = 1.0;
+			public static final double REVERSE_POWER = -1.0;
+
 			public static class Motors {
 				public static final int ROLLER_PORT = 6;
 				public static final boolean IS_REVERSED = false;
@@ -79,9 +81,6 @@ public class RobotMap {
 				public static final int FORWARD_PORT = 2;
 				public static final int REVERSE_PORT = 0;
 			}
-
-			public static final double POWER = 1.0;
-			public static final double REVERSE_POWER = -1.0;
 		}
 
 		public static class Shooter {
@@ -94,6 +93,9 @@ public class RobotMap {
 
 
 				public static final Dataset RPM_TO_POWER = new Dataset(2);
+				public static final double RPM = 2350; // Should be 2300
+				public static final PIDObject pid = new PIDObject(0.0002, 0.0000003, 0); //d1: 0.0001, 0.0000003, 0
+				public static final double iZone = 300;
 
 				static {
 					RPM_TO_POWER.addDatapoint(0, new double[]{-0.0000000001});
@@ -108,22 +110,18 @@ public class RobotMap {
 					RPM_TO_POWER.addDatapoint(4664.115322265625, new double[]{0.9});
 					RPM_TO_POWER.addDatapoint(5209.37181640625, new double[]{1.0});
 				}
-
-				public static final double RPM = 2350; // Should be 2300
-				public static final PIDObject pid = new PIDObject(0.0002, 0.0000003, 0); //d1: 0.0001, 0.0000003, 0
-				public static final double iZone = 300;
 			}
 		}
 
 		public static class Funnel {
+			public static final double POWER = 0.7;
+			public static final double REVERSE_POWER = -0.7;
+			public static final int MACRO_SWITCH_PORT = 0;
+
 			public static class FunnelMotor {
 				public static final int MOTOR_PORT = 5;
 				public static final boolean IS_REVERSED = true;
 			}
-
-			public static final double POWER = 0.7;
-			public static final double REVERSE_POWER = -0.7;
-			public static final int MACRO_SWITCH_PORT = 0;
 		}
 
 		public static class Climb {

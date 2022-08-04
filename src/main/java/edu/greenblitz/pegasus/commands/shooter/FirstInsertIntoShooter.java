@@ -6,11 +6,14 @@ import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 public class FirstInsertIntoShooter extends SequentialCommandGroup {
 
 	private double startTime;
+	private boolean reported = false;
 
 	// AKA InsertoShooter @tal935
 	public FirstInsertIntoShooter() {
@@ -45,16 +48,14 @@ public class FirstInsertIntoShooter extends SequentialCommandGroup {
 	@Override
 	public void initialize() {
 		super.initialize();
-		startTime = System.currentTimeMillis()/1000.0;
+		startTime = System.currentTimeMillis() / 1000.0;
 	}
 
-
-	private boolean reported = false;
 	@Override
 	public void execute() {
 		super.execute();
-		if(Shooter.getInstance().isPreparedToShoot() && !reported){
-			SmartDashboard.putNumber("Time To Shoot", System.currentTimeMillis()/1000.0 - startTime);
+		if (Shooter.getInstance().isPreparedToShoot() && !reported) {
+			SmartDashboard.putNumber("Time To Shoot", System.currentTimeMillis() / 1000.0 - startTime);
 			reported = true;
 		}
 	}

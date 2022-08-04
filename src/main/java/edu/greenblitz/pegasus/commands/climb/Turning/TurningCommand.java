@@ -7,7 +7,7 @@ public abstract class TurningCommand extends GBCommand {
 
 	Climb climb;
 
-	public TurningCommand(){
+	public TurningCommand() {
 		climb = Climb.getInstance();
 		require(climb.getTurning());
 	}

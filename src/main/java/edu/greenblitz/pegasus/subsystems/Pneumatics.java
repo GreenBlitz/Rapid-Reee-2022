@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 public class Pneumatics extends GBSubsystem {
 	private static Pneumatics instance;
 
-	private Compressor m_compressor;
+	private final Compressor m_compressor;
 
 	private Pneumatics() {
 		m_compressor = new Compressor(RobotMap.Pegasus.Pneumatics.PCM.PCM_ID, PneumaticsModuleType.CTREPCM);

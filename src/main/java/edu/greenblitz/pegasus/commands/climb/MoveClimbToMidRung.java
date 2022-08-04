@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
-import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rail.STOPPER_SAFETY_THRESH;
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rail.METERS_TO_SECOND_BAR;
+import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rail.STOPPER_SAFETY_THRESH;
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_SECOND_BAR;
 
 public class MoveClimbToMidRung extends ParallelCommandGroup {

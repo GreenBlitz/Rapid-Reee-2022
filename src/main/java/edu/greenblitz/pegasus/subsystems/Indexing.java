@@ -8,23 +8,16 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj2.command.Command;
-
-import java.util.Queue;
 
 public class Indexing extends GBSubsystem {
+	private static final double MARGIN_OF_ERROR = 0.1;
+	private static final double THRESHOLD = 0.3;
+	private static Indexing instance;
 	private final I2C.Port i2cPort = I2C.Port.kOnboard;
 	private final ColorSensorV3 colorSensor;
 	private final DigitalInput macroSwitch;
 	private int ballCount;
 	private BallColor allianceColor;
-
-	private static Indexing instance;
-
-	private static final double MARGIN_OF_ERROR = 0.1;
-	private static final double THRESHOLD = 0.3;
-
-	public enum BallColor {RED, BLUE, OTHER}
 
 	private Indexing() {
 		colorSensor = new ColorSensorV3(i2cPort);
@@ -46,12 +39,12 @@ public class Indexing extends GBSubsystem {
 
 	public Color getColor() {
 		Color color = colorSensor.getColor();
-		if(color.blue == color.red && color.red == color.green && color.green == 0)
+		if (color.blue == color.red && color.red == color.green && color.green == 0)
 			System.out.println("Color Sensor is not connected");
 		return color;
 	}
 
-	public boolean isBallUp(){
+	public boolean isBallUp() {
 		return macroSwitch.get();
 	}
 
@@ -66,24 +59,26 @@ public class Indexing extends GBSubsystem {
 		return perceivedColor;
 	}
 
-	public BallColor getAllianceColor(){
+	public BallColor getAllianceColor() {
 		return this.allianceColor;
 	}
 
-	public void addBall(){
-		if(this.ballCount < 2)
+	public void addBall() {
+		if (this.ballCount < 2)
 			this.ballCount++;
 	}
 
-	public void resetBallCount(){
+	public void resetBallCount() {
 		this.ballCount = 0;
 	}
 
-	public int getBallCount(){
+	public int getBallCount() {
 		return this.ballCount;
 	}
 
-	public void initSetAlliance(){
+	public void initSetAlliance() {
 		allianceColor = DriverStation.getAlliance() == DriverStation.Alliance.Blue ? BallColor.BLUE : BallColor.RED;
 	}
+
+	public enum BallColor {RED, BLUE, OTHER}
 }

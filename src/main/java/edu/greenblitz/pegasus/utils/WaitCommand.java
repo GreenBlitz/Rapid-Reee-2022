@@ -4,8 +4,8 @@ import edu.greenblitz.gblib.base.GBCommand;
 
 public class WaitCommand extends GBCommand {
 
-	private double timeout;
-	private long tStart;
+	private final double timeout;
+	private final long tStart;
 
 
 	public WaitCommand(double timeout) {

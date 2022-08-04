@@ -1,6 +1,5 @@
 package edu.greenblitz.pegasus.commands.climb;
 
-import com.revrobotics.CANSparkMax;
 import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.gblib.motors.AbstractMotor;
 import edu.greenblitz.pegasus.subsystems.Climb;

@@ -8,15 +8,10 @@ import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rotat
 public class HoldTurning extends TurningCommand {
 	/**
 	 * this command has been changed to be very specific it is advised to not use it in another place until a codee review is finished
-	 *
-	 *
-	 *
-	 *
-	 *
-	 *
 	 */
 	private double goal;
 	private ClimbState state;
+
 	public HoldTurning(double goalAngle) {
 		super();
 		goal = goalAngle;
@@ -36,8 +31,7 @@ public class HoldTurning extends TurningCommand {
 	public void execute() {
 		if (!(Math.abs(goal - climb.getAng()) < EPSILON_STATIC)) {
 			climb.safeMoveTurningMotor(kp_static * (goal - climb.getAng()) + ff_static * Math.signum(goal - climb.getAng()));
-		}
-		else{
+		} else {
 			climb.safeMoveTurningMotor(0);
 		}
 	}
@@ -53,13 +47,13 @@ public class HoldTurning extends TurningCommand {
 	}
 
 
-	public ClimbState getState(){
+	public ClimbState getState() {
 		return state;
 	}
 
 	public void setState(ClimbState state) {
 		this.state = state;
-		switch (state){
+		switch (state) {
 			case PULL_UP:
 				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_SECOND_BAR;
 				break;

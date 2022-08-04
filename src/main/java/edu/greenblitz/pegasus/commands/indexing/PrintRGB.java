@@ -2,7 +2,7 @@ package edu.greenblitz.pegasus.commands.indexing;
 
 import edu.wpi.first.wpilibj.util.Color;
 
-public class PrintRGB extends IndexingCommand{
+public class PrintRGB extends IndexingCommand {
 	@Override
 	public void execute() {
 		Color currColor = indexing.getColor();

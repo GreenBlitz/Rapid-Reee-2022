@@ -16,12 +16,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 public class Shifter extends GBSubsystem {
-	
+
 	private static Shifter instance;
-	
-	private DoubleSolenoid piston;
-	
-	
+
+	private final DoubleSolenoid piston;
+
+
 	/**
 	 * This constructor constructs the piston.
 	 */
@@ -31,7 +31,7 @@ public class Shifter extends GBSubsystem {
 				RobotMap.Pegasus.Chassis.Shifter.Solenoid.FORWARD_PORT,
 				RobotMap.Pegasus.Chassis.Shifter.Solenoid.REVERSE_PORT);
 	}
-	
+
 	/**
 	 * This function creates a new instance of this class.
 	 */
@@ -39,9 +39,9 @@ public class Shifter extends GBSubsystem {
 		if (instance == null) {
 			instance = new Shifter();
 		}
-		
+
 	}
-	
+
 	/**
 	 * This function returns an instance of the class as long as it isn't null.
 	 *
@@ -51,7 +51,7 @@ public class Shifter extends GBSubsystem {
 		init();
 		return instance;
 	}
-	
+
 	/**
 	 * This function sets the state of the piston based on the value received.
 	 *
@@ -63,15 +63,15 @@ public class Shifter extends GBSubsystem {
 				RobotMap.Pegasus.Chassis.Shifter.POWER_VALUE :
 				RobotMap.Pegasus.Chassis.Shifter.SPEED_VALUE);
 	}
-	
+
 	@Override
 	public void periodic() {
 		super.periodic();
 		SmartDashboard.putString("is Power", Boolean.toString(Gear.getInstance().getState()));
 	}
-	
+
 	public void toggleShift() {
 		setShift(!Gear.getInstance().getState());
 	}
-	
+
 }

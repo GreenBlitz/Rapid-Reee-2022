@@ -2,54 +2,47 @@ package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.gblib.subsystems.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.RobotMap;
-
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.shifter.ToPower;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import org.greenblitz.motion.pid.PIDObject;
 
-import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
-
 public class FourBallAuto extends SequentialCommandGroup {
+	public static final PIDObject LIN_OBJECT = new PIDObject(0.4, 0, 0.25, 0);
+	public static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.1, 0.000001, 0, 0);
+	public static final PIDObject ANG_OBJECT = new PIDObject(0.2, 0, 0, 0.035, 0);
 	private static final double FIRST_DISTANCE = -1.46;
 	private static final double DISTANCE_TO_SHOOT = 0.71;
 	private static final double RPM_SHOOTING = 3900;//3600;
-
 	private static final double ANGLE_TO_THIRD_BALL = Math.toRadians(7);
-	
-	public static final PIDObject LIN_OBJECT = new PIDObject(0.4, 0, 0.25, 0);
-	public static final PIDObject LIN_OBJECT_ANG = new PIDObject(0.1, 0.000001, 0, 0);
-public static final PIDObject ANG_OBJECT = new PIDObject(0.2, 0, 0, 0.035, 0);
-	
 	private long tStart;
-	
-	
+
+
 	public FourBallAuto() {
 		addCommands(
 				new ExtendRoller(),
 				new WaitCommand(0.4),
 				// Go and collect first ball
 				new ParallelCommandGroup(
-					new ParallelDeadlineGroup(
-							new ParallelCommandGroup(
-									new ToSpeed(),
-									new MoveFunnelUntilClick(),
-									new SequentialCommandGroup(
-											new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, FIRST_DISTANCE),
-											new WaitCommand(0.2)
-									)
-							),
-							new RunRoller(),
-							new SequentialCommandGroup(
-									new WaitCommand(0.5),
-									new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
-							)
-					)/*,
+						new ParallelDeadlineGroup(
+								new ParallelCommandGroup(
+										new ToSpeed(),
+										new MoveFunnelUntilClick(),
+										new SequentialCommandGroup(
+												new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, FIRST_DISTANCE),
+												new WaitCommand(0.2)
+										)
+								),
+								new RunRoller(),
+								new SequentialCommandGroup(
+										new WaitCommand(0.5),
+										new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
+								)
+						)/*,
 					new SequentialCommandGroup(
 						new MoveRailToPosition(0.613),
 						new MoveTurningToAngle(MID_START_ANGLE),
@@ -113,19 +106,19 @@ public static final PIDObject ANG_OBJECT = new PIDObject(0.2, 0, 0, 0.035, 0);
 				new DoubleShoot(RPM_SHOOTING)
 		);
 	}
-	
-	
+
+
 	@Override
 	public void initialize() {
 		super.initialize();
 		this.tStart = System.currentTimeMillis();
-		
+
 	}
-	
+
 	@Override
 	public void end(boolean interrupted) {
 		super.end(interrupted);
-		
+
 		SmartDashboard.putNumber("time elapsed", (System.currentTimeMillis() - this.tStart) / 1000.0);
 	}
 }

@@ -4,8 +4,8 @@ import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 
 public class SwitchTurning extends TurningCommand {
-	private SmartJoystick joystick;
-	private SmartJoystick nextJoystick;
+	private final SmartJoystick joystick;
+	private final SmartJoystick nextJoystick;
 
 	public SwitchTurning(SmartJoystick joystick, SmartJoystick nextJoystick) {
 		this.joystick = joystick;

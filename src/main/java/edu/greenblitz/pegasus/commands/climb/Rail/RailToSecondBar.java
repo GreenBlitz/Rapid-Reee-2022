@@ -1,12 +1,8 @@
 package edu.greenblitz.pegasus.commands.climb.Rail;
 
 import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.commands.climb.ClimbState;
 
-import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rail.ff;
-import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbConstants.Rail.kp;
-
-public class RailToSecondBar extends RailCommand{
+public class RailToSecondBar extends RailCommand {
 	public static final double GOAL = 0.0;
 	public static final double Kp = 0.1;
 	public static final double P_THRESHOLD = 0.1;

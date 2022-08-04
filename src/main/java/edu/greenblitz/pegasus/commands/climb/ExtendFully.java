@@ -1,6 +1,5 @@
 package edu.greenblitz.pegasus.commands.climb;
 
-import com.revrobotics.CANSparkMax;
 import edu.greenblitz.gblib.motors.AbstractMotor;
 import edu.greenblitz.pegasus.commands.climb.Rail.MoveRailToPosition;
 import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;

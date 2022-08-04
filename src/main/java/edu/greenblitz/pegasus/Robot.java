@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class Robot extends TimedRobot {
-	
+
 	@Override
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
@@ -27,17 +27,17 @@ public class Robot extends TimedRobot {
 		Intake.getInstance();
 		Shifter.getInstance();
 		Funnel.getInstance();
-		
+
 		Shooter.create(new SparkMaxFactory()
-				.withInverted(RobotMap.Pegasus.Shooter.ShooterMotor.LEADER_INVERTED)
-				.withIdleMode(AbstractMotor.IdleMode.Coast)
-				.withCurrentLimit(40)
-				.withRampRate(1),
+						.withInverted(RobotMap.Pegasus.Shooter.ShooterMotor.LEADER_INVERTED)
+						.withIdleMode(AbstractMotor.IdleMode.Coast)
+						.withCurrentLimit(40)
+						.withRampRate(1),
 				RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
-		
+
 		Climb.getInstance().initDefaultCommand(OI.getInstance().getSecondJoystick());
 		Indexing.getInstance();
-		
+
 		Chassis.create(
 				new SparkMaxFactory().withCurrentLimit(40),
 				RobotMap.Pegasus.Chassis.Motors.ports,
@@ -46,20 +46,20 @@ public class Robot extends TimedRobot {
 		Chassis.getInstance().setDefaultCommand(new ArcadeDrive(OI.getInstance().getMainJoystick()));
 		OI.getInstance();
 	}
-	
+
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
-		
+
 	}
-	
-	
+
+
 	@Override
 	public void disabledInit() {
 		//VisionMaster.GameState.DISABLED.setAsCurrent();
 		CommandScheduler.getInstance().cancelAll();
 	}
-	
+
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
@@ -80,12 +80,12 @@ public class Robot extends TimedRobot {
 				)
 		);//.schedule();
 	}
-	
+
 	@Override
 	public void teleopPeriodic() {
 	}
-	
-	
+
+
 	/*
 		TODO: Dear @Orel, please for the love of god, use the very useful function: schedule(), this will help the code to actually work
 	*/
@@ -98,12 +98,12 @@ public class Robot extends TimedRobot {
 		new StopShooter().schedule();
 		//new DCMPAuto().schedule();
 	}
-	
+
 	@Override
 	public void testInit() {
 		CommandScheduler.getInstance().cancelAll();
 	}
-	
+
 	@Override
 	public void testPeriodic() {
 	}

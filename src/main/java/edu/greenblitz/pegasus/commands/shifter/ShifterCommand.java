@@ -5,8 +5,8 @@ import edu.greenblitz.pegasus.subsystems.Shifter;
 
 public class ShifterCommand extends GBCommand {
 	Shifter shifter;
-	
-	public ShifterCommand(){
+
+	public ShifterCommand() {
 		this.shifter = Shifter.getInstance();
 	}
 

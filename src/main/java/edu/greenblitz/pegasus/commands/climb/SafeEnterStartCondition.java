@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class SafeEnterStartCondition extends SequentialCommandGroup {
-	public SafeEnterStartCondition(){
+	public SafeEnterStartCondition() {
 		addRequirements(Climb.getInstance());
 		addCommands(
 				new ParallelCommandGroup(new MoveTurningToAngle(ClimbState.START),
-				new MoveRailToPosition(RobotMap.Pegasus.Climb.ClimbMotors.START_LOCATION-0.02)
+						new MoveRailToPosition(RobotMap.Pegasus.Climb.ClimbMotors.START_LOCATION - 0.02)
 				),
 				new MoveRailToPosition(ClimbState.START)
 		);

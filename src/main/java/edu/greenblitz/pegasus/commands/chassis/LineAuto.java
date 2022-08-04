@@ -4,9 +4,9 @@ import edu.greenblitz.gblib.subsystems.Chassis.ChassisCommand;
 
 public class LineAuto extends ChassisCommand {
 	//makes chassis activate with same power for both wheels
-	private double power;
+	private final double power;
 
-	public LineAuto(double power){
+	public LineAuto(double power) {
 		this.power = power;
 	}
 
@@ -17,6 +17,6 @@ public class LineAuto extends ChassisCommand {
 
 	@Override
 	public void end(boolean interrupted) {
-		chassis.moveMotors(0,0);
+		chassis.moveMotors(0, 0);
 	}
 }

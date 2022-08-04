@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class WaitMilliSeconds extends WaitCommand {
 
-    public WaitMilliSeconds(long time) {
-        super(time / 1000.0);
-    }
+	public WaitMilliSeconds(long time) {
+		super(time / 1000.0);
+	}
 
 }

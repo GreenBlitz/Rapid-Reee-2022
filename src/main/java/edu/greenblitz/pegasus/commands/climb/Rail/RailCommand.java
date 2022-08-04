@@ -7,7 +7,7 @@ public abstract class RailCommand extends GBCommand {
 
 	protected Climb climb;
 
-	public RailCommand(){
+	public RailCommand() {
 		climb = Climb.getInstance();
 		require(climb.getRail());
 	}
