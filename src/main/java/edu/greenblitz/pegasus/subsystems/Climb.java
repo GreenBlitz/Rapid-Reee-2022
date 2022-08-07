@@ -22,7 +22,7 @@ public class Climb extends GBSubsystem {
 	private boolean atStart;
 
 
-	private Climb() {
+	protected Climb() {
 		rail = new Rail();
 		turning = new Turning();
 

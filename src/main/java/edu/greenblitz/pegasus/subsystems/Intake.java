@@ -14,7 +14,7 @@ public class Intake {
 	private final Roller roller;
 	private final Extender extender;
 
-	private Intake() {
+	protected Intake() {
 		roller = new Intake.Roller();
 		extender = new Intake.Extender();
 	}

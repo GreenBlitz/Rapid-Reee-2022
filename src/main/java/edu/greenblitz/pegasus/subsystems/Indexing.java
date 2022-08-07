@@ -19,7 +19,7 @@ public class Indexing extends GBSubsystem {
 	private int ballCount;
 	private BallColor allianceColor;
 
-	private Indexing() {
+	protected Indexing() {
 		colorSensor = new ColorSensorV3(i2cPort);
 		macroSwitch = DigitalInputMap.getInstance().getDigitalInput(RobotMap.Pegasus.Funnel.MACRO_SWITCH_PORT);
 		ballCount = 0;

@@ -25,7 +25,7 @@ public class Shifter extends GBSubsystem {
 	/**
 	 * This constructor constructs the piston.
 	 */
-	private Shifter() {
+	protected Shifter() {
 		piston = new DoubleSolenoid(RobotMap.Pegasus.Pneumatics.PCM.PCM_ID,
 				RobotMap.Pegasus.Pneumatics.PCM.PCM_TYPE,
 				RobotMap.Pegasus.Chassis.Shifter.Solenoid.FORWARD_PORT,

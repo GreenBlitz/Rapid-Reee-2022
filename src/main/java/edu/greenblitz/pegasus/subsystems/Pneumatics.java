@@ -11,7 +11,7 @@ public class Pneumatics extends GBSubsystem {
 
 	private final Compressor m_compressor;
 
-	private Pneumatics() {
+	protected Pneumatics() {
 		m_compressor = new Compressor(RobotMap.Pegasus.Pneumatics.PCM.PCM_ID, PneumaticsModuleType.CTREPCM);
 	}
 
