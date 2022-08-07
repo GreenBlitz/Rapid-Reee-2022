@@ -40,14 +40,14 @@ public class Climb extends GBSubsystem {
 	}
 
 	public double getLoc() {
-		double delta = getRailMotorTicks() / RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_TICKS_PER_METER;
+		double delta = getRailMotorRotations() / RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_ROTATIONS_PER_METER;
 		double loc = delta + RobotMap.Pegasus.Climb.ClimbMotors.START_LOCATION;
 		loc += (getAng() - RobotMap.Pegasus.Climb.ClimbMotors.START_ANGLE) * 0.022;
 		return loc;
 	}
 
 	public double getAng() {
-		double delta = getTurningMotorTicks() / RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_TICKS_PER_RADIAN;
+		double delta = getTurningMotorRotations() / RobotMap.Pegasus.Climb.ClimbMotors.TURNING_MOTOR_ROTATIONS_PER_RADIAN;
 		double ang = delta + RobotMap.Pegasus.Climb.ClimbMotors.START_ANGLE;
 		return ang;
 	}
@@ -103,19 +103,19 @@ public class Climb extends GBSubsystem {
 		turning.turningMotor.setPower(power);
 	}
 
-	public double getRailMotorTicks() {
-		return rail.railMotor.getRawTicks();
+	public double getRailMotorRotations() {
+		return rail.railMotor.getNormalizedPosition();
 	}
 
-	public void resetRailMotorTicks() {
+	public void resetRailEncoder() {
 		rail.railMotor.resetEncoder();
 	}
 
-	public double getTurningMotorTicks() {
-		return turning.turningMotor.getRawTicks();
+	public double getTurningMotorRotations() {
+		return turning.turningMotor.getNormalizedPosition();
 	}
 
-	public void resetTurningMotorTicks() {
+	public void resetTurningMotorRotations() {
 		turning.turningMotor.resetEncoder();
 	}
 

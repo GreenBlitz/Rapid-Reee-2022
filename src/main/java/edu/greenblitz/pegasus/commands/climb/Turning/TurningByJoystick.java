@@ -16,7 +16,7 @@ public class TurningByJoystick extends TurningCommand {
 		super.execute();
 		if (joystick.L1.get()) {
 			if (joystick.R1.get()) {
-				Climb.getInstance().resetTurningMotorTicks();
+				Climb.getInstance().resetTurningMotorRotations();
 			}
 			double turningMotorPower = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_Y);
 			climb.unsafeMoveTurningMotor(turningMotorPower * 0.2);

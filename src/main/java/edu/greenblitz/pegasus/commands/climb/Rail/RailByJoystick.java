@@ -23,7 +23,7 @@ public class RailByJoystick extends RailCommand {
 		super.execute();
 		if (joystick.L1.get()) {
 			if (joystick.R1.get()) {
-				Climb.getInstance().resetRailMotorTicks();
+				Climb.getInstance().resetRailEncoder();
 			}
 			double railMotorPower = -joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y) * powerFactor;
 			climb.unsafeMoveRailMotor(railMotorPower);

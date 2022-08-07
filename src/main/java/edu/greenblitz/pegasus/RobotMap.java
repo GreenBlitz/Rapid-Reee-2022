@@ -141,12 +141,12 @@ public class RobotMap {
 			public static class ClimbMotors {
 				public static final int RAIL_MOTOR_PORT = 9;
 				public static final boolean RAIL_MOTOR_REVERSED = false;
-				public static final double RAIL_MOTOR_TICKS_PER_METER = 8544;
+				public static final double RAIL_MOTOR_ROTATIONS_PER_METER = 203.43;
 				public static final double RAIL_LENGTH = 0.89;
 				public static final double START_LOCATION = 0.633;
 				public static final int TURNING_MOTOR_PORT = 11;
 				public static final boolean TURNING_MOTOR_REVERSED = false;
-				public static final double TURNING_MOTOR_TICKS_PER_RADIAN = 2139;
+				public static final double TURNING_MOTOR_ROTATIONS_PER_RADIAN = 50.9;
 				public static final double START_ANGLE = Math.toRadians(15.985);
 				public static final double MID_START_ANGLE = Math.toRadians(20) + START_ANGLE;
 			}

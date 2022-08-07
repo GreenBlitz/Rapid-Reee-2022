@@ -15,7 +15,7 @@ public class MoveClimbToMidRung extends ParallelCommandGroup {
 	public MoveClimbToMidRung() {
 		super();
 		addCommands(new MoveRailToPosition(METERS_TO_SECOND_BAR), new SequentialCommandGroup(new WaitUntilCommand(() ->
-				Climb.getInstance().getRailMotorTicks() > STOPPER_SAFETY_THRESH
+				Climb.getInstance().getRailMotorRotations() > STOPPER_SAFETY_THRESH
 		), new MoveTurningToAngle(RADIANS_TO_SECOND_BAR)));
 	}
 }
