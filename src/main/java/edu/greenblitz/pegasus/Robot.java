@@ -1,7 +1,6 @@
 package edu.greenblitz.pegasus;
 
 
-import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
