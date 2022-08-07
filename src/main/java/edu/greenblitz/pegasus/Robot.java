@@ -69,7 +69,7 @@ public class Robot extends TimedRobot {
 		Shooter.getInstance().setIdleMode(AbstractMotor.IdleMode.Coast);
 		new SequentialCommandGroup(
 				new ParallelRaceGroup(
-						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 2300) {
+						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, 2300) {
 							@Override
 							public void end(boolean interrupted) {
 								shooter.setSpeedByPID(0);
