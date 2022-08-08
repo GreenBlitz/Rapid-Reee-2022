@@ -72,7 +72,7 @@ public class OI {
 	}
 	private void initRealButtons() {
 		mainJoystick.Y.whileHeld(new FindLocation());
-
+		Chassis.getInstance().initDefaultCommand(mainJoystick);
 	}
 	
 	public static OI getInstance() {

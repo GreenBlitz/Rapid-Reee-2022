@@ -2,9 +2,8 @@ package edu.greenblitz.pegasus.subsystems;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Limelight extends Subsystem {
+public class Limelight extends GBSubsystem {
 	private static Limelight instance;
 
 	public static void init() {
@@ -19,10 +18,10 @@ public class Limelight extends Subsystem {
 	}
 
 	public double[] getLocation() {
-		double[] arr = {-1,-1,-1};
+		double[] arr = {-1, -1, -1};
 		NetworkTableEntry loc = NetworkTableInstance.getDefault().getTable("limelight").getEntry("llpython");
-		if(loc != null) {
-			if(loc.getDoubleArray(arr) != null)
+		if (loc != null) {
+			if (loc.getDoubleArray(arr) != null)
 				return (loc.getDoubleArray(arr));
 			else
 				System.out.println("Inner null");
@@ -32,8 +31,4 @@ public class Limelight extends Subsystem {
 		return new double[5];
 	}
 
-	@Override
-	protected void initDefaultCommand() {
-
-	}
 }

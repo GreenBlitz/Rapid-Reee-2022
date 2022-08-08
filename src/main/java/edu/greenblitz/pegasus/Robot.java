@@ -1,21 +1,11 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.auto.DCMPAuto;
-import edu.greenblitz.pegasus.commands.auto.StealBallAuto;
-import edu.greenblitz.pegasus.commands.auto.ThreeBallAuto;
-import edu.greenblitz.pegasus.commands.auto.TwoBallAuto;
-import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
-import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
-import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
-import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
-import edu.greenblitz.pegasus.commands.shooter.StopShooter;
-import edu.greenblitz.pegasus.subsystems.*;
-import edu.greenblitz.pegasus.utils.DigitalInputMap;
+import edu.greenblitz.pegasus.subsystems.Chassis;
+import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.wpi.first.util.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
 
@@ -36,7 +26,7 @@ public class Robot extends TimedRobot {
 		PortForwarder.add(5803, "limelight.local", 5803);
 		PortForwarder.add(5804, "limelight.local", 5804);
 		PortForwarder.add(5805, "limelight.local", 5805);
-//		Chassis.getInstance(); // Must be last!
+		Chassis.getInstance(); // Must be last!
 	}
 
 	@Override
@@ -89,7 +79,7 @@ public class Robot extends TimedRobot {
 		Chassis.getInstance().resetGyro();
 		Climb.getInstance().resetTurningMotorTicks();
 		Climb.getInstance().resetRailMotorTicks();
-		new StopShooter().schedule();
+		//new StopShooter().schedule();
 		new DCMPAuto().schedule();
 	}
 
