@@ -1,9 +1,11 @@
 package edu.greenblitz.pegasus.subsystems;
 
-import edu.greenblitz.gblib.motors.SparkMax.SparkMaxFactory;
+import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
+import edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
 import edu.greenblitz.gblib.subsystems.Chassis.Chassis;
 import edu.greenblitz.gblib.subsystems.shooter.Shooter;
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.commands.compressor.HandleCompressor;
 
 public class RobotContainer {
 	private static RobotContainer instance;
@@ -20,21 +22,30 @@ public class RobotContainer {
 	public static RobotContainer getInstance() {
 		if (instance == null) {
 			instance = new RobotContainer();
+			instance.initDefaultCommands();
 		}
 		return instance;
 	}
 	
 	private RobotContainer() {
-		this.climb = new Climb();
+		this.shooter = new Shooter(new SparkMaxFactory()
+				.withInverted(RobotMap.Pegasus.Shooter.ShooterMotor.LEADER_INVERTED)
+				.withIdleMode(AbstractMotor.IdleMode.Coast)
+				.withCurrentLimit(40)
+				.withRampRate(1), RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
 		this.funnel = new Funnel();
+		this.climb = new Climb();
 		this.intake = new Intake();
 		this.indexing = new Indexing();
 		this.pneumatics = new Pneumatics();
 		this.shifter = new Shifter();
-		Shooter.create(new SparkMaxFactory(), RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
-		this.shooter = Shooter.getInstance();
-		Chassis.create(new SparkMaxFactory(), RobotMap.Pegasus.Chassis.Motors.ports, RobotMap.Pegasus.Chassis.Motors.isInverted, RobotMap.Pegasus.Chassis.WHEEL_DIST);
-		this.chassis = Chassis.getInstance();
+		this.chassis = new Chassis(new SparkMaxFactory()
+				.withCurrentLimit(40), RobotMap.Pegasus.Chassis.Motors.ports, RobotMap.Pegasus.Chassis.Motors.isInverted, RobotMap.Pegasus.Chassis.WHEEL_DIST);
+	}
+	protected void initDefaultCommands(){
+		pneumatics.setDefaultCommand(new HandleCompressor());
+
+
 	}
 	
 	

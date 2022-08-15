@@ -1,10 +1,10 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
-import edu.greenblitz.gblib.motors.AbstractMotor;
-import edu.greenblitz.gblib.subsystems.shooter.Shooter;
-import edu.greenblitz.gblib.subsystems.shooter.ShooterByRPM;
+
+import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
+import edu.greenblitz.pegasus.subsystems.RobotContainer;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -23,9 +23,9 @@ public class DoubleShoot extends SequentialCommandGroup {
 		addCommands(
 				new ParallelRaceGroup(
 						new FirstInsertIntoShooter(),
-						new ShooterByRPM(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.pid, edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM1),
+						new ShooterByRPM(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM1),
 						new SequentialCommandGroup(
-								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
+								new WaitUntilCommand(() -> RobotContainer.getInstance().getShooter().isPreparedToShoot()),
 								new WaitCommand(1)
 						)
 				),
@@ -35,9 +35,9 @@ public class DoubleShoot extends SequentialCommandGroup {
 				),
 				new ParallelRaceGroup(
 						new InsertIntoShooter(),
-						new ShooterByRPM(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.pid, edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM2),
+						new ShooterByRPM(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM2),
 						new SequentialCommandGroup(
-								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
+								new WaitUntilCommand(() -> RobotContainer.getInstance().getShooter().isPreparedToShoot()),
 								new WaitCommand(1)
 						)),
 				new WaitCommand(0.2)
@@ -56,13 +56,13 @@ public class DoubleShoot extends SequentialCommandGroup {
 
 	@Override
 	public void initialize() {
-		Shooter.getInstance().setIdleMode(AbstractMotor.IdleMode.Coast);
+		RobotContainer.getInstance().getShooter().setIdleMode(AbstractMotor.IdleMode.Coast);
 		super.initialize();
 	}
 
 	@Override
 	public void end(boolean interrupted) {
 		super.end(interrupted);
-		Shooter.getInstance().setSpeedByPID(0);
+		RobotContainer.getInstance().getShooter().setSpeedByPID(0);
 	}
 }

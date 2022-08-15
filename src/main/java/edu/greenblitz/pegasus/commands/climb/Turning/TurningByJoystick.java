@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus.commands.climb.Turning;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.subsystems.Climb;
+import edu.greenblitz.pegasus.subsystems.RobotContainer;
 
 public class TurningByJoystick extends TurningCommand {
 	private final SmartJoystick joystick;
@@ -16,7 +17,7 @@ public class TurningByJoystick extends TurningCommand {
 		super.execute();
 		if (joystick.L1.get()) {
 			if (joystick.R1.get()) {
-				Climb.getInstance().resetTurningMotorRotations();
+				RobotContainer.getInstance().getClimb().resetTurningMotorRotations();
 			}
 			double turningMotorPower = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_Y);
 			climb.unsafeMoveTurningMotor(turningMotorPower * 0.2);

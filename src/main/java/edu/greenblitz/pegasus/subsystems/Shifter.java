@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shifter extends GBSubsystem {
 
-	private static Shifter instance;
 
 	private final DoubleSolenoid piston;
 
@@ -30,26 +29,6 @@ public class Shifter extends GBSubsystem {
 				RobotMap.Pegasus.Pneumatics.PCM.PCM_TYPE,
 				RobotMap.Pegasus.Chassis.Shifter.Solenoid.FORWARD_PORT,
 				RobotMap.Pegasus.Chassis.Shifter.Solenoid.REVERSE_PORT);
-	}
-
-	/**
-	 * This function creates a new instance of this class.
-	 */
-	public static void init() {
-		if (instance == null) {
-			instance = new Shifter();
-		}
-
-	}
-
-	/**
-	 * This function returns an instance of the class as long as it isn't null.
-	 *
-	 * @return The current instance of the class
-	 */
-	public static Shifter getInstance() {
-		init();
-		return instance;
 	}
 
 	/**

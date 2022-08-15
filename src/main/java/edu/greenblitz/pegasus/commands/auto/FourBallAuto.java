@@ -1,12 +1,12 @@
 package edu.greenblitz.pegasus.commands.auto;
 
-import edu.greenblitz.gblib.subsystems.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.shifter.ToPower;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
+import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import org.greenblitz.motion.pid.PIDObject;
@@ -40,7 +40,7 @@ public class FourBallAuto extends SequentialCommandGroup {
 								new RunRoller(),
 								new SequentialCommandGroup(
 										new WaitCommand(0.5),
-										new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
+										new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM_SHOOTING)
 								)
 						)/*,
 					new SequentialCommandGroup(
@@ -54,12 +54,12 @@ public class FourBallAuto extends SequentialCommandGroup {
 				new ParallelDeadlineGroup(
 						new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, DISTANCE_TO_SHOOT),
 						new RunRoller(),
-						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
+						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM_SHOOTING)
 				),
 
 				new ToPower(),
 				new ParallelRaceGroup(
-						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING),
+						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM_SHOOTING),
 						new MoveAngleByPID(ANG_OBJECT, -Math.toRadians(15), true)
 				),
 
@@ -86,7 +86,7 @@ public class FourBallAuto extends SequentialCommandGroup {
 
 						new MoveLinearByPID(LIN_OBJECT, LIN_OBJECT_ANG, 3.55),
 						new RunRoller().withTimeout(1),
-						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
+						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM_SHOOTING)
 				),
 				new ParallelDeadlineGroup(
 						new SequentialCommandGroup(
@@ -95,13 +95,13 @@ public class FourBallAuto extends SequentialCommandGroup {
 						),
 						new SequentialCommandGroup(
 								new WaitCommand(0.5),
-								new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, 4400)
+								new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, 4400)
 						)
 				),
 				new ParallelDeadlineGroup(
 						new MoveAngleByPID(ANG_OBJECT, -Math.toRadians(0)),
 						new ToPower(),
-						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RPM_SHOOTING)
+						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM_SHOOTING)
 				),
 				new DoubleShoot(RPM_SHOOTING)
 		);

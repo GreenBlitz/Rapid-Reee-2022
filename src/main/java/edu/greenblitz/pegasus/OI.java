@@ -3,9 +3,14 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.gblib.subsystems.Chassis.ArcadeDrive;
 import edu.greenblitz.gblib.subsystems.Chassis.Chassis;
-import edu.greenblitz.gblib.subsystems.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
+import edu.greenblitz.pegasus.commands.climb.*;
+import edu.greenblitz.pegasus.commands.climb.Rail.MoveRailToPosition;
+import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
+import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;
+import edu.greenblitz.pegasus.commands.climb.Turning.SwitchTurning;
+import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
@@ -15,9 +20,15 @@ import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
+import edu.greenblitz.pegasus.commands.shifter.ToggleShifter;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
+import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.subsystems.Climb;
+import edu.greenblitz.pegasus.subsystems.RobotContainer;
 import edu.wpi.first.wpilibj2.command.*;
+
+import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
 
 public class OI {
 	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
@@ -60,7 +71,7 @@ public class OI {
 
 	private void initDebug2Buttons() {
 		mainJoystick.A.whileHeld(new ShootByConstant(0.3));
-		Chassis.getInstance().setDefaultCommand(new ArcadeDrive(mainJoystick));
+		RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(mainJoystick));
 	}
 
 	private void initDebugButtons() {
@@ -71,16 +82,14 @@ public class OI {
 
 	private void initRealButtons() {
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
-		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM) {
+		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.RPM) {
 
 			@Override
 			public void end(boolean interrupted) {
 				super.end(interrupted);
-				shooter.setSpeedByPID(0);
+				shooter.setPower(0);
 			}
 		});
-		secondJoystick.X.whileHeld(new InsertIntoShooter());
-
 		secondJoystick.B.whileHeld(
 				new ParallelCommandGroup(new MoveBallUntilClick(), new RollByConstant(1.0))//new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0))
 		);
@@ -88,7 +97,7 @@ public class OI {
 		secondJoystick.START.whenPressed(new ToggleRoller());
 		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter());
 
-		/*
+
 		secondJoystick.POV_UP.whenPressed(new FullClimb(secondJoystick));
 		secondJoystick.POV_RIGHT.whenPressed(
 
@@ -103,19 +112,18 @@ public class OI {
 		secondJoystick.R1.whileHeld(new WhileHeldCoast());
 
 
-		Climb.getInstance().initDefaultCommand(secondJoystick);
+		RobotContainer.getInstance().getClimb().initDefaultCommand(secondJoystick);
 
 		secondJoystick.L1.whenPressed(new ParallelCommandGroup(
 				new RailByJoystick(secondJoystick),
 				new TurningByJoystick(secondJoystick)
 		));
 
-		Chassis.getInstance().setDefaultCommand(new ArcadeDrive(mainJoystick));
+		RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(mainJoystick));
 
 		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
 		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
 		mainJoystick.L1.whenPressed(new ToggleShifter());
-		mainJoystick.A.whileHeld(new CoastWhileClimb());*/
 	}
 
 	private void initTalButtons() {
@@ -126,7 +134,7 @@ public class OI {
 		secondJoystick.L1.whileHeld(new RollByConstant(-0.8));
 		secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
 
-		Chassis.getInstance().setDefaultCommand(new ArcadeDrive(mainJoystick));
+		RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(mainJoystick));
 	}
 
 	public SmartJoystick getMainJoystick() {

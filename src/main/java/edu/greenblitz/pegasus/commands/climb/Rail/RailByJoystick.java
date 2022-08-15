@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus.commands.climb.Rail;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.subsystems.Climb;
+import edu.greenblitz.pegasus.subsystems.RobotContainer;
 
 public class RailByJoystick extends RailCommand {
 
@@ -23,7 +24,7 @@ public class RailByJoystick extends RailCommand {
 		super.execute();
 		if (joystick.L1.get()) {
 			if (joystick.R1.get()) {
-				Climb.getInstance().resetRailEncoder();
+				RobotContainer.getInstance().getClimb().resetRailEncoder();
 			}
 			double railMotorPower = -joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y) * powerFactor;
 			climb.unsafeMoveRailMotor(railMotorPower);

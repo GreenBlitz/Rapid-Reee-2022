@@ -1,14 +1,14 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.gblib.motors.AbstractMotor;
-import edu.greenblitz.gblib.motors.SparkMax.SparkMaxFactory;
-import edu.greenblitz.gblib.subsystems.Chassis.ArcadeDrive;
+import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
+import edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
 import edu.greenblitz.gblib.subsystems.Chassis.Chassis;
 import edu.greenblitz.gblib.subsystems.shooter.Shooter;
-import edu.greenblitz.gblib.subsystems.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
+import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
@@ -24,26 +24,13 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
 		DigitalInputMap.getInstance();
-		Intake.getInstance();
-		Shifter.getInstance();
-		Funnel.getInstance();
 
-		Shooter.create(new SparkMaxFactory()
-						.withInverted(RobotMap.Pegasus.Shooter.ShooterMotor.LEADER_INVERTED)
-						.withIdleMode(AbstractMotor.IdleMode.Coast)
-						.withCurrentLimit(40)
-						.withRampRate(1),
-				RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
 
-		Climb.getInstance().initDefaultCommand(OI.getInstance().getSecondJoystick());
-		Indexing.getInstance();
 
-		Chassis.create(
-				new SparkMaxFactory().withCurrentLimit(40),
-				RobotMap.Pegasus.Chassis.Motors.ports,
-				RobotMap.Pegasus.Chassis.Motors.isInverted,
-				RobotMap.Pegasus.Chassis.WHEEL_DIST);
-		Chassis.getInstance().setDefaultCommand(new ArcadeDrive(OI.getInstance().getMainJoystick()));
+
+		RobotContainer.getInstance().getClimb().initDefaultCommand(OI.getInstance().getSecondJoystick());
+
+		RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(OI.getInstance().getMainJoystick()));
 		OI.getInstance();
 	}
 
@@ -65,8 +52,8 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().cancelAll();
 		new ToSpeed().schedule();
 		new ExtendRoller().schedule();
-		Indexing.getInstance().initSetAlliance();
-		Shooter.getInstance().setIdleMode(AbstractMotor.IdleMode.Coast);
+		RobotContainer.getInstance().getIndexing().initSetAlliance();
+		RobotContainer.getInstance().getShooter().setIdleMode(AbstractMotor.IdleMode.Coast);
 		new SequentialCommandGroup(
 				new ParallelRaceGroup(
 						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, 2300) {
@@ -91,8 +78,8 @@ public class Robot extends TimedRobot {
 	*/
 	@Override
 	public void autonomousInit() {
-		Chassis.getInstance().setIdleMode(AbstractMotor.IdleMode.Brake);
-		Chassis.getInstance().resetGyro();
+		RobotContainer.getInstance().getChassis().setIdleMode(AbstractMotor.IdleMode.Brake);
+		RobotContainer.getInstance().getChassis().resetGyro();
 		//Climb.getInstance().resetTurningMotorTicks();
 		//Climb.getInstance().resetRailMotorTicks();
 		new StopShooter().schedule();

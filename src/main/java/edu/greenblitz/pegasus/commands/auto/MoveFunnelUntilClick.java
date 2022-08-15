@@ -2,12 +2,13 @@ package edu.greenblitz.pegasus.commands.auto;
 
 import edu.greenblitz.pegasus.commands.funnel.FunnelCommand;
 import edu.greenblitz.pegasus.subsystems.Indexing;
+import edu.greenblitz.pegasus.subsystems.RobotContainer;
 
 public class MoveFunnelUntilClick extends FunnelCommand {
 	private final Indexing indexing;
 
 	public MoveFunnelUntilClick() {
-		this.indexing = Indexing.getInstance();
+		this.indexing = RobotContainer.getInstance().getIndexing();
 	}
 
 	@Override

@@ -10,31 +10,19 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Intake {
-	private static Intake instance;
 	private final Roller roller;
 	private final Extender extender;
 
 	protected Intake() {
 		roller = new Intake.Roller();
 		extender = new Intake.Extender();
+		CommandScheduler.getInstance().registerSubsystem(roller);
+		CommandScheduler.getInstance().registerSubsystem(extender);
+
 	}
 
-	private static void init() {
-		instance = new Intake();
-		CommandScheduler.getInstance().registerSubsystem(instance.roller);
-		CommandScheduler.getInstance().registerSubsystem(instance.extender);
-	}
-
-	public static Intake getInstance() {
-		if (instance == null) {
-			init();
-		}
-		return instance;
-	}
-
-	public void initDefaultCommand(SmartJoystick joystick) {
-		instance.getRoller().setDefaultCommand(new HandleBalls());
-//		Funnel.getInstance().setDefaultCommand(new RunFunnel());
+	public void initDefaultCommand() {
+		getRoller().setDefaultCommand(new HandleBalls());
 	}
 
 	public void moveRoller(double power) {

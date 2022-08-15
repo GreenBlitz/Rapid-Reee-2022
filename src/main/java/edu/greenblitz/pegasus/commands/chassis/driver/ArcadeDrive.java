@@ -1,7 +1,7 @@
 package edu.greenblitz.pegasus.commands.chassis.driver;
 
 import edu.greenblitz.gblib.gear.GearDependentValue;
-import edu.greenblitz.gblib.motors.AbstractMotor;
+import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
 import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 

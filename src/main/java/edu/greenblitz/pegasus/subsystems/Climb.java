@@ -2,9 +2,9 @@ package edu.greenblitz.pegasus.subsystems;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.gblib.motion.pid.PIDObject;
-import edu.greenblitz.gblib.motors.AbstractMotor;
-import edu.greenblitz.gblib.motors.GBMotor;
-import edu.greenblitz.gblib.motors.SparkMax.SparkMaxFactory;
+import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
+import edu.greenblitz.gblib.motors.brushless.GBMotor;
+import edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
 import edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
@@ -12,7 +12,6 @@ import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climb extends GBSubsystem {
-	private static Climb instance;
 
 	// Rail motor moves the system forward and backward
 	// Turning motor changes the angle of the system itself
@@ -28,16 +27,6 @@ public class Climb extends GBSubsystem {
 
 	}
 
-	private static void init() {
-		instance = new Climb();
-	}
-
-	public static Climb getInstance() {
-		if (instance == null) {
-			init();
-		}
-		return instance;
-	}
 
 	public double getLoc() {
 		double delta = getRailMotorRotations() / RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_ROTATIONS_PER_METER;

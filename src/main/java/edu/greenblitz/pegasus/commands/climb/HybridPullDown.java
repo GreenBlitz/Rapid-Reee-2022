@@ -1,7 +1,7 @@
 package edu.greenblitz.pegasus.commands.climb;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.gblib.motors.AbstractMotor;
+import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
 import edu.greenblitz.gblib.subsystems.Chassis.Chassis;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
@@ -10,6 +10,7 @@ import edu.greenblitz.pegasus.commands.climb.Turning.HoldTurning;
 import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;
 import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
 import edu.greenblitz.pegasus.subsystems.Climb;
+import edu.greenblitz.pegasus.subsystems.RobotContainer;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -19,8 +20,8 @@ public class HybridPullDown extends ParallelRaceGroup {
 
 	public HybridPullDown(SmartJoystick joystick) {
 		super();
-		Climb climb = Climb.getInstance();
-		addRequirements(Climb.getInstance());
+		Climb climb = RobotContainer.getInstance().getClimb();
+		addRequirements(RobotContainer.getInstance().getClimb());
 		addCommands(
 				new SequentialCommandGroup(
 						new ParallelRaceGroup(
@@ -28,7 +29,7 @@ public class HybridPullDown extends ParallelRaceGroup {
 								new WaitUntilCommand(() -> Math.abs(RailToSecondBar.GOAL - climb.getLoc()) > 0.23),
 								new SequentialCommandGroup(
 										new WaitUntilCommand(() -> Math.abs(RailToSecondBar.GOAL - climb.getLoc()) > 0.07),
-										new InstantCommand(() -> Chassis.getInstance().setIdleMode(AbstractMotor.IdleMode.Coast))
+										new InstantCommand(() -> RobotContainer.getInstance().getChassis().setIdleMode(AbstractMotor.IdleMode.Coast))
 								)
 						),
 						new ParallelRaceGroup(
@@ -67,8 +68,8 @@ public class HybridPullDown extends ParallelRaceGroup {
 	@Override
 	public void end(boolean interrupted) {
 		super.end(interrupted);
-		Climb.getInstance().setTurningMotorIdle(AbstractMotor.IdleMode.Brake);
-		Chassis.getInstance().setIdleMode(AbstractMotor.IdleMode.Brake);
+		RobotContainer.getInstance().getClimb().setTurningMotorIdle(AbstractMotor.IdleMode.Brake);
+		RobotContainer.getInstance().getChassis().setIdleMode(AbstractMotor.IdleMode.Brake);
 		System.out.println("finished pulling:  " + interrupted);
 	}
 

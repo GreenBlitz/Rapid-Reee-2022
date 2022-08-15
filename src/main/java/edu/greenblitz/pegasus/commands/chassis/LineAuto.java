@@ -1,6 +1,5 @@
 package edu.greenblitz.pegasus.commands.chassis;
 
-import edu.greenblitz.gblib.subsystems.Chassis.ChassisCommand;
 
 public class LineAuto extends ChassisCommand {
 	//makes chassis activate with same power for both wheels

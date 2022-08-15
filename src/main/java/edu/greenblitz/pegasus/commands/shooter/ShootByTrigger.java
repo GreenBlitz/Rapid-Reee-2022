@@ -2,7 +2,6 @@ package edu.greenblitz.pegasus.commands.shooter;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.gblib.motion.pid.PIDObject;
-import edu.greenblitz.gblib.subsystems.shooter.ShooterByRPM;
 
 public class ShootByTrigger extends ShooterByRPM {
 
@@ -11,8 +10,8 @@ public class ShootByTrigger extends ShooterByRPM {
 	private final SmartJoystick.Axis axis;
 
 
-	public ShootByTrigger(PIDObject obj, double iZone, double target, SmartJoystick joystick, SmartJoystick.Axis axis) {
-		super(obj, iZone, target);
+	public ShootByTrigger(PIDObject obj, double target, SmartJoystick joystick, SmartJoystick.Axis axis) {
+		super(obj, target);
 		this.joystick = joystick;
 		this.axis = axis;
 	}

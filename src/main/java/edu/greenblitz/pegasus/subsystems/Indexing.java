@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.util.Color;
 public class Indexing extends GBSubsystem {
 	private static final double MARGIN_OF_ERROR = 0.1;
 	private static final double THRESHOLD = 0.3;
-	private static Indexing instance;
 	private final I2C.Port i2cPort = I2C.Port.kOnboard;
 	private final ColorSensorV3 colorSensor;
 	private final DigitalInput macroSwitch;
@@ -24,17 +23,6 @@ public class Indexing extends GBSubsystem {
 		macroSwitch = DigitalInputMap.getInstance().getDigitalInput(RobotMap.Pegasus.Funnel.MACRO_SWITCH_PORT);
 		ballCount = 0;
 		System.out.println(DriverStation.getAlliance());
-	}
-
-	private static void init() {
-		instance = new Indexing();
-	}
-
-	public static Indexing getInstance() {
-		if (instance == null) {
-			init();
-		}
-		return instance;
 	}
 
 	public Color getColor() {
