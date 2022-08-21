@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class ShootAndGo extends SequentialCommandGroup {
-	public ShootAndGo(double movementTime){
+	public ShootAndGo(double movementTime) {
 		addCommands(
 				new ParallelRaceGroup(
 						new WaitCommand(1),

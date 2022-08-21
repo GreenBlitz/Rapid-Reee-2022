@@ -1,16 +1,16 @@
 package edu.greenblitz.pegasus.commands.climb.Turning;
 
-import edu.greenblitz.gblib.command.GBCommand;
-import edu.greenblitz.pegasus.commands.climb.ClimbCommand;
+import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.pegasus.subsystems.Climb;
+import edu.greenblitz.pegasus.subsystems.RobotContainer;
 
 public abstract class TurningCommand extends GBCommand {
-	
+
 	Climb climb;
-	
-	public TurningCommand(){
-		climb = Climb.getInstance();
+
+	public TurningCommand() {
+		climb = RobotContainer.getInstance().getClimb();
 		require(climb.getTurning());
 	}
-	
+
 }

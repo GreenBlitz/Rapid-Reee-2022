@@ -1,20 +1,20 @@
 package edu.greenblitz.pegasus.commands.multiSystem;
 
-import edu.greenblitz.gblib.command.GBCommand;
-import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.pegasus.subsystems.Funnel;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.Intake;
+import edu.greenblitz.pegasus.subsystems.RobotContainer;
 
 public class MoveBallUntilClick extends GBCommand {
-	private Funnel funnel;
-	private Intake intake;
-	private Indexing indexing;
+	private final Funnel funnel;
+	private final Intake intake;
+	private final Indexing indexing;
 
-	public MoveBallUntilClick(){
-		this.funnel = Funnel.getInstance();
-		this.intake = Intake.getInstance();
-		this.indexing = Indexing.getInstance();
+	public MoveBallUntilClick() {
+		this.funnel = RobotContainer.getInstance().getFunnel();
+		this.intake = RobotContainer.getInstance().getIntake();
+		this.indexing = RobotContainer.getInstance().getIndexing();
 	}
 
 	@Override

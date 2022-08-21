@@ -11,6 +11,7 @@ public class MoveTurningToAngle extends TurningCommand {
 	private double goal;
 	private boolean atAngle;
 	private ClimbState state;
+
 	public MoveTurningToAngle(double goalAngle) {
 		super();
 		goal = goalAngle;
@@ -41,14 +42,14 @@ public class MoveTurningToAngle extends TurningCommand {
 		return Math.abs(goal - climb.getAng()) < RobotMap.Pegasus.Climb.ClimbConstants.Rotation.EPSILON;
 	}
 
-	
-	public ClimbState getState(){
+
+	public ClimbState getState() {
 		return state;
 	}
-	
+
 	public void setState(ClimbState state) {
 		this.state = state;
-		switch (state){
+		switch (state) {
 			case PULL_UP:
 				goal = RobotMap.Pegasus.Climb.ClimbConstants.Rotation.RADIANS_TO_SECOND_BAR;
 				break;

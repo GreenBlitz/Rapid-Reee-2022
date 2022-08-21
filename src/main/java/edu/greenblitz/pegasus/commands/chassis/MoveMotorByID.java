@@ -1,13 +1,11 @@
 package edu.greenblitz.pegasus.commands.chassis;
 
-import com.revrobotics.CANSparkMax;
-import edu.greenblitz.pegasus.subsystems.Chassis;
 
 public class MoveMotorByID extends ChassisCommand {
-	private double power;
-	private int id;
+	private final double power;
+	private final int id;
 
-	public MoveMotorByID(int id, double power){
+	public MoveMotorByID(int id, double power) {
 		this.power = power;
 		this.id = id;
 	}

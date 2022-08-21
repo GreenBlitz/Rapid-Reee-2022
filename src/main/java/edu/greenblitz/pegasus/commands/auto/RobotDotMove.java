@@ -1,17 +1,18 @@
 package edu.greenblitz.pegasus.commands.auto;
 
+
 import edu.greenblitz.pegasus.commands.chassis.ChassisCommand;
 
 public class RobotDotMove extends ChassisCommand {
 	private static final double DEF_POWER = -0.1;
 
-	private double power;
+	private final double power;
 
-	public RobotDotMove(){
+	public RobotDotMove() {
 		this.power = DEF_POWER;
 	}
 
-	public RobotDotMove(double power){
+	public RobotDotMove(double power) {
 		this.power = power;
 	}
 
@@ -22,6 +23,6 @@ public class RobotDotMove extends ChassisCommand {
 
 	@Override
 	public void end(boolean interrupted) {
-		chassis.moveMotors(0,0);
+		chassis.moveMotors(0, 0);
 	}
 }

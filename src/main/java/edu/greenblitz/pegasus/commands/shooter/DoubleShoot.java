@@ -1,17 +1,19 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
-import com.revrobotics.CANSparkMax;
-import edu.greenblitz.pegasus.RobotMap.Pegasus.Funnel;
-import edu.greenblitz.pegasus.RobotMap.Pegasus.Intake;
-import edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter;
+
+import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
-import edu.wpi.first.wpilibj2.command.*;
+import edu.greenblitz.pegasus.subsystems.RobotContainer;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 public class DoubleShoot extends SequentialCommandGroup {
 
-	private double RPM1;
-	private double RPM2;
+	private final double RPM1;
+	private final double RPM2;
 
 	public DoubleShoot(double RPM1, double RPM2) {
 		super();
@@ -21,9 +23,9 @@ public class DoubleShoot extends SequentialCommandGroup {
 		addCommands(
 				new ParallelRaceGroup(
 						new FirstInsertIntoShooter(),
-						new ShooterByRPM(Shooter.ShooterMotor.pid, Shooter.ShooterMotor.iZone, RPM1),
+						new ShooterByRPM(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM1),
 						new SequentialCommandGroup(
-								new WaitUntilCommand(() -> edu.greenblitz.pegasus.subsystems.Shooter.getInstance().isPreparedToShoot()),
+								new WaitUntilCommand(() -> RobotContainer.getInstance().getShooter().isPreparedToShoot()),
 								new WaitCommand(1)
 						)
 				),
@@ -33,9 +35,9 @@ public class DoubleShoot extends SequentialCommandGroup {
 				),
 				new ParallelRaceGroup(
 						new InsertIntoShooter(),
-						new ShooterByRPM(Shooter.ShooterMotor.pid, Shooter.ShooterMotor.iZone, RPM2),
+						new ShooterByRPM(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM2),
 						new SequentialCommandGroup(
-								new WaitUntilCommand(() -> edu.greenblitz.pegasus.subsystems.Shooter.getInstance().isPreparedToShoot()),
+								new WaitUntilCommand(() -> RobotContainer.getInstance().getShooter().isPreparedToShoot()),
 								new WaitCommand(1)
 						)),
 				new WaitCommand(0.2)
@@ -49,18 +51,18 @@ public class DoubleShoot extends SequentialCommandGroup {
 	}
 
 	public DoubleShoot() {
-		this(Shooter.ShooterMotor.RPM);
+		this(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.RPM);
 	}
 
 	@Override
 	public void initialize() {
-		edu.greenblitz.pegasus.subsystems.Shooter.getInstance().setIdleMode(CANSparkMax.IdleMode.kCoast);
+		RobotContainer.getInstance().getShooter().setIdleMode(AbstractMotor.IdleMode.Coast);
 		super.initialize();
 	}
 
 	@Override
 	public void end(boolean interrupted) {
 		super.end(interrupted);
-		edu.greenblitz.pegasus.subsystems.Shooter.getInstance().setSpeedByPID(0);
+		RobotContainer.getInstance().getShooter().setSpeedByPID(0);
 	}
 }

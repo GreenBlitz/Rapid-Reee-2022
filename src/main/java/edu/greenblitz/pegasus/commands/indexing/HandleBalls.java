@@ -6,7 +6,7 @@ import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class HandleBalls extends IndexingCommand{
+public class HandleBalls extends IndexingCommand {
 	private Command lastCommand;
 
 	@Override
@@ -16,7 +16,7 @@ public class HandleBalls extends IndexingCommand{
 
 	@Override
 	public void execute() {
-		if(lastCommand == null || lastCommand.isFinished()) { //need to do an action - not action is active right now
+		if (lastCommand == null || lastCommand.isFinished()) { //need to do an action - not action is active right now
 			if (indexing.getPerceivedColor() == indexing.getAllianceColor()) { //the incoming ball is the same color
 				System.out.println("Adding a ball");
 				indexing.addBall();
@@ -24,15 +24,15 @@ public class HandleBalls extends IndexingCommand{
 					System.out.println("Moving until click");
 					lastCommand = new MoveBallUntilClick();
 					lastCommand.schedule(false);
-				}else{
+				} else {
 					//No need for action - the incoming ball is the second ball
 				}
-			} else if(indexing.getPerceivedColor() != Indexing.BallColor.OTHER){ //the incoming ball is the second ball
+			} else if (indexing.getPerceivedColor() != Indexing.BallColor.OTHER) { //the incoming ball is the second ball
 				System.out.println("Trying to eject");
 				if (!indexing.isBallUp()) { // there are no balls in the system - shoot by shooter
 					System.out.println("Shooter");
 					lastCommand = new EjectEnemyBallFromShooter();
-				}else{ //there is one ball in the system - shoot by gripper
+				} else { //there is one ball in the system - shoot by gripper
 					System.out.println("Gripper");
 					lastCommand = new EjectEnemyBallFromGripper();
 				}

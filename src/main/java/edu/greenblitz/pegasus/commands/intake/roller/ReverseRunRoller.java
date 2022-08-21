@@ -1,6 +1,6 @@
 package edu.greenblitz.pegasus.commands.intake.roller;
 
-public class ReverseRunRoller extends RollerCommand{
+public class ReverseRunRoller extends RollerCommand {
 	@Override
 	public void execute() {
 		intake.moveRoller(true);
@@ -14,5 +14,5 @@ public class ReverseRunRoller extends RollerCommand{
 	@Override
 	public void end(boolean interrupted) {
 		intake.stopRoller();
-}
+	}
 }

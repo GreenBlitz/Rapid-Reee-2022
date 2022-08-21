@@ -1,15 +1,11 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.gblib.gears.Gear;
-import edu.greenblitz.gblib.gears.GearDependentValue;
+
+import edu.greenblitz.gblib.gear.GearDependentValue;
+import edu.greenblitz.gblib.motion.pid.PIDObject;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
-import org.greenblitz.motion.pid.PIDObject;
-import org.greenblitz.motion.profiling.ProfilingConfiguration;
-import org.greenblitz.motion.profiling.ProfilingData;
-import org.opencv.core.Mat;
-
-import java.util.HashMap;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.SafetyZones.HIGHEST_ANGLE;
 
@@ -22,21 +18,24 @@ public class RobotMap {
 
 		public static class Chassis {
 			public static final double WHEEL_DIST = 0.564; //very accurate right now
+			public static final double startAngle = Math.toRadians(23);
 
 			public static class Motors {
+				public static final int[] ports = {1, 2, 3, 4, 5, 6};
+				public static final boolean[] isInverted = {true, true, true, false, false, false};
 				public static final int RIGHT_LEADER = 1, RIGHT_FOLLOWER_1 = 2, RIGHT_FOLLOWER_2 = 3, LEFT_LEADER = 4, LEFT_FOLLOWER_1 = 5, LEFT_FOLLOWER_2 = 6;
 				public static final boolean RIGHT_LEADER_REVERSED = true, RIGHT_FOLLOWER_1_REVERSED = true, RIGHT_FOLLOWER_2_REVERSED = true, LEFT_LEADER_REVERSED = false, LEFT_FOLLOWER_1_REVERSED = false, LEFT_FOLLOWER_2_REVERSED = false;
 			}
 
 			public static class Encoders {
-				public static final GearDependentValue<Double> NORM_CONST_SPARK = new GearDependentValue<>(2300.0 * 0.64, 1234.0 / 2.0); // TODO: check this, I copied it from Infinite Reeee
+				public static final GearDependentValue NORM_CONST_SPARK = new GearDependentValue(2300.0 * 0.64, 1234.0 / 2.0); // TODO: check this, I copied it from Infinite Reeee
 				public static final int RIGHT_ENCODER = -1, LEFT_ENCODER = -1;
 				public static final boolean RIGHT_ENCODER_REVERSED = false, LEFT_ENCODER_REVERSED = false;
 			}
-			
-			public static final double startAngle = Math.toRadians(23);
 
 			public static class Shifter {
+				public static final DoubleSolenoid.Value POWER_VALUE = DoubleSolenoid.Value.kForward;
+				public static final DoubleSolenoid.Value SPEED_VALUE = DoubleSolenoid.Value.kReverse;
 
 				public static class Solenoid {
 					public static final int FORWARD_PORT = 3;
@@ -44,31 +43,34 @@ public class RobotMap {
 				}
 			}
 
-			public static class MotionData { // TODO: calibrate this
-
-				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(0.85, 1.0, .0005, 0.8, 0.0, 2.0, .01, 0.5 * 0, 0, 0, .01, 500);
-				public static HashMap<String, ProfilingData> POWER;
-				public static HashMap<String, ProfilingData> SPEED;
-				public static GearDependentValue<HashMap<String, ProfilingData>> PROF;
-
-				static {
-
-					POWER = new HashMap<>();
-					SPEED = new HashMap<>();
-					PROF = new GearDependentValue<>(null, null);
-
-					POWER.put("0.5", new ProfilingData(1.4, 8.4, 4, 10));
-
-					PROF.setValue(Gear.POWER, POWER);
-					PROF.setValue(Gear.SPEED, SPEED);
-				}
-
-			}
+//			public static class MotionData { // TODO: calibrate this
+//
+//				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(0.85, 1.0, .0005, 0.8, 0.0, 2.0, .01, 0.5 * 0, 0, 0, .01, 500);
+//				public static HashMap<String, ProfilingData> POWER;
+//				public static HashMap<String, ProfilingData> SPEED;
+//				public static GearDependentValue<HashMap<String, ProfilingData>> PROF;
+//
+//				static {
+//
+//					POWER = new HashMap<>();
+//					SPEED = new HashMap<>();
+//					PROF = new GearDependentValue<>(null, null);
+//
+//					POWER.put("0.5", new ProfilingData(1.4, 8.4, 4, 10));
+//
+//					PROF.setValue(true, POWER);
+//					PROF.setValue(false, SPEED);
+//				}
+//
+//			}
 
 
 		}
 
 		public static class Intake {
+
+			public static final double POWER = 1.0;
+			public static final double REVERSE_POWER = -1.0;
 
 			public static class Motors {
 				public static final int ROLLER_PORT = 6;
@@ -79,13 +81,11 @@ public class RobotMap {
 				public static final int FORWARD_PORT = 2;
 				public static final int REVERSE_PORT = 0;
 			}
-			
-			public static final double POWER = 1.0;
-			public static final double REVERSE_POWER = -1.0;
 		}
 
 		public static class Shooter {
 			public static class ShooterMotor {
+				public static final int PORT_LEADER = 7; /*,
 				public static final int PORT_LEADER = 7; /*,
 						PORT_FOLLOWER = 2;*/
 				public static final boolean LEADER_INVERTED = true;  /*,
@@ -93,6 +93,8 @@ public class RobotMap {
 
 
 				public static final Dataset RPM_TO_POWER = new Dataset(2);
+				public static final double RPM = 2350; // Should be 2300
+				public static final PIDObject pid = new PIDObject(0.0002, 0.0000003, 0).withIZone(300); //d1: 0.0001, 0.0000003, 0
 
 				static {
 					RPM_TO_POWER.addDatapoint(0, new double[]{-0.0000000001});
@@ -107,23 +109,20 @@ public class RobotMap {
 					RPM_TO_POWER.addDatapoint(4664.115322265625, new double[]{0.9});
 					RPM_TO_POWER.addDatapoint(5209.37181640625, new double[]{1.0});
 				}
-				public static final double RPM = 2350; // Should be 2300
-				public static final PIDObject pid = new PIDObject(0.0002, 0.0000003, 0); //d1: 0.0001, 0.0000003, 0
-				public static final double iZone = 300;
 			}
 		}
 
 		public static class Funnel {
+			public static final double POWER = 0.7;
+			public static final double REVERSE_POWER = -0.7;
+			public static final int MACRO_SWITCH_PORT = 0;
+
 			public static class FunnelMotor {
 				public static final int MOTOR_PORT = 5;
 				public static final boolean IS_REVERSED = true;
 			}
-
-			public static final double POWER = 0.7;
-			public static final double REVERSE_POWER = -0.7;
-			public static final int MACRO_SWITCH_PORT = 0;
 		}
-		
+
 		public static class Climb {
 			public static class SafetyZones {
 				public static final double RAIL_SAFETY_OFFSET = 0.02;
@@ -137,20 +136,20 @@ public class RobotMap {
 				public static final double BATTERY_SAFETY_ANG = Math.toRadians(45.5); // Math.toDegrees(51.5)
 				public static final double BATTERY_SAFETY_LOC = 0.35;
 			}
-			
+
 			public static class ClimbMotors {
 				public static final int RAIL_MOTOR_PORT = 9;
 				public static final boolean RAIL_MOTOR_REVERSED = false;
-				public static final double RAIL_MOTOR_TICKS_PER_METER = 8544;
+				public static final double RAIL_MOTOR_ROTATIONS_PER_METER = 203.43;
 				public static final double RAIL_LENGTH = 0.89;
 				public static final double START_LOCATION = 0.633;
 				public static final int TURNING_MOTOR_PORT = 11;
 				public static final boolean TURNING_MOTOR_REVERSED = false;
-				public static final double TURNING_MOTOR_TICKS_PER_RADIAN = 2139;
+				public static final double TURNING_MOTOR_ROTATIONS_PER_RADIAN = 50.9;
 				public static final double START_ANGLE = Math.toRadians(15.985);
 				public static final double MID_START_ANGLE = Math.toRadians(20) + START_ANGLE;
 			}
-			
+
 			public static class ClimbConstants {
 				public static class Rotation {
 					public static final double kp = 0.3 / Math.PI * 2;
@@ -164,7 +163,7 @@ public class RobotMap {
 					public static final double EPSILON = Math.toRadians(2);
 					public static final double EPSILON_STATIC = Math.toRadians(2);
 				}
-				
+
 				public static class Rail {
 					public static final double kp = 3; //10
 					public static final double ff = 0.2;
@@ -176,12 +175,13 @@ public class RobotMap {
 				}
 			}
 		}
-		
+
 		public static class Pneumatics {
 			public static class PCM {
 				public static final int PCM_ID = 21;
 				public static final PneumaticsModuleType PCM_TYPE = PneumaticsModuleType.CTREPCM;
 			}
+
 			public static class PressureSensor {
 				public static final int PRESSURE = 3;
 			}
