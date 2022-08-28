@@ -24,7 +24,7 @@ public class ShooterByRPM extends ShooterCommand {
 	public void initialize() {
 		shooter.setPreparedToShoot(false);
 //		shooter.getPIDController().setIAccum(0.0);
-		PIDObject temp = new PIDObject(pidObject);
+		PIDObject temp = new PIDObject(pidObject.getKp(),pidObject.getKi(), pidObject.getKd(), pidObject.getKf(), pidObject.getInverted(), pidObject.getIZone());
 		temp.setFF(RobotMap.Pegasus.Shooter.ShooterMotor.RPM_TO_POWER.linearlyInterpolate(target)[0] / target);
 		shooter.setPIDConsts(temp);
 		tStart = System.currentTimeMillis() / 1000.0;

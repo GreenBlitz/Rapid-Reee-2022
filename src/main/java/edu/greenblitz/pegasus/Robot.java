@@ -24,13 +24,8 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
 		DigitalInputMap.getInstance();
-
-
-
-
-		RobotContainer.getInstance().getClimb().initDefaultCommand(OI.getInstance().getSecondJoystick());
-
-		RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(OI.getInstance().getMainJoystick()));
+//		RobotContainer.getInstance().getClimb().initDefaultCommand(OI.getInstance().getSecondJoystick());
+//		RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(OI.getInstance().getMainJoystick()));
 		OI.getInstance();
 	}
 
@@ -50,7 +45,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
-		new ToSpeed().schedule();
+		/*new ToSpeed().schedule();
 		new ExtendRoller().schedule();
 		RobotContainer.getInstance().getIndexing().initSetAlliance();
 		RobotContainer.getInstance().getShooter().setIdleMode(AbstractMotor.IdleMode.Coast);
@@ -65,7 +60,7 @@ public class Robot extends TimedRobot {
 						new MoveBallUntilClick(),
 						new WaitCommand(3)
 				)
-		);//.schedule();
+		);//.schedule();*/
 	}
 
 	@Override

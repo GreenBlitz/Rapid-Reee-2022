@@ -3,7 +3,10 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.gblib.motors.brushed.TalonSRX.TalonSRXFactory;
+import edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
 import edu.greenblitz.gblib.subsystems.Chassis.Chassis;
+import edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
 import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import edu.greenblitz.pegasus.commands.climb.*;
 import edu.greenblitz.pegasus.commands.climb.Rail.MoveRailToPosition;
@@ -24,6 +27,7 @@ import edu.greenblitz.pegasus.commands.shifter.ToggleShifter;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.commands.swerve.RotateToAngle;
 import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.greenblitz.pegasus.subsystems.RobotContainer;
 import edu.wpi.first.wpilibj2.command.*;
@@ -31,7 +35,7 @@ import edu.wpi.first.wpilibj2.command.*;
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
 
 public class OI {
-	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.DEBUG2; //decides which set of controls to init.
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -70,10 +74,9 @@ public class OI {
 	}
 
 	private void initDebug2Buttons() {
-		mainJoystick.A.whileHeld(new ShootByConstant(0.3));
-		RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(mainJoystick));
+		mainJoystick.POV_UP.whenPressed(new RotateToAngle(0));
 	}
-
+ 
 	private void initDebugButtons() {
 		mainJoystick.A.whenPressed(new DoubleShoot());
 		mainJoystick.B.whileHeld(new RunFunnel());
