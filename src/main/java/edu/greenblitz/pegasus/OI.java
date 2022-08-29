@@ -27,6 +27,7 @@ import edu.greenblitz.pegasus.commands.shifter.ToggleShifter;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.commands.swerve.CalibrateMaxMin;
 import edu.greenblitz.pegasus.commands.swerve.RotateToAngle;
 import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.greenblitz.pegasus.subsystems.RobotContainer;
@@ -75,6 +76,8 @@ public class OI {
 
 	private void initDebug2Buttons() {
 		mainJoystick.POV_UP.whenPressed(new RotateToAngle(0));
+		mainJoystick.A.whileHeld(new CalibrateMaxMin(0.09));
+		mainJoystick.B.whileHeld(new CalibrateMaxMin(-0.09));
 	}
  
 	private void initDebugButtons() {

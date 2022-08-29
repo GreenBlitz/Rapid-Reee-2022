@@ -10,6 +10,7 @@ import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
+import edu.greenblitz.pegasus.commands.swerve.ModuleTest;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
+		ModuleTest.getInstance();
 		/*new ToSpeed().schedule();
 		new ExtendRoller().schedule();
 		RobotContainer.getInstance().getIndexing().initSetAlliance();
