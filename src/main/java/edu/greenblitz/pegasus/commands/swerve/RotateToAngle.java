@@ -32,6 +32,8 @@ public class RotateToAngle extends SwerveCommand{
 		object.setFF(SmartDashboard.getNumber("ff", object.getKf()));
 		object.setIZone(SmartDashboard.getNumber("iZone", object.getIZone()));
 		object.setMaxPower(SmartDashboard.getNumber("maxPower", object.getMaxPower()));
+		SmartDashboard.putNumber("curr target",moduleTest.getCurrentAngle());
+		SmartDashboard.putNumber("is reversed",moduleTest.getIsReversed());
 		target = SmartDashboard.getNumber("target", target);
 		moduleTest.configAnglePID(object);
 		moduleTest.rotateToAngle(target);
