@@ -22,8 +22,8 @@ public class CalibrateMaxMin extends SwerveCommand {
 		moduleTest.setRotpower(power);
 		maxVal = Math.max(maxVal,moduleTest.getLampreyAngle());
 		minVal = Math.min(minVal,moduleTest.getLampreyAngle());
-		SmartDashboard.putNumber("max",maxVal);
-		SmartDashboard.putNumber("min",minVal);
+		SmartDashboard.putNumber("motor",moduleTest.getMotorAngle());
+		SmartDashboard.putNumber("lamprey",moduleTest.getLampreyAngle());
 	}
 
 	@Override

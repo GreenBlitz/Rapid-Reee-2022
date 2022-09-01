@@ -46,7 +46,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
-		ModuleTest.getInstance();
+		ModuleTest.getInstance().restEncoderByLamprey();
 		/*new ToSpeed().schedule();
 		new ExtendRoller().schedule();
 		RobotContainer.getInstance().getIndexing().initSetAlliance();

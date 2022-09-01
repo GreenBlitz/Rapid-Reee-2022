@@ -11,7 +11,7 @@ public class ModuleTest extends SwerveModule implements Subsystem {
 	private static ModuleTest instance;
 
 	private ModuleTest() {
-		super(new SparkMaxFactory().withGearRatio(6), new TalonSRXFactory(), 8, 16, 3, 1,0);
+		super(new SparkMaxFactory().withGearRatio(6), new TalonSRXFactory(), 7, 16, 0, RobotMap.Pegasus.Swerve.Module2.MAX_LAMPREY_VAL,RobotMap.Pegasus.Swerve.Module2.MIN_LAMPREY_VAL);
 	}
 
 	public static ModuleTest getInstance() {
