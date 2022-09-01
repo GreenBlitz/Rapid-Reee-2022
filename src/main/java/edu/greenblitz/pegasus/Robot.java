@@ -1,23 +1,11 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
-import edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
-import edu.greenblitz.gblib.subsystems.Chassis.Chassis;
-import edu.greenblitz.gblib.subsystems.shooter.Shooter;
-import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
-import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
-import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
-import edu.greenblitz.pegasus.commands.shifter.ToSpeed;
-import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
-import edu.greenblitz.pegasus.commands.swerve.ModuleTest;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class Robot extends TimedRobot {
 
@@ -46,7 +34,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
-		ModuleTest.getInstance().restEncoderByLamprey();
 		/*new ToSpeed().schedule();
 		new ExtendRoller().schedule();
 		RobotContainer.getInstance().getIndexing().initSetAlliance();
@@ -79,7 +66,6 @@ public class Robot extends TimedRobot {
 		RobotContainer.getInstance().getChassis().resetGyro();
 		//Climb.getInstance().resetTurningMotorTicks();
 		//Climb.getInstance().resetRailMotorTicks();
-		new StopShooter().schedule();
 		//new DCMPAuto().schedule();
 	}
 
