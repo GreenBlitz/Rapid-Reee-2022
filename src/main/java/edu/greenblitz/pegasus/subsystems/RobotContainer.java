@@ -5,7 +5,7 @@ import edu.greenblitz.gblib.gyro.PigeonGyro;
 import edu.greenblitz.gblib.motors.brushed.TalonSRX.TalonSRXFactory;
 import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
 import edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
-import edu.greenblitz.gblib.subsystems.Chassis.Chassis;
+//import edu.greenblitz.gblib.subsystems.Chassis.Chassis;
 import edu.greenblitz.gblib.subsystems.shooter.Shooter;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
@@ -22,7 +22,7 @@ public class RobotContainer {
 	private Pneumatics pneumatics;
 	private Shifter shifter;
 	private Shooter shooter;
-	private Chassis chassis;
+	//private Chassis chassis;
 	private SwerveChassis swerve;
 	
 	public static RobotContainer getInstance() {
@@ -77,9 +77,9 @@ public class RobotContainer {
 		return shooter;
 	}
 	
-	public Chassis getChassis() {
-		return chassis;
-	}
+	//public Chassis getChassis() {
+		//return chassis;
+	//}
 	
 	public SwerveChassis getSwerve(){return swerve;}
 }

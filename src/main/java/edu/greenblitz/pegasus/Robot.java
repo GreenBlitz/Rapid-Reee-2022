@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
+import edu.greenblitz.pegasus.commands.swerve.ModuleTest;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -13,6 +14,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
 		DigitalInputMap.getInstance();
+		ModuleTest.getInstance().SwerveInit();
 //		RobotContainer.getInstance().getClimb().initDefaultCommand(OI.getInstance().getSecondJoystick());
 //		RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(OI.getInstance().getMainJoystick()));
 		OI.getInstance();
@@ -62,8 +64,8 @@ public class Robot extends TimedRobot {
 	*/
 	@Override
 	public void autonomousInit() {
-		RobotContainer.getInstance().getChassis().setIdleMode(AbstractMotor.IdleMode.Brake);
-		RobotContainer.getInstance().getChassis().resetGyro();
+		//RobotContainer.getInstance().getChassis().setIdleMode(AbstractMotor.IdleMode.Brake);
+		//RobotContainer.getInstance().getChassis().resetGyro();
 		//Climb.getInstance().resetTurningMotorTicks();
 		//Climb.getInstance().resetRailMotorTicks();
 		//new DCMPAuto().schedule();

@@ -117,7 +117,7 @@ public class OI {
 				new TurningByJoystick(secondJoystick)
 		));
 		
-		RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(mainJoystick));
+		//RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(mainJoystick));
 		
 		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
 		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
@@ -132,7 +132,7 @@ public class OI {
 		secondJoystick.L1.whileHeld(new RollByConstant(-0.8));
 		secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
 		
-		RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(mainJoystick));
+		//RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(mainJoystick));
 	}
 	
 	public SmartJoystick getMainJoystick() {
