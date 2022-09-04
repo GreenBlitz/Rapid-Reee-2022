@@ -13,7 +13,7 @@ public class MoveSingleByJoystick extends SwerveCommand {
 
 	@Override
 	public void initialize() {
-		ModuleTest.getInstance().configAnglePID(new PIDObject().withKp(0.1).withMaxPower(0.2));
+		ModuleTest.getInstance().configAnglePID(new PIDObject().withKp(0.1).withMaxPower(0.1));
 	}
 
 	@Override
