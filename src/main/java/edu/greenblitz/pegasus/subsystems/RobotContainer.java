@@ -34,12 +34,12 @@ public class RobotContainer {
 	}
 	
 	private RobotContainer() {
-		this.swerve = new SwerveChassis(
-				new SwerveModule(new SparkMaxFactory(), new TalonSRXFactory(), 8, 14, 3, 4012, 10 ),
-				new SwerveModule(new SparkMaxFactory(), new TalonSRXFactory(), 7, 16, 2, 4012, 10 ),
-				new SwerveModule(new SparkMaxFactory(), new TalonSRXFactory(), 11, 13, 1, 4012, 10 ),
-				new SwerveModule(new SparkMaxFactory(), new TalonSRXFactory(), 10, 15, 0, 4012, 10 ),
-				new PigeonGyro(new PigeonIMU(1)), 50, 50);
+		//this.swerve = new SwerveChassis(
+				//new SwerveModule(new SparkMaxFactory(), new TalonSRXFactory(), 8, 14, 3, 4012, 10 ),
+				//new SwerveModule(new SparkMaxFactory(), new TalonSRXFactory(), 7, 16, 2, 4012, 10 ),
+				//new SwerveModule(new SparkMaxFactory(), new TalonSRXFactory(), 11, 13, 1, 4012, 10 ),
+//				new SwerveModule(new SparkMaxFactory(), new TalonSRXFactory(), 10, 15, 0, 4012, 10 ),
+				//new PigeonGyro(new PigeonIMU(1)), 50, 50);
 		
 	}
 	protected void initDefaultCommands(){

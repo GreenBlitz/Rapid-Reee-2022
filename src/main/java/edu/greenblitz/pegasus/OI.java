@@ -3,7 +3,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
+//import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
 import edu.greenblitz.pegasus.commands.climb.*;
 import edu.greenblitz.pegasus.commands.climb.Rail.MoveRailToPosition;
 import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
@@ -22,9 +22,9 @@ import edu.greenblitz.pegasus.commands.shifter.ToggleShifter;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
-import edu.greenblitz.pegasus.commands.swerve.MoveByJoystick;
-import edu.greenblitz.pegasus.commands.swerve.MoveLin;
+import edu.greenblitz.pegasus.commands.swerve.*;
 import edu.greenblitz.pegasus.subsystems.RobotContainer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
@@ -44,7 +44,7 @@ public class OI {
 				initDebugButtons();
 				break;
 			case REAL:
-				initRealButtons();
+//				initRealButtons();
 				break;
 			case DEBUG2:
 				initDebug2Buttons();
@@ -68,8 +68,13 @@ public class OI {
 		isHandled = false;
 	}
 	
+	
 	private void initDebug2Buttons() {
-		RobotContainer.getInstance().getSwerve().setDefaultCommand(new MoveByJoystick(mainJoystick));
+		//RobotContainer.getInstance().getSwerve().setDefaultCommand(new MoveByJoystick(mainJoystick));
+		mainJoystick.X.whileHeld(new SetRotPower(0.1));
+		mainJoystick.A.whileHeld(new MoveLinModule(0.3));
+		mainJoystick.Y.whenHeld(new RotateToAngle(Math.PI/2));
+		mainJoystick.B.whenPressed(new MoveModuleLinAndAng(Math.PI/2,0.3));
 	}
 	
 	private void initDebugButtons() {
@@ -78,51 +83,51 @@ public class OI {
 		mainJoystick.Y.whileHeld(new RunRoller());
 	}
 	
-	private void initRealButtons() {
-		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
-		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.RPM) {
-			
-			@Override
-			public void end(boolean interrupted) {
-				super.end(interrupted);
-				shooter.setPower(0);
-			}
-		});
-		secondJoystick.B.whileHeld(
-				new ParallelCommandGroup(new MoveBallUntilClick(), new RollByConstant(1.0))//new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0))
-		);
-		
-		secondJoystick.START.whenPressed(new ToggleRoller());
-		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter());
-		
-		
-		secondJoystick.POV_UP.whenPressed(new FullClimb(secondJoystick));
-		secondJoystick.POV_RIGHT.whenPressed(
-				
-				new SequentialCommandGroup(
-						new MoveRailToPosition(0.613),
-						new MoveTurningToAngle(MID_START_ANGLE),
-						new ClimbMoveToPosition(ClimbState.MID_GAME)
-				));
-		secondJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
-		
-		secondJoystick.POV_LEFT.whenPressed(new ExtendFully());
-		secondJoystick.R1.whileHeld(new WhileHeldCoast());
-		
-		
-		RobotContainer.getInstance().getClimb().initDefaultCommand(secondJoystick);
-		
-		secondJoystick.L1.whenPressed(new ParallelCommandGroup(
-				new RailByJoystick(secondJoystick),
-				new TurningByJoystick(secondJoystick)
-		));
-		
-		//RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(mainJoystick));
-		
-		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
-		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
-		mainJoystick.L1.whenPressed(new ToggleShifter());
-	}
+//	private void initRealButtons() {
+//		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
+//		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.RPM) {
+//
+//			@Override
+//			public void end(boolean interrupted) {
+//				super.end(interrupted);
+//				shooter.setPower(0);
+//			}
+//		});
+//		secondJoystick.B.whileHeld(
+//				new ParallelCommandGroup(new MoveBallUntilClick(), new RollByConstant(1.0))//new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0))
+//		);
+//
+//		secondJoystick.START.whenPressed(new ToggleRoller());
+//		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter());
+//
+//
+//		secondJoystick.POV_UP.whenPressed(new FullClimb(secondJoystick));
+//		secondJoystick.POV_RIGHT.whenPressed(
+//
+//				new SequentialCommandGroup(
+//						new MoveRailToPosition(0.613),
+//						new MoveTurningToAngle(MID_START_ANGLE),
+//						new ClimbMoveToPosition(ClimbState.MID_GAME)
+//				));
+//		secondJoystick.POV_DOWN.whenPressed(new ClimbMoveToPosition(ClimbState.START));
+//
+//		secondJoystick.POV_LEFT.whenPressed(new ExtendFully());
+//		secondJoystick.R1.whileHeld(new WhileHeldCoast());
+//
+//
+//		RobotContainer.getInstance().getClimb().initDefaultCommand(secondJoystick);
+//
+//		secondJoystick.L1.whenPressed(new ParallelCommandGroup(
+//				new RailByJoystick(secondJoystick),
+//				new TurningByJoystick(secondJoystick)
+//		));
+//
+//		//RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(mainJoystick));
+//
+//		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
+//		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
+//		mainJoystick.L1.whenPressed(new ToggleShifter());
+//	}
 	
 	private void initTalButtons() {
 		secondJoystick.X.whenPressed(new SequentialCommandGroup(new ParallelRaceGroup(new WaitCommand(1), new ShootByConstant(0.7)), new ParallelRaceGroup(new WaitCommand(4), new ShootByConstant(0.7), new RunFunnel())));
