@@ -191,21 +191,24 @@ public class RobotMap {
 			public static final int MACRO_SWITCH = 0;
 		}
 
-		public static class Swerve{
+		public static class Swerve {
 
-			public static class Module1{
+			public static class Module1 {
 				public static final int MIN_LAMPREY_VAL = 7;
 				public static final int MAX_LAMPREY_VAL = 3981;
 			}
-			public static class Module2{
+
+			public static class Module2 {
 				public static final int MIN_LAMPREY_VAL = 94;
 				public static final int MAX_LAMPREY_VAL = 4028;
 			}
-			public static class Module3{
+
+			public static class Module3 {
 				public static final int MIN_LAMPREY_VAL = 10;
 				public static final int MAX_LAMPREY_VAL = 4012;
 			}
-			public static class Module4{
+
+			public static class Module4 {
 				public static final int MIN_LAMPREY_VAL = 101;
 				public static final int MAX_LAMPREY_VAL = 4035;
 			}

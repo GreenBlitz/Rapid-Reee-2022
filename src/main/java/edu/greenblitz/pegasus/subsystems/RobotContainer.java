@@ -1,15 +1,7 @@
 package edu.greenblitz.pegasus.subsystems;
 
-import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.greenblitz.gblib.gyro.PigeonGyro;
-import edu.greenblitz.gblib.motors.brushed.TalonSRX.TalonSRXFactory;
-import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
-import edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
-//import edu.greenblitz.gblib.subsystems.Chassis.Chassis;
 import edu.greenblitz.gblib.subsystems.shooter.Shooter;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
-import edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
-import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.compressor.HandleCompressor;
 
 public class RobotContainer {
@@ -24,15 +16,7 @@ public class RobotContainer {
 	private Shooter shooter;
 	//private Chassis chassis;
 	private SwerveChassis swerve;
-	
-	public static RobotContainer getInstance() {
-		if (instance == null) {
-			instance = new RobotContainer();
-//			instance.initDefaultCommands();
-		}
-		return instance;
-	}
-	
+
 	private RobotContainer() {
 		//this.swerve = new SwerveChassis(
 
@@ -44,46 +28,57 @@ public class RobotContainer {
 //
 
 	}
-	protected void initDefaultCommands(){
+
+	public static RobotContainer getInstance() {
+		if (instance == null) {
+			instance = new RobotContainer();
+//			instance.initDefaultCommands();
+		}
+		return instance;
+	}
+
+	protected void initDefaultCommands() {
 		pneumatics.setDefaultCommand(new HandleCompressor());
 
 
 	}
-	
-	
+
+
 	public Climb getClimb() {
 		return climb;
 	}
-	
+
 	public Funnel getFunnel() {
 		return funnel;
 	}
-	
+
 	public Indexing getIndexing() {
 		return indexing;
 	}
-	
+
 	public Intake getIntake() {
 		return intake;
 	}
-	
+
 	public Pneumatics getPneumatics() {
 		return pneumatics;
 	}
-	
+
 	public Shifter getShifter() {
 		return shifter;
 	}
-	
+
 	public Shooter getShooter() {
 		return shooter;
 	}
-	
+
 	//public Chassis getChassis() {
-		//return chassis;
+	//return chassis;
 	//}
-	
-	public SwerveChassis getSwerve(){return swerve;}
+
+	public SwerveChassis getSwerve() {
+		return swerve;
+	}
 }
 
 

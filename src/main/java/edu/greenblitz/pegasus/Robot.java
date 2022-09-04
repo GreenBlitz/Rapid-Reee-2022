@@ -1,12 +1,7 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
-import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.commands.swerve.ModuleTest;
 import edu.greenblitz.pegasus.commands.swerve.MoveSingleByJoystick;
-import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
-import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;

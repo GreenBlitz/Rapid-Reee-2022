@@ -5,12 +5,16 @@ import edu.greenblitz.gblib.utils.GBMath;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-public class RotateToAngle extends SwerveCommand{
+public class RotateToAngle extends SwerveCommand {
+	private final static double lampreyMinAng = 95;
+	private final static double lampreyMaxAng = 4034;
 	private double target;
-	private PIDObject object = new PIDObject().withKp(0.1).withMaxPower(0.05);
-	public RotateToAngle(double target){
+	private final PIDObject object = new PIDObject().withKp(0.1).withMaxPower(0.05);
+
+	public RotateToAngle(double target) {
 		this.target = target;
 	}
+
 	@Override
 	public void initialize() {
 		SmartDashboard.putNumber("kp", object.getKp());
@@ -34,19 +38,16 @@ public class RotateToAngle extends SwerveCommand{
 		object.setFF(SmartDashboard.getNumber("ff", object.getKf()));
 		object.setIZone(SmartDashboard.getNumber("iZone", object.getIZone()));
 		object.setMaxPower(SmartDashboard.getNumber("maxPower", object.getMaxPower()));
-		SmartDashboard.putNumber("motor angle",ModuleTest.getInstance().getMotorAngle());
+		SmartDashboard.putNumber("motor angle", ModuleTest.getInstance().getMotorAngle());
 //		SmartDashboard.putNumber("curr target",ModuleTest.getInstance().getMotorAngle());
-		SmartDashboard.putNumber("is reversed",ModuleTest.getInstance().getIsReversed());
+		SmartDashboard.putNumber("is reversed", ModuleTest.getInstance().getIsReversed());
 		SmartDashboard.putNumber("raw angle", GBMath.modulo(normalizeAngleToDegrees(ModuleTest.getInstance().getRawLampreyAngle() / 360 * 4076), 360));
 		target = SmartDashboard.getNumber("target", target);
 		ModuleTest.getInstance().configAnglePID(object);
 		ModuleTest.getInstance().rotateToAngle(target);
 	}
 
-	private final static double lampreyMinAng = 95;
-	private final static double lampreyMaxAng = 4034;
-
-	private double normalizeAngleToDegrees(double angle){
-		return (angle - lampreyMinAng) / (lampreyMaxAng - lampreyMinAng) * 360 ;
+	private double normalizeAngleToDegrees(double angle) {
+		return (angle - lampreyMinAng) / (lampreyMaxAng - lampreyMinAng) * 360;
 	}
 }

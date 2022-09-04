@@ -3,31 +3,18 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
-//import edu.greenblitz.pegasus.commands.chassis.driver.ArcadeDrive;
-import edu.greenblitz.pegasus.commands.climb.*;
-import edu.greenblitz.pegasus.commands.climb.Rail.MoveRailToPosition;
-import edu.greenblitz.pegasus.commands.climb.Rail.RailByJoystick;
-import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;
-import edu.greenblitz.pegasus.commands.climb.Turning.SwitchTurning;
-import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
-import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
-import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromShooter;
-import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
-import edu.greenblitz.pegasus.commands.shifter.ToggleShifter;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
-import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
-import edu.greenblitz.pegasus.commands.swerve.*;
-import edu.greenblitz.pegasus.subsystems.RobotContainer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.greenblitz.pegasus.commands.swerve.MoveLinModule;
+import edu.greenblitz.pegasus.commands.swerve.MoveModuleLinAndAng;
+import edu.greenblitz.pegasus.commands.swerve.RotateToAngle;
+import edu.greenblitz.pegasus.commands.swerve.SetRotPower;
 import edu.wpi.first.wpilibj2.command.*;
-
-import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
 
 public class OI {
 	private static final IOModes IOMode = IOModes.DEBUG2; //decides which set of controls to init.
@@ -68,13 +55,13 @@ public class OI {
 		isHandled = false;
 	}
 
-	
+
 	private void initDebug2Buttons() {
 		//RobotContainer.getInstance().getSwerve().setDefaultCommand(new MoveByJoystick(mainJoystick));
 		mainJoystick.X.whileHeld(new SetRotPower(0.1));
 		mainJoystick.A.whileHeld(new MoveLinModule(0.3));
-		mainJoystick.Y.whenHeld(new RotateToAngle(Math.PI/2));
-		mainJoystick.B.whenPressed(new MoveModuleLinAndAng(Math.PI/2,0.3));
+		mainJoystick.Y.whenHeld(new RotateToAngle(Math.PI / 2));
+		mainJoystick.B.whenPressed(new MoveModuleLinAndAng(Math.PI / 2, 0.3));
 	}
 
 	private void initDebugButtons() {

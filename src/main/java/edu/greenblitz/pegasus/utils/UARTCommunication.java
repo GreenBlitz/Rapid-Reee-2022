@@ -24,34 +24,12 @@ public class UARTCommunication extends GBSubsystem {
 	private final SerialPort channel;
 	private final Random rn = new Random();
 	private final byte[] getReq;
+	protected NetworkTable table;
 	private boolean started;
 	private long timeConnectionEst = 0;
 	private boolean ping = false;
 	private byte[] pingReq;
-	protected NetworkTable table;
 	private long lastPing = 0;
-
-	public NetworkTableEntry getEntry(String key) {
-		return table.getEntry(key);
-	}
-
-	public boolean getBoolean(String key, boolean defaultValue) {
-		return getEntry(key).getBoolean(defaultValue);
-	}
-
-
-	private void initializeTable() {
-		String name = this.getClass().getSimpleName();
-		table = NetworkTableInstance.getDefault().getTable(name);
-		NetworkTableEntry entry = NetworkTableInstance.getDefault().getTable("general").getEntry("tables");
-		String[] tablesString = entry.getStringArray(new String[0]);
-		if (!Arrays.asList(tablesString).contains(name)) {
-			tablesString = Arrays.copyOf(tablesString, tablesString.length + 1);
-			tablesString[tablesString.length - 1] = name;
-			entry.forceSetStringArray(tablesString);
-		}
-	}
-
 
 	private UARTCommunication() {
 		super();
@@ -77,6 +55,26 @@ public class UARTCommunication extends GBSubsystem {
 		}
 
 		return instance;
+	}
+
+	public NetworkTableEntry getEntry(String key) {
+		return table.getEntry(key);
+	}
+
+	public boolean getBoolean(String key, boolean defaultValue) {
+		return getEntry(key).getBoolean(defaultValue);
+	}
+
+	private void initializeTable() {
+		String name = this.getClass().getSimpleName();
+		table = NetworkTableInstance.getDefault().getTable(name);
+		NetworkTableEntry entry = NetworkTableInstance.getDefault().getTable("general").getEntry("tables");
+		String[] tablesString = entry.getStringArray(new String[0]);
+		if (!Arrays.asList(tablesString).contains(name)) {
+			tablesString = Arrays.copyOf(tablesString, tablesString.length + 1);
+			tablesString[tablesString.length - 1] = name;
+			entry.forceSetStringArray(tablesString);
+		}
 	}
 
 	private byte[] getResponse(int size) {

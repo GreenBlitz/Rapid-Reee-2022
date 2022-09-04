@@ -1,7 +1,6 @@
 package edu.greenblitz.pegasus.commands.climb.Turning;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.greenblitz.pegasus.subsystems.RobotContainer;
 
 public class TurningByJoystick extends TurningCommand {

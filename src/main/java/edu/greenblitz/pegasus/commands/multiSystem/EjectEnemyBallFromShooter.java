@@ -1,6 +1,5 @@
 package edu.greenblitz.pegasus.commands.multiSystem;
 
-import edu.greenblitz.gblib.subsystems.shooter.Shooter;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.indexing.WaitTillBallExit;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;

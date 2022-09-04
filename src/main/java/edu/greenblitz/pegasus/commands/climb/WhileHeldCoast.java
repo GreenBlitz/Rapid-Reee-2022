@@ -2,7 +2,6 @@ package edu.greenblitz.pegasus.commands.climb;
 
 import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
-import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.greenblitz.pegasus.subsystems.RobotContainer;
 
 public class WhileHeldCoast extends GBCommand {

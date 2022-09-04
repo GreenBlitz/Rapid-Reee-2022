@@ -2,7 +2,6 @@ package edu.greenblitz.pegasus.subsystems;
 
 import edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.commands.compressor.HandleCompressor;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
@@ -14,7 +13,6 @@ public class Pneumatics extends GBSubsystem {
 		m_compressor = new Compressor(RobotMap.Pegasus.Pneumatics.PCM.PCM_ID, PneumaticsModuleType.CTREPCM);
 
 	}
-
 
 
 	public double getPressure() {

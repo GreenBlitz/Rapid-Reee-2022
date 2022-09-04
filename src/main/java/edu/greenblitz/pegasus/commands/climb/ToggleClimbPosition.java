@@ -1,6 +1,5 @@
 package edu.greenblitz.pegasus.commands.climb;
 
-import edu.greenblitz.pegasus.subsystems.Climb;
 import edu.greenblitz.pegasus.subsystems.RobotContainer;
 
 public class ToggleClimbPosition implements Runnable {

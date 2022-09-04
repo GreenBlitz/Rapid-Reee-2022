@@ -1,16 +1,14 @@
 package edu.greenblitz.pegasus.commands.swerve;
 
-import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
-import edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CalibrateMaxMin extends SwerveCommand {
-	private double power;
+	private final double power;
 	private double maxVal;
 	private double minVal;
-	private SwerveChassis.Module module;
-	public CalibrateMaxMin(double power, SwerveChassis.Module module){
+	private final SwerveChassis.Module module;
+
+	public CalibrateMaxMin(double power, SwerveChassis.Module module) {
 		this.power = power;
 		this.module = module;
 	}

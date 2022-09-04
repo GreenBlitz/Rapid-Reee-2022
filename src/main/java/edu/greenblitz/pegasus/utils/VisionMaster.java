@@ -17,10 +17,6 @@ public class VisionMaster extends GBSubsystem {
 
 	private static final long MAX_HANDSHAKE_TIME = 3000;
 	private static VisionMaster instance;
-	private long lastPrintTime = 0;
-	private VisionLocation current;
-	private Algorithm currentAlgorithm;
-	private GameState currentGameState;
 	private final NetworkTable visionTable;
 	private final NetworkTableEntry algorithm;
 	private final NetworkTableEntry output;
@@ -28,9 +24,13 @@ public class VisionMaster extends GBSubsystem {
 	private final NetworkTableEntry gameState;
 	private final NetworkTableEntry shifterState;
 	private final NetworkTableEntry handshake;
+	private final Logger logger;
+	private long lastPrintTime = 0;
+	private VisionLocation current;
+	private Algorithm currentAlgorithm;
+	private GameState currentGameState;
 	private boolean visionGood = false;
 	private long lastHandShake;
-	private final Logger logger;
 
 	private VisionMaster() {
 		super();

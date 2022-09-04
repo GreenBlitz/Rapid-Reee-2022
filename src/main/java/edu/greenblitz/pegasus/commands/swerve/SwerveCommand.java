@@ -6,6 +6,7 @@ import edu.greenblitz.pegasus.subsystems.RobotContainer;
 
 public abstract class SwerveCommand extends GBCommand {
 	SwerveChassis swerve;
+
 	public SwerveCommand() {
 		swerve = RobotContainer.getInstance().getSwerve();
 		require(RobotContainer.getInstance().getSwerve());

@@ -23,7 +23,7 @@ public class MoveSingleByJoystick extends SwerveCommand {
 		double angle = GBMath.modulo(Math.atan2(y, x), Math.PI * 2);
 		double power = Math.hypot(x, y);
 		ModuleTest.getInstance().setLinPower(power);
-		if (power!=0){
+		if (power != 0) {
 			ModuleTest.getInstance().rotateToAngle(angle);
 		}
 	}
