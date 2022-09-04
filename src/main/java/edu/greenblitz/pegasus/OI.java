@@ -22,6 +22,7 @@ import edu.greenblitz.pegasus.commands.shifter.ToggleShifter;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.commands.swerve.MoveByJoystick;
 import edu.greenblitz.pegasus.commands.swerve.MoveLin;
 import edu.greenblitz.pegasus.subsystems.RobotContainer;
 import edu.wpi.first.wpilibj2.command.*;
@@ -68,10 +69,7 @@ public class OI {
 	}
 	
 	private void initDebug2Buttons() {
-		RobotContainer.getInstance().getSwerve().setDefaultCommand(new MoveLin(
-				Math.atan(mainJoystick.getAxisValue(SmartJoystick.Axis.RIGHT_Y) / mainJoystick.getAxisValue(SmartJoystick.Axis.RIGHT_X)) / 2 * Math.PI,
-				Math.hypot(mainJoystick.getAxisValue(SmartJoystick.Axis.RIGHT_Y), mainJoystick.getAxisValue(SmartJoystick.Axis.RIGHT_X) * 0.5)
-				));
+		RobotContainer.getInstance().getSwerve().setDefaultCommand(new MoveByJoystick(mainJoystick));
 	}
 	
 	private void initDebugButtons() {
