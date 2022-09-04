@@ -1,8 +1,11 @@
 package edu.greenblitz.pegasus;
 
+import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.commands.swerve.ModuleTest;
+import edu.greenblitz.pegasus.commands.swerve.MoveSingleByJoystick;
+import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -36,6 +39,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
+		new MoveSingleByJoystick(OI.getInstance().getMainJoystick()).schedule();
+
 		/*new ToSpeed().schedule();
 		new ExtendRoller().schedule();
 		RobotContainer.getInstance().getIndexing().initSetAlliance();

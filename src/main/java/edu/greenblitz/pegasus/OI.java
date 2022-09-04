@@ -35,7 +35,7 @@ public class OI {
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
 	private final SmartJoystick secondJoystick;
-	
+
 	private OI() {
 		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.2);
 		secondJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.SECOND, 0.2);
@@ -49,25 +49,25 @@ public class OI {
 			case DEBUG2:
 				initDebug2Buttons();
 				break;
-			
+
 		}
 	}
-	
+
 	public static OI getInstance() {
 		if (instance == null) {
 			instance = new OI();
 		}
 		return instance;
 	}
-	
+
 	public static boolean isIsHandled() {
 		return isHandled;
 	}
-	
+
 	public static void disableHandling() {
 		isHandled = false;
 	}
-	
+
 	
 	private void initDebug2Buttons() {
 		//RobotContainer.getInstance().getSwerve().setDefaultCommand(new MoveByJoystick(mainJoystick));
@@ -76,13 +76,13 @@ public class OI {
 		mainJoystick.Y.whenHeld(new RotateToAngle(Math.PI/2));
 		mainJoystick.B.whenPressed(new MoveModuleLinAndAng(Math.PI/2,0.3));
 	}
-	
+
 	private void initDebugButtons() {
 		mainJoystick.A.whenPressed(new DoubleShoot());
 		mainJoystick.B.whileHeld(new RunFunnel());
 		mainJoystick.Y.whileHeld(new RunRoller());
 	}
-	
+
 //	private void initRealButtons() {
 //		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
 //		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.RPM) {
@@ -128,7 +128,7 @@ public class OI {
 //		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
 //		mainJoystick.L1.whenPressed(new ToggleShifter());
 //	}
-	
+
 	private void initTalButtons() {
 		secondJoystick.X.whenPressed(new SequentialCommandGroup(new ParallelRaceGroup(new WaitCommand(1), new ShootByConstant(0.7)), new ParallelRaceGroup(new WaitCommand(4), new ShootByConstant(0.7), new RunFunnel())));
 		secondJoystick.B.whenPressed(new SequentialCommandGroup(new ParallelRaceGroup(new WaitCommand(1), new ShootByConstant(0.4)), new ParallelRaceGroup(new WaitCommand(4), new ShootByConstant(0.4), new RunFunnel())));
@@ -136,49 +136,49 @@ public class OI {
 		secondJoystick.R1.whileHeld(new RollByConstant(0.8));
 		secondJoystick.L1.whileHeld(new RollByConstant(-0.8));
 		secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
-		
+
 		//RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(mainJoystick));
 	}
-	
+
 	public SmartJoystick getMainJoystick() {
 		return mainJoystick;
 	}
-	
+
 	public SmartJoystick getSecondJoystick() {
 		return secondJoystick;
 	}
-	
+
 	private enum IOModes {
 		DEBUG, REAL, DEBUG2
 	}
-	
+
 	private class InitManualOverride extends GBCommand {
-		
+
 		private InitManualOverride() {
 			super();
 		}
-		
+
 		@Override
 		public void initialize() {
 			CommandScheduler.getInstance().cancelAll();
 			super.initialize();
-			
+
 			secondJoystick.B.whileHeld(
 					new ParallelCommandGroup(new RunFunnel(), new RollByConstant(1.0)) {
 						@Override
 						public void initialize() {
 							new ToggleRoller().schedule();
 						}
-						
+
 						@Override
 						public void end(boolean interrupted) {
 							new ToggleRoller().schedule();
 						}
 					}
 			);
-			
+
 		}
-		
+
 		@Override
 		public boolean isFinished() {
 			return true;
