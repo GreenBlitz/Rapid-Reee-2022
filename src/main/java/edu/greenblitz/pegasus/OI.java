@@ -3,8 +3,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.pegasus.commands.shooterCommands.ShootByPower;
-import edu.greenblitz.pegasus.commands.shooterCommands.ToggleShooter;
+import edu.greenblitz.pegasus.commands.ShootByPower;
 import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -42,7 +41,6 @@ public class OI {
 	public static boolean isIsHandled() {
 		return isHandled;
 	}
-
 	public static void disableHandling() {
 		isHandled = false;
 	}
@@ -52,9 +50,8 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
-		Shooter.getInstance().initDefaultCommand();
-		mainJoystick.X.whileHeld(new ShootByPower(0.299));
-		mainJoystick.A.whenPressed(new ToggleShooter());
+		mainJoystick.A.whenHeld(new ShootByPower(0.5));
+		mainJoystick.B.whenHeld(new ShootByPower(0.2));
 	}
 
 	private void initRealButtons() {

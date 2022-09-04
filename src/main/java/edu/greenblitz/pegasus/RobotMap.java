@@ -79,7 +79,7 @@ public class RobotMap {
 
 		public static class Shooter {
 			public static class ShooterMotor {
-				public static final int PORT = 11; /*,
+				public static final int PORT = 7; /*,
 						PORT_FOLLOWER = 2;*/
 				public static final boolean LEADER_INVERTED = true;  /*,
 						FOLLOWER_INVERTED = false;*/
