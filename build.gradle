@@ -84,7 +84,7 @@ dependencies {
     // Optional lines, adds common robot code libraries to the project
     // The jitpack line in repositories is required for these libraries.
     implementation 'com.github.GreenBlitz.MotionControl:motion:b9cf4145325d7c48aa9fe9b771e32537c77a25c0'
-    implementation 'com.github.GreenBlitz:GBLib:61b6520c86fbe3da8b7d0c59150b6b1e1c346156'
+    implementation 'com.github.GreenBlitz:GBLib:32c0f6543e29b532306b724f042eca0f2e53aba6'
 
     //implementation 'com.github.GreenBlitz.GBLibOld:881b4ce152bd909f24232 ,fdbd58d0affc0eb4c13'
     implementation group: 'com.google.guava', name: 'guava', version: '11.0.2'

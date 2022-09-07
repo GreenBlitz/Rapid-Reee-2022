@@ -1,7 +1,10 @@
 package edu.greenblitz.pegasus;
-
-import edu.greenblitz.pegasus.commands.swerve.ModuleTest;
-import edu.greenblitz.pegasus.commands.swerve.MoveSingleByJoystick;
+//import edu.greenblitz.pegasus.commands.swerve.ModuleTest;
+//import edu.greenblitz.pegasus.commands.swerve.MoveSingleByJoystick;
+import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
+import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.commands.shooter.StopShooter;
+import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -12,7 +15,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
 		DigitalInputMap.getInstance();
-		ModuleTest.getInstance().SwerveInit();
+		RobotContainer.getInstance().getSwerve().resetAllEncoders();
 //		RobotContainer.getInstance().getClimb().initDefaultCommand(OI.getInstance().getSecondJoystick());
 //		RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(OI.getInstance().getMainJoystick()));
 		OI.getInstance();
@@ -34,7 +37,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
-		new MoveSingleByJoystick(OI.getInstance().getMainJoystick()).schedule();
 
 		/*new ToSpeed().schedule();
 		new ExtendRoller().schedule();

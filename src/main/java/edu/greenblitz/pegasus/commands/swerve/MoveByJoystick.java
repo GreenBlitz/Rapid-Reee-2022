@@ -30,7 +30,7 @@ public class MoveByJoystick extends SwerveCommand {
 		SmartDashboard.putNumber("amplitude", amplitude);
 
 		if (x == 0 && y == 0) {
-			swerve.brakeModules(SwerveChassis.Module.BACK_LEFT, SwerveChassis.Module.BACK_RIGHT, SwerveChassis.Module.FRONT_LEFT, SwerveChassis.Module.FRONT_RIGHT);
+			swerve.stop();
 			System.out.println("op1");
 			return;
 		}

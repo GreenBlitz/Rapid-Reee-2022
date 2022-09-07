@@ -1,7 +1,9 @@
 package edu.greenblitz.pegasus;
 
 
+import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.greenblitz.gblib.base.GBCommand;
+import edu.greenblitz.gblib.gyro.PigeonGyro;
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.funnel.ReverseRunFunnel;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
@@ -10,10 +12,11 @@ import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
-import edu.greenblitz.pegasus.commands.swerve.MoveLinModule;
-import edu.greenblitz.pegasus.commands.swerve.MoveModuleLinAndAng;
-import edu.greenblitz.pegasus.commands.swerve.RotateToAngle;
-import edu.greenblitz.pegasus.commands.swerve.SetRotPower;
+//import edu.greenblitz.pegasus.commands.swerve.MoveLinModule;
+//import edu.greenblitz.pegasus.commands.swerve.MoveModuleLinAndAng;
+//import edu.greenblitz.pegasus.commands.swerve.RotateToAngle;
+//import edu.greenblitz.pegasus.commands.swerve.SetRotPower;
+import edu.greenblitz.pegasus.commands.swerve.moveSingleModule;
 import edu.wpi.first.wpilibj2.command.*;
 
 public class OI {
@@ -58,10 +61,7 @@ public class OI {
 
 	private void initDebug2Buttons() {
 		//RobotContainer.getInstance().getSwerve().setDefaultCommand(new MoveByJoystick(mainJoystick));
-		mainJoystick.X.whileHeld(new SetRotPower(0.1));
-		mainJoystick.A.whileHeld(new MoveLinModule(0.3));
-		mainJoystick.Y.whenHeld(new RotateToAngle(Math.PI / 2));
-		mainJoystick.B.whenPressed(new MoveModuleLinAndAng(Math.PI / 2, 0.3));
+		mainJoystick.X.whileHeld(new moveSingleModule(0.2,10));
 	}
 
 	private void initDebugButtons() {
