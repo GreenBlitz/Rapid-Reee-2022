@@ -11,9 +11,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
 		DigitalInputMap.getInstance();
-
 		OI.getInstance();
-
 	}
 
 	@Override

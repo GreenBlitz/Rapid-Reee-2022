@@ -3,12 +3,14 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.commands.ShootByJoystick;
 import edu.greenblitz.pegasus.commands.ShootByPower;
+import edu.greenblitz.pegasus.commands.ToggleShooter;
 import edu.greenblitz.pegasus.subsystems.Shooter;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.*;
 
 public class OI {
-	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -50,11 +52,13 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
-		mainJoystick.A.whenHeld(new ShootByPower(0.5));
-		mainJoystick.B.whenHeld(new ShootByPower(0.2));
 	}
 
 	private void initRealButtons() {
+		mainJoystick.X.whileHeld(new ShootByPower(0.3));
+		Shooter.getInstance().setDefaultCommand(new ShootByJoystick(mainJoystick));
+		mainJoystick.A.whenPressed(new ToggleShooter());
+		mainJoystick.B.whenPressed(new ShootByPower(1));
 	}
 
 	public SmartJoystick getMainJoystick() {
