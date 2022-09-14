@@ -58,6 +58,12 @@ repositories {
     mavenCentral()
 }
 
+tasks.register("download-gblib"){
+    doLast{
+        implementation 'com.github.GreenBlitz:GBLib:cb43a59d4061108d240c134f3b3103ed2c54299b'
+    }
+}
+
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
 dependencies {
@@ -84,9 +90,8 @@ dependencies {
     // Optional lines, adds common robot code libraries to the project
     // The jitpack line in repositories is required for these libraries.
     implementation 'com.github.GreenBlitz.MotionControl:motion:b9cf4145325d7c48aa9fe9b771e32537c77a25c0'
-    implementation 'com.github.GreenBlitz:GBLib:32c0f6543e29b532306b724f042eca0f2e53aba6'
+    implementation 'com.github.GreenBlitz:GBLib:08644e6c56903da872170e2a7f6749312d1c4c26'
 
-    //implementation 'com.github.GreenBlitz.GBLibOld:881b4ce152bd909f24232 ,fdbd58d0affc0eb4c13'
     implementation group: 'com.google.guava', name: 'guava', version: '11.0.2'
 
     // Optional lines, used for writing tests
