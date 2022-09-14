@@ -10,9 +10,18 @@ public class Pneumatics extends GBSubsystem {
 
 	private final Compressor m_compressor;
 
-	protected Pneumatics() {
+	private Pneumatics() {
 		m_compressor = new Compressor(RobotMap.Pegasus.Pneumatics.PCM.PCM_ID, PneumaticsModuleType.CTREPCM);
 
+	}
+
+	private static Pneumatics instance;
+
+	public static Pneumatics getInstance(){
+		if (instance == null){
+			instance = new Pneumatics();
+		}
+		return instance;
 	}
 
 

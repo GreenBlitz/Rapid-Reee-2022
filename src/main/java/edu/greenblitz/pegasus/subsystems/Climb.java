@@ -21,12 +21,20 @@ public class Climb extends GBSubsystem {
 	private boolean atStart;
 
 
-	protected Climb() {
+	private Climb() {
 		rail = new Rail();
 		turning = new Turning();
 
 	}
 
+	private static Climb instance;
+
+	public static Climb getInstance(){
+		if (instance == null){
+			instance = new Climb();
+		}
+		return instance;
+	}
 
 	public double getLoc() {
 		double delta = getRailMotorRotations() / RobotMap.Pegasus.Climb.ClimbMotors.RAIL_MOTOR_ROTATIONS_PER_METER;

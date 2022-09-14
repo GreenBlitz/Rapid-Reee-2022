@@ -4,7 +4,6 @@ import edu.greenblitz.gblib.subsystems.shooter.Shooter;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
-import edu.greenblitz.pegasus.subsystems.RobotContainer;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -26,7 +25,7 @@ public class InsertIntoShooter extends SequentialCommandGroup {
 				),
 
 				//waits until the shooter is ready
-				new WaitUntilCommand(() -> RobotContainer.getInstance().getShooter().isPreparedToShoot()),
+				new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 
 				new ParallelDeadlineGroup(//activates both roller and funnel until ball is no longer at macro switch (was probably propelled)
 						new WaitUntilCommand(() -> !DigitalInputMap.getInstance().getValue(RobotMap.Pegasus.Funnel.MACRO_SWITCH_PORT)),
@@ -45,7 +44,7 @@ public class InsertIntoShooter extends SequentialCommandGroup {
 	@Override
 	public void execute() {
 		super.execute();
-		if (RobotContainer.getInstance().getShooter().isPreparedToShoot() && !reported) {
+		if (Shooter.getInstance().isPreparedToShoot() && !reported) {
 			SmartDashboard.putNumber("Time To Shoot", System.currentTimeMillis() / 1000.0 - startTime);
 			reported = true;
 		}

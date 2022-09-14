@@ -4,7 +4,6 @@ import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.pegasus.subsystems.Funnel;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.Intake;
-import edu.greenblitz.pegasus.subsystems.RobotContainer;
 
 public class MoveBallUntilClick extends GBCommand {
 	private final Funnel funnel;
@@ -12,9 +11,9 @@ public class MoveBallUntilClick extends GBCommand {
 	private final Indexing indexing;
 
 	public MoveBallUntilClick() {
-		this.funnel = RobotContainer.getInstance().getFunnel();
-		this.intake = RobotContainer.getInstance().getIntake();
-		this.indexing = RobotContainer.getInstance().getIndexing();
+		this.funnel = Funnel.getInstance();
+		this.intake = Intake.getInstance();
+		this.indexing = Indexing.getInstance();
 	}
 
 	@Override

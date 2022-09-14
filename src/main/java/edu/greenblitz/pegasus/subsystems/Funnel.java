@@ -7,9 +7,18 @@ import edu.greenblitz.pegasus.RobotMap;
 public class Funnel extends GBSubsystem {
 	private final WPI_TalonSRX motor;
 
-	protected Funnel() {
+	private Funnel() {
 		motor = new WPI_TalonSRX(RobotMap.Pegasus.Funnel.FunnelMotor.MOTOR_PORT);
 		motor.setInverted(RobotMap.Pegasus.Funnel.FunnelMotor.IS_REVERSED);
+	}
+
+	private static Funnel instance;
+
+	public static Funnel getInstance(){
+		if (instance == null){
+			instance = new Funnel();
+		}
+		return instance;
 	}
 
 	public void moveMotor(double power) {

@@ -10,7 +10,6 @@ import edu.greenblitz.pegasus.commands.climb.Turning.HoldTurning;
 import edu.greenblitz.pegasus.commands.climb.Turning.MoveTurningToAngle;
 import edu.greenblitz.pegasus.commands.climb.Turning.TurningByJoystick;
 import edu.greenblitz.pegasus.subsystems.Climb;
-import edu.greenblitz.pegasus.subsystems.RobotContainer;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -20,8 +19,8 @@ public class HybridPullDown extends ParallelRaceGroup {
 
 	public HybridPullDown(SmartJoystick joystick) {
 		super();
-		Climb climb = RobotContainer.getInstance().getClimb();
-		addRequirements(RobotContainer.getInstance().getClimb());
+		Climb climb = Climb.getInstance();
+		addRequirements(Climb.getInstance());
 		addCommands(
 				new SequentialCommandGroup(
 						new ParallelRaceGroup(
@@ -29,7 +28,7 @@ public class HybridPullDown extends ParallelRaceGroup {
 								new WaitUntilCommand(() -> Math.abs(RailToSecondBar.GOAL - climb.getLoc()) > 0.23),
 								new SequentialCommandGroup(
 										new WaitUntilCommand(() -> Math.abs(RailToSecondBar.GOAL - climb.getLoc()) > 0.07),
-										new InstantCommand(() -> RobotContainer.getInstance().getChassis().setIdleMode(AbstractMotor.IdleMode.Coast))
+										new InstantCommand(() -> Chassis.getInstance().setIdleMode(AbstractMotor.IdleMode.Coast))
 								)
 						),
 						new ParallelRaceGroup(
@@ -68,8 +67,8 @@ public class HybridPullDown extends ParallelRaceGroup {
 	@Override
 	public void end(boolean interrupted) {
 		super.end(interrupted);
-		RobotContainer.getInstance().getClimb().setTurningMotorIdle(AbstractMotor.IdleMode.Brake);
-		RobotContainer.getInstance().getChassis().setIdleMode(AbstractMotor.IdleMode.Brake);
+		Climb.getInstance().setTurningMotorIdle(AbstractMotor.IdleMode.Brake);
+		Chassis.getInstance().setIdleMode(AbstractMotor.IdleMode.Brake);
 		System.out.println("finished pulling:  " + interrupted);
 	}
 

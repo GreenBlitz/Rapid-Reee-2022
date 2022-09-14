@@ -25,7 +25,6 @@ import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.subsystems.Climb;
-import edu.greenblitz.pegasus.subsystems.RobotContainer;
 import edu.wpi.first.wpilibj2.command.*;
 
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.ClimbMotors.MID_START_ANGLE;
@@ -71,7 +70,7 @@ public class OI {
 
 	private void initDebug2Buttons() {
 		mainJoystick.A.whileHeld(new ShootByConstant(0.3));
-		RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(mainJoystick));
+		Chassis.getInstance().setDefaultCommand(new ArcadeDrive(mainJoystick));
 	}
 
 	private void initDebugButtons() {
@@ -90,6 +89,7 @@ public class OI {
 				shooter.setPower(0);
 			}
 		});
+		secondJoystick.X.whileHeld(new InsertIntoShooter());
 		secondJoystick.B.whileHeld(
 				new ParallelCommandGroup(new MoveBallUntilClick(), new RollByConstant(1.0))//new ParallelCommandGroup(new HandleBalls(), new RollByConstant(1.0))
 		);
@@ -112,14 +112,14 @@ public class OI {
 		secondJoystick.R1.whileHeld(new WhileHeldCoast());
 
 
-		RobotContainer.getInstance().getClimb().initDefaultCommand(secondJoystick);
+		Climb.getInstance().initDefaultCommand(secondJoystick);
 
 		secondJoystick.L1.whenPressed(new ParallelCommandGroup(
 				new RailByJoystick(secondJoystick),
 				new TurningByJoystick(secondJoystick)
 		));
 
-		RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(mainJoystick));
+		Chassis.getInstance().setDefaultCommand(new ArcadeDrive(mainJoystick));
 
 		mainJoystick.B.whileHeld(new SwitchTurning(mainJoystick, secondJoystick));
 		mainJoystick.POV_LEFT.whileHeld(new WhileHeldCoast());
@@ -134,7 +134,7 @@ public class OI {
 		secondJoystick.L1.whileHeld(new RollByConstant(-0.8));
 		secondJoystick.POV_DOWN.whenPressed(new ToggleRoller());
 
-		RobotContainer.getInstance().getChassis().setDefaultCommand(new ArcadeDrive(mainJoystick));
+		Chassis.getInstance().setDefaultCommand(new ArcadeDrive(mainJoystick));
 	}
 
 	public SmartJoystick getMainJoystick() {

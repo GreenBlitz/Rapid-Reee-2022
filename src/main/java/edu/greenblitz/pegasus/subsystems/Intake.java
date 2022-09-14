@@ -13,12 +13,21 @@ public class Intake {
 	private final Roller roller;
 	private final Extender extender;
 
-	protected Intake() {
+	private Intake() {
 		roller = new Intake.Roller();
 		extender = new Intake.Extender();
 		CommandScheduler.getInstance().registerSubsystem(roller);
 		CommandScheduler.getInstance().registerSubsystem(extender);
 
+	}
+
+	private static Intake instance;
+
+	public static Intake getInstance(){
+		if (instance == null){
+			instance = new Intake();
+		}
+		return instance;
 	}
 
 	public void initDefaultCommand() {

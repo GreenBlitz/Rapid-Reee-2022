@@ -2,7 +2,6 @@ package edu.greenblitz.pegasus.commands.chassis.localizer;
 
 import edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.gblib.subsystems.Chassis.Chassis;
-import edu.greenblitz.pegasus.subsystems.RobotContainer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.motion.Localizer;
 
@@ -12,7 +11,7 @@ public class LocalizerCommand extends GBCommand {
 
 	@Override
 	public void initialize() {
-		chassis = RobotContainer.getInstance().getChassis();
+		chassis = Chassis.getInstance();
 		chassis.resetGyro();
 		localizer = Localizer.getInstance();
 		localizer.configure(chassis.getWheelDistance(), 0, 0);

@@ -4,7 +4,6 @@ import edu.greenblitz.gblib.subsystems.shooter.Shooter;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.indexing.WaitTillBallExit;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
-import edu.greenblitz.pegasus.subsystems.RobotContainer;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -28,6 +27,6 @@ public class EjectEnemyBallFromShooter extends SequentialCommandGroup {
 
 	@Override
 	public void end(boolean interrupted) {
-		RobotContainer.getInstance().getShooter().setSpeedByPID(0);
+		Shooter.getInstance().setSpeedByPID(0);
 	}
 }

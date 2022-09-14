@@ -18,11 +18,20 @@ public class Indexing extends GBSubsystem {
 	private int ballCount;
 	private BallColor allianceColor;
 
-	protected Indexing() {
+	private Indexing() {
 		colorSensor = new ColorSensorV3(i2cPort);
 		macroSwitch = DigitalInputMap.getInstance().getDigitalInput(RobotMap.Pegasus.Funnel.MACRO_SWITCH_PORT);
 		ballCount = 0;
 		System.out.println(DriverStation.getAlliance());
+	}
+
+	private static Indexing instance;
+
+	public static Indexing getInstance(){
+		if (instance == null){
+			instance = new Indexing();
+		}
+		return instance;
 	}
 
 	public Color getColor() {
