@@ -1,13 +1,14 @@
-package edu.greenblitz.pegasus.commands.swerve;
+package edu.greenblitz.pegasus.commands.swerve.garbage;
 
 
 
 
 import edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class MoveLin extends SwerveCommand{
+public class MoveLin extends SwerveCommand {
 	
 	private double angle;
 	private double power;

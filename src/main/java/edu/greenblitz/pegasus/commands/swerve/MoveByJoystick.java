@@ -29,13 +29,13 @@ public class MoveByJoystick extends SwerveCommand {
 		double y = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_Y) * maxPower;
 		double angle = Math.atan(y / x) + (x < 0 ? Math.PI : 0);
 		double amplitude = Math.hypot(x, y);
-		SmartDashboard.putNumber("pow", amplitude);
-		SmartDashboard.putNumber("x", x);
-		SmartDashboard.putNumber("y", y);
-		SmartDashboard.putNumber("angle", angle);
-		SmartDashboard.putNumber("target", swerve.getTarget(SwerveChassis.Module.BACK_RIGHT));
-		SmartDashboard.putNumber("amplitude", amplitude);
-		SmartDashboard.putNumber("curr angle",(swerve.getAngle(SwerveChassis.Module.BACK_RIGHT)));
+//		SmartDashboard.putNumber("pow", amplitude);
+//		SmartDashboard.putNumber("x", x);
+//		SmartDashboard.putNumber("y", y);
+//		SmartDashboard.putNumber("angle", angle);
+//		SmartDashboard.putNumber("target", swerve.getTarget(SwerveChassis.Module.BACK_RIGHT));
+//		SmartDashboard.putNumber("amplitude", amplitude);
+//		SmartDashboard.putNumber("curr angle",(swerve.getAngle(SwerveChassis.Module.BACK_RIGHT)));
 
 
 		if (x == 0 && y == 0) {
@@ -54,10 +54,12 @@ public class MoveByJoystick extends SwerveCommand {
 
 		swerve.moveChassisLin(angle, amplitude);
 
-//		if(y  == 0 && x == 0) throw new Exception("brake the engines in this case");
-//		else swerve.moveChassisLin( Math.atan(y/x)/ (Math.PI *2) , Math.hypot(x,y));
-		//TODO needs to break engine if  no input
+		if(y  == 0 && x == 0){
+			swerve.stop();
+		}
+		else swerve.moveChassisLin( Math.atan(y/x)/ (Math.PI *2) , Math.hypot(x,y));
 	}
 
 
 }
+

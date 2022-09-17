@@ -1,6 +1,7 @@
-package edu.greenblitz.pegasus.commands.swerve;
+package edu.greenblitz.pegasus.commands.swerve.garbage;
 
 import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 
 public class MoveSingle extends SwerveCommand {
 
