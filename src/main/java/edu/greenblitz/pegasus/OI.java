@@ -7,6 +7,8 @@ import edu.greenblitz.gblib.hid.SmartJoystick;
 //import edu.greenblitz.pegasus.commands.swerve.MoveModuleLinAndAng;
 //import edu.greenblitz.pegasus.commands.swerve.RotateToAngle;
 //import edu.greenblitz.pegasus.commands.swerve.SetRotPower;
+import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.commands.swerve.MoveByJoystick;
 import edu.wpi.first.wpilibj2.command.*;
 
 public class OI {
@@ -50,7 +52,7 @@ public class OI {
 
 
 	private void initDebug2Buttons() {
-
+		SwerveChassis.getInstance().setDefaultCommand(new MoveByJoystick(mainJoystick,RobotMap.Pegasus.Swerve.pid));
 	}
 
 	private void initDebugButtons() {

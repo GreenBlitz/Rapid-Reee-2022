@@ -3,12 +3,18 @@ package edu.greenblitz.pegasus;
 //import edu.greenblitz.pegasus.commands.swerve.MoveSingleByJoystick;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.greenblitz.gblib.gyro.PigeonGyro;
+import edu.greenblitz.gblib.motion.pid.PIDObject;
+import edu.greenblitz.gblib.motors.brushed.GBBrushedMotor;
+import edu.greenblitz.gblib.motors.brushed.IBrushedFactory;
 import edu.greenblitz.gblib.motors.brushed.TalonSRX.TalonSRXFactory;
 import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
+import edu.greenblitz.gblib.motors.brushless.DecoyMotor;
+import edu.greenblitz.gblib.motors.brushless.GBMotor;
+import edu.greenblitz.gblib.motors.brushless.IMotorFactory;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
-import edu.greenblitz.pegasus.subsystems.*;
+
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -17,13 +23,30 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotInit() {
+
+		IMotorFactory decoyFactory = new IMotorFactory() {
+			@Override
+			public GBMotor generate(int id) {
+				return new DecoyMotor();
+			}
+		};
+
+		IBrushedFactory brushedDecoy = new IBrushedFactory() {
+			@Override
+			public GBBrushedMotor generate(int id) {
+				return new DecoyMotor();
+			}
+		};
+
+
+
 		CommandScheduler.getInstance().enable();
 		DigitalInputMap.getInstance();
 		SwerveChassis.create(
-				new SwerveModule(new SparkMaxFactory(), new TalonSRXFactory(), 8, 14, 3, 4012, 10 ),
-				new SwerveModule(new SparkMaxFactory(), new TalonSRXFactory(), 7, 16, 2, 4012, 10 ),
-				new SwerveModule(new SparkMaxFactory(), new TalonSRXFactory(), 11, 13, 1, 4012, 10 ),
-				new SwerveModule(new SparkMaxFactory(), new TalonSRXFactory(), 10, 15, 0, 4012, 10 ),
+				new SwerveModule(decoyFactory, brushedDecoy, 8, 14, 1, 4012, 10 ,RobotMap.Pegasus.Swerve.pid),
+				new SwerveModule(decoyFactory, brushedDecoy, 7, 16, 2, 4012, 10, RobotMap.Pegasus.Swerve.pid ),
+				new SwerveModule(new SparkMaxFactory().withGearRatio(6), new TalonSRXFactory(), 11, 13, 3, 4012, 10 ,RobotMap.Pegasus.Swerve.pid),
+				new SwerveModule(decoyFactory, brushedDecoy, 10, 15, 0, 4012, 10, RobotMap.Pegasus.Swerve.pid),
 				new PigeonGyro(new PigeonIMU(1)), 50, 50);
 		OI.getInstance();
 	}

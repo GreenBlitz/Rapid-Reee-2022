@@ -29,9 +29,6 @@ public class MoveLin extends SwerveCommand{
 	public void execute() {
 		swerve.moveChassisLin(angle, power);
 		swerve.moveChassisLin(angle,power);
-		SmartDashboard.putNumber("lamprey2", swerve.getAbsoluteAngle(SwerveChassis.Module.FRONT_RIGHT));
-		SmartDashboard.putNumber("lamprey3", swerve.getAbsoluteAngle(SwerveChassis.Module.FRONT_LEFT));
-		SmartDashboard.putNumber("lamprey4", swerve.getAbsoluteAngle(SwerveChassis.Module.BACK_LEFT));
 	}
 	
 	@Override

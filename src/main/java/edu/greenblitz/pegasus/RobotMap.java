@@ -192,6 +192,7 @@ public class RobotMap {
 		}
 
 		public static class Swerve {
+			public static final PIDObject pid = new PIDObject().withKp(0.2).withMaxPower(0.2);
 
 			public static class Module1 {
 				public static final int MIN_LAMPREY_VAL = 7;

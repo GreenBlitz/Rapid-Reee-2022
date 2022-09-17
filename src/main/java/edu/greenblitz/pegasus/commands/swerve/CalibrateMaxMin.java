@@ -15,15 +15,15 @@ public class CalibrateMaxMin extends SwerveCommand {
 
 	@Override
 	public void initialize() {
-		maxVal = swerve.getRawAbsoluteAngle(module);
-		minVal = swerve.getRawAbsoluteAngle(module);
+		maxVal = swerve.getRawLampreyAngle(module);
+		minVal = swerve.getRawLampreyAngle(module);
 	}
 
 	@Override
 	public void execute() {
 		swerve.rotateModuleByPower(module, power);
-		maxVal = Math.max(maxVal, swerve.getRawAbsoluteAngle(module));
-		minVal = Math.min(minVal, swerve.getRawAbsoluteAngle(module));
+		maxVal = Math.max(maxVal, swerve.getRawLampreyAngle(module));
+		minVal = Math.min(minVal, swerve.getRawLampreyAngle(module));
 	}
 
 	@Override
