@@ -3,15 +3,18 @@ package edu.greenblitz.pegasus;
 //import edu.greenblitz.pegasus.commands.swerve.MoveSingleByJoystick;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.greenblitz.gblib.gyro.PigeonGyro;
+import edu.greenblitz.gblib.motors.brushless.IMotorFactory;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
 
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import org.greenblitz.motion.profiling.followers.FeedForwards1DFollower;
 
 public class Robot extends TimedRobot {
 
@@ -36,11 +39,17 @@ public class Robot extends TimedRobot {
 
 		CommandScheduler.getInstance().enable();
 		DigitalInputMap.getInstance();
+		SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks,RobotMap.Pegasus.Swerve.kv,RobotMap.Pegasus.Swerve.ka);
+		IMotorFactory angFactory = new SparkMaxFactory().withGearRatio(6).withCurrentLimit(30).withRampRate(0.1);
+		IMotorFactory linFactoryFR = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.1).withInverted(RobotMap.Pegasus.Swerve.Module1.INVERTED);
+		IMotorFactory linFactoryFL = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.1).withInverted(RobotMap.Pegasus.Swerve.Module2.INVERTED);
+		IMotorFactory linFactoryBR = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.1).withInverted(RobotMap.Pegasus.Swerve.Module3.INVERTED);
+		IMotorFactory linFactoryBL = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.1).withInverted(RobotMap.Pegasus.Swerve.Module4.INVERTED);
 		SwerveChassis.create(
-				new SwerveModule(new SparkMaxFactory(),new SparkMaxFactory(), RobotMap.Pegasus.Swerve.Module1.linMotorID,RobotMap.Pegasus.Swerve.Module1.SteerMotorID,RobotMap.Pegasus.Swerve.Module1.lampryID,RobotMap.Pegasus.Swerve.Module1.MAX_LAMPREY_VAL,RobotMap.Pegasus.Swerve.Module1.MIN_LAMPREY_VAL,RobotMap.Pegasus.Swerve.linPID,RobotMap.Pegasus.Swerve.angPID),
-				new SwerveModule(new SparkMaxFactory(),new SparkMaxFactory(), RobotMap.Pegasus.Swerve.Module2.linMotorID,RobotMap.Pegasus.Swerve.Module2.SteerMotorID,RobotMap.Pegasus.Swerve.Module2.lampryID,RobotMap.Pegasus.Swerve.Module2.MAX_LAMPREY_VAL,RobotMap.Pegasus.Swerve.Module2.MIN_LAMPREY_VAL,RobotMap.Pegasus.Swerve.linPID,RobotMap.Pegasus.Swerve.angPID),
-				new SwerveModule(new SparkMaxFactory(),new SparkMaxFactory(), RobotMap.Pegasus.Swerve.Module3.linMotorID,RobotMap.Pegasus.Swerve.Module3.SteerMotorID,RobotMap.Pegasus.Swerve.Module3.lampryID,RobotMap.Pegasus.Swerve.Module3.MAX_LAMPREY_VAL,RobotMap.Pegasus.Swerve.Module3.MIN_LAMPREY_VAL,RobotMap.Pegasus.Swerve.linPID,RobotMap.Pegasus.Swerve.angPID),
-				new SwerveModule(new SparkMaxFactory(),new SparkMaxFactory(), RobotMap.Pegasus.Swerve.Module4.linMotorID,RobotMap.Pegasus.Swerve.Module4.SteerMotorID,RobotMap.Pegasus.Swerve.Module4.lampryID,RobotMap.Pegasus.Swerve.Module4.MAX_LAMPREY_VAL,RobotMap.Pegasus.Swerve.Module4.MIN_LAMPREY_VAL,RobotMap.Pegasus.Swerve.linPID,RobotMap.Pegasus.Swerve.angPID),
+				new SwerveModule(angFactory,new SparkMaxFactory(), RobotMap.Pegasus.Swerve.Module1.linMotorID,RobotMap.Pegasus.Swerve.Module1.SteerMotorID,RobotMap.Pegasus.Swerve.Module1.lampryID,RobotMap.Pegasus.Swerve.Module1.MAX_LAMPREY_VAL,RobotMap.Pegasus.Swerve.Module1.MIN_LAMPREY_VAL,RobotMap.Pegasus.Swerve.linPID,RobotMap.Pegasus.Swerve.angPID,feedforward),
+				new SwerveModule(angFactory,new SparkMaxFactory(), RobotMap.Pegasus.Swerve.Module2.linMotorID,RobotMap.Pegasus.Swerve.Module2.SteerMotorID,RobotMap.Pegasus.Swerve.Module2.lampryID,RobotMap.Pegasus.Swerve.Module2.MAX_LAMPREY_VAL,RobotMap.Pegasus.Swerve.Module2.MIN_LAMPREY_VAL,RobotMap.Pegasus.Swerve.linPID,RobotMap.Pegasus.Swerve.angPID,feedforward),
+				new SwerveModule(angFactory,new SparkMaxFactory(), RobotMap.Pegasus.Swerve.Module3.linMotorID,RobotMap.Pegasus.Swerve.Module3.SteerMotorID,RobotMap.Pegasus.Swerve.Module3.lampryID,RobotMap.Pegasus.Swerve.Module3.MAX_LAMPREY_VAL,RobotMap.Pegasus.Swerve.Module3.MIN_LAMPREY_VAL,RobotMap.Pegasus.Swerve.linPID,RobotMap.Pegasus.Swerve.angPID,feedforward),
+				new SwerveModule(angFactory,new SparkMaxFactory(), RobotMap.Pegasus.Swerve.Module4.linMotorID,RobotMap.Pegasus.Swerve.Module4.SteerMotorID,RobotMap.Pegasus.Swerve.Module4.lampryID,RobotMap.Pegasus.Swerve.Module4.MAX_LAMPREY_VAL,RobotMap.Pegasus.Swerve.Module4.MIN_LAMPREY_VAL,RobotMap.Pegasus.Swerve.linPID,RobotMap.Pegasus.Swerve.angPID,feedforward),
 				new PigeonGyro(new PigeonIMU(1)),
 				RobotMap.Pegasus.Swerve.SwerveLocations
 		);

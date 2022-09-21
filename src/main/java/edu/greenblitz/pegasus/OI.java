@@ -53,15 +53,8 @@ public class OI {
 
 
 	private void initDebug2Buttons() {
-		//SwerveChassis.getInstance().setDefaultCommand(new MoveByJoystick(mainJoystick,RobotMap.Pegasus.Swerve.angPID));
-		GBMotor motor5 = new SparkMaxFactory().generate(5);
-		mainJoystick.B.whenHeld(new StartEndCommand(() -> motor5.setPower(0.2), () -> motor5.setPower(0)));
-		GBMotor motor7 = new SparkMaxFactory().generate(7);
-		mainJoystick.A.whenHeld(new StartEndCommand(() -> motor7.setPower(0.2), () -> motor7.setPower(0)));
-		GBMotor motor8 = new SparkMaxFactory().generate(8);
-		mainJoystick.X.whenHeld(new StartEndCommand(() -> motor8.setPower(0.2), () -> motor8.setPower(0)));
-		GBMotor motor2 = new SparkMaxFactory().generate(2);
-		mainJoystick.Y.whenHeld(new StartEndCommand(() -> motor2.setPower(0.2), () -> motor2.setPower(0)));
+		//TODO calibrate lamprey minmax
+		SwerveChassis.getInstance().setDefaultCommand(new MoveByJoystick(mainJoystick, 0.5));
 
 	}
 

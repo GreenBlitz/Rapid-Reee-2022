@@ -1,20 +1,17 @@
 package edu.greenblitz.pegasus.commands.swerve;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.gblib.utils.GBMath;
 import edu.greenblitz.pegasus.RobotMap;
 
 public class MoveByJoystick extends SwerveCommand {
-	private final double maxPower = 0.3;
+	private final double maxSpeed;
 	private final SmartJoystick joystick;
-	private final PIDObject pid;
 
-
-	public MoveByJoystick(SmartJoystick joystick, PIDObject pidObject) {
+	public MoveByJoystick(SmartJoystick joystick, double maxSpeed) {
 		this.joystick = joystick;
-		this.pid = pidObject;
+		this.maxSpeed = maxSpeed;
 	}
 
 	@Override
@@ -24,10 +21,10 @@ public class MoveByJoystick extends SwerveCommand {
 
 	@Override
 	public void execute() {
-		double x = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_X) * maxPower;
-		double y = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_Y) * maxPower;
+		double x = joystick.getAxisValue(SmartJoystick.Axis.LEFT_X);
+		double y = joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y);
 		double angle = Math.atan(y / x) + (x < 0 ? Math.PI : 0);
-		double amplitude = Math.hypot(x, y);
+		double amplitude = Math.hypot(x, y) * this.maxSpeed;
 //		SmartDashboard.putNumber("pow", amplitude);
 //		SmartDashboard.putNumber("x", x);
 //		SmartDashboard.putNumber("y", y);
@@ -53,10 +50,6 @@ public class MoveByJoystick extends SwerveCommand {
 
 		swerve.moveChassisLin(angle, amplitude);
 
-		if(y  == 0 && x == 0){
-			swerve.stop();
-		}
-		else swerve.moveChassisLin( Math.atan(y/x)/ (Math.PI *2) , Math.hypot(x,y));
 	}
 
 

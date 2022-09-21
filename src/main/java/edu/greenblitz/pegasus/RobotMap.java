@@ -193,6 +193,8 @@ public class RobotMap {
 		}
 
 		public static class Swerve {
+			public static final double ANG_GEAR_RATIO = 6.0;
+			public static final double LIN_GEAR_RATIO = 8.0;
 			public static final Translation2d[] SwerveLocations = new Translation2d[]{
 					new Translation2d(0,0),
 					new Translation2d(0,0),
@@ -202,6 +204,9 @@ public class RobotMap {
 			public static final PIDObject angPID = new PIDObject().withKp(0.2).withMaxPower(0.2);
 			public static final PIDObject linPID = new PIDObject().withKp(0.2).withMaxPower(0.2);
 
+			public static final double ks = 0.14876;
+			public static final double kv = 3.3055;
+			public static final double ka = 0.11023;
 
 			public static class Module1 {//front right
 				public static final int linMotorID = 11;
@@ -209,6 +214,7 @@ public class RobotMap {
 				public static final int lampryID =1 ;
 				public static final int MIN_LAMPREY_VAL = 0;
 				public static final int MAX_LAMPREY_VAL = 0;
+				public static final boolean INVERTED = false;
 			}
 
 			public static class Module2 {//front left
@@ -218,6 +224,7 @@ public class RobotMap {
 
 				public static final int MIN_LAMPREY_VAL = 0;
 				public static final int MAX_LAMPREY_VAL = 0;
+				public static final boolean INVERTED = true;
 			}
 
 			public static class Module3 {//back right
@@ -227,6 +234,7 @@ public class RobotMap {
 
 				public static final int MIN_LAMPREY_VAL = 0;
 				public static final int MAX_LAMPREY_VAL = 0;
+				public static final boolean INVERTED = true;
 			}
 
 			public static class Module4 {//back left
@@ -235,6 +243,7 @@ public class RobotMap {
 				public static final int lampryID = 3 ;
 				public static final int MIN_LAMPREY_VAL = 0;
 				public static final int MAX_LAMPREY_VAL = 0;
+				public static final boolean INVERTED = false;
 			}
 		}
 
