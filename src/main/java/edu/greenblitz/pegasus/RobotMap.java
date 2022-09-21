@@ -3,6 +3,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.gblib.gear.GearDependentValue;
 import edu.greenblitz.gblib.motion.pid.PIDObject;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
@@ -192,26 +193,48 @@ public class RobotMap {
 		}
 
 		public static class Swerve {
-			public static final PIDObject pid = new PIDObject().withKp(0.2).withMaxPower(0.2);
+			public static final Translation2d[] SwerveLocations = new Translation2d[]{
+					new Translation2d(0,0),
+					new Translation2d(0,0),
+					new Translation2d(0,0),
+					new Translation2d(0,0)
+			};
+			public static final PIDObject angPID = new PIDObject().withKp(0.2).withMaxPower(0.2);
+			public static final PIDObject linPID = new PIDObject().withKp(0.2).withMaxPower(0.2);
 
-			public static class Module1 {
-				public static final int MIN_LAMPREY_VAL = 7;
-				public static final int MAX_LAMPREY_VAL = 3981;
+
+			public static class Module1 {//front right
+				public static final int linMotorID = 11;
+				public static final int SteerMotorID = 3;
+				public static final int lampryID =1 ;
+				public static final int MIN_LAMPREY_VAL = 0;
+				public static final int MAX_LAMPREY_VAL = 0;
 			}
 
-			public static class Module2 {
-				public static final int MIN_LAMPREY_VAL = 94;
-				public static final int MAX_LAMPREY_VAL = 4028;
+			public static class Module2 {//front left
+				public static final int linMotorID = 10;
+				public static final int SteerMotorID =1;
+				public static final int lampryID =2 ;
+
+				public static final int MIN_LAMPREY_VAL = 0;
+				public static final int MAX_LAMPREY_VAL = 0;
 			}
 
-			public static class Module3 {
-				public static final int MIN_LAMPREY_VAL = 10;
-				public static final int MAX_LAMPREY_VAL = 4012;
+			public static class Module3 {//back right
+				public static final int linMotorID = 5;
+				public static final int SteerMotorID =7;
+				public static final int lampryID =0 ;
+
+				public static final int MIN_LAMPREY_VAL = 0;
+				public static final int MAX_LAMPREY_VAL = 0;
 			}
 
-			public static class Module4 {
-				public static final int MIN_LAMPREY_VAL = 101;
-				public static final int MAX_LAMPREY_VAL = 4035;
+			public static class Module4 {//back left
+				public static final int linMotorID = 8;
+				public static final int SteerMotorID =2;
+				public static final int lampryID = 3 ;
+				public static final int MIN_LAMPREY_VAL = 0;
+				public static final int MAX_LAMPREY_VAL = 0;
 			}
 		}
 

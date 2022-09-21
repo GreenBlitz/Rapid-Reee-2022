@@ -5,7 +5,6 @@ import edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.gblib.utils.GBMath;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MoveByJoystick extends SwerveCommand {
 	private final double maxPower = 0.3;
@@ -20,7 +19,7 @@ public class MoveByJoystick extends SwerveCommand {
 
 	@Override
 	public void initialize() {
-		swerve.configPID(RobotMap.Pegasus.Swerve.pid);
+		swerve.configPID(RobotMap.Pegasus.Swerve.angPID,RobotMap.Pegasus.Swerve.linPID);
 	}
 
 	@Override

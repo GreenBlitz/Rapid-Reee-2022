@@ -3,19 +3,13 @@ package edu.greenblitz.pegasus;
 //import edu.greenblitz.pegasus.commands.swerve.MoveSingleByJoystick;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.greenblitz.gblib.gyro.PigeonGyro;
-import edu.greenblitz.gblib.motion.pid.PIDObject;
-import edu.greenblitz.gblib.motors.brushed.GBBrushedMotor;
-import edu.greenblitz.gblib.motors.brushed.IBrushedFactory;
-import edu.greenblitz.gblib.motors.brushed.TalonSRX.TalonSRXFactory;
-import edu.greenblitz.gblib.motors.brushless.AbstractMotor;
-import edu.greenblitz.gblib.motors.brushless.DecoyMotor;
-import edu.greenblitz.gblib.motors.brushless.GBMotor;
-import edu.greenblitz.gblib.motors.brushless.IMotorFactory;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
 
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -23,31 +17,33 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotInit() {
-
-		IMotorFactory decoyFactory = new IMotorFactory() {
-			@Override
-			public GBMotor generate(int id) {
-				return new DecoyMotor();
-			}
-		};
-
-		IBrushedFactory brushedDecoy = new IBrushedFactory() {
-			@Override
-			public GBBrushedMotor generate(int id) {
-				return new DecoyMotor();
-			}
-		};
+//
+//		IMotorFactory decoyFactory = new IMotorFactory() {
+//			@Override
+//			public GBMotor generate(int id) {
+//				return new DecoyMotor();
+//			}
+//		};
+//
+//		IBrushedFactory brushedDecoy = new IBrushedFactory() {
+//			@Override
+//			public GBBrushedMotor generate(int id) {
+//				return new DecoyMotor();
+//			}
+//		};
 
 
 
 		CommandScheduler.getInstance().enable();
 		DigitalInputMap.getInstance();
 		SwerveChassis.create(
-				new SwerveModule(decoyFactory, brushedDecoy, 8, 14, 1, 4012, 10 ,RobotMap.Pegasus.Swerve.pid),
-				new SwerveModule(decoyFactory, brushedDecoy, 7, 16, 2, 4012, 10, RobotMap.Pegasus.Swerve.pid ),
-				new SwerveModule(new SparkMaxFactory().withGearRatio(6), new TalonSRXFactory(), 11, 13, 3, 4012, 10 ,RobotMap.Pegasus.Swerve.pid),
-				new SwerveModule(decoyFactory, brushedDecoy, 10, 15, 0, 4012, 10, RobotMap.Pegasus.Swerve.pid),
-				new PigeonGyro(new PigeonIMU(1)), 50, 50);
+				new SwerveModule(new SparkMaxFactory(),new SparkMaxFactory(), RobotMap.Pegasus.Swerve.Module1.linMotorID,RobotMap.Pegasus.Swerve.Module1.SteerMotorID,RobotMap.Pegasus.Swerve.Module1.lampryID,RobotMap.Pegasus.Swerve.Module1.MAX_LAMPREY_VAL,RobotMap.Pegasus.Swerve.Module1.MIN_LAMPREY_VAL,RobotMap.Pegasus.Swerve.linPID,RobotMap.Pegasus.Swerve.angPID),
+				new SwerveModule(new SparkMaxFactory(),new SparkMaxFactory(), RobotMap.Pegasus.Swerve.Module2.linMotorID,RobotMap.Pegasus.Swerve.Module2.SteerMotorID,RobotMap.Pegasus.Swerve.Module2.lampryID,RobotMap.Pegasus.Swerve.Module2.MAX_LAMPREY_VAL,RobotMap.Pegasus.Swerve.Module2.MIN_LAMPREY_VAL,RobotMap.Pegasus.Swerve.linPID,RobotMap.Pegasus.Swerve.angPID),
+				new SwerveModule(new SparkMaxFactory(),new SparkMaxFactory(), RobotMap.Pegasus.Swerve.Module3.linMotorID,RobotMap.Pegasus.Swerve.Module3.SteerMotorID,RobotMap.Pegasus.Swerve.Module3.lampryID,RobotMap.Pegasus.Swerve.Module3.MAX_LAMPREY_VAL,RobotMap.Pegasus.Swerve.Module3.MIN_LAMPREY_VAL,RobotMap.Pegasus.Swerve.linPID,RobotMap.Pegasus.Swerve.angPID),
+				new SwerveModule(new SparkMaxFactory(),new SparkMaxFactory(), RobotMap.Pegasus.Swerve.Module4.linMotorID,RobotMap.Pegasus.Swerve.Module4.SteerMotorID,RobotMap.Pegasus.Swerve.Module4.lampryID,RobotMap.Pegasus.Swerve.Module4.MAX_LAMPREY_VAL,RobotMap.Pegasus.Swerve.Module4.MIN_LAMPREY_VAL,RobotMap.Pegasus.Swerve.linPID,RobotMap.Pegasus.Swerve.angPID),
+				new PigeonGyro(new PigeonIMU(1)),
+				RobotMap.Pegasus.Swerve.SwerveLocations
+		);
 		OI.getInstance();
 	}
 
