@@ -202,7 +202,7 @@ public class RobotMap {
 					new Translation2d(0,0)
 			};
 			public static final PIDObject angPID = new PIDObject().withKp(0.2).withMaxPower(0.2);
-			public static final PIDObject linPID = new PIDObject().withKp(0.2).withMaxPower(0.2);
+			public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.2);
 
 			public static final double ks = 0.14876;
 			public static final double kv = 3.3055;

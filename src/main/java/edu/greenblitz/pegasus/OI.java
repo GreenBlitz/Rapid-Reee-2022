@@ -55,7 +55,7 @@ public class OI {
 
 
 	private void initDebug2Buttons() {
-		SwerveChassis.getInstance().setDefaultCommand(new MoveByJoystick(mainJoystick, 0.2));
+		SwerveChassis.getInstance().setDefaultCommand(new MoveByJoystick(mainJoystick, 1));
 	}
 
 	private void initDebugButtons() {
