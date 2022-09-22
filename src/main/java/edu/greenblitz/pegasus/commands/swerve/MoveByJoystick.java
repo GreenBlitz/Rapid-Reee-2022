@@ -4,6 +4,7 @@ import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.gblib.utils.GBMath;
 import edu.greenblitz.pegasus.RobotMap;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MoveByJoystick extends SwerveCommand {
 	private final double maxSpeed;
@@ -25,6 +26,10 @@ public class MoveByJoystick extends SwerveCommand {
 		double y = joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y);
 		double angle = Math.atan(y / x) + (x < 0 ? Math.PI : 0);
 		double amplitude = Math.hypot(x, y) * this.maxSpeed;
+		SmartDashboard.putNumber("angle fr_right",SwerveChassis.getInstance().getAngle(SwerveChassis.Module.FRONT_RIGHT));
+		SmartDashboard.putNumber("angle fr_left",SwerveChassis.getInstance().getAngle(SwerveChassis.Module.FRONT_LEFT));
+		SmartDashboard.putNumber("angle back_right",SwerveChassis.getInstance().getAngle(SwerveChassis.Module.BACK_RIGHT));
+		SmartDashboard.putNumber("angle back_left",SwerveChassis.getInstance().getAngle(SwerveChassis.Module.BACK_LEFT));
 //		SmartDashboard.putNumber("pow", amplitude);
 //		SmartDashboard.putNumber("x", x);
 //		SmartDashboard.putNumber("y", y);

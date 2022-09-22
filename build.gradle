@@ -90,7 +90,7 @@ dependencies {
     // Optional lines, adds common robot code libraries to the project
     // The jitpack line in repositories is required for these libraries.
     implementation 'com.github.GreenBlitz.MotionControl:motion:b9cf4145325d7c48aa9fe9b771e32537c77a25c0'
-    implementation 'com.github.GreenBlitz:GBLib:2e4f71ccabb9008f822717d2265600a53851d55e'
+    implementation 'com.github.GreenBlitz:GBLib:92fcfdb6abcfb8d2322fbb3cf99a57f487e782dc'
 
     implementation group: 'com.google.guava', name: 'guava', version: '11.0.2'
 
@@ -101,6 +101,8 @@ dependencies {
     // Optional lines, used for logging
     implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.2'
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.2'
+
+
 }
 
 // Simulation configuration (e.g. environment variables).

@@ -10,6 +10,8 @@ import edu.greenblitz.gblib.motors.brushless.GBMotor;
 import edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
 import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.commands.swerve.MoveByJoystick;
+import edu.greenblitz.pegasus.commands.swerve.garbage.CalibrateMaxMin;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 
 public class OI {
@@ -53,9 +55,7 @@ public class OI {
 
 
 	private void initDebug2Buttons() {
-		//TODO calibrate lamprey minmax
-		SwerveChassis.getInstance().setDefaultCommand(new MoveByJoystick(mainJoystick, 0.5));
-
+		SwerveChassis.getInstance().setDefaultCommand(new MoveByJoystick(mainJoystick, 0.2));
 	}
 
 	private void initDebugButtons() {

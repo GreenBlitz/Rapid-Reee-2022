@@ -2,8 +2,9 @@ package edu.greenblitz.pegasus.commands.swerve.garbage;
 
 import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CalibrateMaxMin extends SwerveCommand {
+public  class CalibrateMaxMin extends SwerveCommand {
 	private final double power;
 	private double maxVal;
 	private double minVal;
@@ -27,8 +28,11 @@ public class CalibrateMaxMin extends SwerveCommand {
 		minVal = Math.min(minVal, swerve.getRawLampreyAngle(module));
 	}
 
+
 	@Override
 	public void end(boolean interrupted) {
+		SmartDashboard.putNumber(module.toString()+" min ",minVal);
+		SmartDashboard.putNumber(module.toString()+" max ",maxVal);
 		swerve.rotateModuleByPower(module, 0);
 	}
 }
