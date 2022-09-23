@@ -201,6 +201,7 @@ public class RobotMap {
 					new Translation2d(0,0),
 					new Translation2d(0,0)
 			};
+			//TODO: calibrate GOOD pid
 			public static final PIDObject angPID = new PIDObject().withKp(0.2).withMaxPower(0.2);
 			public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.2);
 

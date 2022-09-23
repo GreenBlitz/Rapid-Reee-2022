@@ -1,30 +1,27 @@
 package edu.greenblitz.pegasus.commands.swerve;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
-import edu.greenblitz.gblib.utils.GBMath;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MoveByJoystick extends SwerveCommand {
 	private final double maxSpeed;
 	private final SmartJoystick joystick;
-
+	
 	public MoveByJoystick(SmartJoystick joystick, double maxSpeed) {
 		this.joystick = joystick;
 		this.maxSpeed = maxSpeed;
 	}
-
+	
 	@Override
 	public void initialize() {
-		swerve.configPID(RobotMap.Pegasus.Swerve.angPID,RobotMap.Pegasus.Swerve.linPID);
+		swerve.configPID(RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID);
 	}
-
+	
 	@Override
 	public void execute() {
 		double x = joystick.getAxisValue(SmartJoystick.Axis.LEFT_X);
 		double y = joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y);
-		double angle = Math.atan2(y, x)*-1 + Math.PI/2 + Math.PI/2; //this is intentional, the second addition will be removed when the lamprey calibration will be corrected.
+		double angle = Math.atan2(y, x) * -1 + Math.PI / 2 + Math.PI / 2;//we added 1 Math.PI/2 to fix wrong lamprey calibration
 		double amplitude = Math.hypot(x, y) * this.maxSpeed;
 //		SmartDashboard.putNumber("pow", amplitude);
 //		SmartDashboard.putNumber("x", x);
@@ -34,16 +31,15 @@ public class MoveByJoystick extends SwerveCommand {
 //		SmartDashboard.putNumber("bakarAngle", swerve.getTarget(SwerveChassis.Module.BACK_RIGHT));
 //		SmartDashboard.putNumber("amplitude", amplitude);
 //		SmartDashboard.putNumber("curr angle",(swerve.getAngle(SwerveChassis.Module.BACK_RIGHT)));
-
-
+		
 		if (x == 0 && y == 0) {
 			swerve.stop();
 			return;
 		}
-
+		
 		swerve.moveChassisLin(angle, amplitude);
 	}
-
-
+	
+	
 }
 
