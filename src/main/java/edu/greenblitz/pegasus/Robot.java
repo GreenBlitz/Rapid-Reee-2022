@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
 				new SwerveModule(angFactory, linFactoryBR, RobotMap.Pegasus.Swerve.Module3.SteerMotorID, RobotMap.Pegasus.Swerve.Module3.linMotorID, RobotMap.Pegasus.Swerve.Module3.lampryID, RobotMap.Pegasus.Swerve.Module3.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module3.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
 				new SwerveModule(angFactory, linFactoryBL, RobotMap.Pegasus.Swerve.Module4.SteerMotorID, RobotMap.Pegasus.Swerve.Module4.linMotorID, RobotMap.Pegasus.Swerve.Module4.lampryID, RobotMap.Pegasus.Swerve.Module4.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module4.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
 				new PigeonGyro(new PigeonIMU(1)),
-				RobotMap.Pegasus.Swerve.SwerveLocations
+				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates
 		);
 		SwerveChassis.getInstance().resetAllEncoders();
 		OI.getInstance();

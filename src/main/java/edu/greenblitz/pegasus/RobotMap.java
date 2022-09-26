@@ -195,11 +195,19 @@ public class RobotMap {
 		public static class Swerve {
 			public static final double ANG_GEAR_RATIO = 6.0;
 			public static final double LIN_GEAR_RATIO = 8.0;
+			public static final double MODULE_OFFSET_X = 30.2645;
+			public static final double MODULE_OFFSET_Y = 25.2645;
 			public static final Translation2d[] SwerveLocations = new Translation2d[]{
-					new Translation2d(0,0),
-					new Translation2d(0,0),
-					new Translation2d(0,0),
-					new Translation2d(0,0)
+					new Translation2d(MODULE_OFFSET_X,MODULE_OFFSET_Y),
+					new Translation2d(-MODULE_OFFSET_X,MODULE_OFFSET_Y),
+					new Translation2d(MODULE_OFFSET_X,-MODULE_OFFSET_Y),
+					new Translation2d(-MODULE_OFFSET_X,-MODULE_OFFSET_Y)
+			};
+			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
+					new Translation2d(MODULE_OFFSET_Y,-MODULE_OFFSET_X),
+					new Translation2d(-MODULE_OFFSET_Y,-MODULE_OFFSET_X),
+					new Translation2d(MODULE_OFFSET_Y,MODULE_OFFSET_X),
+					new Translation2d(-MODULE_OFFSET_Y,MODULE_OFFSET_X)
 			};
 			//TODO: calibrate GOOD pid
 			public static final PIDObject angPID = new PIDObject().withKp(0.2).withMaxPower(0.2);
