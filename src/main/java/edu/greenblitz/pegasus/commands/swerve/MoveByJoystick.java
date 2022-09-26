@@ -2,6 +2,8 @@ package edu.greenblitz.pegasus.commands.swerve;
 
 import edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.opencv.core.Mat;
 
 public class MoveByJoystick extends SwerveCommand {
 	private final double maxSpeed;

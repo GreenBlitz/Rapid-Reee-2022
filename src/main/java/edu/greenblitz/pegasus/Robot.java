@@ -62,7 +62,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("bl", Math.toDegrees(SwerveChassis.getInstance().getAngle(SwerveChassis.Module.BACK_LEFT)));
 		
 		CommandScheduler.getInstance().run();
-		
+
+		SmartDashboard.putNumber("angle fr_right",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_RIGHT)));
+		SmartDashboard.putNumber("angle fr_left",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_LEFT)));
+		SmartDashboard.putNumber("angle back_right",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.BACK_RIGHT)));
+		SmartDashboard.putNumber("angle back_left",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.BACK_LEFT)));
+
 	}
 	
 	
