@@ -220,7 +220,7 @@ public class RobotMap {
 			public static class Module1 {//front right
 				public static final int linMotorID = 11;
 				public static final int SteerMotorID = 3;
-				public static final int lampryID =1 ;
+				public static final int lampryID = 2;
 				public static final int MIN_LAMPREY_VAL = 14;
 				public static final int MAX_LAMPREY_VAL = 4023;
 				public static final boolean INVERTED = false;
@@ -229,7 +229,7 @@ public class RobotMap {
 			public static class Module2 {//front left
 				public static final int linMotorID = 10;
 				public static final int SteerMotorID =1;
-				public static final int lampryID =2 ;
+				public static final int lampryID = 0 ;
 
 				public static final int MIN_LAMPREY_VAL = 63;
 				public static final int MAX_LAMPREY_VAL = 4012;
@@ -238,8 +238,8 @@ public class RobotMap {
 
 			public static class Module3 {//back right
 				public static final int linMotorID = 5;
-				public static final int SteerMotorID =7;
-				public static final int lampryID =0 ;
+				public static final int SteerMotorID =12;
+				public static final int lampryID = 3;
 
 				public static final int MIN_LAMPREY_VAL = 19;
 				public static final int MAX_LAMPREY_VAL = 3967;
@@ -249,7 +249,7 @@ public class RobotMap {
 			public static class Module4 {//back left
 				public static final int linMotorID = 8;
 				public static final int SteerMotorID =2;
-				public static final int lampryID = 3 ;
+				public static final int lampryID =  1;
 				public static final int MIN_LAMPREY_VAL = 27;
 				public static final int MAX_LAMPREY_VAL = 4021;
 				public static final boolean INVERTED = true;
