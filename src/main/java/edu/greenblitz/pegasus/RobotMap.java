@@ -204,10 +204,10 @@ public class RobotMap {
 					new Translation2d(-MODULE_OFFSET_X,-MODULE_OFFSET_Y)
 			};
 			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
-					new Translation2d(MODULE_OFFSET_Y,-MODULE_OFFSET_X),
-					new Translation2d(-MODULE_OFFSET_Y,-MODULE_OFFSET_X),
-					new Translation2d(MODULE_OFFSET_Y,MODULE_OFFSET_X),
-					new Translation2d(-MODULE_OFFSET_Y,MODULE_OFFSET_X)
+					new Translation2d(0.3020647,0.25265),
+					new Translation2d(-0.3020647,0.25265),
+					new Translation2d(0.3020647,-0.25265),
+					new Translation2d(-0.3020647,-0.25265)
 			};
 			//TODO: calibrate GOOD pid
 			public static final PIDObject angPID = new PIDObject().withKp(0.2).withMaxPower(0.2);
