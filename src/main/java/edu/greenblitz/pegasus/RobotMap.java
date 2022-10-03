@@ -210,7 +210,7 @@ public class RobotMap {
 					new Translation2d(-MODULE_OFFSET_Y,MODULE_OFFSET_X)
 			};
 			//TODO: calibrate GOOD pid
-			public static final PIDObject angPID = new PIDObject().withKp(0.2).withMaxPower(0.2);
+			public static final PIDObject angPID = new PIDObject().withKp(0.5).withKd(10).withMaxPower(0.5);
 			public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.2);
 
 			public static final double ks = 0.14876;

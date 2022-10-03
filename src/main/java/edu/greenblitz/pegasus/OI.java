@@ -48,9 +48,10 @@ public class OI /*gevald */ {
 	
 	private void initDebug2Buttons() {
 		SwerveChassis.getInstance().setDefaultCommand(new MoveByJoystick(mainJoystick, 0.5));
-		mainJoystick.X.whenPressed(new RotateToAngle(90));
-		mainJoystick.B.whenPressed(new RotateToAngle(180));
-		mainJoystick.A.whenPressed(new RotateToAngle(0));
+		mainJoystick.X.whenPressed(new RotateToAngle(Math.PI/2));
+		mainJoystick.B.whenPressed(new RotateToAngle(Math.PI/4));
+		mainJoystick.A.whenPressed(new RotateToAngle(3*Math.PI/4));
+		mainJoystick.Y.whenPressed(new MoveByJoystick(mainJoystick, 0.5));
 	}
 	
 	private void initRealButtons() {

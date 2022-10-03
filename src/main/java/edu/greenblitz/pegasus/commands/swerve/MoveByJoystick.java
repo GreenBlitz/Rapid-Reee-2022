@@ -23,7 +23,7 @@ public class MoveByJoystick extends SwerveCommand {
 	public void execute() {
 		double x = joystick.getAxisValue(SmartJoystick.Axis.LEFT_X);
 		double y = joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y);
-		double angle = Math.atan2(y, x) * -1 + Math.PI / 2 + Math.PI / 2;//we added 1 Math.PI/2 to fix wrong lamprey calibration
+		double angle = Math.atan2(y, x) * -1 + Math.PI / 2;
 		double amplitude = Math.hypot(x, y) * this.maxSpeed;
 //		SmartDashboard.putNumber("pow", amplitude);
 //		SmartDashboard.putNumber("x", x);
