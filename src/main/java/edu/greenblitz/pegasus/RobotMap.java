@@ -204,6 +204,8 @@ public class RobotMap {
 					new Translation2d(-MODULE_OFFSET_X,-MODULE_OFFSET_Y)
 			};
 			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
+					//the WPILib coordinate system is stupid. (x is forwards, y is letwards)
+					//the translations are given rotated by 90 degrees clockwise to avoid coordinates system conversion at output
 					new Translation2d(0.3020647,0.25265),
 					new Translation2d(-0.3020647,0.25265),
 					new Translation2d(0.3020647,-0.25265),
@@ -221,8 +223,8 @@ public class RobotMap {
 				public static final int linMotorID = 11;
 				public static final int SteerMotorID = 3;
 				public static final int lampryID = 2;
-				public static final int MIN_LAMPREY_VAL = 1636;
-				public static final int MAX_LAMPREY_VAL = 1831;
+				public static final int MIN_LAMPREY_VAL = 28;
+				public static final int MAX_LAMPREY_VAL = 2675;
 				public static final boolean INVERTED = false;
 			}
 

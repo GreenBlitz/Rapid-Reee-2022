@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CombineJoystickMovement extends SwerveCommand{
 
-	static final double ANG_SPEED_FACTOR = 0.03;
+	static final double ANG_SPEED_FACTOR = 1;
 
 	public final SmartJoystick joystick;
 
@@ -23,7 +23,7 @@ public class CombineJoystickMovement extends SwerveCommand{
 			return;
 		}
 		swerve.MoveByChassisSpeeds(forwardSpeed,rightwardSpeed,angSpeed,
-				0);//put Current angle in CurrentAng (pidgen)
+				swerve.getChassisAngle());//put Current angle in CurrentAng (pidgen)
 	}
 
 }

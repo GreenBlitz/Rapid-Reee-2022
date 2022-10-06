@@ -6,6 +6,7 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.MoveByJoystick;
 import edu.greenblitz.pegasus.commands.swerve.RotateToAngle;
+import edu.greenblitz.pegasus.commands.swerve.garbage.CalibrateMaxMin;
 
 public class OI /*gevald */ {
 	
@@ -47,8 +48,12 @@ public class OI /*gevald */ {
 	}
 	
 	private void initDebug2Buttons() {
-		SwerveChassis.getInstance().setDefaultCommand(new MoveByJoystick(mainJoystick, 0.5));
-		mainJoystick.Y.whenPressed(new MoveByJoystick(mainJoystick, 0.5));
+//		SwerveChassis.getInstance().setDefaultCommand(new MoveByJoystick(mainJoystick, 0.5));
+//		mainJoystick.B.whileHeld(new CalibrateMaxMin(0.05, SwerveChassis.Module.FRONT_RIGHT));
+//		mainJoystick.Y.whenPressed(new MoveByJoystick(mainJoystick, 0.3));
+//		mainJoystick.A.whenPressed(new RotateToAngle(0));
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick));
+//		mainJoystick.X.whenPressed(new CombineJoystickMovement(mainJoystick));
 	}
 	
 	private void initRealButtons() {

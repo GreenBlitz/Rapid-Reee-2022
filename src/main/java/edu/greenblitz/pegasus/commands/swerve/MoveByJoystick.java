@@ -32,7 +32,7 @@ public class MoveByJoystick extends SwerveCommand {
 //		SmartDashboard.putNumber("badJoystickAngle", Math.toDegrees(badAngle));
 //		SmartDashboard.putNumber("goodJoystickAngle", Math.toDegrees(angle));
 		SmartDashboard.putNumber("Angle", swerve.getTarget(SwerveChassis.Module.FRONT_RIGHT));
-//		SmartDashboard.putNumber("amplitude", amplitude);
+//	 	SmartDashboard.putNumber("amplitude", amplitude);
 //		SmartDashboard.putNumber("curr angle",(swerve.getAngle(SwerveChassis.Module.BACK_RIGHT)));
 		
 		if (x == 0 && y == 0) {

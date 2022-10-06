@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
 				new SwerveModule(angFactory, linFactoryFL, RobotMap.Pegasus.Swerve.Module2.SteerMotorID, RobotMap.Pegasus.Swerve.Module2.linMotorID, RobotMap.Pegasus.Swerve.Module2.lampryID, RobotMap.Pegasus.Swerve.Module2.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module2.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
 				new SwerveModule(angFactory, linFactoryBR, RobotMap.Pegasus.Swerve.Module3.SteerMotorID, RobotMap.Pegasus.Swerve.Module3.linMotorID, RobotMap.Pegasus.Swerve.Module3.lampryID, RobotMap.Pegasus.Swerve.Module3.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module3.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
 				new SwerveModule(angFactory, linFactoryBL, RobotMap.Pegasus.Swerve.Module4.SteerMotorID, RobotMap.Pegasus.Swerve.Module4.linMotorID, RobotMap.Pegasus.Swerve.Module4.lampryID, RobotMap.Pegasus.Swerve.Module4.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module4.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
-				new PigeonGyro(new PigeonIMU(1)),
+				new PigeonGyro(new PigeonIMU(12)),
 				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates
 		);
 		SwerveChassis.getInstance().resetAllEncoders();
@@ -58,22 +58,13 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void robotPeriodic() {
-		SmartDashboard.putNumber("fr", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT)), 180));
-		SmartDashboard.putNumber("fl", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_LEFT)), 180));
-		SmartDashboard.putNumber("br", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT)), 180));
-		SmartDashboard.putNumber("bl", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 180));
-		
+		SmartDashboard.putNumber("fr", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT)), 360));
+		SmartDashboard.putNumber("fl", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_LEFT)), 360));
+		SmartDashboard.putNumber("br", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
+		SmartDashboard.putNumber("bl", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 360));
+		SmartDashboard.putNumber("lamprey",SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_RIGHT));
 		CommandScheduler.getInstance().run();
-
-		SmartDashboard.putNumber("angle fr_right",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_RIGHT)));
-		SmartDashboard.putNumber("angle fr_left",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_LEFT)));
-		SmartDashboard.putNumber("angle back_right",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.BACK_RIGHT)));
-		SmartDashboard.putNumber("angle back_left",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.BACK_LEFT)));
-		
-		SmartDashboard.putNumber("raw angle fr_right",SwerveChassis.getInstance().getRawLampreyAngle(SwerveChassis.Module.FRONT_RIGHT));
-		SmartDashboard.putNumber("raw angle fr_left",SwerveChassis.getInstance().getRawLampreyAngle(SwerveChassis.Module.FRONT_LEFT));
-		SmartDashboard.putNumber("raw angle back_right",SwerveChassis.getInstance().getRawLampreyAngle(SwerveChassis.Module.BACK_RIGHT));
-		SmartDashboard.putNumber("raw angle back_left",SwerveChassis.getInstance().getRawLampreyAngle(SwerveChassis.Module.BACK_LEFT));
+		SmartDashboard.putNumber("Angle", SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT));
 	}
 	
 	
