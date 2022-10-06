@@ -1,8 +1,8 @@
 //package edu.greenblitz.pegasus.commands.swerve;
 //
-//import edu.greenblitz.gblib.hid.SmartJoystick;
-//import edu.greenblitz.gblib.motion.pid.PIDObject;
-//import edu.greenblitz.gblib.utils.GBMath;
+//import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
+//import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
+//import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
 //
 //public class MoveSingleByJoystick extends SwerveCommand {
 //	public SmartJoystick joystick;

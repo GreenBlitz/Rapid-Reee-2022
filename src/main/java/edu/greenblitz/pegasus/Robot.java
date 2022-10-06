@@ -3,12 +3,13 @@ package edu.greenblitz.pegasus;
 //import edu.greenblitz.pegasus.commands.swerve.MoveSingleByJoystick;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.greenblitz.gblib.gyro.PigeonGyro;
-import edu.greenblitz.gblib.motors.brushless.IMotorFactory;
-import edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
-import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
-import edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
-import edu.greenblitz.gblib.utils.GBMath;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.IMotorFactory;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.gyro.PigeonGyro;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
+
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -57,10 +58,10 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void robotPeriodic() {
-		SmartDashboard.putNumber("fr", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getAngle(SwerveChassis.Module.FRONT_RIGHT)), 180));
-		SmartDashboard.putNumber("fl", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getAngle(SwerveChassis.Module.FRONT_LEFT)), 180));
-		SmartDashboard.putNumber("br", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getAngle(SwerveChassis.Module.BACK_RIGHT)), 180));
-		SmartDashboard.putNumber("bl", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getAngle(SwerveChassis.Module.BACK_LEFT)), 180));
+		SmartDashboard.putNumber("fr", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT)), 180));
+		SmartDashboard.putNumber("fl", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_LEFT)), 180));
+		SmartDashboard.putNumber("br", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT)), 180));
+		SmartDashboard.putNumber("bl", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 180));
 		
 		CommandScheduler.getInstance().run();
 

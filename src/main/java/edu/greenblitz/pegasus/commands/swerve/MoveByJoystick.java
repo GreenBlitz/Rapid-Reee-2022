@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus.commands.swerve;
 
-import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.opencv.core.Mat;
@@ -30,7 +31,7 @@ public class MoveByJoystick extends SwerveCommand {
 //		SmartDashboard.putNumber("y", y);
 //		SmartDashboard.putNumber("badJoystickAngle", Math.toDegrees(badAngle));
 //		SmartDashboard.putNumber("goodJoystickAngle", Math.toDegrees(angle));
-//		SmartDashboard.putNumber("bakarAngle", swerve.getTarget(SwerveChassis.Module.BACK_RIGHT));
+		SmartDashboard.putNumber("Angle", swerve.getTarget(SwerveChassis.Module.FRONT_RIGHT));
 //		SmartDashboard.putNumber("amplitude", amplitude);
 //		SmartDashboard.putNumber("curr angle",(swerve.getAngle(SwerveChassis.Module.BACK_RIGHT)));
 		

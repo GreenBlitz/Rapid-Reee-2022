@@ -1,8 +1,8 @@
 //package edu.greenblitz.pegasus.commands.swerve;
 //
-//import edu.greenblitz.gblib.motors.brushed.TalonSRX.TalonSRXFactory;
-//import edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
-//import edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
+//import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushed.TalonSRX.TalonSRXFactory;
+//import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
+//import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
 //import edu.greenblitz.pegasus.RobotMap;
 //
 //public class ModuleTest extends SwerveModule {

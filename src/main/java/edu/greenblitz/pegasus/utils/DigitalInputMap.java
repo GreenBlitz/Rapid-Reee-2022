@@ -1,6 +1,6 @@
 package edu.greenblitz.pegasus.utils;
 
-import edu.greenblitz.gblib.subsystems.GBSubsystem;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 // This is GBSubsystem for periodic and the dashboard. this isn't a real subsystem.

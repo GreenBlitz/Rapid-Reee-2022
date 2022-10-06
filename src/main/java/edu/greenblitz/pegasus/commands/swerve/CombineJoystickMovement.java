@@ -1,7 +1,6 @@
 package edu.greenblitz.pegasus.commands.swerve;
 
-import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CombineJoystickMovement extends SwerveCommand{

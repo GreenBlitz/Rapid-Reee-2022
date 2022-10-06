@@ -1,6 +1,6 @@
 package edu.greenblitz.pegasus.utils;
 
-import edu.greenblitz.gblib.subsystems.GBSubsystem;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
