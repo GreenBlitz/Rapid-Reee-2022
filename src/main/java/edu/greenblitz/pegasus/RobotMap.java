@@ -79,7 +79,7 @@ public class RobotMap {
 			}
 
 			public static class Solenoid {
-				public static final int FORWARD_PORT = 2;
+				public static final int FORWARD_PORT = 1;
 				public static final int REVERSE_PORT = 0;
 			}
 		}
@@ -179,7 +179,7 @@ public class RobotMap {
 
 		public static class Pneumatics {
 			public static class PCM {
-				public static final int PCM_ID = 21;
+				public static final int PCM_ID = 22;
 				public static final PneumaticsModuleType PCM_TYPE = PneumaticsModuleType.CTREPCM;
 			}
 
