@@ -96,15 +96,19 @@ public class Robot extends TimedRobot {
 //				new SwerveModule(angFactory, linFactoryBR, RobotMap.Pegasus.Swerve.Module3.SteerMotorID, RobotMap.Pegasus.Swerve.Module3.linMotorID, RobotMap.Pegasus.Swerve.Module3.lampryID, RobotMap.Pegasus.Swerve.Module3.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module3.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
 //				new SwerveModule(angFactory, linFactoryBL, RobotMap.Pegasus.Swerve.Module4.SteerMotorID, RobotMap.Pegasus.Swerve.Module4.linMotorID, RobotMap.Pegasus.Swerve.Module4.lampryID, RobotMap.Pegasus.Swerve.Module4.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module4.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
 				frontRightModule,frontLeftModule,backRightModule,backLeftModule,
-				new PigeonGyro(new PigeonIMU(12)),
+				new PigeonIMU(12),
 				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates
 		);
 		SwerveChassis.getInstance().resetAllEncoders();
 
 		//OI initialisation
 		OI.getInstance();
+
+
 	}
-	
+
+
+
 	@Override
 	public void robotPeriodic() {
 		SmartDashboard.putNumber("FR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT)), 360));
@@ -113,6 +117,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("BL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 360));
 		SmartDashboard.putNumber("FR-lamprey",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_RIGHT)));
 
+		SmartDashboard.putNumber("pigeon angle",Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
 		CommandScheduler.getInstance().run();
 	}
 	
