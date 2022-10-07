@@ -1,5 +1,7 @@
 package edu.greenblitz.pegasus;
 
+
+
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -7,11 +9,12 @@ import org.greenblitz.motion.interpolation.Dataset;
 
 public class RobotMap {
 	public static class Pegasus {
+		
 		public static class Joystick {
 			public static final int MAIN = 0;
 			public static final int SECOND = 1;
 		}
-
+		
 		public static class Intake {
 
 			public static final double POWER = 1.0;
@@ -85,6 +88,8 @@ public class RobotMap {
 		}
 
 		public static class Swerve {
+			public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
+
 			public static final double ANG_GEAR_RATIO = 6.0;
 			public static final double LIN_GEAR_RATIO = 8.0;
 			public static final double MAX_VELOCITY = 3.7; // m/s
@@ -109,8 +114,8 @@ public class RobotMap {
 					new Translation2d(0.3020647,0.25265)
 
 			};
-
 			//TODO: calibrate GOOD PID
+
 			public static final PIDObject angPID = new PIDObject().withKp(0.5).withKd(10).withMaxPower(0.5);
 			public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.5);
 
