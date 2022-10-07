@@ -37,34 +37,83 @@ public class Robot extends TimedRobot {
 		
 		
 		CommandScheduler.getInstance().enable();
+
 		DigitalInputMap.getInstance();
+
+		//swerve
 		SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);
 		IMotorFactory angFactory = new SparkMaxFactory().withGearRatio(6).withCurrentLimit(30).withRampRate(0.4);
 		IMotorFactory linFactoryFR = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module1.INVERTED);
 		IMotorFactory linFactoryFL = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module2.INVERTED);
 		IMotorFactory linFactoryBR = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module3.INVERTED);
 		IMotorFactory linFactoryBL = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module4.INVERTED);
+
+		SwerveModule frontRightModule = new SwerveModule(angFactory,
+				linFactoryFR,
+				RobotMap.Pegasus.Swerve.Module1.SteerMotorID,
+				RobotMap.Pegasus.Swerve.Module1.linMotorID,
+				RobotMap.Pegasus.Swerve.Module1.lampryID,
+				RobotMap.Pegasus.Swerve.Module1.MAX_LAMPREY_VAL,
+				RobotMap.Pegasus.Swerve.Module1.MIN_LAMPREY_VAL,
+				RobotMap.Pegasus.Swerve.angPID,
+				RobotMap.Pegasus.Swerve.linPID,
+				feedforward);
+		SwerveModule frontLeftModule  = new SwerveModule(angFactory,
+				linFactoryFL,
+				RobotMap.Pegasus.Swerve.Module2.SteerMotorID,
+				RobotMap.Pegasus.Swerve.Module2.linMotorID,
+				RobotMap.Pegasus.Swerve.Module2.lampryID,
+				RobotMap.Pegasus.Swerve.Module2.MAX_LAMPREY_VAL,
+				RobotMap.Pegasus.Swerve.Module2.MIN_LAMPREY_VAL,
+				RobotMap.Pegasus.Swerve.angPID,
+				RobotMap.Pegasus.Swerve.linPID,
+				feedforward);
+		SwerveModule backRightModule  = new SwerveModule(angFactory,
+				linFactoryBR,
+				RobotMap.Pegasus.Swerve.Module3.SteerMotorID,
+				RobotMap.Pegasus.Swerve.Module3.linMotorID,
+				RobotMap.Pegasus.Swerve.Module3.lampryID,
+				RobotMap.Pegasus.Swerve.Module3.MAX_LAMPREY_VAL,
+				RobotMap.Pegasus.Swerve.Module3.MIN_LAMPREY_VAL,
+				RobotMap.Pegasus.Swerve.angPID,
+				RobotMap.Pegasus.Swerve.linPID,
+				feedforward);
+		SwerveModule backLeftModule   = new SwerveModule(angFactory,
+				linFactoryBL,
+				RobotMap.Pegasus.Swerve.Module4.SteerMotorID,
+				RobotMap.Pegasus.Swerve.Module4.linMotorID,
+				RobotMap.Pegasus.Swerve.Module4.lampryID,
+				RobotMap.Pegasus.Swerve.Module4.MAX_LAMPREY_VAL,
+				RobotMap.Pegasus.Swerve.Module4.MIN_LAMPREY_VAL,
+				RobotMap.Pegasus.Swerve.angPID,
+				RobotMap.Pegasus.Swerve.linPID,
+				feedforward);
+
+
 		SwerveChassis.create(
-				new SwerveModule(angFactory, linFactoryFR, RobotMap.Pegasus.Swerve.Module1.SteerMotorID, RobotMap.Pegasus.Swerve.Module1.linMotorID, RobotMap.Pegasus.Swerve.Module1.lampryID, RobotMap.Pegasus.Swerve.Module1.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module1.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
-				new SwerveModule(angFactory, linFactoryFL, RobotMap.Pegasus.Swerve.Module2.SteerMotorID, RobotMap.Pegasus.Swerve.Module2.linMotorID, RobotMap.Pegasus.Swerve.Module2.lampryID, RobotMap.Pegasus.Swerve.Module2.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module2.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
-				new SwerveModule(angFactory, linFactoryBR, RobotMap.Pegasus.Swerve.Module3.SteerMotorID, RobotMap.Pegasus.Swerve.Module3.linMotorID, RobotMap.Pegasus.Swerve.Module3.lampryID, RobotMap.Pegasus.Swerve.Module3.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module3.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
-				new SwerveModule(angFactory, linFactoryBL, RobotMap.Pegasus.Swerve.Module4.SteerMotorID, RobotMap.Pegasus.Swerve.Module4.linMotorID, RobotMap.Pegasus.Swerve.Module4.lampryID, RobotMap.Pegasus.Swerve.Module4.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module4.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
+//				new SwerveModule(angFactory, linFactoryFR, RobotMap.Pegasus.Swerve.Module1.SteerMotorID, RobotMap.Pegasus.Swerve.Module1.linMotorID, RobotMap.Pegasus.Swerve.Module1.lampryID, RobotMap.Pegasus.Swerve.Module1.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module1.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
+//				new SwerveModule(angFactory, linFactoryFL, RobotMap.Pegasus.Swerve.Module2.SteerMotorID, RobotMap.Pegasus.Swerve.Module2.linMotorID, RobotMap.Pegasus.Swerve.Module2.lampryID, RobotMap.Pegasus.Swerve.Module2.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module2.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
+//				new SwerveModule(angFactory, linFactoryBR, RobotMap.Pegasus.Swerve.Module3.SteerMotorID, RobotMap.Pegasus.Swerve.Module3.linMotorID, RobotMap.Pegasus.Swerve.Module3.lampryID, RobotMap.Pegasus.Swerve.Module3.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module3.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
+//				new SwerveModule(angFactory, linFactoryBL, RobotMap.Pegasus.Swerve.Module4.SteerMotorID, RobotMap.Pegasus.Swerve.Module4.linMotorID, RobotMap.Pegasus.Swerve.Module4.lampryID, RobotMap.Pegasus.Swerve.Module4.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module4.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
+				frontRightModule,frontLeftModule,backRightModule,backLeftModule,
 				new PigeonGyro(new PigeonIMU(12)),
 				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates
 		);
 		SwerveChassis.getInstance().resetAllEncoders();
+
+		//OI initialisation
 		OI.getInstance();
 	}
 	
 	@Override
 	public void robotPeriodic() {
-		SmartDashboard.putNumber("fr", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT)), 360));
-		SmartDashboard.putNumber("fl", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_LEFT)), 360));
-		SmartDashboard.putNumber("br", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
-		SmartDashboard.putNumber("bl", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 360));
-		SmartDashboard.putNumber("lamprey",SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_RIGHT));
+		SmartDashboard.putNumber("FR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT)), 360));
+		SmartDashboard.putNumber("FL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_LEFT)), 360));
+		SmartDashboard.putNumber("BR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
+		SmartDashboard.putNumber("BL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 360));
+		SmartDashboard.putNumber("FR-lamprey",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_RIGHT)));
+
 		CommandScheduler.getInstance().run();
-		SmartDashboard.putNumber("Angle", SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT));
 	}
 	
 	
