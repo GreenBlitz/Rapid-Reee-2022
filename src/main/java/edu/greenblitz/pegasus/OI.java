@@ -3,6 +3,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.commands.compressor.CompressorOn;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
@@ -57,8 +58,7 @@ public class OI /*gevald */ {
 //		mainJoystick.Y.whenPressed(new MoveByJoystick(mainJoystick, 0.3));
 //		mainJoystick.A.whenPressed(new RotateToAngle(0));
 //		mainJoystick.X.whenPressed(new CombineJoystickMovement(mainJoystick));
-
-		mainJoystick.X.whileHeld(new ShootByConstant(0.5));
+		//mainJoystick.X.whileHeld(new ShootByConstant(0.5));
 		mainJoystick.Y.whileHeld(new RunFunnel());
 		mainJoystick.A.whileHeld(new ToggleRoller());
 		mainJoystick.B.whileHeld(new RunRoller());

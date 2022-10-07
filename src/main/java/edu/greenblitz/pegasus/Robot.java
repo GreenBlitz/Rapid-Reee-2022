@@ -11,6 +11,7 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.gyro.PigeonGyro;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
 
+import edu.greenblitz.pegasus.commands.compressor.CompressorOn;
 import edu.greenblitz.pegasus.commands.compressor.HandleCompressor;
 import edu.greenblitz.pegasus.subsystems.Pneumatics;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
@@ -44,7 +45,6 @@ public class Robot extends TimedRobot {
 		DigitalInputMap.getInstance();
 
 		Shooter.create(new SparkMaxFactory().withInverted(true),RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER );
-		Pneumatics.getInstance().setDefaultCommand(new HandleCompressor());
 		//swerve
 		SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);
 		IMotorFactory angFactory = new SparkMaxFactory().withGearRatio(6).withCurrentLimit(30).withRampRate(0.4);
@@ -105,7 +105,7 @@ public class Robot extends TimedRobot {
 				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates
 		);
 		SwerveChassis.getInstance().resetAllEncoders();
-
+		SwerveChassis.getInstance().resetChassisAngle();
 		//OI initialisation
 		OI.getInstance();
 
@@ -123,6 +123,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("FR-lamprey",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_RIGHT)));
 
 		SmartDashboard.putNumber("pigeon angle",Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
+		SmartDashboard.putNumber("pigeon offset",Math.toDegrees(SwerveChassis.getInstance().pigeonAngleOffset));
 		CommandScheduler.getInstance().run();
 	}
 	
