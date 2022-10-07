@@ -206,14 +206,19 @@ public class RobotMap {
 			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
 					//the WPILib coordinate system is stupid. (x is forwards, y is letwards)
 					//the translations are given rotated by 90 degrees clockwise to avoid coordinates system conversion at output
-					new Translation2d(0.3020647,0.25265),
+//					new Translation2d(0.3020647,0.25265), fl
+//					new Translation2d(-0.3020647,0.25265),fr
+//					new Translation2d(0.3020647,-0.25265),bl
+//					new Translation2d(-0.3020647,-0.25265)br
+					new Translation2d(-0.3020647,-0.25265),
 					new Translation2d(-0.3020647,0.25265),
 					new Translation2d(0.3020647,-0.25265),
-					new Translation2d(-0.3020647,-0.25265)
+					new Translation2d(0.3020647,0.25265)
+
 			};
 			//TODO: calibrate GOOD pid
 			public static final PIDObject angPID = new PIDObject().withKp(0.5).withKd(10).withMaxPower(0.5);
-			public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.2);
+			public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.5);
 
 			public static final double ks = 0.14876;
 			public static final double kv = 3.3055;

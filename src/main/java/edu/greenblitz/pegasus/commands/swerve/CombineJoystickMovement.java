@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CombineJoystickMovement extends SwerveCommand{
 
-	static final double ANG_SPEED_FACTOR = 1;
+	static final double ANG_SPEED_FACTOR = 2;
 
 	public final SmartJoystick joystick;
 
