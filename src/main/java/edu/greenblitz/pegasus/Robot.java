@@ -12,6 +12,8 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
 
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -57,7 +59,8 @@ public class Robot extends TimedRobot {
 				RobotMap.Pegasus.Swerve.Module1.MIN_LAMPREY_VAL,
 				RobotMap.Pegasus.Swerve.angPID,
 				RobotMap.Pegasus.Swerve.linPID,
-				feedforward);
+				feedforward,
+				RobotMap.Pegasus.Swerve.WHEEL_CIRC);
 		SwerveModule frontLeftModule  = new SwerveModule(angFactory,
 				linFactoryFL,
 				RobotMap.Pegasus.Swerve.Module2.SteerMotorID,
@@ -67,7 +70,8 @@ public class Robot extends TimedRobot {
 				RobotMap.Pegasus.Swerve.Module2.MIN_LAMPREY_VAL,
 				RobotMap.Pegasus.Swerve.angPID,
 				RobotMap.Pegasus.Swerve.linPID,
-				feedforward);
+				feedforward,
+				RobotMap.Pegasus.Swerve.WHEEL_CIRC);
 		SwerveModule backRightModule  = new SwerveModule(angFactory,
 				linFactoryBR,
 				RobotMap.Pegasus.Swerve.Module3.SteerMotorID,
@@ -77,7 +81,8 @@ public class Robot extends TimedRobot {
 				RobotMap.Pegasus.Swerve.Module3.MIN_LAMPREY_VAL,
 				RobotMap.Pegasus.Swerve.angPID,
 				RobotMap.Pegasus.Swerve.linPID,
-				feedforward);
+				feedforward,
+				RobotMap.Pegasus.Swerve.WHEEL_CIRC);
 		SwerveModule backLeftModule   = new SwerveModule(angFactory,
 				linFactoryBL,
 				RobotMap.Pegasus.Swerve.Module4.SteerMotorID,
@@ -87,7 +92,8 @@ public class Robot extends TimedRobot {
 				RobotMap.Pegasus.Swerve.Module4.MIN_LAMPREY_VAL,
 				RobotMap.Pegasus.Swerve.angPID,
 				RobotMap.Pegasus.Swerve.linPID,
-				feedforward);
+				feedforward,
+				RobotMap.Pegasus.Swerve.WHEEL_CIRC);
 
 
 		SwerveChassis.create(
@@ -97,7 +103,8 @@ public class Robot extends TimedRobot {
 //				new SwerveModule(angFactory, linFactoryBL, RobotMap.Pegasus.Swerve.Module4.SteerMotorID, RobotMap.Pegasus.Swerve.Module4.linMotorID, RobotMap.Pegasus.Swerve.Module4.lampryID, RobotMap.Pegasus.Swerve.Module4.MAX_LAMPREY_VAL, RobotMap.Pegasus.Swerve.Module4.MIN_LAMPREY_VAL, RobotMap.Pegasus.Swerve.angPID, RobotMap.Pegasus.Swerve.linPID, feedforward),
 				frontRightModule,frontLeftModule,backRightModule,backLeftModule,
 				new PigeonIMU(12),
-				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates
+				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates,
+				new Pose2d(0,0,new Rotation2d(0)) //initial position of robot, 0 for now for testing
 		);
 		SwerveChassis.getInstance().resetAllEncoders();
 

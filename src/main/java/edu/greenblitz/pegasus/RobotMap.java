@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.gear.GearDependentValue;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDController;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -12,38 +13,39 @@ import static edu.greenblitz.pegasus.RobotMap.Pegasus.Climb.SafetyZones.HIGHEST_
 
 public class RobotMap {
 	public static class Pegasus {
+		
 		public static class Joystick {
 			public static final int MAIN = 0;
 			public static final int SECOND = 1;
 		}
 
-		public static class Chassis {
-			public static final double WHEEL_DIST = 0.564; //very accurate right now
-			public static final double startAngle = Math.toRadians(23);
-
-			public static class Motors {
-				public static final int[] ports = {1, 2, 3, 4, 5, 6};
-				public static final boolean[] isInverted = {true, true, true, false, false, false};
-				public static final int RIGHT_LEADER = 1, RIGHT_FOLLOWER_1 = 2, RIGHT_FOLLOWER_2 = 3, LEFT_LEADER = 4, LEFT_FOLLOWER_1 = 5, LEFT_FOLLOWER_2 = 6;
-				public static final boolean RIGHT_LEADER_REVERSED = true, RIGHT_FOLLOWER_1_REVERSED = true, RIGHT_FOLLOWER_2_REVERSED = true, LEFT_LEADER_REVERSED = false, LEFT_FOLLOWER_1_REVERSED = false, LEFT_FOLLOWER_2_REVERSED = false;
-			}
-
-			public static class Encoders {
-				public static final GearDependentValue NORM_CONST_SPARK = new GearDependentValue(2300.0 * 0.64, 1234.0 / 2.0); // TODO: check this, I copied it from Infinite Reeee
-				public static final int RIGHT_ENCODER = -1, LEFT_ENCODER = -1;
-				public static final boolean RIGHT_ENCODER_REVERSED = false, LEFT_ENCODER_REVERSED = false;
-			}
-
-			public static class Shifter {
-				public static final DoubleSolenoid.Value POWER_VALUE = DoubleSolenoid.Value.kForward;
-				public static final DoubleSolenoid.Value SPEED_VALUE = DoubleSolenoid.Value.kReverse;
-
-				public static class Solenoid {
-					public static final int FORWARD_PORT = 3;
-					public static final int REVERSE_PORT = 1;
-				}
-			}
-
+//		public static class Chassis {
+//			public static final double WHEEL_DIST = 0.564; //very accurate right now
+//			public static final double startAngle = Math.toRadians(23);
+//
+//			public static class Motors {
+//				public static final int[] ports = {1, 2, 3, 4, 5, 6};
+//				public static final boolean[] isInverted = {true, true, true, false, false, false};
+//				public static final int RIGHT_LEADER = 1, RIGHT_FOLLOWER_1 = 2, RIGHT_FOLLOWER_2 = 3, LEFT_LEADER = 4, LEFT_FOLLOWER_1 = 5, LEFT_FOLLOWER_2 = 6;
+//				public static final boolean RIGHT_LEADER_REVERSED = true, RIGHT_FOLLOWER_1_REVERSED = true, RIGHT_FOLLOWER_2_REVERSED = true, LEFT_LEADER_REVERSED = false, LEFT_FOLLOWER_1_REVERSED = false, LEFT_FOLLOWER_2_REVERSED = false;
+//			}
+//
+//			public static class Encoders {
+//				public static final GearDependentValue NORM_CONST_SPARK = new GearDependentValue(2300.0 * 0.64, 1234.0 / 2.0); // TODO: check this, I copied it from Infinite Reeee
+//				public static final int RIGHT_ENCODER = -1, LEFT_ENCODER = -1;
+//				public static final boolean RIGHT_ENCODER_REVERSED = false, LEFT_ENCODER_REVERSED = false;
+//			}
+//
+//			public static class Shifter {
+//				public static final DoubleSolenoid.Value POWER_VALUE = DoubleSolenoid.Value.kForward;
+//				public static final DoubleSolenoid.Value SPEED_VALUE = DoubleSolenoid.Value.kReverse;
+//
+//				public static class Solenoid {
+//					public static final int FORWARD_PORT = 3;
+//					public static final int REVERSE_PORT = 1;
+//				}
+//			}
+//
 //			public static class MotionData { // TODO: calibrate this
 //
 //				public static final ProfilingConfiguration CONFIG = new ProfilingConfiguration(0.85, 1.0, .0005, 0.8, 0.0, 2.0, .01, 0.5 * 0, 0, 0, .01, 500);
@@ -64,9 +66,9 @@ public class RobotMap {
 //				}
 //
 //			}
-
-
-		}
+//
+//
+//		}
 
 		public static class Intake {
 
@@ -193,6 +195,8 @@ public class RobotMap {
 		}
 
 		public static class Swerve {
+			public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
+
 			public static final double ANG_GEAR_RATIO = 6.0;
 			public static final double LIN_GEAR_RATIO = 8.0;
 			public static final double MODULE_OFFSET_X = 30.2645;
@@ -217,6 +221,7 @@ public class RobotMap {
 
 			};
 			//TODO: calibrate GOOD pid
+			
 			public static final PIDObject angPID = new PIDObject().withKp(0.5).withKd(10).withMaxPower(0.5);
 			public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.5);
 
