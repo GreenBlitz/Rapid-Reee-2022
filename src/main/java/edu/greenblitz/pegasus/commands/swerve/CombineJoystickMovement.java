@@ -16,7 +16,7 @@ public class CombineJoystickMovement extends SwerveCommand {
 	}
 
 	public void execute() {
-		double rightwardSpeed = joystick.getAxisValue(SmartJoystick.Axis.LEFT_X) * LIN_SPEED_FACTOR;
+		double rightwardSpeed = -joystick.getAxisValue(SmartJoystick.Axis.LEFT_X) * LIN_SPEED_FACTOR;
 		double forwardSpeed = joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y) * LIN_SPEED_FACTOR;
 		double angSpeed = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_X) * ANG_SPEED_FACTOR;
 		SmartDashboard.putNumber("xVal", angSpeed);
