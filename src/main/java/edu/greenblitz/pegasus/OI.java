@@ -54,6 +54,7 @@ public class OI /*gevald */ {
 //		mainJoystick.A.whenPressed(new RotateToAngle(0));
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick));
 //		mainJoystick.X.whenPressed(new CombineJoystickMovement(mainJoystick));
+	
 	}
 	
 	private void initRealButtons() {

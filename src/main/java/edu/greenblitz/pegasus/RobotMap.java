@@ -1,11 +1,8 @@
 package edu.greenblitz.pegasus;
 
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.gear.GearDependentValue;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDController;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
 
@@ -199,14 +196,14 @@ public class RobotMap {
 
 			public static final double ANG_GEAR_RATIO = 6.0;
 			public static final double LIN_GEAR_RATIO = 8.0;
-			public static final double MODULE_OFFSET_X = 30.2645;
-			public static final double MODULE_OFFSET_Y = 25.2645;
-			public static final Translation2d[] SwerveLocations = new Translation2d[]{
-					new Translation2d(MODULE_OFFSET_X,MODULE_OFFSET_Y),
-					new Translation2d(-MODULE_OFFSET_X,MODULE_OFFSET_Y),
-					new Translation2d(MODULE_OFFSET_X,-MODULE_OFFSET_Y),
-					new Translation2d(-MODULE_OFFSET_X,-MODULE_OFFSET_Y)
-			};
+//			public static final double MODULE_OFFSET_X = 30.2645;
+//			public static final double MODULE_OFFSET_Y = 25.2645;
+//			public static final Translation2d[] SwerveLocations = new Translation2d[]{
+//					new Translation2d(MODULE_OFFSET_X,MODULE_OFFSET_Y),
+//					new Translation2d(-MODULE_OFFSET_X,MODULE_OFFSET_Y),
+//					new Translation2d(MODULE_OFFSET_X,-MODULE_OFFSET_Y),
+//					new Translation2d(-MODULE_OFFSET_X,-MODULE_OFFSET_Y)
+//			};
 			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
 					//the WPILib coordinate system is stupid. (x is forwards, y is letwards)
 					//the translations are given rotated by 90 degrees clockwise to avoid coordinates system conversion at output
@@ -223,12 +220,19 @@ public class RobotMap {
 			//TODO: calibrate GOOD pid
 			
 			public static final PIDObject angPID = new PIDObject().withKp(0.5).withKd(10).withMaxPower(0.5);
-			public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.5);
-
+			public static final PIDObject linPID = new PIDObject().withKp(0.5);//PIDObject().withKp(0.0003).withMaxPower(0.5);
+			public static final PIDObject rotationPID = new PIDObject().withKp(0.3).withKi(0).withKd(0);
+			
+			
 			public static final double ks = 0.14876;
 			public static final double kv = 3.3055;
 			public static final double ka = 0.11023;
-
+			
+			public static final double KMaxVelocity = 3.7; //todo find real max speed (meters per second)
+			public static final double KMMaxAcceleration = 1; //todo find real max acceleration (meters per second ^2)
+			public static final double KMaxAngularVelocity = 9.39; //todo find real max speed (radians per second)
+			public static final double KMMaxAngularAcceleration = 1; //todo find real max acceleration (radians per second ^2)
+			
 			public static class Module1 {//front right
 				public static final int linMotorID = 11;
 				public static final int SteerMotorID = 3;

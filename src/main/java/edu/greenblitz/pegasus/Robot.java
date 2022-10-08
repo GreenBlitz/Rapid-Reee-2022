@@ -3,20 +3,25 @@ package edu.greenblitz.pegasus;
 //import edu.greenblitz.pegasus.commands.swerve.MoveSingleByJoystick;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.pathplanner.lib.PathPlanner;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.IMotorFactory;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.gyro.PigeonGyro;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
 
+import edu.greenblitz.pegasus.commands.swerve.PathFollowerCommand;
+import edu.greenblitz.pegasus.commands.swerve.TragectoryCreator;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
+import java.util.ArrayList;
 
 public class Robot extends TimedRobot {
 	
@@ -125,6 +130,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("FR-lamprey",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_RIGHT)));
 
 		SmartDashboard.putNumber("pigeon angle",Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
+		SmartDashboard.putNumber("robot-x", SwerveChassis.getInstance().getLocation().getX());
+		SmartDashboard.putNumber("robot-y", SwerveChassis.getInstance().getLocation().getY());
 		CommandScheduler.getInstance().run();
 	}
 	
@@ -167,10 +174,10 @@ public class Robot extends TimedRobot {
 	*/
 	@Override
 	public void autonomousInit() {
+		SwerveChassis.getInstance().resetLocalizer();
+		//new PathFollowerCommand(new TragectoryCreator(new ArrayList<Translation2d>(0),new Pose2d(2,0,new Rotation2d())).generate()).schedule();
+		new PathFollowerCommand(PathPlanner.loadPath("New New Path", RobotMap.Pegasus.Swerve.KMaxVelocity/3,RobotMap.Pegasus.Swerve.KMMaxAcceleration/3 )).schedule();
 		
-		//Climb.getInstance().resetTurningMotorTicks();
-		//Climb.getInstance().resetRailMotorTicks();
-		//new DCMPAuto().schedule();
 	}
 	
 	@Override
