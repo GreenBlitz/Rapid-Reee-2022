@@ -59,8 +59,9 @@ public class OI /*gevald */ {
 //		mainJoystick.A.whenPressed(new RotateToAngle(0));
 //		mainJoystick.X.whenPressed(new CombineJoystickMovement(mainJoystick));
 		//mainJoystick.X.whileHeld(new ShootByConstant(0.5));
+		mainJoystick.X.whileHeld(new CompressorOn());
 		mainJoystick.Y.whileHeld(new RunFunnel());
-		mainJoystick.A.whileHeld(new ToggleRoller());
+		mainJoystick.A.whenPressed(new ToggleRoller());
 		mainJoystick.B.whileHeld(new RunRoller());
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick));
 	}

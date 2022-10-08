@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().enable();
 
 		DigitalInputMap.getInstance();
-
+		Pneumatics.getInstance().setCompressor(true);
 		Shooter.create(new SparkMaxFactory().withInverted(true),RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER );
 		//swerve
 		SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);
@@ -121,7 +121,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("BR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
 		SmartDashboard.putNumber("BL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 360));
 		SmartDashboard.putNumber("FR-lamprey",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_RIGHT)));
-
+		SmartDashboard.putNumber("pressure",Pneumatics.getInstance().getPressure());
 		SmartDashboard.putNumber("pigeon angle",Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
 		SmartDashboard.putNumber("pigeon offset",Math.toDegrees(SwerveChassis.getInstance().pigeonAngleOffset));
 		CommandScheduler.getInstance().run();

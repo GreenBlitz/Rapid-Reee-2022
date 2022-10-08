@@ -195,6 +195,7 @@ public class RobotMap {
 		public static class Swerve {
 			public static final double ANG_GEAR_RATIO = 6.0;
 			public static final double LIN_GEAR_RATIO = 8.0;
+			public static final double MAX_VELOCITY = 3.7; // m/s
 			public static final double MODULE_OFFSET_X = 30.2645;
 			public static final double MODULE_OFFSET_Y = 25.2645;
 			public static final Translation2d[] SwerveLocations = new Translation2d[]{

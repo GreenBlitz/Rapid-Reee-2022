@@ -1,12 +1,13 @@
 package edu.greenblitz.pegasus.commands.swerve;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CombineJoystickMovement extends SwerveCommand {
 
 	static final double ANG_SPEED_FACTOR = 2;
-	static final double LIN_SPEED_FACTOR = 1;
+	static final double LIN_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_VELOCITY;
 
 	public final SmartJoystick joystick;
 
