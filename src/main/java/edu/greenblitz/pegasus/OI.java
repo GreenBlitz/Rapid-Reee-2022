@@ -10,6 +10,7 @@ import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
+import edu.greenblitz.pegasus.commands.shooter.ShootByRPM2;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -20,7 +21,7 @@ public class OI  {
 		DEBUG, REAL, DEBUG2
 	}
 	
-	private static final IOModes IOMode = IOModes.DEBUG2; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -65,13 +66,15 @@ public class OI  {
 
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
 
-		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM){
-			@Override
-			public void end(boolean interrupted) {
-				super.end(interrupted);
-				shooter.setSpeedByPID(0);
-			}
-		});
+		secondJoystick.A.whileHeld(new ShootByRPM2(2000));
+
+//		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.RPM, RobotMap.Pegasus.Shooter.ShooterMotor.RPM){
+//			@Override
+//			public void end(boolean interrupted) {
+//				super.end(interrupted);
+//				shooter.setSpeedByPID(0);
+//			}
+//		});
 		secondJoystick.X.whileHeld(new InsertIntoShooter());
 
 		secondJoystick.B.whileHeld(

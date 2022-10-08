@@ -36,7 +36,6 @@ public class ShooterByRPM extends ShooterCommand {
 		SmartDashboard.putNumber("target", target);
 		SmartDashboard.putNumber("inShootingSpeed", inShootingSpeed);
 		SmartDashboard.putNumber("RPM", shooter.getShooterSpeed());
-
 		if (Math.abs(target - shooter.getShooterSpeed()) < EPSILON) {
 			this.inShootingSpeed++;
 		} else {
