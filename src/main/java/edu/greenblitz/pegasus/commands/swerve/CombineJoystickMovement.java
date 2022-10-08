@@ -6,8 +6,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CombineJoystickMovement extends SwerveCommand {
 
-	static final double ANG_SPEED_FACTOR = 2;
-	static final double LIN_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_VELOCITY;
+
+	static final double ANG_SPEED_FACTOR = RobotMap.Pegasus.Swerve.KMaxAngularVelocity;
+	static final double LIN_SPEED_FACTOR = RobotMap.Pegasus.Swerve.KMaxVelocity;
+
 
 	public final SmartJoystick joystick;
 
