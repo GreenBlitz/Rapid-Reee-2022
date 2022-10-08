@@ -7,34 +7,26 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shooter.Shooter;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
-
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath; //But why tho?
-import edu.greenblitz.pegasus.subsystems.Pneumatics;
-
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
-
 import edu.greenblitz.pegasus.commands.swerve.PathFollowerCommand;
-import edu.greenblitz.pegasus.commands.swerve.TragectoryCreator;
+import edu.greenblitz.pegasus.subsystems.Pneumatics;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
-import java.util.ArrayList;
 
 public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
-
+		
 		DigitalInputMap.getInstance();
 		Pneumatics.init();
-		Shooter.create(new SparkMaxFactory().withInverted(true),RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER );
-
+		Shooter.create(new SparkMaxFactory().withInverted(true), RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
+		
 		//swerve
 		SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);
 		IMotorFactory angFactory = new SparkMaxFactory().withGearRatio(6).withCurrentLimit(30).withRampRate(0.4);
@@ -42,7 +34,7 @@ public class Robot extends TimedRobot {
 		IMotorFactory linFactoryFL = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module2.INVERTED);
 		IMotorFactory linFactoryBR = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module3.INVERTED);
 		IMotorFactory linFactoryBL = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module4.INVERTED);
-
+		
 		SwerveModule frontRightModule = new SwerveModule(angFactory,
 				linFactoryFR,
 				RobotMap.Pegasus.Swerve.Module1.SteerMotorID,
@@ -54,7 +46,7 @@ public class Robot extends TimedRobot {
 				RobotMap.Pegasus.Swerve.linPID,
 				feedforward,
 				RobotMap.Pegasus.Swerve.WHEEL_CIRC);
-		SwerveModule frontLeftModule  = new SwerveModule(angFactory,
+		SwerveModule frontLeftModule = new SwerveModule(angFactory,
 				linFactoryFL,
 				RobotMap.Pegasus.Swerve.Module2.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module2.linMotorID,
@@ -65,7 +57,7 @@ public class Robot extends TimedRobot {
 				RobotMap.Pegasus.Swerve.linPID,
 				feedforward,
 				RobotMap.Pegasus.Swerve.WHEEL_CIRC);
-		SwerveModule backRightModule  = new SwerveModule(angFactory,
+		SwerveModule backRightModule = new SwerveModule(angFactory,
 				linFactoryBR,
 				RobotMap.Pegasus.Swerve.Module3.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module3.linMotorID,
@@ -76,7 +68,7 @@ public class Robot extends TimedRobot {
 				RobotMap.Pegasus.Swerve.linPID,
 				feedforward,
 				RobotMap.Pegasus.Swerve.WHEEL_CIRC);
-		SwerveModule backLeftModule   = new SwerveModule(angFactory,
+		SwerveModule backLeftModule = new SwerveModule(angFactory,
 				linFactoryBL,
 				RobotMap.Pegasus.Swerve.Module4.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module4.linMotorID,
@@ -87,29 +79,28 @@ public class Robot extends TimedRobot {
 				RobotMap.Pegasus.Swerve.linPID,
 				feedforward,
 				RobotMap.Pegasus.Swerve.WHEEL_CIRC);
-
+		
 		SwerveChassis.create(
-				frontRightModule,frontLeftModule,backRightModule,backLeftModule,
+				frontRightModule, frontLeftModule, backRightModule, backLeftModule,
 				new PigeonIMU(12),
 				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates,
-				new Pose2d(0,0,new Rotation2d(0)) //initial position of robot, 0 for now for testing
+				new Pose2d(0, 0, new Rotation2d(0)) //initial position of robot, 0 for now for testing
 		);
 		SwerveChassis.getInstance().resetAllEncoders();
 		SwerveChassis.getInstance().resetChassisAngle();
 		OI.getInstance();
 	}
-
-
-
+	
+	
 	@Override
 	public void robotPeriodic() {
 		SmartDashboard.putNumber("FR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT)), 360));
 		SmartDashboard.putNumber("FL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_LEFT)), 360));
 		SmartDashboard.putNumber("BR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
 		SmartDashboard.putNumber("BL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 360));
-		SmartDashboard.putNumber("FR-lamprey",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_RIGHT)));
-		SmartDashboard.putNumber("pigeon angle",Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
-		SmartDashboard.putNumber("pigeon offset",Math.toDegrees(SwerveChassis.getInstance().pigeonAngleOffset));
+		SmartDashboard.putNumber("FR-lamprey", Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_RIGHT)));
+		SmartDashboard.putNumber("pigeon angle", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
+		SmartDashboard.putNumber("pigeon offset", Math.toDegrees(SwerveChassis.getInstance().pigeonAngleOffset));
 		SmartDashboard.putNumber("robot-x", SwerveChassis.getInstance().getLocation().getX());
 		SmartDashboard.putNumber("robot-y", SwerveChassis.getInstance().getLocation().getY());
 		CommandScheduler.getInstance().run();
@@ -156,7 +147,7 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		SwerveChassis.getInstance().resetLocalizer();
 		//new PathFollowerCommand(new TragectoryCreator(new ArrayList<Translation2d>(0),new Pose2d(2,0,new Rotation2d())).generate()).schedule();
-		new PathFollowerCommand(PathPlanner.loadPath("New New Path", RobotMap.Pegasus.Swerve.KMaxVelocity/3,RobotMap.Pegasus.Swerve.KMMaxAcceleration/3 )).schedule();
+		new PathFollowerCommand(PathPlanner.loadPath("New New Path", RobotMap.Pegasus.Swerve.KMaxVelocity / 3, RobotMap.Pegasus.Swerve.KMMaxAcceleration / 3)).schedule();
 		
 	}
 	

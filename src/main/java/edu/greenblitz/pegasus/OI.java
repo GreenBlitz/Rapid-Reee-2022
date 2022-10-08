@@ -58,6 +58,8 @@ public class OI  {
 		mainJoystick.A.whileHeld(new CompressorState());
 		mainJoystick.B.whenPressed(new ToggleRoller());
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick));
+//		mainJoystick.X.whenPressed(new CombineJoystickMovement(mainJoystick));
+	
 	}
 	
 	private void initRealButtons() {
