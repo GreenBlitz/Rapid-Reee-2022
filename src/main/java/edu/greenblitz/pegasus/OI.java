@@ -4,6 +4,7 @@ package edu.greenblitz.pegasus;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.compressor.CompressorOn;
+import edu.greenblitz.pegasus.commands.compressor.CompressorState;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
@@ -53,16 +54,9 @@ public class OI /*gevald */ {
 	}
 	
 	private void initDebug2Buttons() {
-//		SwerveChassis.getInstance().setDefaultCommand(new MoveByJoystick(mainJoystick, 0.5));
-//		mainJoystick.B.whileHeld(new CalibrateMaxMin(0.05, SwerveChassis.Module.FRONT_RIGHT));
-//		mainJoystick.Y.whenPressed(new MoveByJoystick(mainJoystick, 0.3));
-//		mainJoystick.A.whenPressed(new RotateToAngle(0));
-//		mainJoystick.X.whenPressed(new CombineJoystickMovement(mainJoystick));
-		//mainJoystick.X.whileHeld(new ShootByConstant(0.5));
-		mainJoystick.X.whileHeld(new CompressorOn());
-		mainJoystick.Y.whileHeld(new RunFunnel());
-		mainJoystick.A.whenPressed(new ToggleRoller());
-		mainJoystick.B.whileHeld(new RunRoller());
+		mainJoystick.X.whenPressed(new CompressorOn());
+		mainJoystick.A.whileHeld(new CompressorState());
+		mainJoystick.B.whenPressed(new ToggleRoller());
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick));
 	}
 	
