@@ -1,20 +1,13 @@
 package edu.greenblitz.pegasus;
 
-
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.compressor.CompressorOn;
 import edu.greenblitz.pegasus.commands.compressor.CompressorState;
-import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
-import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
-import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
-import edu.greenblitz.pegasus.commands.swerve.MoveByJoystick;
-import edu.greenblitz.pegasus.commands.swerve.RotateToAngle;
-import edu.greenblitz.pegasus.commands.swerve.garbage.CalibrateMaxMin;
 
-public class OI /*gevald */ {
+public class OI  {
 	
 	private enum IOModes {
 		DEBUG, REAL, DEBUG2
