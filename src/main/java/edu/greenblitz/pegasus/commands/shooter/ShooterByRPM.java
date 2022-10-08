@@ -12,7 +12,7 @@ public class ShooterByRPM extends ShooterCommand {
 	protected double tStart;
 	private int inShootingSpeed;
 
-	public ShooterByRPM(PIDObject pidObject, double target) {
+	public ShooterByRPM(PIDObject pidObject, double target, double rpm) {
 		this.pidObject = pidObject;
 		this.target = target;
 //		this.logger = RemoteCSVTarget.initTarget("FlyWheelVel", "time", "vel");

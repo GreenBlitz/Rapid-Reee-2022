@@ -20,7 +20,7 @@ public class EjectEnemyBallFromShooter extends SequentialCommandGroup {
 								new WaitCommand(0.5)
 						),
 						new InsertIntoShooter(),
-						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, OUT_RPM)
+						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, OUT_RPM, RobotMap.Pegasus.Shooter.ShooterMotor.RPM)
 				)
 		);
 	}

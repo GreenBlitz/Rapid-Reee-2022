@@ -5,7 +5,14 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick
 import edu.greenblitz.pegasus.commands.compressor.CompressorOn;
 import edu.greenblitz.pegasus.commands.compressor.CompressorState;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
+import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
+import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
+import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromShooter;
+import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
+import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
+import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 public class OI  {
 	
@@ -54,6 +61,25 @@ public class OI  {
 	}
 	
 	private void initRealButtons() {
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick));
+
+		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
+
+		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.iZone, RobotMap.Pegasus.Shooter.ShooterMotor.RPM){
+			@Override
+			public void end(boolean interrupted) {
+				super.end(interrupted);
+				shooter.setSpeedByPID(0);
+			}
+		});
+		secondJoystick.X.whileHeld(new InsertIntoShooter());
+
+		secondJoystick.B.whileHeld(
+				new ParallelCommandGroup(new MoveBallUntilClick(), new RollByConstant(1.0))
+		);
+
+		secondJoystick.START.whenPressed(new ToggleRoller());
+		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter());
 	}
 	
 	public SmartJoystick getMainJoystick() {

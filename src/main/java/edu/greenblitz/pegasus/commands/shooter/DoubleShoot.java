@@ -3,6 +3,7 @@ package edu.greenblitz.pegasus.commands.shooter;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.AbstractMotor;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shooter.Shooter;
+import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
@@ -23,7 +24,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 		addCommands(
 				new ParallelRaceGroup(
 						new FirstInsertIntoShooter(),
-						new ShooterByRPM(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM1),
+						new ShooterByRPM(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM1, RobotMap.Pegasus.Shooter.ShooterMotor.RPM),
 						new SequentialCommandGroup(
 								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 								new WaitCommand(1)
@@ -35,7 +36,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 				),
 				new ParallelRaceGroup(
 						new InsertIntoShooter(),
-						new ShooterByRPM(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM2),
+						new ShooterByRPM(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM2, RobotMap.Pegasus.Shooter.ShooterMotor.RPM),
 						new SequentialCommandGroup(
 								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 								new WaitCommand(1)

@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus.commands.shooter;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
+import edu.greenblitz.pegasus.RobotMap;
 
 public class ShootByTrigger extends ShooterByRPM {
 
@@ -11,7 +12,7 @@ public class ShootByTrigger extends ShooterByRPM {
 
 
 	public ShootByTrigger(PIDObject obj, double target, SmartJoystick joystick, SmartJoystick.Axis axis) {
-		super(obj, target);
+		super(obj, target, RobotMap.Pegasus.Shooter.ShooterMotor.RPM);
 		this.joystick = joystick;
 		this.axis = axis;
 	}
