@@ -19,10 +19,10 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 public class OI  {
 	
 	private enum IOModes {
-		DEBUG, REAL, DEBUG2
+		DEBUG, REAL, DEBUG2, AMIR
 	}
 	
-	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.AMIR; //decides which set of controls to init.
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -42,6 +42,8 @@ public class OI  {
 			case DEBUG2:
 				initDebug2Buttons();
 				break;
+			case AMIR:
+				initAmirButtons();
 		}
 	}
 	
@@ -59,24 +61,22 @@ public class OI  {
 		mainJoystick.X.whenPressed(new CompressorOn());
 		mainJoystick.A.whileHeld(new CompressorState());
 		mainJoystick.B.whenPressed(new ToggleRoller());
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick));
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick,true));
 	}
 	
 	private void initRealButtons() {
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick));
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick,false));
 
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
-//		SmartDashboard.putNumber("shooterTarget", 1000);
+//		secondJoystick.A.whileHeld(new ShooterByRPM(1000));
 
-		secondJoystick.A.whileHeld(new ShooterByRPM(1000));
-
-//		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.RPM, RobotMap.Pegasus.Shooter.ShooterMotor.RPM){
-//			@Override
-//			public void end(boolean interrupted) {
-//				super.end(interrupted);
-//				shooter.setSpeedByPID(0);
-//			}
-//		});
+		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM){
+			@Override
+			public void end(boolean interrupted) {
+				super.end(interrupted);
+				shooter.setSpeedByPID(0);
+			}
+		});
 		secondJoystick.X.whileHeld(new InsertIntoShooter());
 
 		secondJoystick.B.whileHeld(
@@ -86,6 +86,30 @@ public class OI  {
 		secondJoystick.START.whenPressed(new ToggleRoller());
 		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter());
 	}
+
+	private void initAmirButtons(){
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick,true));
+
+		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
+
+		secondJoystick.X.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM){
+			@Override
+			public void end(boolean interrupted) {
+				super.end(interrupted);
+				shooter.setSpeedByPID(0);
+			}
+		});
+		secondJoystick.A.whileHeld(new InsertIntoShooter());
+
+		secondJoystick.B.whileHeld(
+				new ParallelCommandGroup(new MoveBallUntilClick(), new RollByConstant(1.0))
+		);
+
+		secondJoystick.START.whenPressed(new ToggleRoller());
+		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter());
+	}
+
+
 	
 	public SmartJoystick getMainJoystick() {
 		return mainJoystick;

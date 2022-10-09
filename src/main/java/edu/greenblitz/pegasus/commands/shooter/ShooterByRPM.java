@@ -1,9 +1,5 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
-import edu.greenblitz.pegasus.RobotMap;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class ShooterByRPM extends ShooterCommand {
 	private static final double EPSILON = 50;
 	protected double target;
