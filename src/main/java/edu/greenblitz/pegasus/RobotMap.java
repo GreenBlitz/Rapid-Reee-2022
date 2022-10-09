@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
@@ -37,7 +38,14 @@ public class RobotMap {
 
 				public static final Dataset RPM_TO_POWER = new Dataset(2);
 				public static final double RPM = 2350; // Should be 2300
-				public static final PIDObject pid = new PIDObject(0.0002, 0.0000003, 0).withIZone(300).withMaxPower(0.9); //d1: 0.0001, 0.0000003, 0
+				public static final PIDObject pid = new PIDObject(0.0002, 0.0000003, 0).withIZone(300).withMaxPower(0.9).withFF(0.0001); //d1: 0.0001, 0.0000003, 0
+
+				public static final double ks = 0.2192;
+				public static final double kv = 0.13192;
+				public static final double ka = 0.012421;
+
+				public static final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(ShooterMotor.ks, ShooterMotor.kv,ShooterMotor.ka);
+
 
 				static {
 					RPM_TO_POWER.addDatapoint(0, new double[]{-0.0000000001});

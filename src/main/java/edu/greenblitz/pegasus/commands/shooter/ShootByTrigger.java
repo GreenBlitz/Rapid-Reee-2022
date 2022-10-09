@@ -11,8 +11,8 @@ public class ShootByTrigger extends ShooterByRPM {
 	private final SmartJoystick.Axis axis;
 
 
-	public ShootByTrigger(PIDObject obj, double target, SmartJoystick joystick, SmartJoystick.Axis axis) {
-		super(obj, target, RobotMap.Pegasus.Shooter.ShooterMotor.RPM);
+	public ShootByTrigger(double target, SmartJoystick joystick, SmartJoystick.Axis axis) {
+		super(target);
 		this.joystick = joystick;
 		this.axis = axis;
 	}

@@ -19,7 +19,7 @@ public class ShootByRPM2 extends ShooterCommand{
 
 	@Override
 	public void execute() {
-		shooter.setSpeedByPID(2000);
+		shooter.setSpeedByPID(target);
 		SmartDashboard.putNumber("ShooterSpeed", shooter.getShooterSpeed());
 	}
 

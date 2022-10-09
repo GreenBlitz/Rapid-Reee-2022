@@ -13,6 +13,7 @@ import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shooter.ShootByRPM2;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 public class OI  {
@@ -65,8 +66,9 @@ public class OI  {
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick));
 
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
+//		SmartDashboard.putNumber("shooterTarget", 1000);
 
-		secondJoystick.A.whileHeld(new ShootByRPM2(2000));
+		secondJoystick.A.whileHeld(new ShooterByRPM(1000));
 
 //		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, RobotMap.Pegasus.Shooter.ShooterMotor.RPM, RobotMap.Pegasus.Shooter.ShooterMotor.RPM){
 //			@Override
