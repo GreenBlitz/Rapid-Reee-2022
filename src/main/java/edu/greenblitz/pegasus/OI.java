@@ -4,16 +4,16 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.commands.compressor.CompressorOn;
 import edu.greenblitz.pegasus.commands.compressor.CompressorState;
+import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
+import edu.greenblitz.pegasus.commands.handleBalls.HandleBalls;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
-import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
-import edu.greenblitz.pegasus.commands.shooter.ShootByRPM2;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 public class OI  {
@@ -84,11 +84,11 @@ public class OI  {
 		);
 
 		secondJoystick.START.whenPressed(new ToggleRoller());
-		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter());
 	}
 
 	private void initAmirButtons(){
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick,true));
+		Indexing.getInstance().setDefaultCommand(new HandleBalls());
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick,false));
 
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
 
@@ -99,14 +99,15 @@ public class OI  {
 				shooter.setSpeedByPID(0);
 			}
 		});
-		secondJoystick.A.whileHeld(new InsertIntoShooter());
+//		secondJoystick.A.whileHeld(new InsertIntoShooter());
+		secondJoystick.A.whileHeld(new RunFunnel());
 
 		secondJoystick.B.whileHeld(
 				new ParallelCommandGroup(new MoveBallUntilClick(), new RollByConstant(1.0))
 		);
 
 		secondJoystick.START.whenPressed(new ToggleRoller());
-		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter());
+//		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter()); todo make
 	}
 
 

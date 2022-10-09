@@ -1,7 +1,10 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
+import edu.greenblitz.pegasus.RobotMap;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class ShooterByRPM extends ShooterCommand {
-	private static final double EPSILON = 50;
+	private static final double EPSILON = 150;
 	protected double target;
 	protected double tStart;
 	private int inShootingSpeed;
@@ -21,6 +24,7 @@ public class ShooterByRPM extends ShooterCommand {
 	@Override
 	public void execute() {
 		shooter.setSpeedByPID(target);
+		SmartDashboard.putNumber("RPM", shooter.getShooterSpeed());
 //		SmartDashboard.putNumber("target", target);
 //		SmartDashboard.putNumber("inShootingSpeed", inShootingSpeed);
 //		SmartDashboard.putNumber("RPM", shooter.getShooterSpeed());

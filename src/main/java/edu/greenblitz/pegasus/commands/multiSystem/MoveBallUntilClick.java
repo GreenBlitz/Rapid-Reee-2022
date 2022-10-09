@@ -1,9 +1,11 @@
 package edu.greenblitz.pegasus.commands.multiSystem;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.base.GBCommand;
+import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.subsystems.Funnel;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.Intake;
+import edu.greenblitz.pegasus.utils.DigitalInputMap;
 
 public class MoveBallUntilClick extends GBCommand {
 	private final Funnel funnel;
@@ -30,6 +32,6 @@ public class MoveBallUntilClick extends GBCommand {
 
 	@Override
 	public boolean isFinished() {
-		return indexing.isBallUp();
+		return DigitalInputMap.getInstance().getValue(RobotMap.Pegasus.DigitalInputMap.MACRO_SWITCH);
 	}
 }

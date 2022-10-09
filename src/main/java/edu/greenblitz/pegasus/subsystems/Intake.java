@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -14,7 +13,7 @@ public class Intake {
 	private static Intake instance;
 
 	public static Intake getInstance() {
-		if(instance== null){
+		if (instance == null) {
 			instance = new Intake();
 		}
 		return instance;
@@ -26,10 +25,6 @@ public class Intake {
 		CommandScheduler.getInstance().registerSubsystem(roller);
 		CommandScheduler.getInstance().registerSubsystem(extender);
 
-	}
-
-	public void initDefaultCommand() {
-		getRoller().setDefaultCommand(new HandleBalls());
 	}
 
 	public void moveRoller(double power) {
