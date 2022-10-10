@@ -12,6 +12,7 @@ import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
+import edu.greenblitz.pegasus.commands.shooter.FlipShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
@@ -97,6 +98,8 @@ public class OI {
 				shooter.setSpeedByPID(0);
 			}
 		});
+
+		secondJoystick.L1.whenPressed(new FlipShooter());
 
 		secondJoystick.A.whileHeld(new InsertIntoShooter());
 
