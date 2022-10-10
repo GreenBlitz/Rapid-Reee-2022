@@ -74,9 +74,7 @@ public class OI  {
 		});
 		secondJoystick.X.whileHeld(new InsertIntoShooter());
 
-		secondJoystick.B.whileHeld(
-				new ParallelCommandGroup(new MoveBallUntilClick(), new RollByConstant(1.0))
-		);
+		secondJoystick.B.whileHeld(new MoveBallUntilClick());
 
 		secondJoystick.START.whenPressed(new ToggleRoller());
 		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter());
