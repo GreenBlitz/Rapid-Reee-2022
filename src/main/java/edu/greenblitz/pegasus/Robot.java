@@ -8,15 +8,24 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shoote
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
+import edu.greenblitz.pegasus.commands.auto.ThreeBallAuto;
+import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
+import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
+import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
+import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.swerve.PathFollowerCommand;
+import edu.greenblitz.pegasus.commands.swerve.TragectoryCreator;
 import edu.greenblitz.pegasus.subsystems.Pneumatics;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
+import java.util.ArrayList;
 
 public class Robot extends TimedRobot {
 	@Override
@@ -147,8 +156,8 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		SwerveChassis.getInstance().resetLocalizer();
 		//new PathFollowerCommand(new TragectoryCreator(new ArrayList<Translation2d>(0),new Pose2d(2,0,new Rotation2d())).generate()).schedule();
-		new PathFollowerCommand(PathPlanner.loadPath("New New Path", RobotMap.Pegasus.Swerve.KMaxVelocity / 3, RobotMap.Pegasus.Swerve.KMMaxAcceleration / 3)).schedule();
-		
+//		new PathFollowerCommand(PathPlanner.loadPath("New New Path", RobotMap.Pegasus.Swerve.KMaxVelocity / 3, RobotMap.Pegasus.Swerve.KMMaxAcceleration / 3)).schedule();
+		new ThreeBallAuto().schedule();
 	}
 	
 	@Override
