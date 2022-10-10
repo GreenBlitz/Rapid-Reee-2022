@@ -97,6 +97,7 @@ public class Robot extends TimedRobot {
 //		SmartDashboard.putNumber("pigeon angle",Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
 		SmartDashboard.putNumber("pres",Pneumatics.getInstance().getPressure());
 		SmartDashboard.putBoolean("enabled", Pneumatics.getInstance().isEnabled());
+		SmartDashboard.putBoolean("macroSwitch", DigitalInputMap.getInstance().getValue(0));
 //		SmartDashboard.putNumber("pigeon offset",Math.toDegrees(SwerveChassis.getInstance().pigeonAngleOffset));
 		CommandScheduler.getInstance().run();
 	}

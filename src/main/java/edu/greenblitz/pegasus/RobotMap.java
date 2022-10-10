@@ -38,11 +38,13 @@ public class RobotMap {
 
 				public static final Dataset RPM_TO_POWER = new Dataset(2);
 				public static final double RPM = 2350; // Should be 2300
-				public static final PIDObject pid = new PIDObject(0.0003, 0.0000003, 0).withIZone(300).withMaxPower(0.9).withFF(0.00012); //d1: 0.0001, 0.0000003, 0
+				public static final PIDObject pid = new PIDObject(0.0003, 0.0000003, 0).withIZone(300).withMaxPower(0.9)/*.withFF(0.00012)*/; //d1: 0.0001, 0.0000003, 0
 
-				public static final double ks = 0.31979;
-				public static final double kv = 0.13012;
-				public static final double ka = 0.017243;
+
+				// devided by 60 because the SysID is in RPS and our code is in RPM
+				public static final double ks = 0.31979/60;
+				public static final double kv = 0.13012/60;
+				public static final double ka = 0.017243/60;
 
 				public static final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(ShooterMotor.ks, ShooterMotor.kv,ShooterMotor.ka);
 

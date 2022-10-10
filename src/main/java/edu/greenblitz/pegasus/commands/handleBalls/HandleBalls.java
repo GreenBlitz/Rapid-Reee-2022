@@ -20,7 +20,7 @@ public class HandleBalls extends IntakeCommand {
 	 * color sensor to check the color
 	 *
 	 * @see com.revrobotics.ColorSensorV3 colorSensor.
-	 * @see Indexing Indexing Subsystem
+	 * @see Indexing Subsystem
 	 */
 
 	private final Indexing index;

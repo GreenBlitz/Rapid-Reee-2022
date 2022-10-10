@@ -1,17 +1,17 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
-import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shooter.Shooter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterByRPM extends ShooterCommand {
-	private static final double EPSILON = 150;
+	private static final double EPSILON = 50;
 	protected double target;
 	protected double tStart;
-	private int inShootingSpeed;
+//	private int inShootingSpeed;
 
 	public ShooterByRPM(double target) {
 		this.target = target;
-		this.inShootingSpeed = 0;
+//		this.inShootingSpeed = 0;
 	}
 
 
@@ -25,19 +25,15 @@ public class ShooterByRPM extends ShooterCommand {
 	public void execute() {
 		shooter.setSpeedByPID(target);
 		SmartDashboard.putNumber("RPM", shooter.getShooterSpeed());
-//		SmartDashboard.putNumber("target", target);
-//		SmartDashboard.putNumber("inShootingSpeed", inShootingSpeed);
-//		SmartDashboard.putNumber("RPM", shooter.getShooterSpeed());
-		if (Math.abs(target - shooter.getShooterSpeed()) < EPSILON) {
-			this.inShootingSpeed++;
+//		SmartDashboard.putNumber("error", Math.abs(shooter.getShooterSpeed() - target)); //show error
+		if (Math.abs(shooter.getShooterSpeed() - target) < EPSILON) {
+			shooter.setPreparedToShoot(true);
 		} else {
-			this.inShootingSpeed = 0;
-			shooter.setPreparedToShoot(false);
-		}
-		if (this.inShootingSpeed >= 5) {
 			shooter.setPreparedToShoot(true);
 		}
-//		logger.report((System.currentTimeMillis()/1000.0 - tStart), shooter.getShooterSpeed());
+
+		SmartDashboard.putBoolean("readyToShoot", Shooter.getInstance().isPreparedToShoot());
+		SmartDashboard.putNumber("ShooterSpeed", Shooter.getInstance().getShooterSpeed());
 	}
 
 	@Override
@@ -49,7 +45,8 @@ public class ShooterByRPM extends ShooterCommand {
 	public void end(boolean interrupted) {
 		System.out.println("finished");
 		shooter.setPreparedToShoot(false);
-		this.inShootingSpeed = 0;
+		shooter.setSpeedByPID(0);
+//		this.inShootingSpeed = 0;
 		super.end(interrupted);
 	}
 }
