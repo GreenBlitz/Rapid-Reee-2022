@@ -31,7 +31,6 @@ public class Pneumatics extends GBSubsystem {
 
 	public void setCompressor(boolean compress) {
 		if(compress) {
-			System.out.println(compressor.getPressure());
 			compressor.enableDigital();
 		} else {
 			compressor.disable();

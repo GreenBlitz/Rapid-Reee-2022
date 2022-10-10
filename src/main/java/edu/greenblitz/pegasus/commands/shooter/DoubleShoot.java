@@ -24,7 +24,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 		addCommands(
 				new ParallelRaceGroup(
 						new FirstInsertIntoShooter(),
-						new ShooterByRPM(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM1, RobotMap.Pegasus.Shooter.ShooterMotor.RPM),
+						new ShooterByRPM(RPM1),
 						new SequentialCommandGroup(
 								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 								new WaitCommand(1)
@@ -36,7 +36,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 				),
 				new ParallelRaceGroup(
 						new InsertIntoShooter(),
-						new ShooterByRPM(edu.greenblitz.pegasus.RobotMap.Pegasus.Shooter.ShooterMotor.pid, RPM2, RobotMap.Pegasus.Shooter.ShooterMotor.RPM),
+						new ShooterByRPM(RPM2),
 						new SequentialCommandGroup(
 								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 								new WaitCommand(1)

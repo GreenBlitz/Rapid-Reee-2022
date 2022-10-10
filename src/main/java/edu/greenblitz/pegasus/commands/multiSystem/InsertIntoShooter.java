@@ -17,12 +17,7 @@ public class InsertIntoShooter extends SequentialCommandGroup {
 
 	// AKA InsertoShooter @tal935
 	public InsertIntoShooter() {
-		addCommands(
-				new ParallelDeadlineGroup(//activates both roller and funnel until the ball is at macro switch
-						new WaitUntilCommand(() -> DigitalInputMap.getInstance().getValue(RobotMap.Pegasus.Funnel.MACRO_SWITCH_PORT)),
-						new RunFunnel(),
-						new RunRoller()
-				),
+		addCommands(new MoveBallUntilClick(),
 
 				//waits until the shooter is ready
 				new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
@@ -41,14 +36,6 @@ public class InsertIntoShooter extends SequentialCommandGroup {
 		startTime = System.currentTimeMillis() / 1000.0;
 	}
 
-	@Override
-	public void execute() {
-		super.execute();
-		if (Shooter.getInstance().isPreparedToShoot() && !reported) {
-			SmartDashboard.putNumber("Time To Shoot", System.currentTimeMillis() / 1000.0 - startTime);
-			reported = true;
-		}
-	}
 
 	@Override
 	public void end(boolean interrupted) {
