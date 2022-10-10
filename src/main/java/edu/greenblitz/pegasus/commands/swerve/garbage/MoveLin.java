@@ -29,7 +29,6 @@ public class MoveLin extends SwerveCommand {
 	@Override
 	public void execute() {
 		swerve.moveChassisLin(angle, power);
-		swerve.moveChassisLin(angle,power);
 	}
 	
 	@Override

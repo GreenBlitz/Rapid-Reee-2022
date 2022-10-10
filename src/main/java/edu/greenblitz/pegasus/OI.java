@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.commands.compressor.CompressorOn;
 import edu.greenblitz.pegasus.commands.compressor.CompressorState;
@@ -9,12 +10,12 @@ import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
-import edu.greenblitz.pegasus.commands.multiSystem.EjectFromShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
+import edu.greenblitz.pegasus.commands.swerve.garbage.MoveLin;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
@@ -69,16 +70,16 @@ public class OI {
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
 //		secondJoystick.A.whileHeld(new ShooterByRPM(1000));
 
-		secondJoystick.A.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM) {
+		secondJoystick.B.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM) {
 			@Override
 			public void end(boolean interrupted) {
 				super.end(interrupted);
 				shooter.setSpeedByPID(0);
 			}
 		});
-		secondJoystick.X.whileHeld(new InsertIntoShooter());
-
-		secondJoystick.B.whileHeld(new MoveBallUntilClick());
+		//secondJoystick.X.whileHeld(new InsertIntoShooter());
+		secondJoystick.X.whileHeld(new MoveLin(0,0.2,new PIDObject(0.2)));
+		secondJoystick.A.whileHeld(new MoveBallUntilClick());
 
 		secondJoystick.START.whenPressed(new ToggleRoller());
 	}
@@ -96,13 +97,16 @@ public class OI {
 				shooter.setSpeedByPID(0);
 			}
 		});
+
 		secondJoystick.A.whileHeld(new InsertIntoShooter());
 
-		secondJoystick.B.whileHeld(new MoveBallUntilClick().alongWith(new RunRoller()));
+		secondJoystick.B.whileHeld(
+				 new RunRoller()
+		);
+		secondJoystick.X.whileHeld(new MoveBallUntilClick());
 
 		secondJoystick.START.whenPressed(new ToggleRoller());
-
-		secondJoystick.BACK.whenPressed(new EjectFromShooter()); //todo make
+//		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter()); todo make
 	}
 
 

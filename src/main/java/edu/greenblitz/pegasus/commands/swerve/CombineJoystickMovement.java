@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CombineJoystickMovement extends SwerveCommand {
 	
-	static double ANG_SPEED_FACTOR = 2;
+	static double ANG_SPEED_FACTOR = 4;
 	static double LIN_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_VELOCITY;
 	static final double blueAllianceOffset = (DriverStation.getAlliance() == DriverStation.Alliance.Blue) ? Math.PI : 0;
 	
