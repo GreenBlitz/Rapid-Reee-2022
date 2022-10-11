@@ -28,7 +28,7 @@ public class TragectoryCreator {
 		// 1. Create trajectory settings
 		TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
 				RobotMap.Pegasus.Swerve.KMaxVelocity/3,
-				RobotMap.Pegasus.Swerve.KMMaxAcceleration/3)
+				RobotMap.Pegasus.Swerve.KMMaxAcceleration)
 				.setKinematics(SwerveChassis.getInstance().getKinematics());
 		
 		// 2. Generate trajectory

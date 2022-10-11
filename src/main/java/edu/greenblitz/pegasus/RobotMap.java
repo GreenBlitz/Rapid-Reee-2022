@@ -125,7 +125,7 @@ public class RobotMap {
 
 			public static final PIDObject angPID = new PIDObject().withKp(0.5).withKd(10).withMaxPower(0.8);
 			public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.5);
-			public static final PIDObject rotationPID = new PIDObject().withKp(0.3).withKi(0).withKd(0);
+			public static final PIDObject rotationPID = new PIDObject().withKp(0.5).withKi(0).withKd(0).withFF(0.1);
 			
 
 			public static final double ks = 0.14876;
@@ -133,7 +133,7 @@ public class RobotMap {
 			public static final double ka = 0.11023;
 			
 			public static final double KMaxVelocity = 3.7; //todo find real max speed (meters per second)
-			public static final double KMMaxAcceleration = 1; //todo find real max acceleration (meters per second ^2)
+			public static final double KMMaxAcceleration = 3; //todo find real max acceleration (meters per second ^2)
 			public static final double KMaxAngularVelocity = 9.39; //todo find real max speed (radians per second)
 			public static final double KMMaxAngularAcceleration = 1; //todo find real max acceleration (radians per second ^2)
 			

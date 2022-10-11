@@ -4,15 +4,21 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shoote
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterByRPM extends ShooterCommand {
-	private static double EPSILON = 50;
+	private double EPSILON = 50;
 	private static int inShootingSpeed;
-	private static int inShootingSpeedMin = 7;
+	private int inShootingSpeedMin = 7;
 	protected double target;
 	protected double tStart;
 
 	public ShooterByRPM(double target) {
 		this.target = target;
 		inShootingSpeed = 0;
+	}
+	
+	public ShooterByRPM(double target,double EPSILON, int inShootingSpeedMin ) {
+		this(target);
+		this.EPSILON = EPSILON;
+		this.inShootingSpeedMin = inShootingSpeedMin;
 	}
 
 
@@ -53,22 +59,7 @@ public class ShooterByRPM extends ShooterCommand {
 		inShootingSpeed = 0;
 		super.end(interrupted);
 	}
-
-	public static double getEPSILON() {
-		return EPSILON;
-	}
-
-	public static void setEPSILON(double EPSILON) {
-		ShooterByRPM.EPSILON = EPSILON;
-	}
-
-	public static int getInShootingSpeedMin() {
-		return inShootingSpeedMin;
-	}
-
-	public static void setInShootingSpeedMin(int inShootingSpeedMin) {
-		ShooterByRPM.inShootingSpeedMin = inShootingSpeedMin;
-	}
+	
 
 	public static int getInShootingSpeed() {
 		return inShootingSpeed;

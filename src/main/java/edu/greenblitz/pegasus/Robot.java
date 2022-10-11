@@ -155,7 +155,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		SwerveChassis.getInstance().resetLocalizer();
-		//new PathFollowerCommand(new TragectoryCreator(new ArrayList<Translation2d>(0),new Pose2d(2,0,new Rotation2d())).generate()).schedule();
+//		new PathFollowerCommand(new TragectoryCreator(new ArrayList<Translation2d>(0),new Pose2d(2,0,new Rotation2d())).generate()).schedule();
 //		new PathFollowerCommand(PathPlanner.loadPath("New New Path", RobotMap.Pegasus.Swerve.KMaxVelocity / 3, RobotMap.Pegasus.Swerve.KMMaxAcceleration / 3)).schedule();
 //		new ThreeBallAuto().schedule();
 	}

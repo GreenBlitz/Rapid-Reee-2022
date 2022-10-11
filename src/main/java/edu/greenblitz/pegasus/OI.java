@@ -4,6 +4,7 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.commands.DoUntilC
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.commands.auto.ThreeBallAuto;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.handleBalls.HandleBalls;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
@@ -16,9 +17,16 @@ import edu.greenblitz.pegasus.commands.shooter.FlipShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
+import edu.greenblitz.pegasus.commands.swerve.PathFollowerCommand;
+import edu.greenblitz.pegasus.commands.swerve.TragectoryCreator;
 import edu.greenblitz.pegasus.commands.swerve.garbage.MoveLin;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+
+import java.util.ArrayList;
 
 public class OI {
 
@@ -26,7 +34,7 @@ public class OI {
 		DEBUG, REAL, AMIR
 	}
 
-	private static final IOModes IOMode = IOModes.AMIR; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -56,7 +64,11 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
-		secondJoystick.X.whenPressed(new DoubleShoot());
+//		secondJoystick.A.whenPressed(new PathFollowerCommand(new TragectoryCreator(new ArrayList<Translation2d>(0),new Pose2d(2,0,new Rotation2d())).generate()));
+		secondJoystick.A.whenPressed(new ThreeBallAuto());
+		secondJoystick.X.whenPressed(new DoubleShoot(3000));
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
+//		secondJoystick.A.whenPressed(new ToggleRoller());
 	}
 
 	private void initRealButtons() {

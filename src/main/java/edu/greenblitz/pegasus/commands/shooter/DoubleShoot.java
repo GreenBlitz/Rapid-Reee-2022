@@ -6,10 +6,7 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shoote
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import edu.wpi.first.wpilibj2.command.*;
 
 public class DoubleShoot extends SequentialCommandGroup {
 
@@ -24,19 +21,19 @@ public class DoubleShoot extends SequentialCommandGroup {
 		addCommands(
 				new ParallelRaceGroup(
 						new InsertIntoShooter(),
-						new ShooterByRPM(RPM1),
+						new ShooterByRPM(RPM1, 25, 10),
 						new SequentialCommandGroup(
 								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 								new WaitCommand(0.5) //if doesnt shoot second ball sometimes set to 1
 						)
 				),
-				new ParallelRaceGroup(
-						new WaitCommand(0.2),
+				new ParallelDeadlineGroup(
+						new WaitCommand(0.5),
 						new MoveBallUntilClick()
 				),
 				new ParallelRaceGroup(
 						new InsertIntoShooter(),
-						new ShooterByRPM(RPM2),
+						new ShooterByRPM(RPM2,25, 10),
 						new SequentialCommandGroup(
 								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 								new WaitCommand(1)
