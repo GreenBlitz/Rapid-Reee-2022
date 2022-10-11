@@ -59,8 +59,6 @@ public class OI {
 		secondJoystick.X.whenPressed(new DoubleShoot());
 	}
 
-
-
 	private void initRealButtons() {
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
 
