@@ -5,16 +5,19 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
+import edu.greenblitz.pegasus.commands.handleBalls.HandleBalls;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
+import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
 import edu.greenblitz.pegasus.commands.shooter.FlipShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.garbage.MoveLin;
+import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 
 public class OI {
@@ -53,6 +56,7 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
+		secondJoystick.X.whenPressed(new DoubleShoot());
 	}
 
 
@@ -78,7 +82,7 @@ public class OI {
 	}
 
 	private void initAmirButtons() {
-//		Indexing.getInstance().setDefaultCommand(new HandleBalls());
+		Indexing.getInstance().setDefaultCommand(new HandleBalls());
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
 
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
@@ -95,8 +99,6 @@ public class OI {
 
 		secondJoystick.A.whileHeld(new InsertIntoShooter());
 
-//		secondJoystick.B.whileHeld(new RunRoller());
-//		secondJoystick.X.whileHeld(new MoveBallUntilClick());
 
 		secondJoystick.B.whileHeld(new RunRoller().alongWith(
 				new DoUntilCommand(() -> DigitalInputMap.getInstance().getValue(RobotMap.Pegasus.DigitalInputMap.MACRO_SWITCH), new RunFunnel())));

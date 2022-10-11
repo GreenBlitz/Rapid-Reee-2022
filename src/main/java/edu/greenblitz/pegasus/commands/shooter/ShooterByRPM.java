@@ -4,14 +4,15 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shoote
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterByRPM extends ShooterCommand {
-	private static final double EPSILON = 50;
+	private static double EPSILON = 50;
+	private static int inShootingSpeed;
+	private static int inShootingSpeedMin = 7;
 	protected double target;
 	protected double tStart;
-	private int inShootingSpeed;
 
 	public ShooterByRPM(double target) {
 		this.target = target;
-		this.inShootingSpeed = 0;
+		inShootingSpeed = 0;
 	}
 
 
@@ -24,7 +25,7 @@ public class ShooterByRPM extends ShooterCommand {
 	@Override
 	public void execute() {
 		shooter.setSpeedByPID(target);
-		SmartDashboard.putNumber("RPM", shooter.getShooterSpeed());
+//		SmartDashboard.putNumber("RPM", shooter.getShooterSpeed());
 //		SmartDashboard.putNumber("error", Math.abs(shooter.getShooterSpeed() - target)); //show error
 
 		if (Math.abs(shooter.getShooterSpeed() - target) < EPSILON) {
@@ -47,10 +48,29 @@ public class ShooterByRPM extends ShooterCommand {
 
 	@Override
 	public void end(boolean interrupted) {
-		System.out.println("finished");
 		shooter.setPreparedToShoot(false);
 		shooter.setSpeedByPID(0);
-//		this.inShootingSpeed = 0;
+		inShootingSpeed = 0;
 		super.end(interrupted);
+	}
+
+	public static double getEPSILON() {
+		return EPSILON;
+	}
+
+	public static void setEPSILON(double EPSILON) {
+		ShooterByRPM.EPSILON = EPSILON;
+	}
+
+	public static int getInShootingSpeedMin() {
+		return inShootingSpeedMin;
+	}
+
+	public static void setInShootingSpeedMin(int inShootingSpeedMin) {
+		ShooterByRPM.inShootingSpeedMin = inShootingSpeedMin;
+	}
+
+	public static int getInShootingSpeed() {
+		return inShootingSpeed;
 	}
 }

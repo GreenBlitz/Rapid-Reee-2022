@@ -23,11 +23,11 @@ public class DoubleShoot extends SequentialCommandGroup {
 		System.out.println("Command Activated");
 		addCommands(
 				new ParallelRaceGroup(
-						new FirstInsertIntoShooter(),
+						new InsertIntoShooter(),
 						new ShooterByRPM(RPM1),
 						new SequentialCommandGroup(
 								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
-								new WaitCommand(1)
+								new WaitCommand(0.5) //if doesnt shoot second ball sometimes set to 1
 						)
 				),
 				new ParallelRaceGroup(
