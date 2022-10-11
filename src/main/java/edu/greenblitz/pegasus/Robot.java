@@ -6,15 +6,12 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shooter.Shooter;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath; //But why tho?
-import edu.greenblitz.pegasus.commands.handleBalls.HandleBalls;
 import edu.greenblitz.pegasus.subsystems.Dashboard;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.Pneumatics;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
@@ -25,7 +22,7 @@ public class Robot extends TimedRobot {
 		DigitalInputMap.getInstance();
 		Pneumatics.init();
 		Indexing.getInstance();
-		Shooter.create(new SparkMaxFactory().withInverted(true).withRampRate(0.4),RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER );
+		Shooter.create(new SparkMaxFactory().withInverted(true).withRampRate(0.4), RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
 
 		//swerve
 		SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);
@@ -45,7 +42,7 @@ public class Robot extends TimedRobot {
 				RobotMap.Pegasus.Swerve.angPID,
 				RobotMap.Pegasus.Swerve.linPID,
 				feedforward);
-		SwerveModule frontLeftModule  = new SwerveModule(angFactory,
+		SwerveModule frontLeftModule = new SwerveModule(angFactory,
 				linFactoryFL,
 				RobotMap.Pegasus.Swerve.Module2.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module2.linMotorID,
@@ -55,7 +52,7 @@ public class Robot extends TimedRobot {
 				RobotMap.Pegasus.Swerve.angPID,
 				RobotMap.Pegasus.Swerve.linPID,
 				feedforward);
-		SwerveModule backRightModule  = new SwerveModule(angFactory,
+		SwerveModule backRightModule = new SwerveModule(angFactory,
 				linFactoryBR,
 				RobotMap.Pegasus.Swerve.Module3.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module3.linMotorID,
@@ -65,7 +62,7 @@ public class Robot extends TimedRobot {
 				RobotMap.Pegasus.Swerve.angPID,
 				RobotMap.Pegasus.Swerve.linPID,
 				feedforward);
-		SwerveModule backLeftModule   = new SwerveModule(angFactory,
+		SwerveModule backLeftModule = new SwerveModule(angFactory,
 				linFactoryBL,
 				RobotMap.Pegasus.Swerve.Module4.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module4.linMotorID,
@@ -77,7 +74,7 @@ public class Robot extends TimedRobot {
 				feedforward);
 
 		SwerveChassis.create(
-				frontRightModule,frontLeftModule,backRightModule,backLeftModule,
+				frontRightModule, frontLeftModule, backRightModule, backLeftModule,
 				new PigeonIMU(12),
 				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates
 		);
@@ -85,7 +82,6 @@ public class Robot extends TimedRobot {
 		SwerveChassis.getInstance().resetChassisAngle();
 		OI.getInstance();
 	}
-
 
 
 	@Override
@@ -106,14 +102,14 @@ public class Robot extends TimedRobot {
 //		SmartDashboard.putNumber("pigeon angle",Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
 //		SmartDashboard.putNumber("pigeon offset",Math.toDegrees(SwerveChassis.getInstance().pigeonAngleOffset));
 	}
-	
-	
+
+
 	@Override
 	public void disabledInit() {
 		//VisionMaster.GameState.DISABLED.setAsCurrent();
 		CommandScheduler.getInstance().cancelAll();
 	}
-	
+
 	@Override
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
@@ -135,28 +131,28 @@ public class Robot extends TimedRobot {
 				)
 		);//.schedule();*/
 	}
-	
+
 	@Override
 	public void teleopPeriodic() {
 	}
-	
-	
+
+
 	/*
 		TODO: Dear @Orel, please for the love of god, use the very useful function: schedule(), this will help the code to actually work
 	*/
 	@Override
 	public void autonomousInit() {
-		
+
 		//Climb.getInstance().resetTurningMotorTicks();
 		//Climb.getInstance().resetRailMotorTicks();
 		//new DCMPAuto().schedule();
 	}
-	
+
 	@Override
 	public void testInit() {
 		CommandScheduler.getInstance().cancelAll();
 	}
-	
+
 	@Override
 	public void testPeriodic() {
 	}
