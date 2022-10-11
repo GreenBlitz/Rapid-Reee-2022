@@ -1,29 +1,26 @@
 package edu.greenblitz.pegasus;
 
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.commands.DoUntilCommand;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
-import edu.greenblitz.pegasus.commands.compressor.CompressorOn;
-import edu.greenblitz.pegasus.commands.compressor.CompressorState;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
-import edu.greenblitz.pegasus.commands.intake.roller.RollByConstant;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shooter.FlipShooter;
-import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.garbage.MoveLin;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 public class OI {
 
-	private enum IOModes {
-		DEBUG, REAL, DEBUG2, AMIR
+	public enum IOModes {
+		DEBUG, REAL, AMIR
 	}
 
 	private static final IOModes IOMode = IOModes.AMIR; //decides which set of controls to init.
@@ -43,9 +40,6 @@ public class OI {
 			case REAL:
 				initRealButtons();
 				break;
-			case DEBUG2:
-				initDebug2Buttons();
-				break;
 			case AMIR:
 				initAmirButtons();
 		}
@@ -62,8 +56,6 @@ public class OI {
 	}
 
 
-	private void initDebug2Buttons() {
-	}
 
 	private void initRealButtons() {
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
@@ -79,7 +71,7 @@ public class OI {
 			}
 		});
 		//secondJoystick.X.whileHeld(new InsertIntoShooter());
-		secondJoystick.X.whileHeld(new MoveLin(0,0.2,new PIDObject(0.2)));
+		secondJoystick.X.whileHeld(new MoveLin(0, 0.2, new PIDObject(0.2)));
 		secondJoystick.A.whileHeld(new MoveBallUntilClick());
 
 		secondJoystick.START.whenPressed(new ToggleRoller());
@@ -103,13 +95,17 @@ public class OI {
 
 		secondJoystick.A.whileHeld(new InsertIntoShooter());
 
-		secondJoystick.B.whileHeld(
-				 new RunRoller()
-		);
-		secondJoystick.X.whileHeld(new MoveBallUntilClick());
+//		secondJoystick.B.whileHeld(new RunRoller());
+//		secondJoystick.X.whileHeld(new MoveBallUntilClick());
+
+		secondJoystick.B.whileHeld(new RunRoller().alongWith(
+				new DoUntilCommand(() -> DigitalInputMap.getInstance().getValue(RobotMap.Pegasus.DigitalInputMap.MACRO_SWITCH), new RunFunnel())));
+		//always activates roller, only activates funnel until macroSwitch;
+
 
 		secondJoystick.START.whenPressed(new ToggleRoller());
-//		secondJoystick.BACK.whenPressed(new EjectEnemyBallFromShooter()); todo make
+
+		secondJoystick.BACK.whenPressed(new ShooterEvacuate());
 	}
 
 
@@ -127,5 +123,9 @@ public class OI {
 
 	public static void disableHandling() {
 		isHandled = false;
+	}
+
+	public IOModes getIOMode() {
+		return IOMode;
 	}
 }

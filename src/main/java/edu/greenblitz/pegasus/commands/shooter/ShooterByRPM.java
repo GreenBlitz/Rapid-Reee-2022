@@ -7,11 +7,11 @@ public class ShooterByRPM extends ShooterCommand {
 	private static final double EPSILON = 50;
 	protected double target;
 	protected double tStart;
-//	private int inShootingSpeed;
+	private int inShootingSpeed;
 
 	public ShooterByRPM(double target) {
 		this.target = target;
-//		this.inShootingSpeed = 0;
+		this.inShootingSpeed = 0;
 	}
 
 
@@ -26,14 +26,18 @@ public class ShooterByRPM extends ShooterCommand {
 		shooter.setSpeedByPID(target);
 		SmartDashboard.putNumber("RPM", shooter.getShooterSpeed());
 //		SmartDashboard.putNumber("error", Math.abs(shooter.getShooterSpeed() - target)); //show error
+
 		if (Math.abs(shooter.getShooterSpeed() - target) < EPSILON) {
-			shooter.setPreparedToShoot(true);
+//			shooter.setPreparedToShoot(true);
+			inShootingSpeed++;
 		} else {
-			shooter.setPreparedToShoot(true);
+//			shooter.setPreparedToShoot(false);
+			inShootingSpeed = 0;
 		}
 
-		SmartDashboard.putBoolean("readyToShoot", Shooter.getInstance().isPreparedToShoot());
-		SmartDashboard.putNumber("ShooterSpeed", Shooter.getInstance().getShooterSpeed());
+		shooter.setPreparedToShoot(inShootingSpeed > 7);
+
+
 	}
 
 	@Override

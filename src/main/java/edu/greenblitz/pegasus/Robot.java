@@ -8,6 +8,7 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath; //But why tho?
 import edu.greenblitz.pegasus.commands.handleBalls.HandleBalls;
+import edu.greenblitz.pegasus.subsystems.Dashboard;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.Pneumatics;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
@@ -24,7 +25,7 @@ public class Robot extends TimedRobot {
 		DigitalInputMap.getInstance();
 		Pneumatics.init();
 		Indexing.getInstance();
-		Shooter.create(new SparkMaxFactory().withInverted(true),RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER );
+		Shooter.create(new SparkMaxFactory().withInverted(true).withRampRate(0.4),RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER );
 
 		//swerve
 		SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);
@@ -89,17 +90,21 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotPeriodic() {
-		SmartDashboard.putNumber("FR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_RIGHT)), 360));
-		SmartDashboard.putNumber("FL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_LEFT)), 360));
-		SmartDashboard.putNumber("BR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
-		SmartDashboard.putNumber("BL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.BACK_LEFT)), 360));
-//		SmartDashboard.putNumber("FL-lamprey",Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_LEFT)));
-//		SmartDashboard.putNumber("pigeon angle",Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
-		SmartDashboard.putNumber("pres",Pneumatics.getInstance().getPressure());
-		SmartDashboard.putBoolean("enabled", Pneumatics.getInstance().isEnabled());
-		SmartDashboard.putBoolean("macroSwitch", DigitalInputMap.getInstance().getValue(0));
-//		SmartDashboard.putNumber("pigeon offset",Math.toDegrees(SwerveChassis.getInstance().pigeonAngleOffset));
+//		SmartDashboard.putNumber("FR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_RIGHT)), 360));
+//		SmartDashboard.putNumber("FL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_LEFT)), 360));
+//		SmartDashboard.putNumber("BR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
+//		SmartDashboard.putNumber("BL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.BACK_LEFT)), 360));
+//		SmartDashboard.putNumber("pres",Pneumatics.getInstance().getPressure());
+//		SmartDashboard.putBoolean("enabled", Pneumatics.getInstance().isEnabled());
+//		SmartDashboard.putBoolean("macroSwitch", DigitalInputMap.getInstance().getValue(0));
+//		SmartDashboard.putBoolean("readyToShoot", Shooter.getInstance().isPreparedToShoot());
+//		SmartDashboard.putNumber("ShooterSpeed", Shooter.getInstance().getShooterSpeed());
+
+		Dashboard.init();
 		CommandScheduler.getInstance().run();
+
+//		SmartDashboard.putNumber("pigeon angle",Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
+//		SmartDashboard.putNumber("pigeon offset",Math.toDegrees(SwerveChassis.getInstance().pigeonAngleOffset));
 	}
 	
 	
