@@ -68,27 +68,13 @@ public class OI {
 	private void initDebugButtons() {
 		SwerveChassis.getInstance().resetChassisAngle(0);
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
-	
+		mainJoystick.X.whileHeld(new ShooterByRPM(2000));
+		mainJoystick.Y.whileHeld(new RunFunnel());
+		mainJoystick.A.whileHeld(new RunRoller());
+		mainJoystick.B.whileHeld(new ToggleRoller());
 	}
 
 	private void initRealButtons() {
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
-
-		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
-//		secondJoystick.A.whileHeld(new ShooterByRPM(1000));
-
-		secondJoystick.B.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM) {
-			@Override
-			public void end(boolean interrupted) {
-				super.end(interrupted);
-				shooter.setSpeedByPID(0);
-			}
-		});
-		//secondJoystick.X.whileHeld(new InsertIntoShooter());
-		secondJoystick.X.whileHeld(new MoveLin(0, 0.2, new PIDObject(0.2)));
-		secondJoystick.A.whileHeld(new MoveBallUntilClick());
-
-		secondJoystick.START.whenPressed(new ToggleRoller());
 	}
 
 	private void initAmirButtons() {

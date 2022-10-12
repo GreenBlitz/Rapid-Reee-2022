@@ -18,11 +18,11 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 	
 	public ThreeBallAuto(){
 		addCommands(
-				new DoubleShoot(),
+				new DoubleShoot(3000),
 				new ExtendRoller(),
 				new PathFollowerCommand(PathPlanner.loadPath("3 ball auto", RobotMap.Pegasus.Swerve.KMaxVelocity / 3, RobotMap.Pegasus.Swerve.KMMaxAcceleration / 3))
 						.alongWith(new MoveBallUntilClick()),
-				new DoubleShoot()
+				new DoubleShoot(3000)
 		);
 	}
 }
