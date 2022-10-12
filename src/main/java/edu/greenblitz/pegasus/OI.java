@@ -1,5 +1,6 @@
 package edu.greenblitz.pegasus;
 
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.commands.DoUntilCommand;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
@@ -18,6 +19,7 @@ import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.PathFollowerCommand;
+import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 import edu.greenblitz.pegasus.commands.swerve.TragectoryCreator;
 import edu.greenblitz.pegasus.commands.swerve.garbage.MoveLin;
 import edu.greenblitz.pegasus.subsystems.Indexing;
@@ -64,11 +66,9 @@ public class OI {
 	}
 
 	private void initDebugButtons() {
-//		secondJoystick.A.whenPressed(new PathFollowerCommand(new TragectoryCreator(new ArrayList<Translation2d>(0),new Pose2d(2,0,new Rotation2d())).generate()));
-		secondJoystick.A.whenPressed(new ThreeBallAuto());
-		secondJoystick.X.whenPressed(new DoubleShoot(3000));
+		SwerveChassis.getInstance().resetChassisAngle(0);
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
-//		secondJoystick.A.whenPressed(new ToggleRoller());
+	
 	}
 
 	private void initRealButtons() {
@@ -94,6 +94,12 @@ public class OI {
 	private void initAmirButtons() {
 		Indexing.getInstance().setDefaultCommand(new HandleBalls());
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
+		mainJoystick.Y.whenPressed(new SwerveCommand() {
+			@Override
+			public void initialize() {
+				swerve.resetChassisAngle(0);
+			}
+		});
 
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
 
@@ -116,8 +122,8 @@ public class OI {
 
 
 		secondJoystick.START.whenPressed(new ToggleRoller());
-
-		secondJoystick.BACK.whenPressed(new ShooterEvacuate());
+		secondJoystick.POV_DOWN.whileHeld(new RunFunnel());
+		secondJoystick.POV_UP.whenPressed(new ShooterEvacuate());
 	}
 
 

@@ -26,6 +26,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import java.util.ArrayList;
@@ -104,8 +105,9 @@ public class Robot extends TimedRobot {
 
 
 		SwerveChassis.getInstance().resetAllEncoders();
-		SwerveChassis.getInstance().resetChassisAngle();
-
+//		SwerveChassis.getInstance().resetChassisAngle();
+		
+		SmartDashboard.putNumber("pigeon init value", 0);
 		OI.getInstance();
 	}
 
@@ -126,22 +128,6 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		CommandScheduler.getInstance().cancelAll();
 		
-		/*new ToSpeed().schedule();
-		new ExtendRoller().schedule();
-		Indexing.getInstance().initSetAlliance();
-		Shooter.getInstance().setIdleMode(AbstractMotor.IdleMode.Coast);
-		new SequentialCommandGroup(
-				new ParallelRaceGroup(
-						new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.pid, 2300) {
-							@Override
-							public void end(boolean interrupted) {
-								shooter.setSpeedByPID(0);
-							}
-						},
-						new MoveBallUntilClick(),
-						new WaitCommand(3)
-				)
-		);//.schedule();*/
 	}
 
 	@Override
@@ -154,6 +140,7 @@ public class Robot extends TimedRobot {
 	*/
 	@Override
 	public void autonomousInit() {
+		SwerveChassis.getInstance().resetChassisAngle(SmartDashboard.getNumber("pigeon init value", 0));
 		SwerveChassis.getInstance().resetLocalizer();
 //		new PathFollowerCommand(new TragectoryCreator(new ArrayList<Translation2d>(0),new Pose2d(2,0,new Rotation2d())).generate()).schedule();
 //		new PathFollowerCommand(PathPlanner.loadPath("New New Path", RobotMap.Pegasus.Swerve.KMaxVelocity / 3, RobotMap.Pegasus.Swerve.KMMaxAcceleration / 3)).schedule();
