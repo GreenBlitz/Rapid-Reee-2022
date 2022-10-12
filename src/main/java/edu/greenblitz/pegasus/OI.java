@@ -25,7 +25,7 @@ public class OI {
 		DEBUG,/* REAL,*/ AMIR
 	}
 	
-	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.AMIR; //decides which set of controls to init.
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -56,7 +56,7 @@ public class OI {
 	
 	private void initDebugButtons() {
 		SwerveChassis.getInstance().resetAllEncodersByValues();
-		SwerveChassis.getInstance().resetChassisAngle(0);
+//		SwerveChassis.getInstance().resetChassisAngle(0);
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
 		mainJoystick.X.whileHeld(new ShooterByRPM(2000));
 		mainJoystick.Y.whileHeld(new RunFunnel());

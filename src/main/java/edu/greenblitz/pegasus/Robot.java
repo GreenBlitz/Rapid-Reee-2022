@@ -152,22 +152,22 @@ public class Robot extends TimedRobot {
 		SwerveChassis.getInstance().resetLocalizer();
 		switch ((int) SmartDashboard.getNumber("auto number",1)){
 			case 1:
-				SwerveChassis.getInstance().resetChassisAngle(/*88.5*/90);
+				SwerveChassis.getInstance().resetChassisAngle(/*88.5*/-90);
 				new ExtendRoller().andThen(new DoubleShoot(3000).andThen(new Taxi(2, 2))).schedule();
 				System.out.println("auto 1");
 				break;
 			case 2:
-				SwerveChassis.getInstance().resetChassisAngle(/*46.5*/47);
+				SwerveChassis.getInstance().resetChassisAngle(/*46.5*/-47);
 				new ThreeBallAuto().schedule();
 				System.out.println("auto 2");
 				break;
 			case 3:
-				SwerveChassis.getInstance().resetChassisAngle(/*1.5*/0);
+				SwerveChassis.getInstance().resetChassisAngle(/*1.5*/-0);
 				new ExtendRoller().andThen(new DoubleShoot(3000).andThen(new Taxi(2, 2))).schedule();
 				System.out.println("auto 3");
 				break;
 			case 4:
-				SwerveChassis.getInstance().resetChassisAngle(/*43.5*/315);
+				SwerveChassis.getInstance().resetChassisAngle(/*43.5*/-315);
 				new ExtendRoller().andThen(new DoubleShoot(3000).andThen(new Taxi(2, 2))).schedule();
 				System.out.println("auto 4");
 				break;

@@ -48,9 +48,9 @@ public class Dashboard extends GBSubsystem {
 				SmartDashboard.putNumber("ShooterCounter", ShooterByRPM.getInShootingSpeed());
 				SmartDashboard.putNumber("ShooterSpeed", Shooter.getInstance().getShooterSpeed());
 				break;
-			case REAL:
-				SmartDashboard.putBoolean("macroSwitch", DigitalInputMap.getInstance().getValue(0));
-				break;
+//			case REAL:
+//				SmartDashboard.putBoolean("macroSwitch", DigitalInputMap.getInstance().getValue(0));
+//				break;
 			case AMIR:
 				SmartDashboard.putBoolean("macroSwitch", DigitalInputMap.getInstance().getValue(0));
 				SmartDashboard.putBoolean("readyToShoot", Shooter.getInstance().isPreparedToShoot());
