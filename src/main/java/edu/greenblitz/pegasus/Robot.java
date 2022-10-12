@@ -8,6 +8,7 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shoote
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
 import edu.greenblitz.pegasus.commands.auto.Taxi;
+import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.subsystems.Dashboard;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 
@@ -105,9 +106,10 @@ public class Robot extends TimedRobot {
 		);
 
 
-		SwerveChassis.getInstance().resetAllEncoders();
+//		SwerveChassis.getInstance().resetAllEncoders();
+//		SwerveChassis.getInstance().resetAllEncodersByValues(); works
 //		SwerveChassis.getInstance().resetChassisAngle();
-		
+
 //		SmartDashboard.putNumber("pigeon init value", 0);
 		SmartDashboard.putNumber("auto number", 1);
 		OI.getInstance();
@@ -117,6 +119,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
+		SmartDashboard.putNumber("pigeon angle", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
 	}
 
 
@@ -142,24 +145,31 @@ public class Robot extends TimedRobot {
 	*/
 	@Override
 	public void autonomousInit() {
+		//resets encoders
+		SwerveChassis.getInstance().resetAllEncodersByValues();
+
 //		SwerveChassis.getInstance().resetChassisAngle(SmartDashboard.getNumber("pigeon init value", 0));
 		SwerveChassis.getInstance().resetLocalizer();
 		switch ((int) SmartDashboard.getNumber("auto number",1)){
 			case 1:
-				SwerveChassis.getInstance().resetChassisAngle(88.5);
-				new DoubleShoot(3000).andThen(new Taxi(2, 2)).schedule();
+				SwerveChassis.getInstance().resetChassisAngle(/*88.5*/90);
+				new ExtendRoller().andThen(new DoubleShoot(3000).andThen(new Taxi(2, 2))).schedule();
+				System.out.println("auto 1");
 				break;
 			case 2:
-				SwerveChassis.getInstance().resetChassisAngle(46.5);
+				SwerveChassis.getInstance().resetChassisAngle(/*46.5*/47);
 				new ThreeBallAuto().schedule();
+				System.out.println("auto 2");
 				break;
 			case 3:
-				SwerveChassis.getInstance().resetChassisAngle(1.5);
-				new DoubleShoot(3000).andThen(new Taxi(2, 2)).schedule();
+				SwerveChassis.getInstance().resetChassisAngle(/*1.5*/0);
+				new ExtendRoller().andThen(new DoubleShoot(3000).andThen(new Taxi(2, 2))).schedule();
+				System.out.println("auto 3");
 				break;
 			case 4:
-				SwerveChassis.getInstance().resetChassisAngle(43.5);
-				new DoubleShoot(3000).andThen(new Taxi(2, 2)).schedule();
+				SwerveChassis.getInstance().resetChassisAngle(/*43.5*/315);
+				new ExtendRoller().andThen(new DoubleShoot(3000).andThen(new Taxi(2, 2))).schedule();
+				System.out.println("auto 4");
 				break;
 		}
 //		new PathFollowerCommand(new TragectoryCreator(new ArrayList<Translation2d>(0),new Pose2d(2,0,new Rotation2d())).generate()).schedule();

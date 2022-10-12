@@ -100,14 +100,6 @@ public class RobotMap {
 			public static final double LIN_GEAR_RATIO = 8.0;
 			public static final double MAX_VELOCITY = 3.7; // m/s
 			
-			//			public static final double MODULE_OFFSET_X = 30.2645;
-//			public static final double MODULE_OFFSET_Y = 25.2645;
-//			public static final Translation2d[] SwerveLocations = new Translation2d[]{
-//					new Translation2d(MODULE_OFFSET_X,MODULE_OFFSET_Y),
-//					new Translation2d(-MODULE_OFFSET_X,MODULE_OFFSET_Y),
-//					new Translation2d(MODULE_OFFSET_X,-MODULE_OFFSET_Y),
-//					new Translation2d(-MODULE_OFFSET_X,-MODULE_OFFSET_Y)
-//			};
 			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
 					//the WPILib coordinate system is stupid. (x is forwards, y is letwards)
 					//the translations are given rotated by 90 degrees clockwise to avoid coordinates system conversion at output
