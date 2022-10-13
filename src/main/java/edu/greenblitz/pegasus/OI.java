@@ -1,5 +1,6 @@
 package edu.greenblitz.pegasus;
 
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.commands.DoUntilCommand;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
@@ -83,6 +84,23 @@ public class OI {
 			@Override
 			public void initialize() {
 				swerve.resetChassisAngle();
+			}
+
+			@Override
+			public boolean isFinished() {
+				return true;
+			}
+		});
+
+		mainJoystick.POV_UP.whenPressed(new GBCommand() {
+			@Override
+			public void initialize() {
+				SwerveChassis.getInstance().resetAllEncodersByValues();
+			}
+
+			@Override
+			public boolean isFinished() {
+				return true;
 			}
 		});
 		
