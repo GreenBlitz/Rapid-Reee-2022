@@ -9,8 +9,8 @@ public class CombineJoystickMovement extends SwerveCommand {
 	
 	static double ANG_SPEED_FACTOR = 4;
 	static double LIN_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_VELOCITY;
-	static final double blueAllianceOffset = (DriverStation.getAlliance() == DriverStation.Alliance.Blue) ? Math.PI : 0;
-	
+//	static final double blueAllianceOffset = (DriverStation.getAlliance() == DriverStation.Alliance.Blue) ? Math.PI : 0;
+//
 	public final SmartJoystick joystick;
 	
 	private boolean isSlow;
@@ -37,7 +37,7 @@ public class CombineJoystickMovement extends SwerveCommand {
 			return;
 		}
 		swerve.MoveByChassisSpeeds(forwardSpeed, rightwardSpeed, angSpeed,
-				-swerve.getChassisAngle() + blueAllianceOffset);//put Current angle in CurrentAng (pidgen)
+				-swerve.getChassisAngle() /*+ blueAllianceOffset*/);//put Current angle in CurrentAng (pidgen)
 	}
 	
 }
