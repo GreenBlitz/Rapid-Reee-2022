@@ -9,6 +9,8 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
 import edu.greenblitz.pegasus.commands.auto.Taxi;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
+import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
+import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.subsystems.Dashboard;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 
@@ -30,6 +32,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 
 import java.util.ArrayList;
 
@@ -43,15 +46,15 @@ public class Robot extends TimedRobot {
 		Dashboard.init();
 
 		Indexing.getInstance();
-		Shooter.create(new SparkMaxFactory().withInverted(true).withRampRate(0.4), RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
+		Shooter.create(new SparkMaxFactory().withInverted(true).withRampRate(0.4).withCurrentLimit(30), RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
 
 		//swerve
 		SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);
 		IMotorFactory angFactory = new SparkMaxFactory().withGearRatio(6).withCurrentLimit(30).withRampRate(0.4);
-		IMotorFactory linFactoryFR = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module1.INVERTED);
-		IMotorFactory linFactoryFL = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module2.INVERTED);
-		IMotorFactory linFactoryBR = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module3.INVERTED);
-		IMotorFactory linFactoryBL = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(40).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module4.INVERTED);
+		IMotorFactory linFactoryFR = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(30).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module1.INVERTED);
+		IMotorFactory linFactoryFL = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(30).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module2.INVERTED);
+		IMotorFactory linFactoryBR = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(30).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module3.INVERTED);
+		IMotorFactory linFactoryBL = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(30).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module4.INVERTED);
 		
 		SwerveModule frontRightModule = new SwerveModule(angFactory,
 				linFactoryFR,
@@ -150,25 +153,29 @@ public class Robot extends TimedRobot {
 
 //		SwerveChassis.getInstance().resetChassisAngle(SmartDashboard.getNumber("pigeon init value", 0));
 		SwerveChassis.getInstance().resetLocalizer();
-		switch ((int) SmartDashboard.getNumber("auto number",1)){
+		switch (/*(int) SmartDashboard.getNumber("auto number",1)*/1){
 			case 1:
 //				SwerveChassis.getInstance().resetChassisAngle(/*88.5*/-90);
-				new ExtendRoller().andThen(new DoubleShoot(3000).andThen(new Taxi(2, 2))).schedule();
+				new ExtendRoller()
+						.andThen(new DoubleShoot(3100))
+						.andThen(new ParallelDeadlineGroup(new Taxi(3, 2),new MoveBallUntilClick()))
+						.andThen(new ParallelDeadlineGroup(new Taxi(3,-2),new MoveBallUntilClick()))
+						.andThen(new DoubleShoot(3100)).schedule();
 				System.out.println("auto 1");
 				break;
 			case 2:
 //				SwerveChassis.getInstance().resetChassisAngle(/*46.5*/-47);
-				new ThreeBallAuto().schedule();
+				new ExtendRoller().andThen(new DoubleShoot(3100).andThen(new Taxi(3, 2))).alongWith(new MoveBallUntilClick().alongWith(new ShooterByRPM(3100)).andThen(new Taxi(3,-2)).andThen(new DoubleShoot(3000))).schedule();
 				System.out.println("auto 2");
 				break;
 			case 3:
 //				SwerveChassis.getInstance().resetChassisAngle(/*1.5*/-0);
-				new ExtendRoller().andThen(new DoubleShoot(3000).andThen(new Taxi(2, 2))).schedule();
+				new ExtendRoller().andThen(new DoubleShoot(3100).andThen(new Taxi(3, 2))).alongWith(new MoveBallUntilClick().alongWith(new ShooterByRPM(3100)).andThen(new Taxi(3,-2)).andThen(new DoubleShoot(3000))).schedule();
 				System.out.println("auto 3");
 				break;
 			case 4:
 //				SwerveChassis.getInstance().resetChassisAngle(/*43.5*/-315);
-				new ExtendRoller().andThen(new DoubleShoot(3000).andThen(new Taxi(2, 2))).schedule();
+				new ExtendRoller().andThen(new DoubleShoot(3100).andThen(new Taxi(3, 2))).alongWith(new MoveBallUntilClick().alongWith(new ShooterByRPM(3100)).andThen(new Taxi(3,-2)).andThen(new DoubleShoot(3000))).schedule();
 				System.out.println("auto 4");
 				break;
 		}

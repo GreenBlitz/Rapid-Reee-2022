@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterByRPM extends ShooterCommand {
 	private double EPSILON = 50;
-	private static int inShootingSpeed;
+	protected static int inShootingSpeed;
 	private int inShootingSpeedMin = 7;
 	protected double target;
 	protected double tStart;

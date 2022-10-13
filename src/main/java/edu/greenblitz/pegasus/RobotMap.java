@@ -98,7 +98,7 @@ public class RobotMap {
 			
 			public static final double ANG_GEAR_RATIO = 6.0;
 			public static final double LIN_GEAR_RATIO = 8.0;
-			public static final double MAX_VELOCITY = 3.7; // m/s
+			public static final double MAX_VELOCITY = /*3.7*/ 4.5; // m/s
 			
 			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
 					//the WPILib coordinate system is stupid. (x is forwards, y is letwards)
