@@ -7,6 +7,7 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
 import edu.greenblitz.pegasus.OI;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -61,6 +62,8 @@ public class Dashboard extends GBSubsystem {
 				SmartDashboard.putNumber("FL-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_LEFT)), 360));
 				SmartDashboard.putNumber("BR-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
 				SmartDashboard.putNumber("BL-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 360));
+
+				SmartDashboard.putString("alliance", DriverStation.getAlliance().toString());
 		}
 	}
 }

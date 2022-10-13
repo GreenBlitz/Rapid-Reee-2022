@@ -34,7 +34,7 @@ public class OI {
 	private final SmartJoystick secondJoystick;
 	
 	private OI() {
-		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.2);
+		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.1);
 		secondJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.SECOND, 0.2);
 		switch (IOMode) {
 			case DEBUG:
