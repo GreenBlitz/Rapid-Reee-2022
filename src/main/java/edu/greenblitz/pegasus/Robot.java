@@ -144,7 +144,7 @@ public class Robot extends TimedRobot {
 
 
 	/*
-		TODO: Dear @Orel, please for the love of god, use the very useful function: schedule(), this will help the code to actually work
+		TODO: Dear @Orel & @Tal, please for the love of god, use the very useful function: schedule(), this will help the code to actually work
 	*/
 	@Override
 	public void autonomousInit() {
@@ -152,11 +152,22 @@ public class Robot extends TimedRobot {
 		SwerveChassis.getInstance().resetAllEncodersByValues();
 		SwerveChassis.getInstance().resetLocalizer();
 		//				SwerveChassis.getInstance().resetChassisAngle(/*88.5*/-90);
+
+		/**old auto
 		new ExtendRoller()
-				.andThen(new DoubleShoot(3400))
-				.andThen(new ParallelDeadlineGroup(new Taxi(3, 2),new MoveBallUntilClick()))
-				.andThen(new ParallelDeadlineGroup(new Taxi(3,-2),new MoveBallUntilClick()))
-				.andThen(new DoubleShoot(3400)).schedule();
+				.andThen(new DoubleShoot(3500))
+				.andThen(new ParallelDeadlineGroup(new Taxi(3, 3),new MoveBallUntilClick()))
+				.andThen(new ParallelDeadlineGroup(new Taxi(3,-3),new MoveBallUntilClick()))
+				.andThen(new DoubleShoot(3500)).schedule();
+		**/
+
+		//new auto for alliance
+		new ExtendRoller()
+				.andThen(new DoubleShoot(3500))
+				.andThen(new Taxi(2.5, 2)).schedule(); //THIS
+
+
+
 		//				SwerveChassis.getInstance().resetChassisAngle(/*46.5*/-47);
 		//				SwerveChassis.getInstance().resetChassisAngle(/*1.5*/-0);
 		//				SwerveChassis.getInstance().resetChassisAngle(/*43.5*/-315);

@@ -9,8 +9,8 @@ public class Taxi extends SwerveCommand {
 	private long time1;
 	private long totalTime;
 	private double speed;
-	public Taxi(long timeInSecs, double speedMeterPerSecondBackwards){
-		this.totalTime = timeInSecs * 1000;
+	public Taxi(double timeInSecs, double speedMeterPerSecondBackwards){
+		this.totalTime = (long) (timeInSecs * 1000);
 		this.speed = speedMeterPerSecondBackwards;
 	}
 	@Override

@@ -106,7 +106,7 @@ public class OI {
 			}
 		});
 
-		mainJoystick.L1.whileHeld(new GBCommand() {
+		mainJoystick.R1.whileHeld(new GBCommand() {
 			@Override
 			public void initialize() {
 				new RetractRoller().schedule();
