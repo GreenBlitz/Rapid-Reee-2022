@@ -77,12 +77,12 @@ public class OI {
 	}
 	
 	private void initAmirButtons() {
-		Indexing.getInstance().setDefaultCommand(new HandleBalls());
+		//Indexing.getInstance().setDefaultCommand(new HandleBalls());
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
 		mainJoystick.Y.whenPressed(new SwerveCommand() {
 			@Override
 			public void initialize() {
-				swerve.resetChassisAngle(0);
+				swerve.resetChassisAngle();
 			}
 		});
 		
@@ -101,8 +101,7 @@ public class OI {
 		secondJoystick.A.whileHeld(new InsertIntoShooter());
 		
 		
-		secondJoystick.B.whileHeld(new RunRoller().alongWith(
-				new DoUntilCommand(() -> DigitalInputMap.getInstance().getValue(RobotMap.Pegasus.DigitalInputMap.MACRO_SWITCH), new RunFunnel())));
+		secondJoystick.B.whileHeld(new RunRoller());
 		//always activates roller, only activates funnel until macroSwitch;
 		
 		

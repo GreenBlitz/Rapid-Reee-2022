@@ -5,7 +5,7 @@ import edu.greenblitz.pegasus.subsystems.Intake;
 public class RunRoller extends RollerCommand {
 	@Override
 	public void execute() {
-		intake.moveRoller(Intake.getInstance().isExtended()?1.0:0);
+		intake.moveRoller(1);
 	}
 	
 	@Override
