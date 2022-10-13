@@ -150,38 +150,18 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		//resets encoders
 		SwerveChassis.getInstance().resetAllEncodersByValues();
-
-//		SwerveChassis.getInstance().resetChassisAngle(SmartDashboard.getNumber("pigeon init value", 0));
 		SwerveChassis.getInstance().resetLocalizer();
-		switch (/*(int) SmartDashboard.getNumber("auto number",1)*/1){
-			case 1:
-//				SwerveChassis.getInstance().resetChassisAngle(/*88.5*/-90);
-				new ExtendRoller()
-						.andThen(new DoubleShoot(3100))
-						.andThen(new ParallelDeadlineGroup(new Taxi(3, 2),new MoveBallUntilClick()))
-						.andThen(new ParallelDeadlineGroup(new Taxi(3,-2),new MoveBallUntilClick()))
-						.andThen(new DoubleShoot(3100)).schedule();
-				System.out.println("auto 1");
-				break;
-			case 2:
-//				SwerveChassis.getInstance().resetChassisAngle(/*46.5*/-47);
-				new ExtendRoller().andThen(new DoubleShoot(3100).andThen(new Taxi(3, 2))).alongWith(new MoveBallUntilClick().alongWith(new ShooterByRPM(3100)).andThen(new Taxi(3,-2)).andThen(new DoubleShoot(3000))).schedule();
-				System.out.println("auto 2");
-				break;
-			case 3:
-//				SwerveChassis.getInstance().resetChassisAngle(/*1.5*/-0);
-				new ExtendRoller().andThen(new DoubleShoot(3100).andThen(new Taxi(3, 2))).alongWith(new MoveBallUntilClick().alongWith(new ShooterByRPM(3100)).andThen(new Taxi(3,-2)).andThen(new DoubleShoot(3000))).schedule();
-				System.out.println("auto 3");
-				break;
-			case 4:
-//				SwerveChassis.getInstance().resetChassisAngle(/*43.5*/-315);
-				new ExtendRoller().andThen(new DoubleShoot(3100).andThen(new Taxi(3, 2))).alongWith(new MoveBallUntilClick().alongWith(new ShooterByRPM(3100)).andThen(new Taxi(3,-2)).andThen(new DoubleShoot(3000))).schedule();
-				System.out.println("auto 4");
-				break;
-		}
-//		new PathFollowerCommand(new TragectoryCreator(new ArrayList<Translation2d>(0),new Pose2d(2,0,new Rotation2d())).generate()).schedule();
+		//				SwerveChassis.getInstance().resetChassisAngle(/*88.5*/-90);
+		new ExtendRoller()
+				.andThen(new DoubleShoot(3400))
+				.andThen(new ParallelDeadlineGroup(new Taxi(3, 2),new MoveBallUntilClick()))
+				.andThen(new ParallelDeadlineGroup(new Taxi(3,-2),new MoveBallUntilClick()))
+				.andThen(new DoubleShoot(3400)).schedule();
+		//				SwerveChassis.getInstance().resetChassisAngle(/*46.5*/-47);
+		//				SwerveChassis.getInstance().resetChassisAngle(/*1.5*/-0);
+		//				SwerveChassis.getInstance().resetChassisAngle(/*43.5*/-315);
+		//		new PathFollowerCommand(new TragectoryCreator(new ArrayList<Translation2d>(0),new Pose2d(2,0,new Rotation2d())).generate()).schedule();
 //		new PathFollowerCommand(PathPlanner.loadPath("New New Path", RobotMap.Pegasus.Swerve.KMaxVelocity / 3, RobotMap.Pegasus.Swerve.KMMaxAcceleration / 3)).schedule();
-//		new ThreeBallAuto().schedule();
 	}
 
 	@Override

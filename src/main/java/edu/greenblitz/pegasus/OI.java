@@ -6,6 +6,8 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.handleBalls.HandleBalls;
+import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
+import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
@@ -101,6 +103,18 @@ public class OI {
 			@Override
 			public boolean isFinished() {
 				return true;
+			}
+		});
+
+		mainJoystick.L1.whileHeld(new GBCommand() {
+			@Override
+			public void initialize() {
+				new RetractRoller().schedule();
+			}
+
+			@Override
+			public void end(boolean interrupted) {
+				new ExtendRoller().schedule();
 			}
 		});
 		
