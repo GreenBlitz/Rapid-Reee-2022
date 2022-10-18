@@ -34,24 +34,25 @@ public class RobotMap {
 		public static class Shooter {
 			public static class ShooterMotor {
 				public static final int PORT_LEADER = 7;
-				public static final boolean LEADER_INVERTED = true;
+				public static final boolean LEADER_INVERTED = true; //todo use this
 
 
 
-				public static final Dataset RPM_TO_POWER = new Dataset(2);
-				public static final double RPM = 2350; // Should be 2300
+
+				public static final double RPM = 2350;
 				public static final PIDObject pid = new PIDObject(0.0003, 0.0000003, 0).withIZone(300).withMaxPower(0.9)/*.withFF(0.00012)*/; //d1: 0.0001, 0.0000003, 0
 
 
 				// devided by 60 because the SysID is in RPS and our code is in RPM
-				public static final double ks = 0.31979/60;
+				public static final double ks = 0.31979/60; //todo
 				public static final double kv = 0.13012/60;
 				public static final double ka = 0.017243/60;
 
 				public static final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(ShooterMotor.ks, ShooterMotor.kv,ShooterMotor.ka);
-				public static final double iZone = 0; //TODO: calibrate this
+				public static final double iZone = 0; //TODO: delete this
 
-				static {
+				public static final Dataset RPM_TO_POWER = new Dataset(2);
+				static { //TODO: delete this
 					RPM_TO_POWER.addDatapoint(0, new double[]{-0.0000000001});
 					RPM_TO_POWER.addDatapoint(346.17146728515627, new double[]{0.1});
 					RPM_TO_POWER.addDatapoint(840.5715405273437, new double[]{0.2});
@@ -98,7 +99,7 @@ public class RobotMap {
 			
 			public static final double ANG_GEAR_RATIO = 6.0;
 			public static final double LIN_GEAR_RATIO = 8.0;
-			public static final double MAX_VELOCITY = /*3.7*/ 4.5; // m/s
+			public static final double MAX_VELOCITY = /*3.7*/ 4.5; // m/s //todo
 			
 			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
 					//the WPILib coordinate system is stupid. (x is forwards, y is letwards)
@@ -163,7 +164,7 @@ public class RobotMap {
 				public static final int SteerMotorID = 2;
 				public static final int lampryID = 1;
 				public static final int MIN_LAMPREY_VAL = 20;
-				public static final int MAX_LAMPREY_VAL = 2646;
+				public static final int MAX_LAMPREY_VAL = 2646; //todo calibrate in 5v
 				public static final boolean INVERTED = true;
 			}
 		}

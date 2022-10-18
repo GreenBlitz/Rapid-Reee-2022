@@ -46,7 +46,8 @@ public class OI {
 //				initRealButtons();
 //				break;
 			case AMIR:
-				initAmirButtons();
+				initAmirButtons(); //todo do i really need to explain⁈
+
 		}
 	}
 	
@@ -94,7 +95,7 @@ public class OI {
 			}
 		});
 
-		mainJoystick.POV_UP.whenPressed(new GBCommand() {
+		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
 			@Override
 			public void initialize() {
 				SwerveChassis.getInstance().resetAllEncodersByValues();
@@ -106,7 +107,7 @@ public class OI {
 			}
 		});
 
-		mainJoystick.R1.whileHeld(new GBCommand() {
+		mainJoystick.R1.whileHeld(new GBCommand() { //todo make whenHeld possibly interruptible=false
 			@Override
 			public void initialize() {
 				new RetractRoller().schedule();
@@ -120,7 +121,7 @@ public class OI {
 		
 		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
 		
-		secondJoystick.R1.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM) {
+		secondJoystick.R1.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM) { //todo replace with .andThan(new stopShooter())
 			@Override
 			public void end(boolean interrupted) {
 				super.end(interrupted);
@@ -128,16 +129,15 @@ public class OI {
 			}
 		});
 		
-		secondJoystick.L1.whenPressed(new FlipShooter());
+		secondJoystick.L1.whenPressed(new FlipShooter()); //todo delete the whole-flipping-concept
 		
 		secondJoystick.A.whileHeld(new InsertIntoShooter());
-		
-		
+
+
 		secondJoystick.B.whileHeld(new RunRoller());
-		//always activates roller, only activates funnel until macroSwitch;
+
 		
-		
-		secondJoystick.START.whenPressed(new ToggleRoller());
+		secondJoystick.START.whenPressed(new ToggleRoller()); //todo use .toggle
 		secondJoystick.POV_DOWN.whileHeld(new RunFunnel());
 		secondJoystick.POV_UP.whenPressed(new ShooterEvacuate());
 	}

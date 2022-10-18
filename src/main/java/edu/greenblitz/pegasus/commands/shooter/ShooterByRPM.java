@@ -4,7 +4,7 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shoote
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterByRPM extends ShooterCommand {
-	private double EPSILON = 50;
+	private double EPSILON = 50; //todo make static final
 	protected static int inShootingSpeed;
 	private int inShootingSpeedMin = 7;
 	protected double target;
@@ -31,18 +31,14 @@ public class ShooterByRPM extends ShooterCommand {
 	@Override
 	public void execute() {
 		shooter.setSpeedByPID(target);
-//		SmartDashboard.putNumber("RPM", shooter.getShooterSpeed());
-//		SmartDashboard.putNumber("error", Math.abs(shooter.getShooterSpeed() - target)); //show error
 
 		if (Math.abs(shooter.getShooterSpeed() - target) < EPSILON) {
-//			shooter.setPreparedToShoot(true);
 			inShootingSpeed++;
 		} else {
-//			shooter.setPreparedToShoot(false);
 			inShootingSpeed = 0;
 		}
 
-		shooter.setPreparedToShoot(inShootingSpeed > 7);
+		shooter.setPreparedToShoot(inShootingSpeed > 7); //todo magic number
 
 
 	}
@@ -55,7 +51,7 @@ public class ShooterByRPM extends ShooterCommand {
 	@Override
 	public void end(boolean interrupted) {
 		shooter.setPreparedToShoot(false);
-		shooter.setSpeedByPID(0);
+		shooter.setSpeedByPID(0);  // todo find a solution that allows for double shoot
 		inShootingSpeed = 0;
 		super.end(interrupted);
 	}

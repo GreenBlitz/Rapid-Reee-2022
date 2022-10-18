@@ -4,7 +4,7 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.greenblitz.pegasus.RobotMap;
 
-public class ShootByTrigger extends ShooterByRPM {
+public class ShootByTrigger extends ShooterByRPM {//todo remake later when its relevant
 
 	private static final double DEADZONE = 0.1;
 	private final SmartJoystick joystick;

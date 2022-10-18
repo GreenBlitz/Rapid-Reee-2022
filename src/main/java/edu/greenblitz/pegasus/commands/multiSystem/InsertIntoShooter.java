@@ -17,7 +17,8 @@ public class InsertIntoShooter extends SequentialCommandGroup {
 
 	// AKA InsertoShooter @tal935
 	public InsertIntoShooter() {
-		addCommands(new MoveBallUntilClick(),
+		addCommands(
+				new MoveBallUntilClick(),
 
 				//waits until the shooter is ready
 				new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),

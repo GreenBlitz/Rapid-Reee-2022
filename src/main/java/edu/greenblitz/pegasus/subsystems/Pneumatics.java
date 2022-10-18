@@ -10,7 +10,7 @@ public class Pneumatics extends GBSubsystem {
 	private Compressor compressor;
 	private static Pneumatics instance;
 
-	private Pneumatics() {
+	private Pneumatics() { //todo check if created automaticlly by solenoid
 		compressor = new Compressor(RobotMap.Pegasus.Pneumatics.PCM.PCM_ID, PneumaticsModuleType.CTREPCM);
 	}
 

@@ -11,8 +11,8 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 
 import java.util.List;
 
-public class TragectoryCreator {
-	private List<Translation2d> poses;
+public class TragectoryCreator {//todo move to experimental branch
+	private List<Translation2d> poses; //todo do not name something by another thing's name
 	private Pose2d finalPose;
 	
 	public TragectoryCreator(List<Translation2d> poses, Pose2d finalPose) {

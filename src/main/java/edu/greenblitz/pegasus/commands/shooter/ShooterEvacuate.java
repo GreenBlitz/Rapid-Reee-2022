@@ -13,7 +13,7 @@ public class ShooterEvacuate extends ParallelRaceGroup {
 	public ShooterEvacuate(){
 		
 		addCommands(
-				new ShootByConstant(0.3),
+				new ShootByConstant(0.3), //todo use velocity control instead of voltage control
 				new SequentialCommandGroup(
 						new RunFunnel().alongWith(new RunRoller()).until(() -> DigitalInputMap.getInstance().getValue(0)),
 						new WaitCommand(0.2),

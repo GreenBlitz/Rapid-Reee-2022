@@ -7,7 +7,7 @@ import edu.greenblitz.pegasus.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-public class Intake {
+public class Intake { //todo separate to two files
 	private final Roller roller;
 	private final Extender extender;
 	private static Intake instance;

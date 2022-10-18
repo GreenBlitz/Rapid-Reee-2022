@@ -2,7 +2,7 @@ package edu.greenblitz.pegasus.commands.swerve;
 
 import edu.greenblitz.pegasus.RobotMap;
 
-public class RotateByJoyStick {
+public class RotateByJoyStick { //todo get this out of my sight
 	private RobotMap.Pegasus.Joystick joystick;
 	
 	enum Direction {

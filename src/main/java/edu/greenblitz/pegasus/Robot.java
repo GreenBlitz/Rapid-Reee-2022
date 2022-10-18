@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
 		Indexing.getInstance();
 		Shooter.create(new SparkMaxFactory().withInverted(true).withRampRate(0.4).withCurrentLimit(30), RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
 
+		//todo add voltage compensation
 		//swerve
 		SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);
 		IMotorFactory angFactory = new SparkMaxFactory().withGearRatio(6).withCurrentLimit(30).withRampRate(0.4);
@@ -162,9 +163,10 @@ public class Robot extends TimedRobot {
 		**/
 
 		//new auto for alliance
-		new ExtendRoller()
-				.andThen(new DoubleShoot(3500))
-				.andThen(new Taxi(2.5, 2)).schedule(); //THIS
+//		new ExtendRoller()
+//				.andThen(new DoubleShoot(3500))
+//				.andThen
+				(new Taxi(2.5, 2)).schedule(); //THIS   //todo sendablechooser for choosing auto
 
 
 
