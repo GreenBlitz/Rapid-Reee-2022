@@ -1,10 +1,10 @@
 package edu.greenblitz.pegasus.commands.intake.roller;
 
-import edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RollByTrigger extends RollerCommand {
-	private SmartJoystick joystick;
+	private final SmartJoystick joystick;
 
 	public RollByTrigger(SmartJoystick joystick) {
 		this.joystick = joystick;

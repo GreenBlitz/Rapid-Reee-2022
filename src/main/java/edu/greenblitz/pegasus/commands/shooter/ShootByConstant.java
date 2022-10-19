@@ -1,5 +1,6 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.debug.RemoteCSVTarget;
 
 public class ShootByConstant extends ShooterCommand {
@@ -10,7 +11,7 @@ public class ShootByConstant extends ShooterCommand {
 
 	public ShootByConstant(double power) {
 		this.power = power;
-		this.logger = RemoteCSVTarget.initTarget("FlyWheelRPM2Power", "time", "vel");
+		this.logger = RemoteCSVTarget.initTarget("FlyWheelRPM2Power", "time", "vel"); //todo delete
 	}
 
 	@Override
@@ -21,13 +22,13 @@ public class ShootByConstant extends ShooterCommand {
 
 	@Override
 	public void execute() {
-		shooter.shoot(power);
+		shooter.setPower(power);
 		logger.report((System.currentTimeMillis() - tStart) / 1000.0, shooter.getShooterSpeed());
 	}
 
 	@Override
 	public void end(boolean interrupted) {
-		shooter.shoot(0);
+		shooter.setPower(0);
 	}
 
 	@Override

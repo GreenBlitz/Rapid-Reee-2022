@@ -1,54 +1,46 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
-import edu.greenblitz.pegasus.RobotMap;
-import org.greenblitz.debug.RemoteCSVTarget;
-import org.greenblitz.motion.pid.PIDObject;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shooter.Shooter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterByRPM extends ShooterCommand {
-	protected PIDObject obj;
-	protected double iZone;
-	protected RemoteCSVTarget logger;
+	private double EPSILON = 50; //todo make static final
+	protected static int inShootingSpeed;
+	private int inShootingSpeedMin = 7;
 	protected double target;
 	protected double tStart;
-	private int inShootingSpeed;
 
-	private static final double EPSILON = 120;
-
-	public ShooterByRPM(PIDObject obj, double iZone, double target) {
-		this.obj = obj;
-		this.obj.setKf(RobotMap.Pegasus.Shooter.ShooterMotor.RPM_TO_POWER.linearlyInterpolate(target)[0] / target);
-		this.iZone = iZone;
+	public ShooterByRPM(double target) {
 		this.target = target;
-		this.logger = RemoteCSVTarget.initTarget("FlyWheelVel", "time", "vel");
-		this.inShootingSpeed = 0;
+		inShootingSpeed = 0;
+	}
+	
+	public ShooterByRPM(double target,double EPSILON, int inShootingSpeedMin ) {
+		this(target);
+		this.EPSILON = EPSILON;
+		this.inShootingSpeedMin = inShootingSpeedMin;
 	}
 
-	public ShooterByRPM(PIDObject obj, double target) {
-		this(obj, 0, target);
-	}
 
 	@Override
 	public void initialize() {
 		shooter.setPreparedToShoot(false);
-		shooter.getPIDController().setIAccum(0.0);
-		shooter.setPIDConsts(obj, iZone);
-		tStart = System.currentTimeMillis()/1000.0;
+		tStart = System.currentTimeMillis() / 1000.0;
 	}
 
 	@Override
 	public void execute() {
 		shooter.setSpeedByPID(target);
-		if (Math.abs(target - shooter.getShooterSpeed()) < EPSILON) {
-			this.inShootingSpeed++;
 
+		if (Math.abs(shooter.getShooterSpeed() - target) < EPSILON) {
+			inShootingSpeed++;
 		} else {
-			this.inShootingSpeed = 0;
-			shooter.setPreparedToShoot(false);
+			inShootingSpeed = 0;
 		}
-		if (this.inShootingSpeed >= 7) {
-			shooter.setPreparedToShoot(true);
-		}
-		logger.report((System.currentTimeMillis()/1000.0 - tStart), shooter.getShooterSpeed());
+
+		shooter.setPreparedToShoot(inShootingSpeed > 7); //todo magic number
+
+
 	}
 
 	@Override
@@ -58,9 +50,14 @@ public class ShooterByRPM extends ShooterCommand {
 
 	@Override
 	public void end(boolean interrupted) {
-
 		shooter.setPreparedToShoot(false);
-		this.inShootingSpeed = 0;
+		shooter.setSpeedByPID(0);  // todo find a solution that allows for double shoot
+		inShootingSpeed = 0;
 		super.end(interrupted);
+	}
+	
+
+	public static int getInShootingSpeed() {
+		return inShootingSpeed;
 	}
 }

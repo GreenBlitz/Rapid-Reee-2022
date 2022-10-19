@@ -1,21 +1,21 @@
 package edu.greenblitz.pegasus.subsystems;
 
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.compressor.HandleCompressor;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class Pneumatics extends GBSubsystem {
+	private Compressor compressor;
 	private static Pneumatics instance;
 
-	private Compressor m_compressor;
-
-	private Pneumatics() {
-		m_compressor = new Compressor(RobotMap.Pegasus.Pneumatics.PCM.PCM_ID, PneumaticsModuleType.CTREPCM);
+	private Pneumatics() { //todo check if created automaticlly by solenoid
+		compressor = new Compressor(RobotMap.Pegasus.Pneumatics.PCM.PCM_ID, PneumaticsModuleType.CTREPCM);
 	}
 
 	public static void init() {
-		if (instance == null) {
+		if(instance == null){
 			instance = new Pneumatics();
 			instance.setDefaultCommand(new HandleCompressor());
 		}
@@ -26,23 +26,22 @@ public class Pneumatics extends GBSubsystem {
 	}
 
 	public double getPressure() {
-		return m_compressor.getPressure();
+		return this.compressor.getPressure();
 	}
 
 	public void setCompressor(boolean compress) {
-		if (compress) {
-			m_compressor.enableDigital();
+		if(compress) {
+			compressor.enableDigital();
 		} else {
-			m_compressor.disable();
+			compressor.disable();
 		}
-
 	}
 
 	public boolean isEnabled() {
-		return m_compressor.enabled();
+		return compressor.enabled();
 	}
 
-	public void reset() {
+	public void reset(){
 		setCompressor(false);
 	}
 

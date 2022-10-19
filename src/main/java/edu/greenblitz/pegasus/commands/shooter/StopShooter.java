@@ -3,7 +3,7 @@ package edu.greenblitz.pegasus.commands.shooter;
 public class StopShooter extends ShooterCommand {
 	@Override
 	public void initialize() {
-		shooter.shoot(0);
+		shooter.setPower(0);
 	}
 
 	@Override

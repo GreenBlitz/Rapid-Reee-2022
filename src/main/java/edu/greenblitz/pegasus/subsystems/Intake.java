@@ -2,57 +2,47 @@ package edu.greenblitz.pegasus.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.gblib.sendables.GBDoubleSolenoid;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.commands.indexing.HandleBalls;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-public class Intake {
+public class Intake { //todo separate to two files
+	private final Roller roller;
+	private final Extender extender;
 	private static Intake instance;
-	private Roller roller;
-	private Extender extender;
-
-	private Intake() {
-		roller = new Intake.Roller();
-		extender = new Intake.Extender();
-	}
-
-	private static void init() {
-		instance = new Intake();
-		CommandScheduler.getInstance().registerSubsystem(instance.roller);
-		CommandScheduler.getInstance().registerSubsystem(instance.extender);
-	}
 
 	public static Intake getInstance() {
 		if (instance == null) {
-			init();
+			instance = new Intake();
 		}
 		return instance;
 	}
 
-	public void initDefaultCommand(SmartJoystick joystick) {
-		instance.getRoller().setDefaultCommand(new HandleBalls());
-//		Funnel.getInstance().setDefaultCommand(new RunFunnel());
+	protected Intake() {
+		roller = new Roller();
+		extender = new Extender();
+		CommandScheduler.getInstance().registerSubsystem(roller);
+		CommandScheduler.getInstance().registerSubsystem(extender);
+
 	}
 
 	public void moveRoller(double power) {
 		roller.rollerMotor.set(power);
 	}
-	
+
 	public void stopRoller() {
 		moveRoller(0.0);
 	}
 
-	public void moveRoller(boolean reversed){
+	public void moveRoller(boolean reversed) {
 		moveRoller(reversed ? RobotMap.Pegasus.Intake.REVERSE_POWER : RobotMap.Pegasus.Intake.POWER);
 	}
-	
-	public void moveRoller(){
+
+	public void moveRoller() {
 		moveRoller(false);
 	}
-	
+
 	public void extend() {
 		extender.extender.set(DoubleSolenoid.Value.kForward);
 	}
@@ -90,7 +80,7 @@ public class Intake {
 
 	private class Roller extends IntakeSubsystem {
 
-		private WPI_TalonSRX rollerMotor;
+		private final WPI_TalonSRX rollerMotor;
 
 		private Roller() {
 			rollerMotor = new WPI_TalonSRX(RobotMap.Pegasus.Intake.Motors.ROLLER_PORT);
@@ -105,7 +95,7 @@ public class Intake {
 
 	public class Extender extends IntakeSubsystem {
 
-		private DoubleSolenoid extender;
+		private final DoubleSolenoid extender;
 
 		private Extender() {
 			extender = new DoubleSolenoid(RobotMap.Pegasus.Pneumatics.PCM.PCM_ID, RobotMap.Pegasus.Pneumatics.PCM.PCM_TYPE, RobotMap.Pegasus.Intake.Solenoid.FORWARD_PORT, RobotMap.Pegasus.Intake.Solenoid.REVERSE_PORT);
