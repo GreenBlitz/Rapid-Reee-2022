@@ -25,10 +25,10 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 public class OI {
 	
 	public enum IOModes {
-		DEBUG,/* REAL,*/ AMIR
+		DEBUG, REAL
 	}
 	
-	private static final IOModes IOMode = IOModes.AMIR; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -42,12 +42,9 @@ public class OI {
 			case DEBUG:
 				initDebugButtons();
 				break;
-//			case REAL:
-//				initRealButtons();
-//				break;
-			case AMIR:
-				initAmirButtons(); //todo do i really need to explain⁈
-
+			case REAL:
+				initRealButtons();
+				break;
 		}
 	}
 	
@@ -78,11 +75,8 @@ public class OI {
 	}
 	
 	private void initRealButtons() {
-	}
-	
-	private void initAmirButtons() {
 		//Indexing.getInstance().setDefaultCommand(new HandleBalls());
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, true));
 		mainJoystick.Y.whenPressed(new SwerveCommand() {
 			@Override
 			public void initialize() {
@@ -94,32 +88,6 @@ public class OI {
 				return true;
 			}
 		});
-
-		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
-			@Override
-			public void initialize() {
-				SwerveChassis.getInstance().resetAllEncodersByValues();
-			}
-
-			@Override
-			public boolean isFinished() {
-				return true;
-			}
-		});
-
-		mainJoystick.R1.whileHeld(new GBCommand() { //todo make whenHeld possibly interruptible=false
-			@Override
-			public void initialize() {
-				new RetractRoller().schedule();
-			}
-
-			@Override
-			public void end(boolean interrupted) {
-				new ExtendRoller().schedule();
-			}
-		});
-		
-		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
 		
 		secondJoystick.R1.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM) { //todo replace with .andThan(new stopShooter())
 			@Override
@@ -129,10 +97,7 @@ public class OI {
 			}
 		});
 		
-		secondJoystick.L1.whenPressed(new FlipShooter()); //todo delete the whole-flipping-concept
-		
 		secondJoystick.A.whileHeld(new InsertIntoShooter());
-
 
 		secondJoystick.B.whileHeld(new RunRoller());
 
