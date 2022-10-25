@@ -22,8 +22,8 @@ public class CombineJoystickMovement extends SwerveCommand {
 	@Override
 	public void initialize() {
 			if (isSlow) {
-				ANG_SPEED_FACTOR *= 0.3; //todo querry from robot map in initialize to prevent repeated changes
-				LIN_SPEED_FACTOR *= 0.3;
+				ANG_SPEED_FACTOR *= 1; //todo querry from robot map in initialize to prevent repeated changes
+				LIN_SPEED_FACTOR *= 0.8;
 			}
 		}
 	

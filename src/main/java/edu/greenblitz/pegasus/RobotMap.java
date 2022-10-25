@@ -39,7 +39,7 @@ public class RobotMap {
 
 
 
-				public static final double RPM = 2350;
+				public static final double RPM = 2900;
 				public static final PIDObject pid = new PIDObject(0.0003, 0.0000003, 0).withIZone(300).withMaxPower(0.9)/*.withFF(0.00012)*/; //d1: 0.0001, 0.0000003, 0
 
 
