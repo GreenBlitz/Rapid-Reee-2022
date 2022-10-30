@@ -30,6 +30,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.util.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -48,7 +49,12 @@ public class Robot extends TimedRobot {
 
 		Indexing.getInstance();
 		Shooter.create(new SparkMaxFactory().withInverted(true).withRampRate(0.4).withCurrentLimit(30), RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
-
+		PortForwarder.add(5800, "limelight.local", 5800);
+		PortForwarder.add(5801, "limelight.local", 5801);
+		PortForwarder.add(5802, "limelight.local", 5802);
+		PortForwarder.add(5803, "limelight.local", 5803);
+		PortForwarder.add(5804, "limelight.local", 5804);
+		PortForwarder.add(5805, "limelight.local", 5805);
 		//todo add voltage compensation
 		//swerve
 		SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);

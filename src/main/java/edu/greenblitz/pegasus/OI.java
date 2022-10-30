@@ -15,6 +15,7 @@ import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.shooter.FlipShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
+import edu.greenblitz.pegasus.commands.shooter.getLocation;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 import edu.greenblitz.pegasus.commands.swerve.garbage.CalibrateMaxMin;
@@ -103,6 +104,7 @@ public class OI {
 	}
 	
 	private void initRealButtons() {
+		mainJoystick.A.whileHeld(new getLocation());
 	}
 	
 	private void initAmirButtons() {
