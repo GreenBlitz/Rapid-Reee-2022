@@ -13,7 +13,7 @@ public class CombineJoystickMovement extends SwerveCommand {
 	private DoubleSupplier angSupplier;
 	static double ANG_SPEED_FACTOR = 5;//todo magic number
 	static double LIN_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_VELOCITY;
-	
+
 	private boolean isSlow;
 	
 	public CombineJoystickMovement(boolean isSlow, DoubleSupplier angSupplier){
@@ -34,6 +34,7 @@ public class CombineJoystickMovement extends SwerveCommand {
 		if (isSlow) {
 			ANG_SPEED_FACTOR *= 0.8; //todo querry from robot map in initialize to prevent repeated changes
 			LIN_SPEED_FACTOR *= 0.5;
+			
 		}
 	}
 	
