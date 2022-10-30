@@ -5,11 +5,9 @@ import edu.greenblitz.pegasus.subsystems.Shooter;
 
 public abstract class ShooterCommand extends GBCommand {
 	Shooter shooter;
-
+	
 	public ShooterCommand(){
-		shooter = Shooter.getInstance();
+		this.shooter = Shooter.getInstance();
 		require(shooter);
 	}
-
-
 }

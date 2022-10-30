@@ -1,43 +1,43 @@
 package edu.greenblitz.pegasus.subsystems;
 
-import edu.greenblitz.gblib.motors.brushed.GBBrushedMotor;
-import edu.greenblitz.gblib.motors.brushed.TalonSRX.TalonSRXFactory;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.commands.ShootByJoystick;
 import edu.greenblitz.pegasus.commands.ShootByPower;
 
 public class Shooter extends GBSubsystem {
+private TalonSRX motor;
+private static Shooter instance;
+private boolean isOn;
+private Shooter(){
+	this.motor = new TalonSRX(3);
+}
+public static Shooter getInstance(){
+	if (instance == null)
+		instance = new Shooter();
+	return instance;
+}
 
-	private static Shooter instance;
-	private GBBrushedMotor motor;
-	private boolean isOn = false;
+public void initDefaultCommand(){
+	setDefaultCommand(new ShootByJoystick());
+}
 
-	private Shooter() {
-		this.motor = new TalonSRXFactory().generate(3);
-	}
+public void setPower(double powah){
+	motor.set(ControlMode.PercentOutput, powah);
+}
 
-	public static Shooter getInstance(){
-		if(instance==null){
-			instance = new Shooter();
-		}
-		return instance;
-	}
-
-	public void setPower (double power){
-		motor.setPower(power);
-	}
-
-	public void toggle(){
-		isOn = !isOn;
-	}
-
+public void toggle(){
+	isOn = !isOn;
+}
+	
+	
 	@Override
 	public void periodic() {
 		if(isOn){
-			new ShootByPower(0.7).schedule();
+			new ShootByPower(0.2).schedule();
 		}
-//		else{
-//			new ShootByPower(0).schedule();
-//		}
 	}
+	
+	
 }
