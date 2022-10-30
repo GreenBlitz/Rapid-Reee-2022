@@ -12,10 +12,10 @@ import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
+import edu.greenblitz.pegasus.commands.shooter.FindLocation;
 import edu.greenblitz.pegasus.commands.shooter.FlipShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
-import edu.greenblitz.pegasus.commands.shooter.getLocation;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 import edu.greenblitz.pegasus.commands.swerve.garbage.CalibrateMaxMin;
@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 public class OI {
 	
 	public enum IOModes {
-		DEBUG,/* REAL,*/ AMIR
+		DEBUG, REAL, AMIR
 	}
 	
 	private static final IOModes IOMode = IOModes.AMIR; //decides which set of controls to init.
@@ -44,9 +44,9 @@ public class OI {
 			case DEBUG:
 				initDebugButtons();
 				break;
-//			case REAL:
-//				initRealButtons();
-//				break;
+			case REAL:
+				initRealButtons();
+				break;
 			case AMIR:
 				initAmirButtons(); //todo do i really need to explain
 
@@ -104,7 +104,7 @@ public class OI {
 	}
 	
 	private void initRealButtons() {
-		mainJoystick.A.whileHeld(new getLocation());
+		mainJoystick.A.whileHeld(new FindLocation());
 	}
 	
 	private void initAmirButtons() {
