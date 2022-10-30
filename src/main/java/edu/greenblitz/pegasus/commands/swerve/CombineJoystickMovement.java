@@ -3,6 +3,8 @@ package edu.greenblitz.pegasus.commands.swerve;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.RobotMap;
 
+import java.util.function.DoubleSupplier;
+
 public class CombineJoystickMovement extends SwerveCommand {
 	
 	static double ANG_SPEED_FACTOR = 5;//todo magic number
@@ -16,8 +18,9 @@ public class CombineJoystickMovement extends SwerveCommand {
 		this.joystick = joystick;
 		this.isSlow = isSlow;
 		if (isSlow) {
-			ANG_SPEED_FACTOR *= 0.5; //todo querry from robot map in initialize to prevent repeated changes
-			LIN_SPEED_FACTOR *= 0.3;
+			ANG_SPEED_FACTOR *= 0.8; //todo querry from robot map in initialize to prevent repeated changes
+			LIN_SPEED_FACTOR *= 0.5;
+
 		}
 	}
 	
