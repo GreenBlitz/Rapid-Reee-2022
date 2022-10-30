@@ -14,6 +14,7 @@ import edu.greenblitz.pegasus.commands.shooter.FindLocation;
 import edu.greenblitz.pegasus.commands.shooter.FlipShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
+import edu.greenblitz.pegasus.commands.shooter.getLocation;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.MoveByVisionSupplier;
 import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
@@ -121,6 +122,7 @@ public class OI {
 		mainJoystick.A.whileHeld(new FindLocation());
 		mainJoystick.B.whenHeld(new CombineJoystickMovement(true, ()-> 0.3));
 		mainJoystick.Y.whileHeld(new MoveByVisionSupplier(true));
+
 	}
 	
 	private void initAmirButtons() {
