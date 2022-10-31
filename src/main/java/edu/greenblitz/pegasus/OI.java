@@ -28,7 +28,7 @@ public class OI {
 		DEBUG,/* REAL,*/ AMIR
 	}
 	
-	private static final IOModes IOMode = IOModes.AMIR; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -46,7 +46,7 @@ public class OI {
 //				initRealButtons();
 //				break;
 			case AMIR:
-				initAmirButtons(); //todo do i really need to explain⁈
+				initAmirButtons(); //todo do i really need to explain
 
 		}
 	}
@@ -59,20 +59,44 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		SwerveChassis.getInstance().resetAllEncodersByValues();
+//		SwerveChassis.getInstance().resetAllEncodersByValues();
 //		SwerveChassis.getInstance().resetChassisAngle(0);
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
-		mainJoystick.X.whileHeld(new ShooterByRPM(2000));
-		mainJoystick.Y.whileHeld(new RunFunnel());
-		mainJoystick.A.whileHeld(new RunRoller());
-		mainJoystick.B.whenPressed(new ToggleRoller());
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, true));
+
+		mainJoystick.Y.whenPressed(new SwerveCommand() {
+			@Override
+			public void initialize() {
+				swerve.resetChassisAngle();
+			}
+
+			@Override
+			public boolean isFinished() {
+				return true;
+			}
+		});
+
+		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
+			@Override
+			public void initialize() {
+				SwerveChassis.getInstance().resetAllEncodersByValues();
+			}
+
+			@Override
+			public boolean isFinished() {
+				return true;
+			}
+		});
+//		mainJoystick.X.whileHeld(new ShooterByRPM(2000));
+//		mainJoystick.Y.whileHeld(new RunFunnel());
+//		mainJoystick.A.whileHeld(new RunRoller());
+//		mainJoystick.B.whenPressed(new ToggleRoller());
 		
-		mainJoystick.L1.whenPressed(new ParallelCommandGroup(
-				new CalibrateMaxMin(0.2, SwerveChassis.Module.FRONT_RIGHT),
-				new CalibrateMaxMin(0.2, SwerveChassis.Module.FRONT_LEFT),
-				new CalibrateMaxMin(0.2, SwerveChassis.Module.BACK_RIGHT),
-				new CalibrateMaxMin(0.2, SwerveChassis.Module.BACK_LEFT)
-		));
+//		mainJoystick.L1.whenPressed(new ParallelCommandGroup(
+//				new CalibrateMaxMin(0.2, SwerveChassis.Module.FRONT_RIGHT),
+//				new CalibrateMaxMin(0.2, SwerveChassis.Module.FRONT_LEFT),
+//				new CalibrateMaxMin(0.2, SwerveChassis.Module.BACK_RIGHT),
+//				new CalibrateMaxMin(0.2, SwerveChassis.Module.BACK_LEFT)
+//		));
 		
 		
 	}
@@ -82,7 +106,7 @@ public class OI {
 	
 	private void initAmirButtons() {
 		//Indexing.getInstance().setDefaultCommand(new HandleBalls());
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, true));
 		mainJoystick.Y.whenPressed(new SwerveCommand() {
 			@Override
 			public void initialize() {

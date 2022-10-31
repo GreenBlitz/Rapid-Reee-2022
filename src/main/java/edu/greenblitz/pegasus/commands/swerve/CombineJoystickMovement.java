@@ -17,15 +17,11 @@ public class CombineJoystickMovement extends SwerveCommand {
 	public CombineJoystickMovement(SmartJoystick joystick, boolean isSlow) {
 		this.joystick = joystick;
 		this.isSlow = isSlow;
-	}
-
-	@Override
-	public void initialize() {
-			if (isSlow) {
-				ANG_SPEED_FACTOR *= 0.5; //todo querry from robot map in initialize to prevent repeated changes
-				LIN_SPEED_FACTOR *= 0.5;
-			}
+		if (isSlow) {
+			ANG_SPEED_FACTOR *= 0.8; //todo querry from robot map in initialize to prevent repeated changes
+			LIN_SPEED_FACTOR *= 0.5;
 		}
+	}
 	
 	public void execute() {
 		double rightwardSpeed = -joystick.getAxisValue(SmartJoystick.Axis.LEFT_X) * LIN_SPEED_FACTOR;

@@ -104,14 +104,14 @@ public class RobotMap {
 			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
 					//the WPILib coordinate system is stupid. (x is forwards, y is letwards)
 					//the translations are given rotated by 90 degrees clockwise to avoid coordinates system conversion at output
-//					new Translation2d(0.3020647,0.25265), fl
-//					new Translation2d(-0.3020647,0.25265),fr
-//					new Translation2d(0.3020647,-0.25265),bl
-//					new Translation2d(-0.3020647,-0.25265)br
-					new Translation2d(-0.3020647, -0.25265),
-					new Translation2d(-0.3020647, 0.25265),
-					new Translation2d(0.3020647, -0.25265),
-					new Translation2d(0.3020647, 0.25265)
+					new Translation2d(0.3020647,0.25265), /*fl*/
+					new Translation2d(0.3020647,-0.25265),/*fr*/
+					new Translation2d(-0.3020647,0.25265),/*bl*/
+					new Translation2d(-0.3020647,-0.25265)/*br*/
+//					new Translation2d(-0.3020647, -0.25265),
+//					new Translation2d(-0.3020647, 0.25265),
+//					new Translation2d(0.3020647, -0.25265),
+//					new Translation2d(0.3020647, 0.25265)
 				
 			};
 			//TODO: calibrate GOOD PID
@@ -156,7 +156,7 @@ public class RobotMap {
 				
 				public static final int MIN_LAMPREY_VAL = 32;
 				public static final int MAX_LAMPREY_VAL = 4021;
-				public static final boolean INVERTED = true;
+				public static final boolean INVERTED = false;
 			}
 			
 			public static class Module4 {//back left
@@ -165,7 +165,7 @@ public class RobotMap {
 				public static final int lampryID = 1;
 				public static final int MIN_LAMPREY_VAL = 20;
 				public static final int MAX_LAMPREY_VAL = 2646; //todo calibrate in 5v
-				public static final boolean INVERTED = true;
+				public static final boolean INVERTED = false;
 			}
 		}
 		

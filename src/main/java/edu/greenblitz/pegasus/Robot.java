@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.pathplanner.lib.PathPlanner;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.gyro.PigeonGyro;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.IMotorFactory;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shooter.Shooter;
@@ -104,11 +105,11 @@ public class Robot extends TimedRobot {
 		
 		SwerveChassis.create(
 				frontRightModule, frontLeftModule, backRightModule, backLeftModule,
-				new PigeonIMU(12),
+				new PigeonGyro(12),
 				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates,
 				new Pose2d(0, 0, new Rotation2d(0)) //initial position of robot, 0 for now for testing
 		);
-
+		SwerveChassis.getInstance().resetChassisAngle(0); //fixme noam -  reminder for me if not work to check here
 
 //		SwerveChassis.getInstance().resetAllEncoders();
 //		SwerveChassis.getInstance().resetAllEncodersByValues(); works
@@ -116,6 +117,7 @@ public class Robot extends TimedRobot {
 
 //		SmartDashboard.putNumber("pigeon init value", 0);
 		SmartDashboard.putNumber("auto number", 1);
+
 		OI.getInstance();
 	}
 
