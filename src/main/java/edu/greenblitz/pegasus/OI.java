@@ -101,7 +101,6 @@ public class OI {
 //		mainJoystick.Y.whileHeld(new RunFunnel());
 //		mainJoystick.A.whileHeld(new RunRoller());
 //		mainJoystick.B.whenPressed(new ToggleRoller());
-
 		mainJoystick.X.whileHeld(new ShooterByRPM(2000));
 		mainJoystick.Y.whileHeld(new RunFunnel());
 		mainJoystick.A.whileHeld(new RunRoller());
