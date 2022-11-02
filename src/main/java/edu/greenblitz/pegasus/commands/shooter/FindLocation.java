@@ -19,6 +19,7 @@ public class FindLocation extends GBCommand {
 
 		//System.out.println((Limelight.getInstance().getLocation()));
 
+
 	}
 
 	@Override

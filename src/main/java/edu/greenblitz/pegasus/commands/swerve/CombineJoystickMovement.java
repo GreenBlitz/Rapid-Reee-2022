@@ -35,6 +35,7 @@ public class CombineJoystickMovement extends SwerveCommand {
 			ANG_SPEED_FACTOR *= 0.8; //todo querry from robot map in initialize to prevent repeated changes
 			LIN_SPEED_FACTOR *= 0.5;
 			
+
 		}
 	}
 	

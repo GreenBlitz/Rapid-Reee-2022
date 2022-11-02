@@ -73,6 +73,7 @@ public class OI {
 
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement( true));
 
+
 		mainJoystick.Y.whenPressed(new SwerveCommand() {
 			@Override
 			public void initialize() {
@@ -100,6 +101,7 @@ public class OI {
 //		mainJoystick.Y.whileHeld(new RunFunnel());
 //		mainJoystick.A.whileHeld(new RunRoller());
 //		mainJoystick.B.whenPressed(new ToggleRoller());
+
 		mainJoystick.X.whileHeld(new ShooterByRPM(2000));
 		mainJoystick.Y.whileHeld(new RunFunnel());
 		mainJoystick.A.whileHeld(new RunRoller());
@@ -121,16 +123,11 @@ public class OI {
 		mainJoystick.B.whenHeld(new CombineJoystickMovement(true, ()-> 0.3));
 		mainJoystick.Y.whileHeld(new MoveByVisionSupplier(true));
 
-
 	}
 	
 	private void initAmirButtons() {
 		//Indexing.getInstance().setDefaultCommand(new HandleBalls());
-<<<<<<< HEAD
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false ));
-=======
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(false));
->>>>>>> b672a60 (Romy & Amir - fixed conflicts, please rebase more often)
 		mainJoystick.Y.whenPressed(new SwerveCommand() {
 			@Override
 			public void initialize() {
