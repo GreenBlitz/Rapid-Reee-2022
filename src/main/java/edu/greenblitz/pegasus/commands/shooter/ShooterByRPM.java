@@ -5,20 +5,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterByRPM extends ShooterCommand {
 	private double EPSILON = 50; //todo make static final
-	protected static int inShootingSpeed;
-	private int inShootingSpeedMin = 7;
+	private static final double APPROXIMATE_INSERTION_TIME = 5; //approximate amount of roborio cycles between funnel activation and shooting
+	private double lastSpeed;
 	protected double target;
 	protected double tStart;
 
 	public ShooterByRPM(double target) {
 		this.target = target;
-		inShootingSpeed = 0;
 	}
 	
 	public ShooterByRPM(double target,double EPSILON, int inShootingSpeedMin ) {
 		this(target);
 		this.EPSILON = EPSILON;
-		this.inShootingSpeedMin = inShootingSpeedMin;
 	}
 
 
@@ -26,20 +24,18 @@ public class ShooterByRPM extends ShooterCommand {
 	public void initialize() {
 		shooter.setPreparedToShoot(false);
 		tStart = System.currentTimeMillis() / 1000.0;
+		lastSpeed = shooter.getShooterSpeed();
 	}
 
+	double accel;
 	@Override
 	public void execute() {
 		shooter.setSpeedByPID(target);
+		accel = lastSpeed - shooter.getShooterSpeed();
 
-		if (Math.abs(shooter.getShooterSpeed() - target) < EPSILON) {
-			inShootingSpeed++;
-		} else {
-			inShootingSpeed = 0;
-		}
-
-		shooter.setPreparedToShoot(inShootingSpeed > 7); //todo magic number
-
+		shooter.setPreparedToShoot((Math.abs(shooter.getShooterSpeed() - target) < EPSILON
+				&& Math.abs(shooter.getShooterSpeed() - target + (accel*APPROXIMATE_INSERTION_TIME)) < EPSILON));
+		lastSpeed = shooter.getShooterSpeed();
 
 	}
 
@@ -52,12 +48,8 @@ public class ShooterByRPM extends ShooterCommand {
 	public void end(boolean interrupted) {
 		shooter.setPreparedToShoot(false);
 		shooter.setSpeedByPID(0);  // todo find a solution that allows for double shoot
-		inShootingSpeed = 0;
 		super.end(interrupted);
 	}
 	
 
-	public static int getInShootingSpeed() {
-		return inShootingSpeed;
-	}
 }

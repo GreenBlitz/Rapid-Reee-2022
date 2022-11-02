@@ -46,7 +46,6 @@ public class Dashboard extends GBSubsystem {
 				//shooter
 				SmartDashboard.putBoolean("macroSwitch", DigitalInputMap.getInstance().getValue(0));
 				SmartDashboard.putBoolean("readyToShoot", Shooter.getInstance().isPreparedToShoot());
-				SmartDashboard.putNumber("ShooterCounter", ShooterByRPM.getInShootingSpeed());
 				SmartDashboard.putNumber("ShooterSpeed", Shooter.getInstance().getShooterSpeed());
 				break;
 //			case REAL:
@@ -56,7 +55,6 @@ public class Dashboard extends GBSubsystem {
 				SmartDashboard.putBoolean("macroSwitch", DigitalInputMap.getInstance().getValue(0));
 				SmartDashboard.putBoolean("readyToShoot", Shooter.getInstance().isPreparedToShoot());
 				SmartDashboard.putNumber("ShooterSpeed", Shooter.getInstance().getShooterSpeed());
-				SmartDashboard.putNumber("ShooterCounter", ShooterByRPM.getInShootingSpeed());
 
 				SmartDashboard.putNumber("FR-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT)), 360));
 				SmartDashboard.putNumber("FL-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_LEFT)), 360));
