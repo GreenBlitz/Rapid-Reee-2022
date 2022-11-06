@@ -1,11 +1,9 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.base.GBCommand;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.commands.DoUntilCommand;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
-import edu.greenblitz.pegasus.commands.handleBalls.HandleBalls;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
@@ -17,11 +15,15 @@ import edu.greenblitz.pegasus.commands.shooter.FlipShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
+import edu.greenblitz.pegasus.commands.swerve.MoveByVisionSupplier;
 import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 import edu.greenblitz.pegasus.commands.swerve.garbage.CalibrateMaxMin;
+<<<<<<< HEAD
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+=======
+>>>>>>> b672a60 (Romy & Amir - fixed conflicts, please rebase more often)
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 public class OI {
@@ -29,8 +31,14 @@ public class OI {
 	public enum IOModes {
 		DEBUG, REAL, AMIR
 	}
+<<<<<<< HEAD
 	
 	private static final IOModes IOMode = IOModes.AMIR; //decides which set of controls to init.
+=======
+
+
+	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+>>>>>>> b672a60 (Romy & Amir - fixed conflicts, please rebase more often)
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -48,6 +56,7 @@ public class OI {
 				initRealButtons();
 				break;
 			case AMIR:
+
 				initAmirButtons(); //todo do i really need to explain
 
 		}
@@ -63,7 +72,8 @@ public class OI {
 	private void initDebugButtons() {
 //		SwerveChassis.getInstance().resetAllEncodersByValues();
 //		SwerveChassis.getInstance().resetChassisAngle(0);
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, true));
+
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement( true));
 
 		mainJoystick.Y.whenPressed(new SwerveCommand() {
 			@Override
@@ -92,7 +102,11 @@ public class OI {
 //		mainJoystick.Y.whileHeld(new RunFunnel());
 //		mainJoystick.A.whileHeld(new RunRoller());
 //		mainJoystick.B.whenPressed(new ToggleRoller());
-		
+		mainJoystick.X.whileHeld(new ShooterByRPM(2000));
+		mainJoystick.Y.whileHeld(new RunFunnel());
+		mainJoystick.A.whileHeld(new RunRoller());
+		mainJoystick.B.whenPressed(new ToggleRoller());
+
 //		mainJoystick.L1.whenPressed(new ParallelCommandGroup(
 //				new CalibrateMaxMin(0.2, SwerveChassis.Module.FRONT_RIGHT),
 //				new CalibrateMaxMin(0.2, SwerveChassis.Module.FRONT_LEFT),
@@ -104,12 +118,19 @@ public class OI {
 	}
 	
 	private void initRealButtons() {
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(true));
 		mainJoystick.A.whileHeld(new FindLocation());
+		mainJoystick.B.whenHeld(new CombineJoystickMovement(true, ()-> 0.3));
+		mainJoystick.Y.whileHeld(new MoveByVisionSupplier(true));
 	}
 	
 	private void initAmirButtons() {
 		//Indexing.getInstance().setDefaultCommand(new HandleBalls());
+<<<<<<< HEAD
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false ));
+=======
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(false));
+>>>>>>> b672a60 (Romy & Amir - fixed conflicts, please rebase more often)
 		mainJoystick.Y.whenPressed(new SwerveCommand() {
 			@Override
 			public void initialize() {
@@ -123,6 +144,7 @@ public class OI {
 			}
 		});
 
+		
 		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
 			@Override
 			public void initialize() {

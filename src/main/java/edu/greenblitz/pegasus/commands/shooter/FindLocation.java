@@ -13,8 +13,12 @@ public class FindLocation extends GBCommand {
 
 	@Override
 	public void initialize() {
+
 		System.out.println(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv"));
 		System.out.println((Limelight.getInstance().getLocation()));
+
+		//System.out.println((Limelight.getInstance().getLocation()));
+
 	}
 
 	@Override

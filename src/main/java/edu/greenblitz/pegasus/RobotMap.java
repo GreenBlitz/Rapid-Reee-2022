@@ -166,7 +166,7 @@ public class RobotMap {
 				public static final int lampryID = 1;
 				public static final int MIN_LAMPREY_VAL = 20;
 				public static final int MAX_LAMPREY_VAL = 2646; //todo calibrate in 5v
-				public static final boolean INVERTED = true;
+				public static final boolean INVERTED = false;
 			}
 		}
 		

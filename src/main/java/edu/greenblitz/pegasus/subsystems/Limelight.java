@@ -21,13 +21,18 @@ public class Limelight extends GBSubsystem {
 		return instance;
 	}
 
-	public double[] getLocation() {
+
+	public double getLocation() {
 		double[] arr = {-1, -1};
+		double[] location = new double[2];
+		double angle = 1;
 		NetworkTableEntry loc = NetworkTableInstance.getDefault().getTable("limelight").getEntry("llpython");
 		if (loc != null) {
 			System.out.println(Arrays.toString(loc.getDoubleArray(arr)));
+			location = loc.getDoubleArray(arr);
+			angle = Math.atan2(location[0],location[1]);
 		}
-		return new double[5];
+		return angle;
 	}
 
 }
