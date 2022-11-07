@@ -1,7 +1,5 @@
 package edu.greenblitz.pegasus.commands.auto;
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.base.GBCommand;
-import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 
 public class Taxi extends SwerveCommand {
@@ -20,7 +18,7 @@ public class Taxi extends SwerveCommand {
 	
 	@Override
 	public void execute() {
-		swerve.MoveByChassisSpeeds(-speed,0,0,0);
+		swerve.moveByChassisSpeeds(-speed,0,0,0);
 		time1 = System.currentTimeMillis();
 	}
 	
