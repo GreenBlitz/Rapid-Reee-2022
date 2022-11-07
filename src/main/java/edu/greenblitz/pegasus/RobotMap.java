@@ -102,7 +102,7 @@ public class RobotMap {
 			public static final double MAX_VELOCITY = /*3.7*/ 4.5; // m/s //todo
 			
 			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
-					//the WPILib coordinate system is stupid. (x is forwards, y is letwards)
+					//the WPILib coordinate system is stupid. (x is forwards, y is leftwards)
 					//the translations are given rotated by 90 degrees clockwise to avoid coordinates system conversion at output
 					new Translation2d(0.3020647,0.25265), /*fl*/
 					new Translation2d(0.3020647,-0.25265),/*fr*/
@@ -130,6 +130,7 @@ public class RobotMap {
 			public static final double KMaxAngularVelocity = 9.39; //todo find real max speed (radians per second)
 			public static final double KMMaxAngularAcceleration = 1; //todo find real max acceleration (radians per second ^2)
 			
+			public static final boolean angleMotorInverted = true;
 			public static class Module1 {//front right
 				public static final int linMotorID = 11;
 				public static final int SteerMotorID = 3;
@@ -146,7 +147,7 @@ public class RobotMap {
 				
 				public static final int MIN_LAMPREY_VAL = 22;
 				public static final int MAX_LAMPREY_VAL = 4040;
-				public static final boolean INVERTED = false;
+				public static final boolean INVERTED = true;
 			}
 			
 			public static class Module3 {//back right
@@ -165,7 +166,7 @@ public class RobotMap {
 				public static final int lampryID = 1;
 				public static final int MIN_LAMPREY_VAL = 20;
 				public static final int MAX_LAMPREY_VAL = 2646; //todo calibrate in 5v
-				public static final boolean INVERTED = false;
+				public static final boolean INVERTED = true;
 			}
 		}
 		
