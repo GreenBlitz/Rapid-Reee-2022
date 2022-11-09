@@ -46,7 +46,7 @@ public class OI {
 //				initRealButtons();
 //				break;
 			case AMIR:
-				initAmirButtons(); //todo do i really need to explain⁈
+				initAmirButtons(); //todo do i really need to explain
 
 		}
 	}
