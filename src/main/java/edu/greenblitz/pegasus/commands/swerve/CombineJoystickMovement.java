@@ -47,7 +47,7 @@ public class CombineJoystickMovement extends SwerveCommand {
 			swerve.stop();
 			return;
 		}
-		swerve.MoveByChassisSpeeds(forwardSpeed, leftwardSpeed, angSpeed,
+		swerve.moveByChassisSpeeds(forwardSpeed, leftwardSpeed, angSpeed,
 				-swerve.getChassisAngle());
 	}
 	
