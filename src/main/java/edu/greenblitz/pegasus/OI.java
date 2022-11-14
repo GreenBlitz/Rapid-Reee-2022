@@ -20,6 +20,7 @@ import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 import edu.greenblitz.pegasus.commands.swerve.garbage.CalibrateMaxMin;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 public class OI {
@@ -28,7 +29,7 @@ public class OI {
 		DEBUG,/* REAL,*/ AMIR
 	}
 	
-	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.AMIR; //decides which set of controls to init.
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -106,11 +107,12 @@ public class OI {
 	
 	private void initAmirButtons() {
 		//Indexing.getInstance().setDefaultCommand(new HandleBalls());
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, true));
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false ));
 		mainJoystick.Y.whenPressed(new SwerveCommand() {
 			@Override
 			public void initialize() {
 				swerve.resetChassisAngle();
+				SmartDashboard.putNumber("pigeon",swerve.getChassisAngle());
 			}
 
 			@Override
@@ -127,6 +129,7 @@ public class OI {
 
 			@Override
 			public boolean isFinished() {
+
 				return true;
 			}
 		});
