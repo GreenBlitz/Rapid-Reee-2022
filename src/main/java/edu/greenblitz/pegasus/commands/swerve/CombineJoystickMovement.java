@@ -18,11 +18,6 @@ public class CombineJoystickMovement extends SwerveCommand {
 	
 	public CombineJoystickMovement(boolean isSlow, DoubleSupplier angSupplier){
 		this.isSlow = isSlow;
-		if (isSlow) {
-			ANG_SPEED_FACTOR *= 0.8; //todo querry from robot map in initialize to prevent repeated changes
-			LIN_SPEED_FACTOR *= 0.5;
-
-		}
 		this.angSupplier = angSupplier;
 	}
 	public CombineJoystickMovement(boolean isSlow){
@@ -34,13 +29,11 @@ public class CombineJoystickMovement extends SwerveCommand {
 		if (isSlow) {
 			ANG_SPEED_FACTOR *= 0.8; //todo querry from robot map in initialize to prevent repeated changes
 			LIN_SPEED_FACTOR *= 0.5;
-			
-
 		}
 	}
 	
 	public void execute() {
-		double leftwardSpeed = -OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.RIGHT_X)* LIN_SPEED_FACTOR;
+		double leftwardSpeed = -OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.LEFT_X) * LIN_SPEED_FACTOR;
 		double forwardSpeed = OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.LEFT_Y) * LIN_SPEED_FACTOR;
 		double angSpeed = angSupplier.getAsDouble() * ANG_SPEED_FACTOR;
 		if (forwardSpeed == 0 && leftwardSpeed == 0 && angSpeed == 0) {
@@ -48,7 +41,7 @@ public class CombineJoystickMovement extends SwerveCommand {
 			return;
 		}
 		swerve.moveByChassisSpeeds(forwardSpeed, leftwardSpeed, angSpeed,
-				-swerve.getChassisAngle());
+				swerve.getChassisAngle());
 	}
 	
 	@Override

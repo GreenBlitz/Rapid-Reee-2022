@@ -118,8 +118,7 @@ public class RobotMap {
 
 			public static final PIDObject angPID = new PIDObject().withKp(0.5).withKd(10).withMaxPower(0.8);
 			public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.5);
-			public static final PIDObject rotationPID = new PIDObject().withKp(0.5).withKi(0).withKd(0).withFF(0.1);
-			
+			public static final PIDObject rotationPID = new PIDObject().withKp(0.1).withKi(0).withKd(0).withFF(0.1);
 
 			public static final double ks = 0.14876;
 			public static final double kv = 3.3055;
@@ -137,7 +136,7 @@ public class RobotMap {
 				public static final int lampryID = 2;
 				public static final int MIN_LAMPREY_VAL = 12;
 				public static final int MAX_LAMPREY_VAL = 4041;
-				public static final boolean INVERTED = false;
+				public static final boolean INVERTED = true;
 			}
 			
 			public static class Module2 {//front left
@@ -147,7 +146,7 @@ public class RobotMap {
 				
 				public static final int MIN_LAMPREY_VAL = 22;
 				public static final int MAX_LAMPREY_VAL = 4040;
-				public static final boolean INVERTED = true;
+				public static final boolean INVERTED = false;
 			}
 			
 			public static class Module3 {//back right
@@ -157,7 +156,7 @@ public class RobotMap {
 				
 				public static final int MIN_LAMPREY_VAL = 32;
 				public static final int MAX_LAMPREY_VAL = 4021;
-				public static final boolean INVERTED = false;
+				public static final boolean INVERTED = true;
 			}
 			
 			public static class Module4 {//back left

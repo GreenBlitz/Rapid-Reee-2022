@@ -14,16 +14,14 @@ import edu.greenblitz.pegasus.commands.shooter.FindLocation;
 import edu.greenblitz.pegasus.commands.shooter.FlipShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
+import edu.greenblitz.pegasus.commands.swerve.AngPIDSupplier;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.MoveByVisionSupplier;
 import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 import edu.greenblitz.pegasus.commands.swerve.garbage.CalibrateMaxMin;
-<<<<<<< HEAD
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-=======
->>>>>>> b672a60 (Romy & Amir - fixed conflicts, please rebase more often)
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 public class OI {
@@ -31,13 +29,7 @@ public class OI {
 	public enum IOModes {
 		DEBUG, REAL, AMIR
 	}
-<<<<<<< HEAD
-	
 	private static final IOModes IOMode = IOModes.AMIR; //decides which set of controls to init.
-=======
-
-	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
->>>>>>> b672a60 (Romy & Amir - fixed conflicts, please rebase more often)
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -127,19 +119,19 @@ public class OI {
 	private void initAmirButtons() {
 		//Indexing.getInstance().setDefaultCommand(new HandleBalls());
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(false));
-		mainJoystick.Y.whenPressed(new SwerveCommand() {
-			@Override
-			public void initialize() {
-				swerve.resetChassisAngle();
-				SmartDashboard.putNumber("pigeon",swerve.getChassisAngle());
-			}
-
-			@Override
-			public boolean isFinished() {
-				return true;
-			}
-		});
-
+//		mainJoystick.Y.whenPressed(new SwerveCommand() {
+//			@Override
+//			public void initialize() {
+//				swerve.resetChassisAngle();
+//				SmartDashboard.putNumber("pigeon",swerve.getChassisAngle());
+//			}
+//
+//			@Override
+//			public boolean isFinished() {
+//				return true;
+//			}
+//		});
+		mainJoystick.Y.whileHeld(new CombineJoystickMovement(true, new AngPIDSupplier(() -> 0.3)));
 		
 		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
 			@Override
@@ -188,7 +180,6 @@ public class OI {
 		secondJoystick.POV_DOWN.whileHeld(new RunFunnel());
 		secondJoystick.POV_UP.whenPressed(new ShooterEvacuate());
 	}
-	
 	
 	public SmartJoystick getMainJoystick() {
 		return mainJoystick;
