@@ -4,7 +4,6 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.AbstractMotor;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.GBMotor;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.RobotMap;
 
 public class Shooter extends GBSubsystem {

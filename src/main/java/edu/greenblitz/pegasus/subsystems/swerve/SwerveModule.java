@@ -80,7 +80,7 @@ public class SwerveModule {
 		angleMotor.setEncoderAng(getLampreyAngle());
 	}
 	
-	public void resetEncoderByValue(double angle) {
+	public void resetEncoderToValue(double angle) {
 		angleMotor.setEncoderAng(angle);
 	} //todo combine both into same overload
 	

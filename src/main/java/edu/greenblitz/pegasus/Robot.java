@@ -1,6 +1,6 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.gyro.PigeonGyro;
+import edu.greenblitz.pegasus.utils.PigeonGyro;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.IMotorFactory;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
 import edu.greenblitz.pegasus.subsystems.Shooter;
@@ -134,7 +134,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		//resets encoders
-		SwerveChassis.getInstance().resetAllEncodersByValues();
+		SwerveChassis.getInstance().resetAllEncodersToValues();
 		SwerveChassis.getInstance().resetLocalizer();
 		//				SwerveChassis.getInstance().resetChassisAngle(/*88.5*/-90);
 

@@ -1,7 +1,6 @@
 package edu.greenblitz.pegasus.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.RobotMap;
 
 public class Funnel extends GBSubsystem {

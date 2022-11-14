@@ -1,9 +1,9 @@
 package edu.greenblitz.pegasus.subsystems.swerve;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.gyro.PigeonGyro;
+import edu.greenblitz.pegasus.utils.PigeonGyro;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.GBSubsystem;
+import edu.greenblitz.pegasus.subsystems.GBSubsystem;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -127,11 +127,11 @@ public class SwerveChassis extends GBSubsystem {
 	}
 	
 	
-	public void resetAllEncodersByValues() {
-		getModule(Module.FRONT_LEFT).resetEncoderByValue(0);
-		getModule(Module.FRONT_RIGHT).resetEncoderByValue(0);
-		getModule(Module.BACK_LEFT).resetEncoderByValue(0);
-		getModule(Module.BACK_RIGHT).resetEncoderByValue(0);
+	public void resetAllEncodersToValues() { //todo why to value and not just reset()?
+		getModule(Module.FRONT_LEFT).resetEncoderToValue(0);
+		getModule(Module.FRONT_RIGHT).resetEncoderToValue(0);
+		getModule(Module.BACK_LEFT).resetEncoderToValue(0);
+		getModule(Module.BACK_RIGHT).resetEncoderToValue(0);
 	}
 	
 	

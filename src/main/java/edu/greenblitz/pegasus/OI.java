@@ -72,7 +72,7 @@ public class OI {
 		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
 			@Override
 			public void initialize() {
-				SwerveChassis.getInstance().resetAllEncodersByValues();
+				SwerveChassis.getInstance().resetAllEncodersToValues();
 			}
 
 			@Override
@@ -116,7 +116,7 @@ public class OI {
 		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
 			@Override
 			public void initialize() {
-				SwerveChassis.getInstance().resetAllEncodersByValues();
+				SwerveChassis.getInstance().resetAllEncodersToValues();
 			}
 
 			@Override

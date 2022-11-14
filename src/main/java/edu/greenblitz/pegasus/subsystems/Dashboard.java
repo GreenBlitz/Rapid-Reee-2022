@@ -1,6 +1,5 @@
 package edu.greenblitz.pegasus.subsystems;
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
 import edu.greenblitz.pegasus.OI;
