@@ -1,10 +1,9 @@
 package edu.greenblitz.pegasus.commands.swerve;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.opencv.core.Mat;
 
 public class MoveByJoystick extends SwerveCommand { //todo explain to me why this still exists
 	private final double maxSpeed;

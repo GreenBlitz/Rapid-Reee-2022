@@ -2,8 +2,7 @@ package edu.greenblitz.pegasus.commands.shooter;
 
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.AbstractMotor;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shooter.Shooter;
-import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.wpi.first.wpilibj2.command.*;

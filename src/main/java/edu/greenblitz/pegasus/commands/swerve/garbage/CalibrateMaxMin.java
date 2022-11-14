@@ -1,8 +1,7 @@
 package edu.greenblitz.pegasus.commands.swerve.garbage;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.base.GBCommand;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
-import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
+import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public  class CalibrateMaxMin extends GBCommand {

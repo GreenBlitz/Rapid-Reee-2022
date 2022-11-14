@@ -1,7 +1,7 @@
 package edu.greenblitz.pegasus.commands.swerve;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.base.GBCommand;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 
 
 public abstract class SwerveCommand extends GBCommand {

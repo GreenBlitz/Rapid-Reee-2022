@@ -1,41 +1,23 @@
 package edu.greenblitz.pegasus;
 
-import com.ctre.phoenix.sensors.PigeonIMU;
-import com.pathplanner.lib.PathPlanner;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.gyro.PigeonGyro;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.IMotorFactory;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shooter.Shooter;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
+import edu.greenblitz.pegasus.subsystems.Shooter;
+import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.subsystems.swerve.SwerveModule;
 import edu.greenblitz.pegasus.commands.auto.Taxi;
-import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
-import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
-import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.subsystems.Dashboard;
 import edu.greenblitz.pegasus.subsystems.Indexing;
-
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
-import edu.greenblitz.pegasus.commands.auto.ThreeBallAuto;
-import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
-import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
-import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
-import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
-import edu.greenblitz.pegasus.commands.swerve.PathFollowerCommand;
-import edu.greenblitz.pegasus.commands.swerve.TragectoryCreator;
 
 import edu.greenblitz.pegasus.subsystems.Pneumatics;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-
-import java.util.ArrayList;
 
 public class Robot extends TimedRobot {
 	@Override
