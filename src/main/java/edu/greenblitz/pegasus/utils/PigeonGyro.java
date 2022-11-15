@@ -1,7 +1,6 @@
 package edu.greenblitz.pegasus.utils;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
 
 public class PigeonGyro extends PigeonIMU {
 	//fixme noam - reminder for myself. if pigeon not working problem is prob here;

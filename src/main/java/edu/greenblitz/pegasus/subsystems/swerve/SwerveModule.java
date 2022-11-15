@@ -4,7 +4,7 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.AbstractMotor;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.GBMotor;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
+import edu.greenblitz.pegasus.utils.GBMath;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;

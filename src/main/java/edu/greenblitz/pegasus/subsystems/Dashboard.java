@@ -1,7 +1,7 @@
 package edu.greenblitz.pegasus.subsystems;
 
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
+import edu.greenblitz.pegasus.utils.GBMath;
 import edu.greenblitz.pegasus.OI;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.DriverStation;

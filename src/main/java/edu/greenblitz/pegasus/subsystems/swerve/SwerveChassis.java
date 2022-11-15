@@ -4,7 +4,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.greenblitz.pegasus.utils.PigeonGyro;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
 import edu.greenblitz.pegasus.subsystems.GBSubsystem;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
+import edu.greenblitz.pegasus.utils.GBMath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
