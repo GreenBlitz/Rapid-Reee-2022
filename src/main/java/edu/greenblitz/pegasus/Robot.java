@@ -132,6 +132,8 @@ public class Robot extends TimedRobot {
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
 		SmartDashboard.putNumber("pigeon angle", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
+		SmartDashboard.putNumber("ang in deg", Math.toDegrees(SmartDashboard.getNumber("ang target", 0)));
+		SmartDashboard.putNumber("ang dif", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle() - SmartDashboard.getNumber("ang target", 0)));
 	}
 
 

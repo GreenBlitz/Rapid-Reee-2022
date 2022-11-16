@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.base.GBCommand;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.gyro.PigeonGyro;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
@@ -23,6 +24,7 @@ import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import org.opencv.core.Mat;
 
 public class OI {
 	
@@ -131,7 +133,10 @@ public class OI {
 //				return true;
 //			}
 //		});
-		mainJoystick.Y.whileHeld(new CombineJoystickMovement(true, new AngPIDSupplier(() -> 0.3)));
+		SmartDashboard.putNumber("ang target", 0);
+		mainJoystick.Y.whileHeld(new CombineJoystickMovement(false, new AngPIDSupplier(()-> SmartDashboard.getNumber("ang target", 0))));
+		SmartDashboard.putNumber("ang in deg", Math.toDegrees(SmartDashboard.getNumber("ang target", 0)));
+		SmartDashboard.putNumber("ang dif", SwerveChassis.getInstance().getChassisAngle() - Math.toDegrees(SmartDashboard.getNumber("ang target", 0)));
 		
 		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
 			@Override
@@ -142,6 +147,18 @@ public class OI {
 			@Override
 			public boolean isFinished() {
 
+				return true;
+			}
+		});
+
+		mainJoystick.B.whenPressed(new SwerveCommand() {
+			@Override
+			public void initialize() {
+				swerve.resetChassisAngle();
+			}
+
+			@Override
+			public boolean isFinished() {
 				return true;
 			}
 		});
