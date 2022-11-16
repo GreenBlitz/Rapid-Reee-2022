@@ -1,4 +1,4 @@
-package edu.greenblitz.pegasus.utils;
+package edu.greenblitz.pegasus.utils.commands;
 
 import edu.greenblitz.pegasus.utils.commands.GBCommand;
 

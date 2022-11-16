@@ -3,10 +3,9 @@ package edu.greenblitz.pegasus.commands.swerve.garbage;
 
 
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
+import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MoveLin extends SwerveCommand {
 	

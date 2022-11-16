@@ -1,7 +1,7 @@
 //
 //package edu.greenblitz.pegasus.commands.swerve;
 //
-//import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
+//import edu.greenblitz.pegasus.utils.PIDObject;
 //import edu.greenblitz.pegasus.utils.GBMath;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //

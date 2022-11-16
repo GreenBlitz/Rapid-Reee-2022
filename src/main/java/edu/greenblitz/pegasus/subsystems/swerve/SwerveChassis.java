@@ -2,7 +2,7 @@ package edu.greenblitz.pegasus.subsystems.swerve;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.greenblitz.pegasus.utils.PigeonGyro;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
+import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.greenblitz.pegasus.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.utils.GBMath;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -155,7 +155,7 @@ public class SwerveChassis extends GBSubsystem {
 		getModule(module).resetEncoderToZero();
 	}
 	/**
-	 * all code below is self-explanatory - well, after a long time its maybe not self-explanatory
+	 * all code below is self-explanatory - well, after a long time It's maybe not self-explanatory
 	 * <p>
 	 * ALL IN RADIANS, NOT DEGREES
 	 */

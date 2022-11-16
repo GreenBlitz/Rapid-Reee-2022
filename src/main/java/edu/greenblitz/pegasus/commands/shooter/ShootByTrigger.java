@@ -1,8 +1,6 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motion.pid.PIDObject;
-import edu.greenblitz.pegasus.RobotMap;
 
 public class ShootByTrigger extends ShooterByRPM {//todo remake later when its relevant
 
