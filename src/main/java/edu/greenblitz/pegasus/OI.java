@@ -1,7 +1,7 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.utils.commands.GBCommand;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;

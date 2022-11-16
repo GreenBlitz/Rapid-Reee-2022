@@ -1,6 +1,6 @@
 package edu.greenblitz.pegasus.commands.swerve;
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
+import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
