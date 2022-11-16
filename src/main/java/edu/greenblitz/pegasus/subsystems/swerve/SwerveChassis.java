@@ -104,6 +104,7 @@ public class SwerveChassis extends GBSubsystem {
 		}
 	}
 
+	/** stops all the modules (power(0)) */
 	public void stop() {
 		frontRight.setLinPower(0);
 		frontRight.setRotPower(0);
@@ -154,17 +155,24 @@ public class SwerveChassis extends GBSubsystem {
 		getModule(module).resetEncoderToZero();
 	}
 	/**
-	 * all code below is self-explanatory
+	 * all code below is self-explanatory - well, after a long time its maybe not self-explanatory
 	 * <p>
 	 * ALL IN RADIANS, NOT DEGREES
 	 */
+	
+	/**
+	 * moving a single module to radians by power.
+	 * */
 	public void moveSingleModule(Module module, double radians, double speed) {
 		if (getModule(module) != null) { //IntelliJ is being dumb here, this should fix it - nitzan.b todo ignore intellij
 			getModule(module).rotateToAngle(radians);
 			getModule(module).setLinSpeed(speed);
 		}
 	}
-
+	
+	/**
+	 * moving a single module by module state
+	 * */
 	public void moveSingleModule(Module module, SwerveModuleState state) {
 		moveSingleModule(module, state.angle.getRadians(), state.speedMetersPerSecond);
 	}
