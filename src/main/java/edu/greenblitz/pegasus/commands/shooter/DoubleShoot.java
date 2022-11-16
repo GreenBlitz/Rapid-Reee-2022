@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
 
+import com.revrobotics.CANSparkMax;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.AbstractMotor;
 import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
@@ -53,7 +54,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 
 	@Override
 	public void initialize() {
-		Shooter.getInstance().setIdleMode(AbstractMotor.IdleMode.Coast);
+		Shooter.getInstance().setIdleMode(CANSparkMax.IdleMode.kCoast);
 		super.initialize();
 	}
 

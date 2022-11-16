@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
 		Dashboard.init();
 
 		Indexing.getInstance();
-		Shooter.create(new SparkMaxFactory().withInverted(true).withRampRate(0.4).withCurrentLimit(30), RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
+		Shooter.create(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
 
 		//todo add voltage compensation
 		//swerve

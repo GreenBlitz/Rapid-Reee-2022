@@ -1,5 +1,6 @@
 package edu.greenblitz.pegasus;
 
+import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
 import edu.greenblitz.pegasus.utils.commands.GBCommand;
 import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
@@ -53,8 +54,6 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-//		SwerveChassis.getInstance().resetAllEncodersByValues();
-//		SwerveChassis.getInstance().resetChassisAngle(0);
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, true));
 
 		mainJoystick.Y.whenPressed(new SwerveCommand() {
@@ -80,18 +79,9 @@ public class OI {
 				return true;
 			}
 		});
-//		mainJoystick.X.whileHeld(new ShooterByRPM(2000));
-//		mainJoystick.Y.whileHeld(new RunFunnel());
-//		mainJoystick.A.whileHeld(new RunRoller());
-//		mainJoystick.B.whenPressed(new ToggleRoller());
 		
-//		mainJoystick.L1.whenPressed(new ParallelCommandGroup(
-//				new CalibrateMaxMin(0.2, SwerveChassis.Module.FRONT_RIGHT),
-//				new CalibrateMaxMin(0.2, SwerveChassis.Module.FRONT_LEFT),
-//				new CalibrateMaxMin(0.2, SwerveChassis.Module.BACK_RIGHT),
-//				new CalibrateMaxMin(0.2, SwerveChassis.Module.BACK_LEFT)
-//		));
-		
+		mainJoystick.X.whileHeld(new ShootByConstant(0.5));
+		mainJoystick.A.whileHeld(new ShooterByRPM(2000));
 		
 	}
 	
