@@ -8,10 +8,12 @@ import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shooter.Shooter;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveModule;
+import edu.greenblitz.pegasus.commands.BatteryDisabler;
 import edu.greenblitz.pegasus.commands.auto.Taxi;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
+import edu.greenblitz.pegasus.subsystems.Battery;
 import edu.greenblitz.pegasus.subsystems.Dashboard;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 
@@ -36,6 +38,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class Robot extends TimedRobot {
 	@Override
@@ -126,6 +129,8 @@ public class Robot extends TimedRobot {
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
 		SmartDashboard.putNumber("pigeon angle", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
+
+
 	}
 
 
@@ -133,6 +138,7 @@ public class Robot extends TimedRobot {
 	public void disabledInit() {
 		//VisionMaster.GameState.DISABLED.setAsCurrent();
 		CommandScheduler.getInstance().cancelAll();
+		Battery.getInstance().setDefaultCommand(new BatteryDisabler());
 	}
 
 	@Override

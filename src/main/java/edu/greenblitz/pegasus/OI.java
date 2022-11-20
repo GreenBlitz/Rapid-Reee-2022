@@ -56,6 +56,7 @@ public class OI {
 		if (instance == null) {
 			instance = new OI();
 		}
+
 		return instance;
 	}
 	
