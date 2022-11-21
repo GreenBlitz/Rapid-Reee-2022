@@ -136,14 +136,14 @@ public class SwerveChassis extends GBSubsystem {
 	}
 	
 	
-	public void resetAllEncodersByLamprey() {
-		getModule(Module.FRONT_LEFT).resetEncoderByLamprey();
-		getModule(Module.FRONT_RIGHT).resetEncoderByLamprey();
-		getModule(Module.BACK_LEFT).resetEncoderByLamprey();
-		getModule(Module.BACK_RIGHT).resetEncoderByLamprey();
-
-	}
-	
+//	public void resetAllEncodersByLamprey() {
+//		getModule(Module.FRONT_LEFT).resetEncoderByLamprey();
+//		getModule(Module.FRONT_RIGHT).resetEncoderByLamprey();
+//		getModule(Module.BACK_LEFT).resetEncoderByLamprey();
+//		getModule(Module.BACK_RIGHT).resetEncoderByLamprey();
+//
+//	}
+//
 	public void resetAllEncodersToZero() {
 		getModule(Module.FRONT_LEFT).resetEncoderToZero();
 		getModule(Module.FRONT_RIGHT).resetEncoderToZero();
@@ -194,12 +194,12 @@ public class SwerveChassis extends GBSubsystem {
 	public double getRawLampreyAngle(Module module) {
 		return getModule(module).getRawLampreyAngle();
 	}
-
-	public double getLampreyAngle(Module module) {
-		return getModule(module).getLampreyAngle();
-	}
-
-	
+//
+//	public double getLampreyAngle(Module module) {
+//		return getModule(module).getLampreyAngle();
+//	}
+//
+//
 	public double getLampreyValue(Module module) {
 		return getModule(module).getLampreyValue();
 	}

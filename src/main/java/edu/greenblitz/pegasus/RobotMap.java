@@ -131,6 +131,7 @@ public class RobotMap {
 			public static final double KMMaxAngularAcceleration = 1; //todo find real max acceleration (radians per second ^2)
 			
 			public static final boolean angleMotorInverted = true;
+			
 			public static class Module1 {//front right
 				public static final int linMotorID = 11;
 				public static final int SteerMotorID = 3;

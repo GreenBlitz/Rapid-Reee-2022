@@ -1,6 +1,8 @@
 package edu.greenblitz.pegasus.subsystems.swerve;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.IMotorFactory;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
+import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.AbstractMotor;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.GBMotor;
@@ -16,35 +18,29 @@ public class SwerveModule {
 	private int isReversed = 1;
 	public double targetAngle;
 	public double targetVel;
-	private double maxLampreyVal;
-	private double minLampreyVal;
 	private final GBMotor angleMotor;
 	private final GBMotor linearMotor;
 	private final AnalogInput lamprey;
 	private final SimpleMotorFeedforward feedforward;
 	private final double wheelCirc;
 
-	public SwerveModule(IMotorFactory motorFactoryA, IMotorFactory motorFactoryL, int portA, int portL,
-	                    int lampreyID, double maxLampreyVal, double minLampreyVal,
-	                    PIDObject pidAng, PIDObject pidLin, SimpleMotorFeedforward feedforward, double wheelCirc) {
-		angleMotor = motorFactoryA.generate(portA);
-		linearMotor = motorFactoryL.generate(portL);
+	public SwerveModule(int portA, int portL, int lampreyID) {
+		angleMotor = new SparkMaxFactory().withGearRatio(6).withCurrentLimit(30).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.angleMotorInverted).generate(portA);
+		linearMotor = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(30).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module4.INVERTED).generate(portL);
 		lamprey = new AnalogInput(lampreyID);
 		lamprey.setAverageBits(2);
-		this.maxLampreyVal = maxLampreyVal;
-		this.minLampreyVal = minLampreyVal;
-		configAnglePID(pidAng);
-		configLinPID(pidLin);
-		this.feedforward = feedforward;
-		this.wheelCirc = wheelCirc;
+		configAnglePID(RobotMap.Pegasus.Swerve.angPID);
+		configLinPID(RobotMap.Pegasus.Swerve.linPID);
+		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
+		this.wheelCirc = RobotMap.Pegasus.Swerve.WHEEL_CIRC;
 	}
 
-	public double getLampreyAngle() { // in radians;
-		int val = lamprey.getValue();
-		if(val < minLampreyVal) minLampreyVal = val;
-		if(val > maxLampreyVal) maxLampreyVal = val;
-		return (lamprey.getValue() - minLampreyVal) / (maxLampreyVal - minLampreyVal) * Math.PI * 2;
-	}
+//	public double getLampreyAngle() { // in radians;
+//		int val = lamprey.getValue();
+//		if(val < minLampreyVal) minLampreyVal = val;
+//		if(val > maxLampreyVal) maxLampreyVal = val;
+//		return (lamprey.getValue() - minLampreyVal) / (maxLampreyVal - minLampreyVal) * Math.PI * 2;
+//	}
 
 	public void rotateToAngle(double angle) {
 
@@ -76,9 +72,9 @@ public class SwerveModule {
 		angleMotor.resetEncoder();
 	}
 
-	public void resetEncoderByLamprey() {
-		angleMotor.setEncoderAng(getLampreyAngle());
-	}
+//	public void resetEncoderByLamprey() {
+//		angleMotor.setEncoderAng(getLampreyAngle());
+//	}
 	
 	public void resetEncoderToValue(double angle) {
 		angleMotor.setEncoderAng(angle);
