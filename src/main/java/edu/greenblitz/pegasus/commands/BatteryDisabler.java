@@ -13,14 +13,13 @@ public class BatteryDisabler extends GBCommand {
 
 
 	public BatteryDisabler (){
-		battery = new Battery();
+		battery = Battery.getInstance();
 		require(battery);
 	}
 
 	@Override
 	public void initialize() {
 		timesUnder = 0;
-		CommandScheduler.getInstance().enable(); //todo - is this need?
 	}
 
 	@Override
@@ -29,8 +28,8 @@ public class BatteryDisabler extends GBCommand {
 			timesUnder++;
 		}
 		if (timesUnder >= disableAfterTicks &&
-				DriverStation.getMatchType() == DriverStation.MatchType.None ||
-				DriverStation.getMatchType() == DriverStation.MatchType.Practice){
+				(DriverStation.getMatchType() == DriverStation.MatchType.None ||
+				DriverStation.getMatchType() == DriverStation.MatchType.Practice)){
 			CommandScheduler.getInstance().cancelAll();
 			CommandScheduler.getInstance().disable();
 		}
