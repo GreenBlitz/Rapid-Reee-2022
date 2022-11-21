@@ -24,9 +24,9 @@ public class SwerveModule {
 	private final SimpleMotorFeedforward feedforward;
 	private final double wheelCirc;
 
-	public SwerveModule(int portA, int portL, int lampreyID) {
+	public SwerveModule(int portA, int portL, int lampreyID, boolean linInverted) {
 		angleMotor = new SparkMaxFactory().withGearRatio(6).withCurrentLimit(30).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.angleMotorInverted).generate(portA);
-		linearMotor = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(30).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.Module4.INVERTED).generate(portL);
+		linearMotor = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(30).withRampRate(0.4).withInverted(linInverted).generate(portL);
 		lamprey = new AnalogInput(lampreyID);
 		lamprey.setAverageBits(2);
 		configAnglePID(RobotMap.Pegasus.Swerve.angPID);

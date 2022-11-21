@@ -37,19 +37,26 @@ public class Robot extends TimedRobot {
 		SwerveModule frontRightModule = new SwerveModule(
 				RobotMap.Pegasus.Swerve.Module1.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module1.linMotorID,
-				RobotMap.Pegasus.Swerve.Module1.lampryID);
+				RobotMap.Pegasus.Swerve.Module1.lampryID,
+				RobotMap.Pegasus.Swerve.Module1.INVERTED);
 		SwerveModule frontLeftModule = new SwerveModule(
 				RobotMap.Pegasus.Swerve.Module2.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module2.linMotorID,
-				RobotMap.Pegasus.Swerve.Module2.lampryID);
+				RobotMap.Pegasus.Swerve.Module2.lampryID,
+				RobotMap.Pegasus.Swerve.Module2.INVERTED);
+
+		
 		SwerveModule backRightModule = new SwerveModule(
 				RobotMap.Pegasus.Swerve.Module3.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module3.linMotorID,
-				RobotMap.Pegasus.Swerve.Module3.lampryID);
+				RobotMap.Pegasus.Swerve.Module3.lampryID,
+				RobotMap.Pegasus.Swerve.Module3.INVERTED);
 		SwerveModule backLeftModule = new SwerveModule(
 				RobotMap.Pegasus.Swerve.Module4.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module4.linMotorID,
-				RobotMap.Pegasus.Swerve.Module4.lampryID);
+				RobotMap.Pegasus.Swerve.Module4.lampryID,
+				RobotMap.Pegasus.Swerve.Module4.INVERTED);
+
 		
 		SwerveChassis.create(
 				frontRightModule, frontLeftModule, backRightModule, backLeftModule,
