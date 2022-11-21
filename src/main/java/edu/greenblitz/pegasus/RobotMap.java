@@ -4,12 +4,17 @@ package edu.greenblitz.pegasus;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveModule;
 import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
 
 public class RobotMap {
 	public static class Pegasus {
+		public static class gyro{
+			public static final int pigeonID = 12;
+		}
 		
 		public static class Joystick {
 			public static final int MAIN = 0;
@@ -96,6 +101,8 @@ public class RobotMap {
 		}
 		
 		public static class Swerve {
+			
+			public static final Pose2d initialRobotPosition = new Pose2d(0, 0, new Rotation2d(0));
 			public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
 			
 			public static final double ANG_GEAR_RATIO = 6.0;

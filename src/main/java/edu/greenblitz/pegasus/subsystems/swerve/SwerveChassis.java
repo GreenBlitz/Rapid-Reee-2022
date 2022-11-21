@@ -35,7 +35,7 @@ public class SwerveChassis extends GBSubsystem {
 		BACK_LEFT
 	}
 
-	private SwerveChassis(PigeonGyro pigeonGyro, Translation2d[] swerveLocationsInSwerveKinematicsCoordinates, Pose2d initialPose) {
+	public SwerveChassis() {
 		
 		this.frontRight = RobotMap.Pegasus.Swerve.Module1.frontRightModule;
 		this.frontLeft = RobotMap.Pegasus.Swerve.Module2.frontLeftModule;
@@ -43,26 +43,23 @@ public class SwerveChassis extends GBSubsystem {
 		this.backRight = RobotMap.Pegasus.Swerve.Module3.backRightModule;
 		this.backLeft = RobotMap.Pegasus.Swerve.Module4.backLeftModule;
 //		this.pigeonGyro = pigeonGyro;
-		this.pigeonIMU = pigeonGyro;
+		this.pigeonIMU = new PigeonGyro(RobotMap.Pegasus.gyro.pigeonID);
 		this.kinematics = new SwerveDriveKinematics(
-				swerveLocationsInSwerveKinematicsCoordinates
+				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates
 		);
 		this.localizer = new SwerveDriveOdometry(
 				this.kinematics,
 				new Rotation2d(this.getChassisAngle()),
-				initialPose
+				RobotMap.Pegasus.Swerve.initialRobotPosition
 		);
 	}
 
 
 	private static SwerveChassis instance;
-
-
-	public static void create(PigeonGyro pigeonGyro, Translation2d[] swerveLocationsInSwerveKinematicsCoordinates, Pose2d initialPose) {
-		instance = new SwerveChassis(pigeonGyro, swerveLocationsInSwerveKinematicsCoordinates, initialPose);
-	}
-
 	public static SwerveChassis getInstance() {
+		if (instance == null){
+			instance = new SwerveChassis();
+		}
 		return instance;
 	}
 	

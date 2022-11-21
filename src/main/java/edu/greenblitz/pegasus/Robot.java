@@ -33,12 +33,7 @@ public class Robot extends TimedRobot {
 
 		//todo add voltage compensation
 		//swerve
-
 		
-		SwerveChassis.create(new PigeonGyro(12),
-				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates,
-				new Pose2d(0, 0, new Rotation2d(0)) //initial position of robot, 0 for now for testing
-		);
 		SwerveChassis.getInstance().resetChassisAngle(0); //fixme noam -  reminder for me if not work to check here
 
 //		SwerveChassis.getInstance().resetAllEncoders();
