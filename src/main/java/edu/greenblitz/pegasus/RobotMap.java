@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus;
 
 
+import edu.greenblitz.pegasus.subsystems.swerve.SwerveModule;
 import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -133,6 +134,13 @@ public class RobotMap {
 			public static final boolean angleMotorInverted = true;
 			
 			public static class Module1 {//front right
+				
+				public static final SwerveModule frontRightModule = new SwerveModule(
+						RobotMap.Pegasus.Swerve.Module1.SteerMotorID,
+						RobotMap.Pegasus.Swerve.Module1.linMotorID,
+						RobotMap.Pegasus.Swerve.Module1.lampryID,
+						RobotMap.Pegasus.Swerve.Module1.INVERTED);
+				
 				public static final int linMotorID = 11;
 				public static final int SteerMotorID = 3;
 				public static final int lampryID = 2;
@@ -142,6 +150,16 @@ public class RobotMap {
 			}
 			
 			public static class Module2 {//front left
+				
+				
+				public static final SwerveModule frontLeftModule = new SwerveModule(
+						RobotMap.Pegasus.Swerve.Module2.SteerMotorID,
+						RobotMap.Pegasus.Swerve.Module2.linMotorID,
+						RobotMap.Pegasus.Swerve.Module2.lampryID,
+						RobotMap.Pegasus.Swerve.Module2.INVERTED);
+				
+				
+				
 				public static final int linMotorID = 10;
 				public static final int SteerMotorID = 1;
 				public static final int lampryID = 0;
@@ -152,6 +170,16 @@ public class RobotMap {
 			}
 			
 			public static class Module3 {//back right
+				
+				
+				public static final SwerveModule backRightModule = new SwerveModule(
+						RobotMap.Pegasus.Swerve.Module3.SteerMotorID,
+						RobotMap.Pegasus.Swerve.Module3.linMotorID,
+						RobotMap.Pegasus.Swerve.Module3.lampryID,
+						RobotMap.Pegasus.Swerve.Module3.INVERTED);
+				
+				
+				
 				public static final int linMotorID = 5;
 				public static final int SteerMotorID = 12;
 				public static final int lampryID = 3;
@@ -162,6 +190,15 @@ public class RobotMap {
 			}
 			
 			public static class Module4 {//back left
+				
+				
+				public static final SwerveModule backLeftModule = new SwerveModule(
+						RobotMap.Pegasus.Swerve.Module4.SteerMotorID,
+						RobotMap.Pegasus.Swerve.Module4.linMotorID,
+						RobotMap.Pegasus.Swerve.Module4.lampryID,
+						RobotMap.Pegasus.Swerve.Module4.INVERTED);
+				
+				
 				public static final int linMotorID = 8;
 				public static final int SteerMotorID = 2;
 				public static final int lampryID = 1;

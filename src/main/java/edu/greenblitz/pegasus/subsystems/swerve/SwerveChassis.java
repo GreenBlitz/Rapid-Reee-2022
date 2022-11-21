@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus.subsystems.swerve;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
+import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.PigeonGyro;
 import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.greenblitz.pegasus.subsystems.GBSubsystem;
@@ -34,13 +35,13 @@ public class SwerveChassis extends GBSubsystem {
 		BACK_LEFT
 	}
 
-	private SwerveChassis(SwerveModule frontRight, SwerveModule frontLeft, SwerveModule backRight, SwerveModule backLeft, PigeonGyro pigeonGyro, Translation2d[] swerveLocationsInSwerveKinematicsCoordinates, Pose2d initialPose) {
+	private SwerveChassis(PigeonGyro pigeonGyro, Translation2d[] swerveLocationsInSwerveKinematicsCoordinates, Pose2d initialPose) {
 		
-		this.frontRight = frontRight;
-		this.frontLeft = frontLeft;
+		this.frontRight = RobotMap.Pegasus.Swerve.Module1.frontRightModule;
+		this.frontLeft = RobotMap.Pegasus.Swerve.Module2.frontLeftModule;
 
-		this.backRight = backRight;
-		this.backLeft = backLeft;
+		this.backRight = RobotMap.Pegasus.Swerve.Module3.backRightModule;
+		this.backLeft = RobotMap.Pegasus.Swerve.Module4.backLeftModule;
 //		this.pigeonGyro = pigeonGyro;
 		this.pigeonIMU = pigeonGyro;
 		this.kinematics = new SwerveDriveKinematics(
@@ -57,8 +58,8 @@ public class SwerveChassis extends GBSubsystem {
 	private static SwerveChassis instance;
 
 
-	public static void create(SwerveModule frontRight, SwerveModule frontLeft, SwerveModule backRight, SwerveModule backLeft, PigeonGyro pigeonGyro, Translation2d[] swerveLocationsInSwerveKinematicsCoordinates, Pose2d initialPose) {
-		instance = new SwerveChassis(frontRight, frontLeft, backRight, backLeft, pigeonGyro, swerveLocationsInSwerveKinematicsCoordinates, initialPose);
+	public static void create(PigeonGyro pigeonGyro, Translation2d[] swerveLocationsInSwerveKinematicsCoordinates, Pose2d initialPose) {
+		instance = new SwerveChassis(pigeonGyro, swerveLocationsInSwerveKinematicsCoordinates, initialPose);
 	}
 
 	public static SwerveChassis getInstance() {
