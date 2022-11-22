@@ -22,7 +22,7 @@ public class SwerveModule {
 	public double targetAngle;
 	public double targetVel;
 	private final CANSparkMax angleMotor;
-	private final GBMotor linearMotor;
+	private final CANSparkMax linearMotor;
 	private final AnalogInput lamprey;
 	private final SimpleMotorFeedforward feedforward;
 	private final double wheelCirc;
@@ -32,12 +32,16 @@ public class SwerveModule {
 		//SET ANGLE MOTOR
 		angleMotor = new CANSparkMax(portA, CANSparkMaxLowLevel.MotorType.kBrushless);
 		angleMotor.setSmartCurrentLimit(30);
-		angleMotor.setClosedLoopRampRate(0.4);
+		angleMotor.setClosedLoopRampRate(0.4);//todo is closed or open?
 		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
 		angleMotor.getEncoder().setPositionConversionFactor(2 * Math.PI * RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
 		angleMotor.getEncoder().setVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
 		
-		linearMotor = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(30).withRampRate(0.4).withInverted(linInverted).generate(portL);
+		linearMotor = new CANSparkMax(portL, CANSparkMaxLowLevel.MotorType.kBrushless);
+		linearMotor.setSmartCurrentLimit(30);
+		linearMotor.setClosedLoopRampRate(0.4); //todo is closed or open?
+		linearMotor.setInverted(linInverted);
+		
 		lamprey = new AnalogInput(lampreyID);
 		lamprey.setAverageBits(2);
 		configAnglePID(RobotMap.Pegasus.Swerve.angPID);
@@ -72,7 +76,7 @@ public class SwerveModule {
 	}
 
 	public double getCurrentVel() {
-		return linearMotor.getNormalizedVelocity() / 60 * wheelCirc;
+		return (linearMotor.getEncoder().getVelocity() / RobotMap.Pegasus.Swerve.linTicksToWheelToRPM) / 60 * wheelCirc;
 	}
 
 	public void rotateByAngle(double angle) {
@@ -96,7 +100,12 @@ public class SwerveModule {
 	}
 
 	public void configLinPID(PIDObject pidObject) {
-		linearMotor.configurePID(pidObject);
+		linearMotor.getPIDController().setP(pidObject.getKp());
+		linearMotor.getPIDController().setI(pidObject.getKi());
+		linearMotor.getPIDController().setD(pidObject.getKd());
+		linearMotor.getPIDController().setFF(pidObject.getKf());
+		linearMotor.getPIDController().setIZone(pidObject.getIZone());
+		linearMotor.getPIDController().setOutputRange(-pidObject.getMaxPower(), pidObject.getMaxPower());
 	}
 
 	public void configAnglePID(PIDObject pidObject) {
@@ -111,7 +120,7 @@ public class SwerveModule {
 
 	public void setLinSpeed(double speed) {
 		speed *= isReversed;
-		linearMotor.setTargetSpeedByPID(speed, feedforward.calculate(speed));
+		linearMotor.getPIDController().setReference(speed,ControlType.kPosition, 0, feedforward.calculate(speed));
 	}
 
 	public void setRotPower(double power) {
@@ -128,7 +137,7 @@ public class SwerveModule {
 	}
 
 	public void setLinPower(double power) {
-		linearMotor.setPower(power * isReversed);
+		linearMotor.set(power * isReversed);
 	}
 
 	public int getIsReversed() {
