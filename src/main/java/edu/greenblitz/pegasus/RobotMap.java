@@ -12,6 +12,11 @@ import org.greenblitz.motion.interpolation.Dataset;
 
 public class RobotMap {
 	public static class Pegasus {
+		public static class motors{
+			public final static double SPARKMAX_TICKS_PER_RADIAN = 1 / (Math.PI * 2);
+			public final static double SPARKMAX_VELOCITY_UNITS_TO_RPM = 1;
+			
+		}
 		public static class gyro{
 			public static final int pigeonID = 12;
 		}
@@ -101,6 +106,14 @@ public class RobotMap {
 		}
 		
 		public static class Swerve {
+			
+			public static final double angleTicksToWheelToRPM = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_VELOCITY_UNITS_TO_RPM;
+			public static final double linTicksToWheelToRPM = Swerve.LIN_GEAR_RATIO * motors.SPARKMAX_VELOCITY_UNITS_TO_RPM;
+			
+			public static final double angleTicksToRadians = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN;
+			public static final double linTicksToRadians = Swerve.LIN_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN ;
+			
+			
 			
 			public static final Pose2d initialRobotPosition = new Pose2d(0, 0, new Rotation2d(0));
 			public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now

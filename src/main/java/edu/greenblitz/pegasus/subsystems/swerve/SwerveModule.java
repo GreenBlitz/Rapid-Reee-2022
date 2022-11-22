@@ -1,5 +1,7 @@
 package edu.greenblitz.pegasus.subsystems.swerve;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.IMotorFactory;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
 import edu.greenblitz.pegasus.RobotMap;
@@ -18,14 +20,20 @@ public class SwerveModule {
 	private int isReversed = 1;
 	public double targetAngle;
 	public double targetVel;
-	private final GBMotor angleMotor;
+	private final CANSparkMax angleMotor;
 	private final GBMotor linearMotor;
 	private final AnalogInput lamprey;
 	private final SimpleMotorFeedforward feedforward;
 	private final double wheelCirc;
 
 	public SwerveModule(int portA, int portL, int lampreyID, boolean linInverted) {
-		angleMotor = new SparkMaxFactory().withGearRatio(6).withCurrentLimit(30).withRampRate(0.4).withInverted(RobotMap.Pegasus.Swerve.angleMotorInverted).generate(portA);
+//		angleMotor = new SparkMaxFactory().withGearRatio(6)
+		//SET ANGLE MOTOR
+		angleMotor = new CANSparkMax(portA, CANSparkMaxLowLevel.MotorType.kBrushless);
+		angleMotor.setSmartCurrentLimit(30);
+		angleMotor.setClosedLoopRampRate(0.4);
+		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
+		
 		linearMotor = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(30).withRampRate(0.4).withInverted(linInverted).generate(portL);
 		lamprey = new AnalogInput(lampreyID);
 		lamprey.setAverageBits(2);
