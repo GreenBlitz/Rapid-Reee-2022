@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus.subsystems.swerve;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkMax.ControlType;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.IMotorFactory;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
 import edu.greenblitz.pegasus.RobotMap;
@@ -33,6 +34,8 @@ public class SwerveModule {
 		angleMotor.setSmartCurrentLimit(30);
 		angleMotor.setClosedLoopRampRate(0.4);
 		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
+		angleMotor.getEncoder().setPositionConversionFactor(2 * Math.PI * RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
+		angleMotor.getEncoder().setVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
 		
 		linearMotor = new SparkMaxFactory().withGearRatio(8).withCurrentLimit(30).withRampRate(0.4).withInverted(linInverted).generate(portL);
 		lamprey = new AnalogInput(lampreyID);
@@ -56,7 +59,7 @@ public class SwerveModule {
 		diff -= diff > Math.PI ? 2*Math.PI : 0;
 		angle = getMotorAngle() + diff;
 
-		angleMotor.setTargetByPID(angle, AbstractMotor.PIDTarget.Position);
+		angleMotor.getPIDController().setReference(angle, ControlType.kPosition);
 		targetAngle = angle;
 	}
 
@@ -65,7 +68,7 @@ public class SwerveModule {
 	}
 
 	public double getMotorAngle() {
-		return angleMotor.getNormalizedPosition();
+		return angleMotor.getEncoder().getPosition() / RobotMap.Pegasus.Swerve.angleTicksToRadians;
 	}
 
 	public double getCurrentVel() {
@@ -73,11 +76,11 @@ public class SwerveModule {
 	}
 
 	public void rotateByAngle(double angle) {
-		angleMotor.setTargetByPID(getMotorAngle() + angle, AbstractMotor.PIDTarget.Position);
+		angleMotor.getPIDController().setReference(getMotorAngle() + angle, ControlType.kPosition);
 	}
 
 	public void resetAngle() {
-		angleMotor.resetEncoder();
+		angleMotor.getEncoder().setPosition(0);
 	}
 
 //	public void resetEncoderByLamprey() {
@@ -85,11 +88,11 @@ public class SwerveModule {
 //	}
 	
 	public void resetEncoderToValue(double angle) {
-		angleMotor.setEncoderAng(angle);
+		angleMotor.getEncoder().setPosition(angle);
 	} //todo combine both into same overload
 	
 	public void resetEncoderToZero(){
-		angleMotor.setEncoderAng(0);
+		angleMotor.getEncoder().setPosition(0);
 	}
 
 	public void configLinPID(PIDObject pidObject) {
@@ -97,7 +100,12 @@ public class SwerveModule {
 	}
 
 	public void configAnglePID(PIDObject pidObject) {
-		angleMotor.configurePID(pidObject);
+		angleMotor.getPIDController().setP(pidObject.getKp());
+		angleMotor.getPIDController().setI(pidObject.getKi());
+		angleMotor.getPIDController().setD(pidObject.getKd());
+		angleMotor.getPIDController().setFF(pidObject.getKf());
+		angleMotor.getPIDController().setIZone(pidObject.getIZone());
+		angleMotor.getPIDController().setOutputRange(-pidObject.getMaxPower(), pidObject.getMaxPower());
 	}
 
 
@@ -107,7 +115,7 @@ public class SwerveModule {
 	}
 
 	public void setRotPower(double power) {
-		angleMotor.setPower(power);
+		angleMotor.set(power);
 	}
 	//only for debugging
 
@@ -136,7 +144,7 @@ public class SwerveModule {
 	}
 
 	public double getAngMotorTicks(){
-		return this.angleMotor.getRawTicks();
+		return this.angleMotor.getEncoder().getPosition();
 	}
 
 
