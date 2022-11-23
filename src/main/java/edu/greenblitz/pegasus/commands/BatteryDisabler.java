@@ -13,6 +13,7 @@ public class BatteryDisabler extends GBCommand {
 
 
 	public BatteryDisabler (){
+		Battery.isBatteryLow = false;
 		battery = Battery.getInstance();
 		require(battery);
 	}
@@ -30,6 +31,7 @@ public class BatteryDisabler extends GBCommand {
 		if (timesUnder >= disableAfterTicks &&
 				(DriverStation.getMatchType() == DriverStation.MatchType.None ||
 				DriverStation.getMatchType() == DriverStation.MatchType.Practice)){
+			Battery.isBatteryLow = true;
 			CommandScheduler.getInstance().cancelAll();
 			CommandScheduler.getInstance().disable();
 		}

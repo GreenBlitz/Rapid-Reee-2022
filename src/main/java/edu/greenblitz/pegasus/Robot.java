@@ -127,10 +127,13 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotPeriodic() {
-		CommandScheduler.getInstance().run();
-		SmartDashboard.putNumber("pigeon angle", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
 
+		//TODO noam - because of the low battery disable command everything if the periodic must be in the if
 
+		if(!Battery.isBatteryLow){
+			CommandScheduler.getInstance().run();
+			SmartDashboard.putNumber("pigeon angle", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
+		}
 	}
 
 
