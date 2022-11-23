@@ -81,7 +81,7 @@ public class OI {
 		});
 		
 		mainJoystick.X.whileHeld(new ShootByConstant(0.5));
-		mainJoystick.A.whileHeld(new ShooterByRPM(2000));
+		secondJoystick.A.whileHeld(new ShooterByRPM(2000));
 		
 	}
 	
