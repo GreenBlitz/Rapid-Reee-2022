@@ -73,7 +73,7 @@ public class SwerveChassis extends GBSubsystem {
 	/**
 	 * @return returns the swerve module based on its name
 	 */
-	private SwerveModule getModule(Module module) {
+	public SwerveModule getModule(Module module) {
 		switch (module) {
 			case BACK_LEFT:
 				return backLeft;
@@ -241,6 +241,7 @@ public class SwerveChassis extends GBSubsystem {
 		SmartDashboard.putNumber("BR-lin-vel", states[3].speedMetersPerSecond);
 		
 	}
+
 	
 	public void moveByChassisSpeeds(double forwardSpeed, double leftwardSpeed, double angSpeed, double currentAng) {
 		ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(

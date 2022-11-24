@@ -168,10 +168,24 @@ public class SwerveModule {
 
 	/** alternate swerve kinematics atan & noam*/
 
+	public void setModuleState (SwerveModuleState state){
+
+		if(state.speedMetersPerSecond < 0.001){
+			return;
+		}
+
+		this.rotateToAngle(state.angle.getRadians());
+		this.setLinSpeed(state.speedMetersPerSecond);
+	}
+
 	public void update(){
 		Vector ang = new Vector(this.baseAngle,angularVelocity,this.position);
 		//transform.setPos(getPos());
 		finalVector = Vector.add(ang,transform);
+		setModuleState(new SwerveModuleState(
+				finalVector.getMagnitude(),
+				new Rotation2d(finalVector.getDirection())
+		));
 	}
 
 	public Vector getTransform() {return transform;}
