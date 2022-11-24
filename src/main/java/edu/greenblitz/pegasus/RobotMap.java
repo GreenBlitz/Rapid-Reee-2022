@@ -3,6 +3,8 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveModule;
 import edu.greenblitz.pegasus.utils.PIDObject;
+import edu.greenblitz.pegasus.utils.swerveKinematics.Point;
+import edu.greenblitz.pegasus.utils.swerveKinematics.Vector;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -135,6 +137,18 @@ public class RobotMap {
 //					new Translation2d(0.3020647, 0.25265)
 				
 			};
+
+
+
+
+			public static final Translation2d[] SwerveLocationsInAlternateSK = new Translation2d[]{
+					new Translation2d(0.3020647,0.25265), /*fr  0*/
+					new Translation2d(0.3020647,-0.25265),/*fl  1*/
+					new Translation2d(-0.3020647,0.25265),/*br  2*/
+					new Translation2d(-0.3020647,-0.25265)/*bl  3*/
+			};
+
+
 			//TODO: calibrate GOOD PID
 
 			public static final PIDObject angPID = new PIDObject().withKp(0.5).withKd(10).withMaxPower(0.8);
@@ -154,12 +168,19 @@ public class RobotMap {
 			public static final boolean angleMotorInverted = true;
 			
 			public static class Module1 {//front right
+
+				public static final double baseRotationAngle = new Vector(
+						new Point(0,0),
+						new Point(SwerveLocationsInAlternateSK[0])).getDirection() - 90;
 				
 				public static final SwerveModule frontRightModule = new SwerveModule(
 						RobotMap.Pegasus.Swerve.Module1.SteerMotorID,
 						RobotMap.Pegasus.Swerve.Module1.linMotorID,
 						RobotMap.Pegasus.Swerve.Module1.lampryID,
-						RobotMap.Pegasus.Swerve.Module1.INVERTED);
+						RobotMap.Pegasus.Swerve.Module1.INVERTED,
+						new Point(SwerveLocationsInAlternateSK[0]),
+						baseRotationAngle
+						);
 				
 				public static final int linMotorID = 11;
 				public static final int SteerMotorID = 3;
@@ -170,13 +191,20 @@ public class RobotMap {
 			}
 			
 			public static class Module2 {//front left
-				
-				
+
+				public static final double baseRotationAngle = new Vector(
+						new Point(0,0),
+						new Point(SwerveLocationsInAlternateSK[1])).getDirection() - 90;
+
+
 				public static final SwerveModule frontLeftModule = new SwerveModule(
 						RobotMap.Pegasus.Swerve.Module2.SteerMotorID,
 						RobotMap.Pegasus.Swerve.Module2.linMotorID,
 						RobotMap.Pegasus.Swerve.Module2.lampryID,
-						RobotMap.Pegasus.Swerve.Module2.INVERTED);
+						RobotMap.Pegasus.Swerve.Module2.INVERTED,
+						new Point(SwerveLocationsInAlternateSK[1]),
+						baseRotationAngle
+				);
 				
 				
 				
@@ -190,13 +218,20 @@ public class RobotMap {
 			}
 			
 			public static class Module3 {//back right
-				
-				
+
+				public static final double baseRotationAngle = new Vector(
+						new Point(0,0),
+						new Point(SwerveLocationsInAlternateSK[2])).getDirection() - 90;
+
+
 				public static final SwerveModule backRightModule = new SwerveModule(
 						RobotMap.Pegasus.Swerve.Module3.SteerMotorID,
 						RobotMap.Pegasus.Swerve.Module3.linMotorID,
 						RobotMap.Pegasus.Swerve.Module3.lampryID,
-						RobotMap.Pegasus.Swerve.Module3.INVERTED);
+						RobotMap.Pegasus.Swerve.Module3.INVERTED,
+						new Point(SwerveLocationsInAlternateSK[2]),
+						baseRotationAngle
+				);
 				
 				
 				
@@ -210,13 +245,20 @@ public class RobotMap {
 			}
 			
 			public static class Module4 {//back left
-				
-				
+
+				public static final double baseRotationAngle = new Vector(
+						new Point(0,0),
+						new Point(SwerveLocationsInAlternateSK[3])).getDirection() - 90;
+
+
 				public static final SwerveModule backLeftModule = new SwerveModule(
 						RobotMap.Pegasus.Swerve.Module4.SteerMotorID,
 						RobotMap.Pegasus.Swerve.Module4.linMotorID,
 						RobotMap.Pegasus.Swerve.Module4.lampryID,
-						RobotMap.Pegasus.Swerve.Module4.INVERTED);
+						RobotMap.Pegasus.Swerve.Module4.INVERTED,
+						new Point(SwerveLocationsInAlternateSK[3]),
+						baseRotationAngle
+				);
 				
 				
 				public static final int linMotorID = 8;

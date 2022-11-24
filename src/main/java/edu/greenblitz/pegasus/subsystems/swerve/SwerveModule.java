@@ -3,13 +3,11 @@ package edu.greenblitz.pegasus.subsystems.swerve;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.CANSparkMax.ControlType;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.IMotorFactory;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.PIDObject;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.AbstractMotor;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.GBMotor;
 import edu.greenblitz.pegasus.utils.GBMath;
+import edu.greenblitz.pegasus.utils.swerveKinematics.Vector;
+import edu.greenblitz.pegasus.utils.swerveKinematics.Point;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -17,6 +15,11 @@ import edu.wpi.first.wpilibj.AnalogInput;
 
 public class SwerveModule {
 
+	private Vector transform;
+	private double angularVelocity;
+	private Vector finalVector;
+	private Point position;
+	private double baseAngle;
 
 	private int isReversed = 1;
 	public double targetAngle;
@@ -27,9 +30,15 @@ public class SwerveModule {
 	private final SimpleMotorFeedforward feedforward;
 	private final double wheelCirc;
 
-	public SwerveModule(int portA, int portL, int lampreyID, boolean linInverted) {
+	public SwerveModule(int portA, int portL, int lampreyID, boolean linInverted, Point position, double baseRotationAngle) {
 //		angleMotor = new SparkMaxFactory().withGearRatio(6)
 		//SET ANGLE MOTOR
+
+		this.baseAngle = baseRotationAngle;
+		this.position = position;
+		this.angularVelocity = 0;
+		this.finalVector = new Vector();
+
 		angleMotor = new CANSparkMax(portA, CANSparkMaxLowLevel.MotorType.kBrushless);
 		angleMotor.setSmartCurrentLimit(30);
 		angleMotor.setClosedLoopRampRate(0.4);//todo is closed or open?
@@ -155,6 +164,27 @@ public class SwerveModule {
 	public double getAngMotorTicks(){
 		return this.angleMotor.getEncoder().getPosition();
 	}
+
+
+	/** alternate swerve kinematics atan & noam*/
+
+	public void update(){
+		Vector ang = new Vector(this.baseAngle,angularVelocity,this.position);
+		//transform.setPos(getPos());
+		finalVector = Vector.add(ang,transform);
+	}
+
+	public Vector getTransform() {return transform;}
+
+	public void setTransform(Vector transform) {this.transform = transform;}
+
+	public double getAngularVelocity() {return this.angularVelocity;}
+
+	public void setAngularVelocity(double angVel) {this.angularVelocity = angVel;}
+
+	public Point getPosition() {return this.position;}
+
+	public Vector getFinalVector() {return this.finalVector;}
 
 
 }
