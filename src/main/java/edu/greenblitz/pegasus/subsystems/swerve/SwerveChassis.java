@@ -1,6 +1,5 @@
 package edu.greenblitz.pegasus.subsystems.swerve;
 
-import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.PigeonGyro;
 import edu.greenblitz.pegasus.utils.PIDObject;
@@ -8,7 +7,6 @@ import edu.greenblitz.pegasus.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.utils.GBMath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,15 +14,11 @@ public class SwerveChassis extends GBSubsystem {
 	
 	private final SwerveModule frontRight, frontLeft, backRight, backLeft;
 	//	private final PigeonGyro pigeonGyro;
-	private final PigeonGyro pigeonIMU; //todo decide on whether to use our pijen;
+	private final PigeonGyro pigeonGyro; //todo decide on whether to use our pijen;
 	private final SwerveDriveOdometry localizer;
 	
 	public double pigeonAngleOffset = 0.0;
 	//todo make not exist
-	
-
-
-
 	private final SwerveDriveKinematics kinematics;
 
 
@@ -43,7 +37,7 @@ public class SwerveChassis extends GBSubsystem {
 		this.backRight = RobotMap.Pegasus.Swerve.Module3.backRightModule;
 		this.backLeft = RobotMap.Pegasus.Swerve.Module4.backLeftModule;
 //		this.pigeonGyro = pigeonGyro;
-		this.pigeonIMU = new PigeonGyro(RobotMap.Pegasus.gyro.pigeonID);
+		this.pigeonGyro = new PigeonGyro(RobotMap.Pegasus.gyro.pigeonID);
 		this.kinematics = new SwerveDriveKinematics(
 				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates
 		);
@@ -53,8 +47,6 @@ public class SwerveChassis extends GBSubsystem {
 				RobotMap.Pegasus.Swerve.initialRobotPosition
 		);
 	}
-
-
 	private static SwerveChassis instance;
 	public static SwerveChassis getInstance() {
 		if (instance == null){
@@ -125,12 +117,13 @@ public class SwerveChassis extends GBSubsystem {
 		getModule(Module.BACK_RIGHT).configLinPID(pidObjectLin);
 	}
 	
-	
-	public void resetAllEncodersToValues() { //todo why to value and not just reset()?
-		getModule(Module.FRONT_LEFT).resetEncoderToValue(0);
-		getModule(Module.FRONT_RIGHT).resetEncoderToValue(0);
-		getModule(Module.BACK_LEFT).resetEncoderToValue(0);
-		getModule(Module.BACK_RIGHT).resetEncoderToValue(0);
+
+	/** resetting all the angle motor's encoders to 0 */
+	public void resetAllEncoders() {
+		getModule(Module.FRONT_LEFT).resetEncoderToZero();
+		getModule(Module.FRONT_RIGHT).resetEncoderToZero();
+		getModule(Module.BACK_LEFT).resetEncoderToZero();
+		getModule(Module.BACK_RIGHT).resetEncoderToZero();
 	}
 	
 	
@@ -142,16 +135,12 @@ public class SwerveChassis extends GBSubsystem {
 //
 //	}
 //
-	public void resetAllEncodersToZero() {
-		getModule(Module.FRONT_LEFT).resetEncoderToZero();
-		getModule(Module.FRONT_RIGHT).resetEncoderToZero();
-		getModule(Module.BACK_LEFT).resetEncoderToZero();
-		getModule(Module.BACK_RIGHT).resetEncoderToZero();
-	}
+
 	
-	public void resetModuleToZero(Module module){
+	public void resetModuleAngularEncoderToZero(Module module){
 		getModule(module).resetEncoderToZero();
 	}
+
 	/**
 	 * all code below is self-explanatory - well, after a long time It's maybe not self-explanatory
 	 * <p>
@@ -176,6 +165,7 @@ public class SwerveChassis extends GBSubsystem {
 	}
 
 
+	/** moving the chassis linear by angle (radians) and speed */
 	public void moveChassisLin(double angle, double speed) {
 		moveSingleModule(Module.FRONT_RIGHT, angle, speed);
 		moveSingleModule(Module.FRONT_LEFT, angle, speed);
@@ -208,7 +198,7 @@ public class SwerveChassis extends GBSubsystem {
 
 	public void resetChassisAngle(double angInDeegres) {//todo make with our reset
 
-		pigeonIMU.setYaw(angInDeegres);
+		pigeonGyro.setYaw(angInDeegres);
 	}
 
 	public void resetChassisAngle(){
@@ -217,14 +207,16 @@ public class SwerveChassis extends GBSubsystem {
 
 
 	public double getChassisAngle() {
-		return GBMath.modulo(Math.toRadians(pigeonIMU.getYaw()) - pigeonAngleOffset, 2 * Math.PI);
+		return GBMath.modulo(Math.toRadians(pigeonGyro.getYaw()) - pigeonAngleOffset, 2 * Math.PI);
 	}
 
+	/** get module target angle (radians) */
 	public double getTarget(Module module) {//todo make more informative name
 		return getModule(module).getTargetAngle();
 
 	}
-	
+
+	/** setting module states to all 4 modules */
 	public void setModuleStates(SwerveModuleState[] states){
 		moveSingleModule(Module.FRONT_LEFT,
 				SwerveModuleState.optimize(states[0],new Rotation2d(getModuleAngle(Module.FRONT_LEFT))));
@@ -263,8 +255,8 @@ public class SwerveChassis extends GBSubsystem {
 	}
 	public void resetLocalizer(){localizer.resetPosition(new Pose2d(),new Rotation2d());}
 	
-	public PigeonIMU getPigeonIMU() {
-		return pigeonIMU;
+	public PigeonGyro getPigeonGyro() {
+		return pigeonGyro;
 	}
 	public double getAngMotorTicks (Module m){
 		return this.getModule(m).getAngMotorTicks();

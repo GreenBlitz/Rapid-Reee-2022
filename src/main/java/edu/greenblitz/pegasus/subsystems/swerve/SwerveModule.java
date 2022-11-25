@@ -116,7 +116,7 @@ public class SwerveModule {
 
 	public void setLinSpeed(double speed) {
 		speed *= isReversed;
-		linearMotor.getPIDController().setReference(speed,ControlType.kPosition, 0, feedforward.calculate(speed));
+		linearMotor.getPIDController().setReference(speed,ControlType.kVelocity, 0, feedforward.calculate(speed));
 	}
 
 	public void setRotPower(double power) {

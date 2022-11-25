@@ -69,7 +69,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		//resets encoders
-		SwerveChassis.getInstance().resetAllEncodersToValues();
+		SwerveChassis.getInstance().resetAllEncoders();
 		SwerveChassis.getInstance().resetLocalizer();
 		//				SwerveChassis.getInstance().resetChassisAngle(/*88.5*/-90);
 
