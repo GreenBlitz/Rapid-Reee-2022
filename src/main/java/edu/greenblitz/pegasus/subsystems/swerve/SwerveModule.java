@@ -71,7 +71,7 @@ public class SwerveModule {
 		return angleMotor.getEncoder().getPosition() / RobotMap.Pegasus.Swerve.angleTicksToRadians;
 	}
 
-	public double getCurrentVel() {
+	public double getCurrentVelocity() {
 		return (linearMotor.getEncoder().getVelocity() / RobotMap.Pegasus.Swerve.linTicksToWheelToRPM) / 60 * wheelCirc;
 	}
 
@@ -141,7 +141,7 @@ public class SwerveModule {
 	}
 	
 	public SwerveModuleState getModuleState (){
-		return new SwerveModuleState(getCurrentVel(),new Rotation2d(this.getMotorAngle()));
+		return new SwerveModuleState(getCurrentVelocity(),new Rotation2d(this.getMotorAngle()));
 	}
 	
 	public double getLampreyValue(){

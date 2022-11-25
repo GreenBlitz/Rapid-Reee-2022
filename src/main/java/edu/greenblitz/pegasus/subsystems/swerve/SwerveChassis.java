@@ -30,14 +30,37 @@ public class SwerveChassis extends GBSubsystem {
 	}
 
 	public SwerveChassis() {
-		
-		this.frontRight = RobotMap.Pegasus.Swerve.Module1.frontRightModule;
-		this.frontLeft = RobotMap.Pegasus.Swerve.Module2.frontLeftModule;
 
-		this.backRight = RobotMap.Pegasus.Swerve.Module3.backRightModule;
-		this.backLeft = RobotMap.Pegasus.Swerve.Module4.backLeftModule;
-//		this.pigeonGyro = pigeonGyro;
+		this.frontRight  = new SwerveModule(
+				RobotMap.Pegasus.Swerve.Module1.SteerMotorID,
+				RobotMap.Pegasus.Swerve.Module1.linMotorID,
+				RobotMap.Pegasus.Swerve.Module1.lampryID,
+				RobotMap.Pegasus.Swerve.Module1.INVERTED
+		);
+
+		this.frontLeft = new SwerveModule(
+				RobotMap.Pegasus.Swerve.Module2.SteerMotorID,
+				RobotMap.Pegasus.Swerve.Module2.linMotorID,
+				RobotMap.Pegasus.Swerve.Module2.lampryID,
+				RobotMap.Pegasus.Swerve.Module2.INVERTED
+		);
+
+		this.backRight = new SwerveModule(
+				RobotMap.Pegasus.Swerve.Module3.SteerMotorID,
+				RobotMap.Pegasus.Swerve.Module3.linMotorID,
+				RobotMap.Pegasus.Swerve.Module3.lampryID,
+				RobotMap.Pegasus.Swerve.Module3.INVERTED
+		);
+
+		this.backLeft = new SwerveModule(
+				RobotMap.Pegasus.Swerve.Module4.SteerMotorID,
+				RobotMap.Pegasus.Swerve.Module4.linMotorID,
+				RobotMap.Pegasus.Swerve.Module4.lampryID,
+				RobotMap.Pegasus.Swerve.Module4.INVERTED
+		);
+
 		this.pigeonGyro = new PigeonGyro(RobotMap.Pegasus.gyro.pigeonID);
+
 		this.kinematics = new SwerveDriveKinematics(
 				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates
 		);
