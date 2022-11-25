@@ -1,15 +1,11 @@
 package edu.greenblitz.pegasus.subsystems.swerve;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.CANSparkMax.ControlType;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.IMotorFactory;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
+import com.revrobotics.CANSparkMaxLowLevel;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.utils.PIDObject;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.AbstractMotor;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.GBMotor;
 import edu.greenblitz.pegasus.utils.GBMath;
+import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;

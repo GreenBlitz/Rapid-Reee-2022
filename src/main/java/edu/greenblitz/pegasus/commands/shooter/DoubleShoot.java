@@ -2,10 +2,9 @@ package edu.greenblitz.pegasus.commands.shooter;
 
 
 import com.revrobotics.CANSparkMax;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.AbstractMotor;
-import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
+import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.*;
 
 public class DoubleShoot extends SequentialCommandGroup {

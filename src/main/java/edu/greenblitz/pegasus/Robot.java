@@ -1,20 +1,12 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.pegasus.utils.PigeonGyro;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.IMotorFactory;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
-import edu.greenblitz.pegasus.subsystems.Shooter;
-import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
-import edu.greenblitz.pegasus.subsystems.swerve.SwerveModule;
 import edu.greenblitz.pegasus.commands.auto.Taxi;
 import edu.greenblitz.pegasus.subsystems.Dashboard;
 import edu.greenblitz.pegasus.subsystems.Indexing;
-
 import edu.greenblitz.pegasus.subsystems.Pneumatics;
+import edu.greenblitz.pegasus.subsystems.Shooter;
+import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
