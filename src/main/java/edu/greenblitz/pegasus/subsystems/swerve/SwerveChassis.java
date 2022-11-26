@@ -129,6 +129,7 @@ public class SwerveChassis extends GBSubsystem {
 		backLeft.setRotPower(0);
 	}
 
+
 	public void configPID(PIDObject pidObjectAng, PIDObject pidObjectLin) {
 		getModule(Module.FRONT_LEFT).configAnglePID(pidObjectAng);
 		getModule(Module.FRONT_LEFT).configLinPID(pidObjectLin);
@@ -197,10 +198,6 @@ public class SwerveChassis extends GBSubsystem {
 	}
 
 
-	@Deprecated
-	public void moveByAngle(double angle, SwerveModule module){
-
-	}
 
 	public double getRawLampreyAngle(Module module) {
 		return getModule(module).getRawLampreyAngle();
@@ -209,8 +206,7 @@ public class SwerveChassis extends GBSubsystem {
 //	public double getLampreyAngle(Module module) {
 //		return getModule(module).getLampreyAngle();
 //	}
-//
-//
+
 	public double getLampreyValue(Module module) {
 		return getModule(module).getLampreyValue();
 	}
@@ -219,9 +215,9 @@ public class SwerveChassis extends GBSubsystem {
 		return getModule(module).getMotorAngle();
 	}
 
-	public void resetChassisAngle(double angInDeegres) {//todo make with our reset
+	public void resetChassisAngle(double angInDegrees) {//todo make with our reset
 
-		pigeonGyro.setYaw(angInDeegres);
+		pigeonGyro.setYaw(angInDegrees);
 	}
 
 	public void resetChassisAngle(){
@@ -250,10 +246,10 @@ public class SwerveChassis extends GBSubsystem {
 		moveSingleModule(Module.BACK_RIGHT,
 				SwerveModuleState.optimize(states[3],new Rotation2d(getModuleAngle(Module.BACK_RIGHT))));
 		
-		SmartDashboard.putNumber("FL-lin-vel", states[0].speedMetersPerSecond);
-		SmartDashboard.putNumber("FR-lin-vel", states[1].speedMetersPerSecond);
-		SmartDashboard.putNumber("BL-lin-vel", states[2].speedMetersPerSecond);
-		SmartDashboard.putNumber("BR-lin-vel", states[3].speedMetersPerSecond);
+		SmartDashboard.putNumber("FL-lin-velocity", states[0].speedMetersPerSecond);
+		SmartDashboard.putNumber("FR-lin-velocity", states[1].speedMetersPerSecond);
+		SmartDashboard.putNumber("BL-lin-velocity", states[2].speedMetersPerSecond);
+		SmartDashboard.putNumber("BR-lin-velocity", states[3].speedMetersPerSecond);
 		
 	}
 	
@@ -284,4 +280,10 @@ public class SwerveChassis extends GBSubsystem {
 	public double getAngMotorTicks (Module m){
 		return this.getModule(m).getAngMotorTicks();
 	}
+
+	@Deprecated
+	public void moveByAngle(double angle, SwerveModule module){
+
+	}
+
 }

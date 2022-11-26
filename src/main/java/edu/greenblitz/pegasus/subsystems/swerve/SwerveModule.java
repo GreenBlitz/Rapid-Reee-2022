@@ -30,6 +30,8 @@ public class SwerveModule {
 		angleMotor.setSmartCurrentLimit(30);
 		angleMotor.setClosedLoopRampRate(0.4);//todo is closed or open?
 		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
+
+		//fixme noam - maybe be the problem. just to check
 		angleMotor.getEncoder().setPositionConversionFactor(2 * Math.PI * RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
 		angleMotor.getEncoder().setVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
 		
@@ -67,6 +69,8 @@ public class SwerveModule {
 		return lamprey.getValue();
 	}
 
+
+	/** get the module angle by radians */
 	public double getMotorAngle() {
 		return angleMotor.getEncoder().getPosition() / RobotMap.Pegasus.Swerve.angleTicksToRadians;
 	}
@@ -77,10 +81,6 @@ public class SwerveModule {
 
 	public void rotateByAngle(double angle) {
 		angleMotor.getPIDController().setReference(getMotorAngle() + angle, ControlType.kPosition);
-	}
-
-	public void resetAngle() {
-		angleMotor.getEncoder().setPosition(0);
 	}
 
 //	public void resetEncoderByLamprey() {

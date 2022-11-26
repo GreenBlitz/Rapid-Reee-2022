@@ -12,17 +12,17 @@ public class MoveLin extends SwerveCommand {
 	private double angle;
 	private double power;
 	
-	private PIDObject pidObject;
+	private PIDObject angularPID;
 	
-	public MoveLin(double angleInRotations, double power, PIDObject pidObject){
+	public MoveLin(double angleInRotations, double power, PIDObject angularPID){
 		this.angle = angleInRotations;
 		this.power = power;
-		this.pidObject = pidObject;
+		this.angularPID = angularPID;
 	}
 	
 	@Override
 	public void initialize() {
-		swerve.configPID(this.pidObject, RobotMap.Pegasus.Swerve.linPID);
+		swerve.configPID(this.angularPID, RobotMap.Pegasus.Swerve.linPID);
 	}
 
 	@Override
