@@ -70,6 +70,8 @@ public class SwerveChassis extends GBSubsystem {
 				RobotMap.Pegasus.Swerve.initialRobotPosition
 		);
 	}
+
+
 	private static SwerveChassis instance;
 	public static SwerveChassis getInstance() {
 		if (instance == null){
@@ -101,32 +103,12 @@ public class SwerveChassis extends GBSubsystem {
 		}
 		return null;
 	}
-
-	/**
-	 * for calibration purposes
-	 */
-	public void rotateModuleByPower(Module module, double power) {
-		getModule(module).setRotPower(power);
-	}
-	
-	@Deprecated
-	public void brakeModules(Module... modules) {
-		for (Module module : modules) {
-			getModule(module).setLinPower(0);
-			getModule(module).setRotPower(0);
-		}
-	}
-
 	/** stops all the modules (power(0)) */
 	public void stop() {
-		frontRight.setLinPower(0);
-		frontRight.setRotPower(0);
-		frontLeft.setLinPower(0);
-		frontLeft.setRotPower(0);
-		backRight.setLinPower(0);
-		backRight.setRotPower(0);
-		backLeft.setLinPower(0);
-		backLeft.setRotPower(0);
+		frontRight.stop();
+		frontLeft.stop();
+		backRight.stop();
+		backLeft.stop();
 	}
 
 
@@ -170,35 +152,6 @@ public class SwerveChassis extends GBSubsystem {
 	 * <p>
 	 * ALL IN RADIANS, NOT DEGREES
 	 */
-	
-	/**
-	 * moving a single module to radians by power.
-	 * */
-	public void moveSingleModule(Module module, double radians, double speed) {
-		if (getModule(module) != null) { //IntelliJ is being dumb here, this should fix it - nitzan.b todo ignore intellij
-			getModule(module).rotateToAngle(radians);
-			getModule(module).setLinSpeed(speed);
-		}
-	}
-	
-	/**
-	 * moving a single module by module state
-	 * */
-	public void moveSingleModule(Module module, SwerveModuleState state) {
-		getModule(module).setModuleState(state);
-	}
-
-
-	/** moving the chassis linear by angle (radians) and speed */
-	public void moveChassisLin(double angle, double speed) {
-		moveSingleModule(Module.FRONT_RIGHT, angle, speed);
-		moveSingleModule(Module.FRONT_LEFT, angle, speed);
-		moveSingleModule(Module.BACK_RIGHT, angle, speed);
-		moveSingleModule(Module.BACK_LEFT, angle, speed);
-	}
-
-
-
 	public double getRawLampreyAngle(Module module) {
 		return getModule(module).getRawLampreyAngle();
 	}
@@ -237,13 +190,13 @@ public class SwerveChassis extends GBSubsystem {
 
 	/** setting module states to all 4 modules */
 	public void setModuleStates(SwerveModuleState[] states){
-		moveSingleModule(Module.FRONT_LEFT,
+		setModuleStateForModule(Module.FRONT_LEFT,
 				SwerveModuleState.optimize(states[0],new Rotation2d(getModuleAngle(Module.FRONT_LEFT))));
-		moveSingleModule(Module.FRONT_RIGHT,
+		setModuleStateForModule(Module.FRONT_RIGHT,
 				SwerveModuleState.optimize(states[1],new Rotation2d(getModuleAngle(Module.FRONT_RIGHT))));
-		moveSingleModule(Module.BACK_LEFT,
+		setModuleStateForModule(Module.BACK_LEFT,
 				SwerveModuleState.optimize(states[2],new Rotation2d(getModuleAngle(Module.BACK_LEFT))));
-		moveSingleModule(Module.BACK_RIGHT,
+		setModuleStateForModule(Module.BACK_RIGHT,
 				SwerveModuleState.optimize(states[3],new Rotation2d(getModuleAngle(Module.BACK_RIGHT))));
 		
 		SmartDashboard.putNumber("FL-lin-velocity", states[0].speedMetersPerSecond);
@@ -284,6 +237,35 @@ public class SwerveChassis extends GBSubsystem {
 	@Deprecated
 	public void moveByAngle(double angle, SwerveModule module){
 
+	}
+
+
+	/**
+	 * moving a single module to radians by power.
+	 * */
+	/**
+	 * moving a single module by module state
+	 * */
+	private void setModuleStateForModule(Module module, SwerveModuleState state) {
+		getModule(module).setModuleState(state);
+	}
+
+
+	/** moving the chassis linear by angle (radians) and speed */
+	public void moveChassisLin(double angle, double speed) {
+		setModuleStateForModule(Module.FRONT_RIGHT, new SwerveModuleState(speed,new Rotation2d(angle)));
+		setModuleStateForModule(Module.FRONT_LEFT,  new SwerveModuleState(speed,new Rotation2d(angle)));
+		setModuleStateForModule(Module.BACK_RIGHT,  new SwerveModuleState(speed,new Rotation2d(angle)));
+		setModuleStateForModule(Module.BACK_LEFT,   new SwerveModuleState(speed,new Rotation2d(angle)));
+	}
+
+
+
+	/**
+	 * for calibration purposes
+	 */
+	public void rotateModuleByPower(Module module, double power) {
+		getModule(module).setRotPowerOnlyForCalibrations(power);
 	}
 
 }

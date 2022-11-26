@@ -61,7 +61,7 @@ public class SwerveModule {
 		rotateToAngle(moduleState.angle.getRadians());
 	}
 
-	public void rotateToAngle(double angle) {
+	private void rotateToAngle(double angle) { //fixme make private
 
 		double diff = GBMath.modulo(angle - getMotorAngle(), 2 * Math.PI);
 		diff -= diff > Math.PI ? 2*Math.PI : 0;
@@ -120,14 +120,16 @@ public class SwerveModule {
 	}
 
 
-	public void setLinSpeed(double speed) {
+	private void setLinSpeed(double speed) {
 		speed *= isReversed;
 		linearMotor.getPIDController().setReference(speed,ControlType.kVelocity, 0, feedforward.calculate(speed));
 	}
 
-	public void setRotPower(double power) {
-		angleMotor.set(power);
+	public void stop (){
+		angleMotor.set(0);
+		linearMotor.set(0);
 	}
+
 	//only for debugging
 
 	public double getTargetAngle() {
@@ -136,10 +138,6 @@ public class SwerveModule {
 
 	public double getTargetVel() {
 		return targetVel * isReversed;
-	}
-
-	public void setLinPower(double power) {
-		linearMotor.set(power * isReversed);
 	}
 
 	public int getIsReversed() {
@@ -156,6 +154,9 @@ public class SwerveModule {
 
 	public double getAngMotorTicks(){
 		return this.angleMotor.getEncoder().getPosition();
+	}
+	public void setRotPowerOnlyForCalibrations(double power){
+		angleMotor.set(power);
 	}
 
 
