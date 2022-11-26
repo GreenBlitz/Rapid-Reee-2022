@@ -17,13 +17,62 @@ public class SwerveModule {
 	private int isReversed = 1;
 	public double targetAngle;
 	public double targetVel;
-	private final CANSparkMax angleMotor;
-	private final CANSparkMax linearMotor;
-	private final AnalogInput lamprey;
-	private final SimpleMotorFeedforward feedforward;
-	private final double wheelCirc;
+	private CANSparkMax angleMotor;
+	private CANSparkMax linearMotor;
+	private AnalogInput lamprey;
+	private SimpleMotorFeedforward feedforward;
+	private double wheelCirc;
 
-	public SwerveModule(int portA, int portL, int lampreyID, boolean linInverted) {
+
+	public SwerveModule (SwerveChassis.Module module){
+
+		switch (module){
+			case FRONT_RIGHT:
+				angleMotor = new CANSparkMax(RobotMap.Pegasus.Swerve.Module1.SteerMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+				linearMotor = new CANSparkMax(RobotMap.Pegasus.Swerve.Module1.linMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+				linearMotor.setInverted(RobotMap.Pegasus.Swerve.Module1.INVERTED);
+				lamprey = new AnalogInput(RobotMap.Pegasus.Swerve.Module1.lampryID);
+				break;
+			case FRONT_LEFT:
+				angleMotor = new CANSparkMax(RobotMap.Pegasus.Swerve.Module2.SteerMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+				linearMotor = new CANSparkMax(RobotMap.Pegasus.Swerve.Module2.linMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+				linearMotor.setInverted(RobotMap.Pegasus.Swerve.Module2.INVERTED);
+				lamprey = new AnalogInput(RobotMap.Pegasus.Swerve.Module2.lampryID);
+				break;
+			case BACK_RIGHT:
+				angleMotor = new CANSparkMax(RobotMap.Pegasus.Swerve.Module3.SteerMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+				linearMotor = new CANSparkMax(RobotMap.Pegasus.Swerve.Module3.linMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+				linearMotor.setInverted(RobotMap.Pegasus.Swerve.Module3.INVERTED);
+				lamprey = new AnalogInput(RobotMap.Pegasus.Swerve.Module3.lampryID);
+				break;
+			case BACK_LEFT:
+				angleMotor = new CANSparkMax(RobotMap.Pegasus.Swerve.Module4.SteerMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+				linearMotor = new CANSparkMax(RobotMap.Pegasus.Swerve.Module4.linMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+				linearMotor.setInverted(RobotMap.Pegasus.Swerve.Module4.INVERTED);
+				lamprey = new AnalogInput(RobotMap.Pegasus.Swerve.Module4.lampryID);
+				break;
+		}
+
+		//fixme noam - maybe be the problem. just to check
+		angleMotor.getEncoder().setPositionConversionFactor(2 * Math.PI * RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
+		angleMotor.getEncoder().setVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
+
+		angleMotor.setSmartCurrentLimit(30);
+		angleMotor.setClosedLoopRampRate(0.4);//todo is closed or open?
+		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
+
+		linearMotor.setSmartCurrentLimit(30);
+		linearMotor.setClosedLoopRampRate(0.4); //todo is closed or open?
+
+		lamprey.setAverageBits(2);
+		configAnglePID(RobotMap.Pegasus.Swerve.angPID);
+		configLinPID(RobotMap.Pegasus.Swerve.linPID);
+		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
+		this.wheelCirc = RobotMap.Pegasus.Swerve.WHEEL_CIRC;
+
+	}
+
+	private	 SwerveModule (int portA, int portL, int lampreyID, boolean linInverted) {
 //		angleMotor = new SparkMaxFactory().withGearRatio(6)
 		//SET ANGLE MOTOR
 		angleMotor = new CANSparkMax(portA, CANSparkMaxLowLevel.MotorType.kBrushless);
