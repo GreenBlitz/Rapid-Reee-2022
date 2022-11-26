@@ -31,10 +31,33 @@ public class SwerveChassis extends GBSubsystem {
 
 	public SwerveChassis() {
 
-		this.frontRight  = new SwerveModule(Module.FRONT_RIGHT);
-		this.frontLeft = new SwerveModule(Module.FRONT_LEFT);
-		this.backRight = new SwerveModule(Module.BACK_RIGHT);
-		this.backLeft = new SwerveModule(Module.BACK_LEFT);
+		this.frontRight  = new SwerveModule(
+				RobotMap.Pegasus.Swerve.Module1.SteerMotorID,
+				RobotMap.Pegasus.Swerve.Module1.linMotorID,
+				RobotMap.Pegasus.Swerve.Module1.lampryID,
+				RobotMap.Pegasus.Swerve.Module1.INVERTED
+		);
+
+		this.frontLeft = new SwerveModule(
+				RobotMap.Pegasus.Swerve.Module2.SteerMotorID,
+				RobotMap.Pegasus.Swerve.Module2.linMotorID,
+				RobotMap.Pegasus.Swerve.Module2.lampryID,
+				RobotMap.Pegasus.Swerve.Module2.INVERTED
+		);
+
+		this.backRight = new SwerveModule(
+				RobotMap.Pegasus.Swerve.Module3.SteerMotorID,
+				RobotMap.Pegasus.Swerve.Module3.linMotorID,
+				RobotMap.Pegasus.Swerve.Module3.lampryID,
+				RobotMap.Pegasus.Swerve.Module3.INVERTED
+		);
+
+		this.backLeft = new SwerveModule(
+				RobotMap.Pegasus.Swerve.Module4.SteerMotorID,
+				RobotMap.Pegasus.Swerve.Module4.linMotorID,
+				RobotMap.Pegasus.Swerve.Module4.lampryID,
+				RobotMap.Pegasus.Swerve.Module4.INVERTED
+		);
 
 		this.pigeonGyro = new PigeonGyro(RobotMap.Pegasus.gyro.pigeonID);
 
@@ -162,7 +185,7 @@ public class SwerveChassis extends GBSubsystem {
 	 * moving a single module by module state
 	 * */
 	public void moveSingleModule(Module module, SwerveModuleState state) {
-		moveSingleModule(module, state.angle.getRadians(), state.speedMetersPerSecond);
+		getModule(module).setModuleState(state);
 	}
 
 
