@@ -31,13 +31,14 @@ public class SwerveModule {
 		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
 
 		//fixme noam - maybe be the problem. just to check
-		angleMotor.getEncoder().setPositionConversionFactor(2 * Math.PI * RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
+		angleMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO/*RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO*/);
 		angleMotor.getEncoder().setVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
-		
+
 		linearMotor = new CANSparkMax(portL, CANSparkMaxLowLevel.MotorType.kBrushless);
 		linearMotor.setSmartCurrentLimit(30);
 		linearMotor.setClosedLoopRampRate(0.4); //todo is closed or open?
 		linearMotor.setInverted(linInverted);
+		linearMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.linTicksToMeters);
 		
 		lamprey = new AnalogInput(lampreyID);
 		lamprey.setAverageBits(2);
@@ -78,11 +79,11 @@ public class SwerveModule {
 
 	/** get the module angle by radians */
 	public double getMotorAngle() {
-		return angleMotor.getEncoder().getPosition() / RobotMap.Pegasus.Swerve.angleTicksToRadians;
+		return angleMotor.getEncoder().getPosition();
 	}
 
 	public double getCurrentVelocity() {
-		return (linearMotor.getEncoder().getVelocity() / RobotMap.Pegasus.Swerve.linTicksToWheelToRPM) / 60 * wheelCirc;
+		return (linearMotor.getEncoder().getVelocity() / RobotMap.Pegasus.Swerve.linTicksToWheelToRPM);
 	}
 
 	public void rotateByAngle(double angle) {

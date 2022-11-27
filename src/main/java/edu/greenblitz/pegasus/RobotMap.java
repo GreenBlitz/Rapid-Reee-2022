@@ -105,22 +105,25 @@ public class RobotMap {
 		}
 		
 		public static class Swerve {
-			
-			public static final double angleTicksToWheelToRPM = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_VELOCITY_UNITS_TO_RPM;
-			public static final double linTicksToWheelToRPM = Swerve.LIN_GEAR_RATIO * motors.SPARKMAX_VELOCITY_UNITS_TO_RPM;
-			
-			public static final double angleTicksToRadians = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN;
-			public static final double linTicksToRadians = Swerve.LIN_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN ;
-			
-			
-			
+
 			public static final Pose2d initialRobotPosition = new Pose2d(0, 0, new Rotation2d(0));
 			public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
 			
-			public static final double ANG_GEAR_RATIO = 1 / 6.0; //todo maybe 6.0 /1?
+			public static final double ANG_GEAR_RATIO = 1 / 6.0; //todo maybe 6.0 /1?   input/output
 			public static final double LIN_GEAR_RATIO = 8.0;
 			public static final double MAX_VELOCITY = /*3.7*/ 4.5; // m/s //todo
-			
+
+
+
+			public static final double angleTicksToWheelToRPM = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_VELOCITY_UNITS_TO_RPM;
+			public static final double linTicksToWheelToRPM = Swerve.LIN_GEAR_RATIO * motors.SPARKMAX_VELOCITY_UNITS_TO_RPM;
+
+			public static final double angleTicksToRadians = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN * 2 * Math.PI;
+			public static final double linTicksToMeters = Swerve.LIN_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN * WHEEL_CIRC ;
+
+
+
+
 			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
 					//the WPILib coordinate system is stupid. (x is forwards, y is leftwards)
 					//the translations are given rotated by 90 degrees clockwise to avoid coordinates system conversion at output

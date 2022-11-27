@@ -30,10 +30,20 @@ public class Dashboard extends GBSubsystem {
 //				SmartDashboard.putNumber("BR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
 //				SmartDashboard.putNumber("BL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.BACK_LEFT)), 360));
 				//neos
+
+				SmartDashboard.putNumber("FR targert", SwerveChassis.getInstance().getTarget(SwerveChassis.Module.FRONT_RIGHT));
+				SmartDashboard.putNumber("FL targert", SwerveChassis.getInstance().getTarget(SwerveChassis.Module.FRONT_LEFT));
+				SmartDashboard.putNumber("BR targert", SwerveChassis.getInstance().getTarget(SwerveChassis.Module.BACK_RIGHT));
+				SmartDashboard.putNumber("BL targert", SwerveChassis.getInstance().getTarget(SwerveChassis.Module.BACK_LEFT));
+
 				SmartDashboard.putNumber("FR-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT)), 360));
 				SmartDashboard.putNumber("FL-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_LEFT)), 360));
 				SmartDashboard.putNumber("BR-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
 				SmartDashboard.putNumber("BL-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 360));
+
+				SmartDashboard.putNumber("a", SwerveChassis.getInstance().getModule(SwerveChassis.Module.BACK_RIGHT).getMotorAngle());
+
+
 				//pigeon
 				SmartDashboard.putNumber("pigeon angle", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
 				SmartDashboard.putNumber("pigeon offset", Math.toDegrees(SwerveChassis.getInstance().pigeonAngleOffset));
