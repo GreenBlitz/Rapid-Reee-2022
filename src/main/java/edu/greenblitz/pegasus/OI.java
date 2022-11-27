@@ -21,6 +21,7 @@ import edu.greenblitz.pegasus.commands.swerve.MoveByVisionSupplier;
 import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 import edu.greenblitz.pegasus.commands.swerve.garbage.CalibrateMaxMin;
 import edu.greenblitz.pegasus.subsystems.Indexing;
+import edu.greenblitz.pegasus.subsystems.Limelight;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -31,7 +32,7 @@ public class OI {
 	public enum IOModes {
 		DEBUG, REAL, AMIR
 	}
-	private static final IOModes IOMode = IOModes.AMIR; //decides which set of controls to init.
+	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -113,8 +114,35 @@ public class OI {
 	private void initRealButtons() {
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(true));
 		mainJoystick.A.whileHeld(new FindLocation());
-		mainJoystick.B.whenHeld(new CombineJoystickMovement(true, ()-> 0.3));
+		mainJoystick.X.whenHeld(new CombineJoystickMovement(true, new AngPIDSupplier(()-> Limelight.getInstance().fieldRelativeTargetYaw())));
 		mainJoystick.Y.whileHeld(new MoveByVisionSupplier(true));
+		
+		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
+			@Override
+			public void initialize() {
+				SwerveChassis.getInstance().resetAllEncodersByValues();
+			}
+			
+			@Override
+			public boolean isFinished() {
+				
+				return true;
+			}
+		});
+		
+		
+		mainJoystick.B.whenPressed(new SwerveCommand() {
+			@Override
+			public void initialize() {
+				swerve.resetChassisAngle();
+			}
+			
+			@Override
+			public boolean isFinished() {
+				return true;
+			}
+		});
+		
 
 	}
 	

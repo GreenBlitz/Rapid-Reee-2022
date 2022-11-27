@@ -49,12 +49,12 @@ public class Robot extends TimedRobot {
 
 		Indexing.getInstance();
 		Shooter.create(new SparkMaxFactory().withInverted(true).withRampRate(0.4).withCurrentLimit(30), RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
-		PortForwarder.add(5800, "limelight.local", 5800);
-		PortForwarder.add(5801, "limelight.local", 5801);
-		PortForwarder.add(5802, "limelight.local", 5802);
-		PortForwarder.add(5803, "limelight.local", 5803);
-		PortForwarder.add(5804, "limelight.local", 5804);
-		PortForwarder.add(5805, "limelight.local", 5805);
+		PortForwarder.add(5800, "gloworm.local", 5800);
+		PortForwarder.add(5801, "gloworm.local", 5801);
+		PortForwarder.add(5802, "gloworm.local", 5802);
+		PortForwarder.add(5803, "gloworm.local", 5803);
+		PortForwarder.add(5804, "gloworm.local", 5804);
+		PortForwarder.add(5805, "gloworm.local", 5805);
 		//todo add voltage compensation
 		//swerve
 		SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);
