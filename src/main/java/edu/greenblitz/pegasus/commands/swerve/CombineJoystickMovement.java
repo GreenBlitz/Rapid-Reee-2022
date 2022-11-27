@@ -30,7 +30,7 @@ public class CombineJoystickMovement extends SwerveCommand {
 			return;
 		}
 		swerve.moveByChassisSpeeds(forwardSpeed, leftwardSpeed, angSpeed,
-				-swerve.getChassisAngle() );
+				swerve.getChassisAngle());
 	}
 	
 }
