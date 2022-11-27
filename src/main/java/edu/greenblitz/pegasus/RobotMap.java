@@ -13,7 +13,7 @@ import org.greenblitz.motion.interpolation.Dataset;
 public class RobotMap {
 	public static class Pegasus {
 		public static class motors{
-			public final static double SPARKMAX_TICKS_PER_RADIAN = 1 / (Math.PI * 2);
+			public final static double SPARKMAX_TICKS_PER_RADIAN =Math.PI * 2;
 			public final static double SPARKMAX_VELOCITY_UNITS_TO_RPM = 1;
 			
 		}
@@ -118,7 +118,7 @@ public class RobotMap {
 			public static final double angleTicksToWheelToRPM = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_VELOCITY_UNITS_TO_RPM;
 			public static final double linTicksToWheelToRPM = Swerve.LIN_GEAR_RATIO * motors.SPARKMAX_VELOCITY_UNITS_TO_RPM;
 
-			public static final double angleTicksToRadians = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN * 2 * Math.PI;
+			public static final double angleTicksToRadians = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN ;
 			public static final double linTicksToMeters = Swerve.LIN_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN * WHEEL_CIRC ;
 
 

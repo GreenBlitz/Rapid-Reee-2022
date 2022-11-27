@@ -31,7 +31,7 @@ public class SwerveModule {
 		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
 
 		//fixme noam - maybe be the problem. just to check
-		angleMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO/*RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO*/);
+		angleMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToRadians);
 		angleMotor.getEncoder().setVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
 
 		linearMotor = new CANSparkMax(portL, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -69,6 +69,7 @@ public class SwerveModule {
 		angle = getMotorAngle() + diff;
 
 		angleMotor.getPIDController().setReference(angle, ControlType.kPosition);
+
 		targetAngle = angle;
 	}
 
