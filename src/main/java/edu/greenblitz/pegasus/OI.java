@@ -16,6 +16,8 @@ import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 public class OI {
 	
@@ -90,11 +92,13 @@ public class OI {
 	
 	private void initAmirButtons() {
 		//Indexing.getInstance().setDefaultCommand(new HandleBalls());
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, true));
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
+
 		mainJoystick.Y.whenPressed(new SwerveCommand() {
 			@Override
 			public void initialize() {
 				swerve.resetChassisAngle();
+				SmartDashboard.putNumber("pigeon",swerve.getChassisAngle());
 			}
 
 			@Override
@@ -111,6 +115,7 @@ public class OI {
 
 			@Override
 			public boolean isFinished() {
+
 				return true;
 			}
 		});

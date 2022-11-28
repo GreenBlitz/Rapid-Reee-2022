@@ -21,14 +21,6 @@ public class CombineJoystickMovement extends SwerveCommand {
 		}
 	}
 
-	public CombineJoystickMovement(SmartJoystick joystick) {
-		this.joystick = joystick;
-		this.isSlow = false;
-		if (isSlow) {
-			ANG_SPEED_FACTOR = 0.8;
-			LIN_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_VELOCITY;
-		}
-	}
 	
 	public void execute() {
 		double leftwardSpeed = -joystick.getAxisValue(SmartJoystick.Axis.LEFT_X) * LIN_SPEED_FACTOR;
