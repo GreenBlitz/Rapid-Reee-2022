@@ -11,7 +11,6 @@ public class ShootByConstant extends ShooterCommand {
 
 	public ShootByConstant(double power) {
 		this.power = power;
-		this.logger = RemoteCSVTarget.initTarget("FlyWheelRPM2Power", "time", "vel"); //todo delete
 	}
 
 	@Override

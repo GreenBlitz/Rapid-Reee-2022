@@ -14,11 +14,8 @@ public class SwerveChassis extends GBSubsystem {
 	
 	private final SwerveModule frontRight, frontLeft, backRight, backLeft;
 	//	private final PigeonGyro pigeonGyro;
-	private final PigeonGyro pigeonGyro; //todo decide on whether to use our pijen;
+	private final PigeonGyro pigeonGyro;
 	private final SwerveDriveOdometry localizer;
-	
-	public double pigeonAngleOffset = 0.0;
-	//todo make not exist
 	private final SwerveDriveKinematics kinematics;
 
 
@@ -166,13 +163,13 @@ public class SwerveChassis extends GBSubsystem {
 	}
 
 	public void resetChassisAngle(){
-		pigeonAngleOffset += getChassisAngle();
+		pigeonGyro.setYawOffset(pigeonGyro.getYawAngle());
 	}
 
 
-	/** returns chassis angle in degrees */
+	/** returns chassis angle in radians */
 	public double getChassisAngle() {
-		return GBMath.modulo(Math.toRadians(pigeonGyro.getYaw()) - pigeonAngleOffset, 2 * Math.PI);
+		return GBMath.modulo(pigeonGyro.getYawAngle(), 2 * Math.PI);
 	}
 
 	/** get module target angle (radians) */

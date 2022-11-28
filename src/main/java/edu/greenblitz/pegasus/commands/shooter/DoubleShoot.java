@@ -20,7 +20,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 		addCommands(
 				new ParallelRaceGroup(
 						new InsertIntoShooter(),
-						new ShooterByRPM(RPM1, 25, 10),
+						new ShooterByRPM(RPM1, 10),
 						new SequentialCommandGroup(
 								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 								new WaitCommand(0.5) //if doesnt shoot second ball sometimes set to 1
@@ -32,7 +32,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 				),
 				new ParallelRaceGroup(
 						new InsertIntoShooter(),
-						new ShooterByRPM(RPM2,25, 10),
+						new ShooterByRPM(RPM2, 10),
 						new SequentialCommandGroup(
 								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 								new WaitCommand(1)

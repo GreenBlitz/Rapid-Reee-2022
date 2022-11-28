@@ -31,14 +31,6 @@ public class PigeonGyro extends PigeonIMU {
 		rollOffset += offset;
 	}
 
-
-	public void resetYawAngle(double angInDeegres) {//todo make with our reset
-
-		yawOffset += angInDeegres;
-		super.setYaw(angInDeegres);
-	}
-
-
 	public double getYawAngle(){
 		return GBMath.modulo(Math.toRadians(super.getYaw()) - yawOffset, 2 * Math.PI);
 	}

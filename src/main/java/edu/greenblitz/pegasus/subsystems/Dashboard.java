@@ -24,13 +24,6 @@ public class Dashboard extends GBSubsystem {
 	public void periodic() {
 		switch (OI.getInstance().getIOMode()) {
 			case DEBUG:
-				//lampreys
-//				SmartDashboard.putNumber("FR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_RIGHT)), 360));
-//				SmartDashboard.putNumber("FL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.FRONT_LEFT)), 360));
-//				SmartDashboard.putNumber("BR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
-//				SmartDashboard.putNumber("BL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getLampreyAngle(SwerveChassis.Module.BACK_LEFT)), 360));
-				//neos
-
 				SmartDashboard.putNumber("FR targert", SwerveChassis.getInstance().getTarget(SwerveChassis.Module.FRONT_RIGHT));
 				SmartDashboard.putNumber("FL targert", SwerveChassis.getInstance().getTarget(SwerveChassis.Module.FRONT_LEFT));
 				SmartDashboard.putNumber("BR targert", SwerveChassis.getInstance().getTarget(SwerveChassis.Module.BACK_RIGHT));
@@ -44,7 +37,6 @@ public class Dashboard extends GBSubsystem {
 
 				//pigeon
 				SmartDashboard.putNumber("pigeon angle", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
-				SmartDashboard.putNumber("pigeon offset", Math.toDegrees(SwerveChassis.getInstance().pigeonAngleOffset));
 				//pneumatics
 				SmartDashboard.putNumber("pres",Pneumatics.getInstance().getPressure());
 				SmartDashboard.putBoolean("enabled", Pneumatics.getInstance().isEnabled());

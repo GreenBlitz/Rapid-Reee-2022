@@ -111,8 +111,9 @@ public class RobotMap {
 			
 			public static final double ANG_GEAR_RATIO = 1 / 6.0; //todo maybe 6.0 /1?   input/output
 			public static final double LIN_GEAR_RATIO = 8.0;
-			public static final double MAX_VELOCITY = /*3.7*/ 4.5; // m/s //todo
 
+			public static final double MAX_VELOCITY = /*3.7*/ 4.5; // m/s //todo
+			public static final double MAX_ANGULAR_SPEED = 5;
 
 
 			public static final double angleTicksToWheelToRPM = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_VELOCITY_UNITS_TO_RPM;
