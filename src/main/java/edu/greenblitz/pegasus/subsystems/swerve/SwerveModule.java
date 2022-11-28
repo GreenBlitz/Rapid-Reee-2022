@@ -64,9 +64,9 @@ public class SwerveModule {
 
 	private void rotateToAngle(double angle) {
 
-		double diff = GBMath.modulo(angle - getMotorAngle(), 2 * Math.PI);
+		double diff = GBMath.modulo(angle - getModuleAngle(), 2 * Math.PI);
 		diff -= diff > Math.PI ? 2*Math.PI : 0;
-		angle = getMotorAngle() + diff;
+		angle = getModuleAngle() + diff;
 
 		angleMotor.getPIDController().setReference(angle, ControlType.kPosition);
 
@@ -75,7 +75,7 @@ public class SwerveModule {
 
 
 	/** get the module angle by radians */
-	public double getMotorAngle() {
+	public double getModuleAngle() {
 		return angleMotor.getEncoder().getPosition();
 	}
 
@@ -84,7 +84,7 @@ public class SwerveModule {
 	}
 
 	public void rotateByAngle(double angle) {
-		angleMotor.getPIDController().setReference(getMotorAngle() + angle, ControlType.kPosition);
+		angleMotor.getPIDController().setReference(getModuleAngle() + angle, ControlType.kPosition);
 	}
 
 //	public void resetEncoderByLamprey() {
@@ -144,16 +144,12 @@ public class SwerveModule {
 	}
 	
 	public SwerveModuleState getModuleState (){
-		return new SwerveModuleState(getCurrentVelocity(),new Rotation2d(this.getMotorAngle()));
+		return new SwerveModuleState(getCurrentVelocity(),new Rotation2d(this.getModuleAngle()));
 	}
 
 	/** get the lamprey's angle raw units (analog to digital converter)*/
 	public double getLampreyValue(){
 		return lamprey.getValue();
-	}
-
-	public double getAngMotorTicks(){
-		return this.angleMotor.getEncoder().getPosition();
 	}
 	public void setRotPowerOnlyForCalibrations(double power){
 		angleMotor.set(power);
