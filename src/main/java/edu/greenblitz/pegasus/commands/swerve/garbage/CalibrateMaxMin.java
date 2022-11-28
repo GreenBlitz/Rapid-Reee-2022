@@ -19,15 +19,15 @@ public  class CalibrateMaxMin extends GBCommand {
 
 	@Override
 	public void initialize() {
-		maxVal = swerve.getRawLampreyAngle(module);
-		minVal = swerve.getRawLampreyAngle(module);
+		maxVal = swerve.getModuleLampreyValue(module);
+		minVal = swerve.getModuleLampreyValue(module);
 	}
 
 	@Override
 	public void execute() {
 		swerve.rotateModuleByPower(module, power);
-		maxVal = Math.max(maxVal, swerve.getRawLampreyAngle(module));
-		minVal = Math.min(minVal, swerve.getRawLampreyAngle(module));
+		maxVal = Math.max(maxVal, swerve.getModuleLampreyValue(module));
+		minVal = Math.min(minVal, swerve.getModuleLampreyValue(module));
 	}
 
 

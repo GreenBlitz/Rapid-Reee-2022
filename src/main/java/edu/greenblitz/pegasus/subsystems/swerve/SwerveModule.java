@@ -23,20 +23,20 @@ public class SwerveModule {
 	private SimpleMotorFeedforward feedforward;
 	private double wheelCirc;
 
-	public	 SwerveModule (int portA, int portL, int lampreyID, boolean linInverted) {
-		//SET ANGLE MOTOR
-		angleMotor = new CANSparkMax(portA, CANSparkMaxLowLevel.MotorType.kBrushless);
+	public	 SwerveModule (int angleMotorID, int linearMotorID, int lampreyID, boolean linInverted) {
+		//SET ANGLE MOTO
+		angleMotor = new CANSparkMax(angleMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
 		angleMotor.setSmartCurrentLimit(30);
-		angleMotor.setClosedLoopRampRate(0.4);//todo is closed or open?
+		angleMotor.setClosedLoopRampRate(0.4);
 		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
 
-		//fixme noam - maybe be the problem. just to check
 		angleMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToRadians);
 		angleMotor.getEncoder().setVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
 
-		linearMotor = new CANSparkMax(portL, CANSparkMaxLowLevel.MotorType.kBrushless);
+		linearMotor = new CANSparkMax(linearMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
 		linearMotor.setSmartCurrentLimit(30);
-		linearMotor.setClosedLoopRampRate(0.4); //todo is closed or open?
+		linearMotor.setClosedLoopRampRate(0.4);
+		linearMotor.setOpenLoopRampRate(0.4);
 		linearMotor.setInverted(linInverted);
 		linearMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.linTicksToMeters);
 		
@@ -62,7 +62,7 @@ public class SwerveModule {
 		rotateToAngle(moduleState.angle.getRadians());
 	}
 
-	private void rotateToAngle(double angle) { //fixme make private
+	private void rotateToAngle(double angle) {
 
 		double diff = GBMath.modulo(angle - getMotorAngle(), 2 * Math.PI);
 		diff -= diff > Math.PI ? 2*Math.PI : 0;
@@ -71,10 +71,6 @@ public class SwerveModule {
 		angleMotor.getPIDController().setReference(angle, ControlType.kPosition);
 
 		targetAngle = angle;
-	}
-
-	public double getRawLampreyAngle() {
-		return lamprey.getValue();
 	}
 
 
@@ -94,12 +90,13 @@ public class SwerveModule {
 //	public void resetEncoderByLamprey() {
 //		angleMotor.setEncoderAng(getLampreyAngle());
 //	}
-	
+
+	/** resetEncoderToValue - reset the angular encoder to RADIANS */
 	public void resetEncoderToValue(double angle) {
 		angleMotor.getEncoder().setPosition(angle);
 	} //todo combine both into same overload
 	
-	public void resetEncoderToZero(){
+	public void resetEncoderToValue(){
 		angleMotor.getEncoder().setPosition(0);
 	}
 
@@ -149,7 +146,8 @@ public class SwerveModule {
 	public SwerveModuleState getModuleState (){
 		return new SwerveModuleState(getCurrentVelocity(),new Rotation2d(this.getMotorAngle()));
 	}
-	
+
+	/** get the lamprey's angle raw units (analog to digital converter)*/
 	public double getLampreyValue(){
 		return lamprey.getValue();
 	}

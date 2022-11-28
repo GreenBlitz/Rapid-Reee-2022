@@ -126,10 +126,10 @@ public class SwerveChassis extends GBSubsystem {
 
 	/** resetting all the angle motor's encoders to 0 */
 	public void resetAllEncoders() {
-		getModule(Module.FRONT_LEFT).resetEncoderToZero();
-		getModule(Module.FRONT_RIGHT).resetEncoderToZero();
-		getModule(Module.BACK_LEFT).resetEncoderToZero();
-		getModule(Module.BACK_RIGHT).resetEncoderToZero();
+		getModule(Module.FRONT_LEFT).resetEncoderToValue();
+		getModule(Module.FRONT_RIGHT).resetEncoderToValue();
+		getModule(Module.BACK_LEFT).resetEncoderToValue();
+		getModule(Module.BACK_RIGHT).resetEncoderToValue();
 	}
 	
 	
@@ -141,29 +141,20 @@ public class SwerveChassis extends GBSubsystem {
 //
 //	}
 //
-
-	
-	public void resetModuleAngularEncoderToZero(Module module){
-		getModule(module).resetEncoderToZero();
-	}
-
 	/**
 	 * all code below is self-explanatory - well, after a long time It's maybe not self-explanatory
 	 * <p>
 	 * ALL IN RADIANS, NOT DEGREES
 	 */
-	public double getRawLampreyAngle(Module module) {
-		return getModule(module).getRawLampreyAngle();
+	
+	/** get the lamprey value of a specific module */
+	public double getModuleLampreyValue(Module module) {
+		return getModule(module).getLampreyValue();
 	}
 //
 //	public double getLampreyAngle(Module module) {
 //		return getModule(module).getLampreyAngle();
 //	}
-
-	public double getLampreyValue(Module module) {
-		return getModule(module).getLampreyValue();
-	}
-
 	public double getModuleAngle(Module module) {
 		return getModule(module).getMotorAngle();
 	}
