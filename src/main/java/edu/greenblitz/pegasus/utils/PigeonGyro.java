@@ -1,5 +1,6 @@
 package edu.greenblitz.pegasus.utils;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 public class PigeonGyro extends PigeonIMU {
@@ -17,7 +18,16 @@ public class PigeonGyro extends PigeonIMU {
 	/**
 	 * the offset sets himself the current angle + the offset
 	 * because idk but we do it like this
+	 *
+	 * ALL IN RADIANS
 	 * */
+
+
+	@Override
+	public ErrorCode setYaw(double yaw){
+		yawOffset += (yaw + getYaw());
+		return ErrorCode.valueOf(0);
+	}
 
 	public void setYawOffset (double offset){
 		yawOffset += offset;
@@ -31,15 +41,18 @@ public class PigeonGyro extends PigeonIMU {
 		rollOffset += offset;
 	}
 
-	public double getYawAngle(){
+	@Override
+	public double getYaw(){
 		return GBMath.modulo(Math.toRadians(super.getYaw()) - yawOffset, 2 * Math.PI);
 	}
 
-	public double getPitchAngle(){
+	@Override
+	public double getPitch(){
 		return GBMath.modulo(Math.toRadians(super.getYaw()) - pitchOffset, 2 * Math.PI);
 	}
 
-	public double getRollAngle(){
+	@Override
+	public double getRoll(){
 		return GBMath.modulo(Math.toRadians(super.getYaw()) - rollOffset, 2 * Math.PI);
 	}
 

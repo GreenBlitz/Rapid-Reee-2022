@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
 		//todo add voltage compensation
 		//swerve
 		
-		SwerveChassis.getInstance().resetChassisAngle(0); //fixme noam -  reminder for me if not work to check here
+		SwerveChassis.getInstance().resetChassisAngle();
 
 //		SwerveChassis.getInstance().resetAllEncoders();
 //		SwerveChassis.getInstance().resetAllEncodersByValues(); works
