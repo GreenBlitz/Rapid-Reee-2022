@@ -108,19 +108,6 @@ public class SwerveChassis extends GBSubsystem {
 		backLeft.stop();
 	}
 
-
-	public void configPID(PIDObject pidObjectAng, PIDObject pidObjectLin) {
-		getModule(Module.FRONT_LEFT).configAnglePID(pidObjectAng);
-		getModule(Module.FRONT_LEFT).configLinPID(pidObjectLin);
-		getModule(Module.FRONT_RIGHT).configAnglePID(pidObjectAng);
-		getModule(Module.FRONT_RIGHT).configLinPID(pidObjectLin);
-		getModule(Module.BACK_LEFT).configAnglePID(pidObjectAng);
-		getModule(Module.BACK_LEFT).configLinPID(pidObjectLin);
-		getModule(Module.BACK_RIGHT).configAnglePID(pidObjectAng);
-		getModule(Module.BACK_RIGHT).configLinPID(pidObjectLin);
-	}
-	
-
 	/** resetting all the angle motor's encoders to 0 */
 	public void resetAllEncoders() {
 		getModule(Module.FRONT_LEFT).resetEncoderToValue();
@@ -189,11 +176,7 @@ public class SwerveChassis extends GBSubsystem {
 		setModuleStateForModule(Module.BACK_RIGHT,
 				SwerveModuleState.optimize(states[3],new Rotation2d(getModuleAngle(Module.BACK_RIGHT))));
 		
-		SmartDashboard.putNumber("FL-lin-velocity", states[0].speedMetersPerSecond);
-		SmartDashboard.putNumber("FR-lin-velocity", states[1].speedMetersPerSecond);
-		SmartDashboard.putNumber("BL-lin-velocity", states[2].speedMetersPerSecond);
-		SmartDashboard.putNumber("BR-lin-velocity", states[3].speedMetersPerSecond);
-		
+
 	}
 	
 	public void moveByChassisSpeeds(double forwardSpeed, double leftwardSpeed, double angSpeed, double currentAng) {
@@ -253,6 +236,11 @@ public class SwerveChassis extends GBSubsystem {
 	 */
 	public void rotateModuleByPower(Module module, double power) {
 		getModule(module).setRotPowerOnlyForCalibrations(power);
+	}
+
+
+	public SwerveModuleState getModuleState (Module module){
+		return getModule(module).getModuleState();
 	}
 
 }

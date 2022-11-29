@@ -34,6 +34,10 @@ public class Dashboard extends GBSubsystem {
 				SmartDashboard.putNumber("BR-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
 				SmartDashboard.putNumber("BL-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 360));
 
+				SmartDashboard.putNumber("FL-lin-velocity", SwerveChassis.getInstance().getModuleState(SwerveChassis.Module.FRONT_LEFT).speedMetersPerSecond);
+				SmartDashboard.putNumber("FR-lin-velocity", SwerveChassis.getInstance().getModuleState(SwerveChassis.Module.FRONT_RIGHT).speedMetersPerSecond);
+				SmartDashboard.putNumber("BL-lin-velocity", SwerveChassis.getInstance().getModuleState(SwerveChassis.Module.BACK_LEFT).speedMetersPerSecond);
+				SmartDashboard.putNumber("BR-lin-velocity", SwerveChassis.getInstance().getModuleState(SwerveChassis.Module.BACK_RIGHT).speedMetersPerSecond);
 
 				//pigeon
 				SmartDashboard.putNumber("pigeon angle", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
