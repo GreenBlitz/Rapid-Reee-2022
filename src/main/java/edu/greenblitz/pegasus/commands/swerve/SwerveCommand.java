@@ -11,5 +11,4 @@ public abstract class SwerveCommand extends GBCommand {
 		swerve = SwerveChassis.getInstance();
 		require(swerve);
 	}
-
 }
