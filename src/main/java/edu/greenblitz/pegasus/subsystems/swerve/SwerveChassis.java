@@ -143,11 +143,13 @@ public class SwerveChassis extends GBSubsystem {
 		return getModule(module).getModuleAngle();
 	}
 
-	/** make the pigeon (gyro) set this angle to be 0 */
+	/** make the pigeon (gyro) set this angle to be the angle in radians*/
 	public void resetChassisAngle(double angInRads) {
 
 		pigeonGyro.setYaw(angInRads);
 	}
+
+	/** when no parameter is given reset the chassis angle to 0 */
 
 	public void resetChassisAngle(){
 		pigeonGyro.setYaw(0);
