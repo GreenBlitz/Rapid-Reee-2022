@@ -14,28 +14,25 @@ public class BatteryDisabler extends GBCommand {
 	private Battery battery;
 	
 	private static final int LEN_OF_AVG = 10;
-	
-	// number of ticks of under voltage running
-	double ticksUnder = 0;
-	double maxTicksUnder = 50; //50 ticks = 1 second
 	private LinearFilter voltageFilter;
 	
 
 
 	public BatteryDisabler (){
 		voltageFilter = LinearFilter.movingAverage(LEN_OF_AVG);
-		Battery.isBatteryLow = false;
 		battery = Battery.getInstance();
 		require(battery);
 	}
 
 	@Override
 	public void initialize() {
+		for (int i = 0; i < LEN_OF_AVG; i++) {
+			voltageFilter.calculate(battery.getCurrentVoltage());
+		}
 	}
 
 	@Override
 	public void execute() {
-		SmartDashboard.putBoolean("disabkle by batter: ", Battery.isBatteryLow);
 		SmartDashboard.putBoolean(" is disabled: ", 	DriverStation.isDisabled());
 		
 		SmartDashboard.putNumber("by battery voltage: ", Battery.getInstance().getCurrentVoltage());
@@ -44,13 +41,7 @@ public class BatteryDisabler extends GBCommand {
 		double a = voltageFilter.calculate(battery.getCurrentVoltage());
 		SmartDashboard.putNumber("battery avarage: ", a );
 		
-		ticksUnder += a <= battery.getMinVoltage() ?  1 : 0;
-		
-		
-		if (a <= battery.getMinVoltage()&& ticksUnder >= maxTicksUnder &&DriverStation.getMatchType() == DriverStation.MatchType.None){
-			
-			Battery.isBatteryLow = true;
-			
+		if (a <= battery.getMinVoltage()&&DriverStation.getMatchType() == DriverStation.MatchType.None){
 			throw new java.lang.RuntimeException("Battery is low");
 		}
 	}

@@ -111,7 +111,6 @@ public class OI {
 	private void initAmirButtons() {
 		//Indexing.getInstance().setDefaultCommand(new HandleBalls());
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false ));
-		Battery.getInstance().setDefaultCommand(new BatteryDisabler());
 		mainJoystick.Y.whenPressed(new SwerveCommand() {
 			@Override
 			public void initialize() {

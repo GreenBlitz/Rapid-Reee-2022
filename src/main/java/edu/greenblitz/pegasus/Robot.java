@@ -51,7 +51,8 @@ public class Robot extends TimedRobot {
 
 		Indexing.getInstance();
 		Shooter.create(new SparkMaxFactory().withInverted(true).withRampRate(0.4).withCurrentLimit(30), RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
-
+		Battery.getInstance().setDefaultCommand(new BatteryDisabler());
+		
 		//todo add voltage compensation
 		//swerve
 		SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);
@@ -130,10 +131,8 @@ public class Robot extends TimedRobot {
 
 		//TODO noam - because of the low battery disable command everything if the periodic must be in the if
 
-		if(!Battery.isBatteryLow){
 			CommandScheduler.getInstance().run();
 			SmartDashboard.putNumber("pigeon angle", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
-		}
 		
 	}
 
@@ -142,7 +141,6 @@ public class Robot extends TimedRobot {
 	public void disabledInit() {
 		//VisionMaster.GameState.DISABLED.setAsCurrent();
 		CommandScheduler.getInstance().cancelAll();
-		Battery.getInstance().setDefaultCommand(new BatteryDisabler());
 	}
 
 	@Override

@@ -11,7 +11,6 @@ public class Battery extends GBSubsystem {
 	private double currentVoltage;
 	private static final double minVoltage = 12.50;
 	private static Battery instance;
-	public static boolean isBatteryLow = false;
 
 
 	private Battery (){}
