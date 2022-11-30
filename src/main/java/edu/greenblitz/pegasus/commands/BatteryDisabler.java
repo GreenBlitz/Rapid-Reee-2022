@@ -3,6 +3,7 @@ package edu.greenblitz.pegasus.commands;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.pegasus.Robot;
 import edu.greenblitz.pegasus.subsystems.Battery;
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,11 +12,18 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class BatteryDisabler extends GBCommand {
 
 	private Battery battery;
-	public static final int disableAfterTicks = 1;
-	public int timesUnder;
+	
+	private static final int LEN_OF_AVG = 10;
+	
+	// number of ticks of under voltage running
+	double ticksUnder = 0;
+	double maxTicksUnder = 50; //50 ticks = 1 second
+	private LinearFilter voltageFilter;
+	
 
 
 	public BatteryDisabler (){
+		voltageFilter = LinearFilter.movingAverage(LEN_OF_AVG);
 		Battery.isBatteryLow = false;
 		battery = Battery.getInstance();
 		require(battery);
@@ -23,7 +31,6 @@ public class BatteryDisabler extends GBCommand {
 
 	@Override
 	public void initialize() {
-		timesUnder = 0;
 	}
 
 	@Override
@@ -33,12 +40,14 @@ public class BatteryDisabler extends GBCommand {
 		
 		SmartDashboard.putNumber("by battery voltage: ", Battery.getInstance().getCurrentVoltage());
 		
-		if(battery.getCurrentVoltage() < battery.getMinVoltage()){
-			timesUnder++;
-		}
-		if (timesUnder >= disableAfterTicks &&
-				(DriverStation.getMatchType() == DriverStation.MatchType.None ||
-				DriverStation.getMatchType() == DriverStation.MatchType.Practice)){
+		
+		double a = voltageFilter.calculate(battery.getCurrentVoltage());
+		SmartDashboard.putNumber("battery avarage: ", a );
+		
+		ticksUnder += a <= battery.getMinVoltage() ?  1 : 0;
+		
+		
+		if (a <= battery.getMinVoltage()&& ticksUnder >= maxTicksUnder &&DriverStation.getMatchType() == DriverStation.MatchType.None){
 			
 			Battery.isBatteryLow = true;
 			
