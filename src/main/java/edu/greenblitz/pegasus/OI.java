@@ -15,10 +15,7 @@ import edu.greenblitz.pegasus.commands.shooter.FindLocation;
 import edu.greenblitz.pegasus.commands.shooter.FlipShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
-import edu.greenblitz.pegasus.commands.swerve.AngPIDSupplier;
-import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
-import edu.greenblitz.pegasus.commands.swerve.MoveByVisionSupplier;
-import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
+import edu.greenblitz.pegasus.commands.swerve.*;
 import edu.greenblitz.pegasus.commands.swerve.garbage.CalibrateMaxMin;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.Limelight;
@@ -114,7 +111,7 @@ public class OI {
 	private void initRealButtons() {
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(true));
 		mainJoystick.A.whileHeld(new FindLocation());
-		mainJoystick.X.whenHeld(new CombineJoystickMovement(true, new AngPIDSupplier(()-> Limelight.getInstance().fieldRelativeTargetYaw())));
+		mainJoystick.X.whenHeld(new CombineJoystickMovement(true, new AngPIDSupplier(new VisionTargetSupplier())));
 		mainJoystick.Y.whileHeld(new MoveByVisionSupplier(true));
 		
 		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control

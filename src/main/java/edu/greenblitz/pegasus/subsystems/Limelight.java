@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus.subsystems;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.utils.GBMath;
 import edu.greenblitz.pegasus.RobotMap;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonTrackedTarget;
@@ -26,10 +27,10 @@ public class Limelight extends GBSubsystem {
 		var result = camera.getLatestResult();
 		PhotonTrackedTarget target = result.getBestTarget();
 		if (!camera.getLatestResult().hasTargets()){return 0;}
-		return Math.toRadians(target.getYaw());
+		return GBMath.modulo(Math.toRadians(target.getYaw()),2 * Math.PI);
 	}
 	public double fieldRelativeTargetYaw(){
-		return SwerveChassis.getInstance().getChassisAngle() - getYawTarget();
+		return GBMath.modulo(SwerveChassis.getInstance().getChassisAngle() - getYawTarget(), 2* Math.PI);
 	}
 	
 	public boolean FindTarget(){
