@@ -2,13 +2,11 @@ package edu.greenblitz.pegasus.subsystems.swerve;
 
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.PigeonGyro;
-import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.greenblitz.pegasus.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.utils.GBMath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveChassis extends GBSubsystem {
 	
@@ -132,8 +130,8 @@ public class SwerveChassis extends GBSubsystem {
 	 */
 	
 	/** get the lamprey value of a specific module */
-	public double getModuleLampreyValue(Module module) {
-		return getModule(module).getLampreyValue();
+	public double getModuleLampreyVoltage(Module module) {
+		return getModule(module).getLampreyVoltage();
 	}
 //
 //	public double getLampreyAngle(Module module) {

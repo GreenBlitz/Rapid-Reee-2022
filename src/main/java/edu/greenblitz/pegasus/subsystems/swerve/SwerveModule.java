@@ -148,8 +148,8 @@ public class SwerveModule {
 	}
 
 	/** get the lamprey's angle raw units (analog to digital converter)*/
-	public double getLampreyValue(){
-		return lamprey.getValue();
+	public double getLampreyVoltage(){
+		return lamprey.getVoltage();
 	}
 	public void setRotPowerOnlyForCalibrations(double power){
 		angleMotor.set(power);

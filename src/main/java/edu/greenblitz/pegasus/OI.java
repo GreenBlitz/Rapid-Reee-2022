@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
+import edu.greenblitz.pegasus.commands.swerve.CalibrateLampreyByNeo;
 import edu.greenblitz.pegasus.utils.commands.GBCommand;
 import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
@@ -83,7 +84,7 @@ public class OI {
 		});
 		
 		mainJoystick.X.whileHeld(new ShootByConstant(0.5));
-		secondJoystick.A.whileHeld(new ShooterByRPM(2000));
+		secondJoystick.B.whenPressed(new CalibrateLampreyByNeo());
 		
 	}
 	
