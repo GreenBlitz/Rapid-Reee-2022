@@ -25,8 +25,8 @@ public class Limelight extends GBSubsystem {
 
 	public double getYawTarget() {
 		var result = camera.getLatestResult();
+		if (!result.hasTargets()){return 0;}
 		PhotonTrackedTarget target = result.getBestTarget();
-		if (!camera.getLatestResult().hasTargets()){return 0;}
 		return GBMath.modulo(Math.toRadians(target.getYaw()),2 * Math.PI);
 	}
 	public double fieldRelativeTargetYaw(){

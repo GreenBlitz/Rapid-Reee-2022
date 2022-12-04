@@ -6,6 +6,6 @@ import java.util.function.DoubleSupplier;
 
 public class MoveByVisionSupplier extends CombineJoystickMovement {
 	public MoveByVisionSupplier(boolean isSlow) {
-		super(isSlow, ()->Limelight.getInstance().fieldRelativeTargetYaw());
+		super(isSlow, new AngPIDSupplier(new VisionTargetSupplier()));
 	}
 }

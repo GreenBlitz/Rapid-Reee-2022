@@ -109,10 +109,9 @@ public class OI {
 	}
 	
 	private void initRealButtons() {
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(true));
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(false));
 		mainJoystick.A.whileHeld(new FindLocation());
-		mainJoystick.X.whenHeld(new CombineJoystickMovement(true, new AngPIDSupplier(new VisionTargetSupplier())));
-		mainJoystick.Y.whileHeld(new MoveByVisionSupplier(true));
+		mainJoystick.X.whenHeld(new MoveByVisionSupplier(false));
 		
 		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
 			@Override

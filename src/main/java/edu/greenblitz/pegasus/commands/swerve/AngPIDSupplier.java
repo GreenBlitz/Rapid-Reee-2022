@@ -13,7 +13,7 @@ public class AngPIDSupplier implements DoubleSupplier{
 	private PIDController chassisPid;
 
 	public AngPIDSupplier(DoubleSupplier ang){
-		SmartDashboard.putNumber("kp", 0.1);
+		SmartDashboard.putNumber("kp", 1);
 		SmartDashboard.putNumber("ki", 0);
 		SmartDashboard.putNumber("kd", 0);
 		this.ang = ang;
@@ -23,10 +23,12 @@ public class AngPIDSupplier implements DoubleSupplier{
 
 	@Override
 	public double getAsDouble() {
-		double kp = SmartDashboard.getNumber("kp",0.1);
+		double kp = SmartDashboard.getNumber("kp",1);
 		double kd = SmartDashboard.getNumber("kd",0);
 		double ki = SmartDashboard.getNumber("ki",0);
 		chassisPid.setPID(kp,ki,kd);
-		return Math.max(Math.min(chassisPid.calculate(SwerveChassis.getInstance().getChassisAngle(),ang.getAsDouble()),0.4),-0.4);
+		double input = chassisPid.calculate(SwerveChassis.getInstance().getChassisAngle(),ang.getAsDouble());
+		SmartDashboard.putNumber("ang input", input);
+		return input;
 	}
 }

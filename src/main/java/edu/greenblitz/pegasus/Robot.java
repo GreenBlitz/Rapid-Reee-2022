@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.pathplanner.lib.PathPlanner;
+import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.base.GBCommand;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.gyro.PigeonGyro;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.IMotorFactory;
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.SparkMax.SparkMaxFactory;
@@ -43,7 +44,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
-		
 		DigitalInputMap.getInstance();
 		Pneumatics.init();
 		Dashboard.init();
@@ -124,7 +124,7 @@ public class Robot extends TimedRobot {
 
 //		SmartDashboard.putNumber("pigeon init value", 0);
 		SmartDashboard.putNumber("auto number", 1);
-
+		SwerveChassis.getInstance().resetAllEncodersByValues();
 		OI.getInstance();
 	}
 
