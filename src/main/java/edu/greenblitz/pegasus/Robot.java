@@ -2,10 +2,7 @@ package edu.greenblitz.pegasus;
 
 
 import edu.greenblitz.pegasus.commands.auto.Taxi;
-import edu.greenblitz.pegasus.subsystems.Dashboard;
-import edu.greenblitz.pegasus.subsystems.Indexing;
-import edu.greenblitz.pegasus.subsystems.Pneumatics;
-import edu.greenblitz.pegasus.subsystems.Shooter;
+import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.util.net.PortForwarder;
@@ -20,7 +17,7 @@ public class Robot extends TimedRobot {
 		DigitalInputMap.getInstance();
 		Pneumatics.init();
 		Dashboard.init();
-
+		Limelight.getInstance();
 		Indexing.getInstance();
 		PortForwarder.add(5800, "gloworm.local", 5800);
 		PortForwarder.add(5801, "gloworm.local", 5801);
@@ -32,11 +29,11 @@ public class Robot extends TimedRobot {
 
 		//todo add voltage compensation
 		//swerve
-		
-		SwerveChassis.getInstance().resetChassisAngle();
 
-//		SmartDashboard.putNumber("pigeon init value", 0);
-		SmartDashboard.putNumber("auto number", 1);
+		SwerveChassis.getInstance().resetChassisAngle();
+//
+////		SmartDashboard.putNumber("pigeon init value", 0);
+//		SmartDashboard.putNumber("auto number", 1);
 		SwerveChassis.getInstance().resetAllEncoders();
 		OI.getInstance();
 	}

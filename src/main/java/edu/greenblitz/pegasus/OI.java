@@ -56,25 +56,25 @@ public class OI {
 	
 	private void initButtons() {
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement( false));
-		
+
 		mainJoystick.Y.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetChassisAngle()));
-		
+
 		mainJoystick.R1.whenHeld(new StartEndCommand(() -> Intake.getInstance().getExtender().retract(),
 				() -> Intake.getInstance().getExtender().extend()));
-		
+
 		secondJoystick.Y.whenHeld(new EjectEnemyBallFromGripper());
-		
+
 		secondJoystick.R1.whenHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM).andThen(new StopShooter()));
-		
+
 		secondJoystick.A.whenHeld(new InsertIntoShooter());
-		
+
 		secondJoystick.B.whenHeld(new RunRoller().alongWith(new RunFunnel().until(() -> DigitalInputMap.getInstance().getValue(0))));
-		
-		
+
+
 		secondJoystick.START.toggleWhenPressed(new ToggleRoller());
 		secondJoystick.POV_DOWN.whileHeld(new RunFunnel());
 		secondJoystick.POV_UP.whenPressed(new ShooterEvacuate());
-		
+
 	}
 	
 	public SmartJoystick getMainJoystick() {
