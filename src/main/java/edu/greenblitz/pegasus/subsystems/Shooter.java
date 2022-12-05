@@ -7,7 +7,7 @@ import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.PIDObject;
 
 public class Shooter extends GBSubsystem {
-
+	
 	private final static double RPM = 3000;
 	private int flipped = 1;
 	private final CANSparkMax motor;
@@ -22,7 +22,7 @@ public class Shooter extends GBSubsystem {
 //		this.motor.configurePID(RobotMap.Pegasus.Shooter.ShooterMotor.pid);
 		
 		//setting the motor pid
-
+		this.motor.setInverted(RobotMap.Pegasus.Shooter.ShooterMotor.LEADER_INVERTED);
 		this.motor.getPIDController().setP(RobotMap.Pegasus.Shooter.ShooterMotor.pid.getKp());
 		this.motor.getPIDController().setI(RobotMap.Pegasus.Shooter.ShooterMotor.pid.getKi());
 		this.motor.getPIDController().setD(RobotMap.Pegasus.Shooter.ShooterMotor.pid.getKd());
