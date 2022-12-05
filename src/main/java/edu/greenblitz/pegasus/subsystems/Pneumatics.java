@@ -1,6 +1,5 @@
 package edu.greenblitz.pegasus.subsystems;
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.compressor.HandleCompressor;
 import edu.wpi.first.wpilibj.Compressor;

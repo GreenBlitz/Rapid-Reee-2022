@@ -1,9 +1,9 @@
 package edu.greenblitz.pegasus.commands.swerve;
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
 import edu.greenblitz.pegasus.OI;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.subsystems.Limelight;
+import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -11,8 +11,10 @@ import java.util.function.DoubleSupplier;
 
 public class CombineJoystickMovement extends SwerveCommand {
 	private DoubleSupplier angSupplier;
-	private double ANG_SPEED_FACTOR = 5;//todo magic number
-	private double LIN_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_VELOCITY;
+
+	
+	static double ANG_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_ANGULAR_SPEED;
+	static double LIN_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_VELOCITY;
 
 	private boolean isSlow;
 	
@@ -27,15 +29,17 @@ public class CombineJoystickMovement extends SwerveCommand {
 	@Override
 	public void initialize() {
 		if (isSlow) {
-			ANG_SPEED_FACTOR = 0.8 * 5; //todo querry from robot map in initialize to prevent repeated changes
+			ANG_SPEED_FACTOR = 0.8 * RobotMap.Pegasus.Swerve.MAX_ANGULAR_SPEED;
 			LIN_SPEED_FACTOR = 0.5 * RobotMap.Pegasus.Swerve.MAX_VELOCITY;
 		}
 	}
+
 	
 	public void execute() {
 		double leftwardSpeed = -OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.LEFT_X) * LIN_SPEED_FACTOR;
 		double forwardSpeed = OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.LEFT_Y) * LIN_SPEED_FACTOR;
 		double angSpeed = angSupplier.getAsDouble() * ANG_SPEED_FACTOR;
+		angSpeed = Math.min(angSpeed, ANG_SPEED_FACTOR);
 		if (forwardSpeed == 0 && leftwardSpeed == 0 && angSpeed == 0) {
 			swerve.stop();
 			return;

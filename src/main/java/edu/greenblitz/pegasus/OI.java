@@ -1,9 +1,5 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.base.GBCommand;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.gyro.PigeonGyro;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.hid.SmartJoystick;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
@@ -16,20 +12,25 @@ import edu.greenblitz.pegasus.commands.shooter.FlipShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
 import edu.greenblitz.pegasus.commands.swerve.*;
-import edu.greenblitz.pegasus.commands.swerve.garbage.CalibrateMaxMin;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.Limelight;
+import edu.greenblitz.pegasus.commands.shooter.StopShooter;
+import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
+import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
+import edu.greenblitz.pegasus.subsystems.Intake;
+import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
+import edu.greenblitz.pegasus.utils.commands.GBCommand;
+import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import org.opencv.core.Mat;
+
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
+
 
 public class OI {
 	
-	public enum IOModes {
-		DEBUG, REAL, AMIR
-	}
-	private static final IOModes IOMode = IOModes.REAL; //decides which set of controls to init.
+	
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -39,17 +40,9 @@ public class OI {
 	private OI() {
 		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.1);
 		secondJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.SECOND, 0.2);
-		switch (IOMode) {
-			case DEBUG:
-				initDebugButtons();
-				break;
-			case REAL:
-				initRealButtons();
-				break;
-			case AMIR:
-				initAmirButtons(); //todo do i really need to explain
 
-		}
+		initButtons();
+		
 	}
 	
 	public static OI getInstance() {
@@ -59,167 +52,29 @@ public class OI {
 		return instance;
 	}
 	
-	private void initDebugButtons() {
-//		SwerveChassis.getInstance().resetAllEncodersByValues();
-//		SwerveChassis.getInstance().resetChassisAngle(0);
 
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement( true));
-
-
-		mainJoystick.Y.whenPressed(new SwerveCommand() {
-			@Override
-			public void initialize() {
-				swerve.resetChassisAngle();
-			}
-
-			@Override
-			public boolean isFinished() {
-				return true;
-			}
-		});
-
-		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
-			@Override
-			public void initialize() {
-				SwerveChassis.getInstance().resetAllEncodersByValues();
-			}
-
-			@Override
-			public boolean isFinished() {
-				return true;
-			}
-		});
-//		mainJoystick.X.whileHeld(new ShooterByRPM(2000));
-//		mainJoystick.Y.whileHeld(new RunFunnel());
-//		mainJoystick.A.whileHeld(new RunRoller());
-//		mainJoystick.B.whenPressed(new ToggleRoller());
-		mainJoystick.X.whileHeld(new ShooterByRPM(2000));
-		mainJoystick.Y.whileHeld(new RunFunnel());
-		mainJoystick.A.whileHeld(new RunRoller());
-		mainJoystick.B.whenPressed(new ToggleRoller());
-
-//		mainJoystick.L1.whenPressed(new ParallelCommandGroup(
-//				new CalibrateMaxMin(0.2, SwerveChassis.Module.FRONT_RIGHT),
-//				new CalibrateMaxMin(0.2, SwerveChassis.Module.FRONT_LEFT),
-//				new CalibrateMaxMin(0.2, SwerveChassis.Module.BACK_RIGHT),
-//				new CalibrateMaxMin(0.2, SwerveChassis.Module.BACK_LEFT)
-//		));
-		
-		
-	}
 	
-	private void initRealButtons() {
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(false));
-		mainJoystick.A.whileHeld(new FindLocation());
-		mainJoystick.X.whenHeld(new MoveByVisionSupplier(false));
+	private void initButtons() {
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement( false));
 		
-		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
-			@Override
-			public void initialize() {
-				SwerveChassis.getInstance().resetAllEncodersByValues();
-			}
-			
-			@Override
-			public boolean isFinished() {
-				
-				return true;
-			}
-		});
+		mainJoystick.Y.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetChassisAngle()));
+		
+		mainJoystick.R1.whenHeld(new StartEndCommand(() -> Intake.getInstance().getExtender().retract(),
+				() -> Intake.getInstance().getExtender().extend()));
+		
+		secondJoystick.Y.whenHeld(new EjectEnemyBallFromGripper());
+		
+		secondJoystick.R1.whenHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM).andThen(new StopShooter()));
+		
+		secondJoystick.A.whenHeld(new InsertIntoShooter());
+		
+		secondJoystick.B.whenHeld(new RunRoller().alongWith(new RunFunnel().until(() -> DigitalInputMap.getInstance().getValue(0))));
 		
 		
-		mainJoystick.B.whenPressed(new SwerveCommand() {
-			@Override
-			public void initialize() {
-				swerve.resetChassisAngle();
-			}
-			
-			@Override
-			public boolean isFinished() {
-				return true;
-			}
-		});
-		
-
-	}
-	
-	private void initAmirButtons() {
-		//Indexing.getInstance().setDefaultCommand(new HandleBalls());
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(false));
-//		mainJoystick.Y.whenPressed(new SwerveCommand() {
-//			@Override
-//			public void initialize() {
-//				swerve.resetChassisAngle();
-//				SmartDashboard.putNumber("pigeon",swerve.getChassisAngle());
-//			}
-//
-//			@Override
-//			public boolean isFinished() {
-//				return true;
-//			}
-//		});
-		SmartDashboard.putNumber("ang target", 0);
-		mainJoystick.Y.whileHeld(new CombineJoystickMovement(false, new AngPIDSupplier(()-> SmartDashboard.getNumber("ang target", 0))));
-		SmartDashboard.putNumber("ang in deg", Math.toDegrees(SmartDashboard.getNumber("ang target", 0)));
-		SmartDashboard.putNumber("ang dif", SwerveChassis.getInstance().getChassisAngle() - Math.toDegrees(SmartDashboard.getNumber("ang target", 0)));
-		
-		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
-			@Override
-			public void initialize() {
-				SwerveChassis.getInstance().resetAllEncodersByValues();
-			}
-
-			@Override
-			public boolean isFinished() {
-
-				return true;
-			}
-		});
-
-		mainJoystick.B.whenPressed(new SwerveCommand() {
-			@Override
-			public void initialize() {
-				swerve.resetChassisAngle();
-			}
-
-			@Override
-			public boolean isFinished() {
-				return true;
-			}
-		});
-
-		mainJoystick.R1.whileHeld(new GBCommand() { //todo make whenHeld possibly interruptible=false
-			@Override
-			public void initialize() {
-				new RetractRoller().schedule();
-			}
-
-			@Override
-			public void end(boolean interrupted) {
-				new ExtendRoller().schedule();
-			}
-		});
-		
-		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
-		
-		secondJoystick.R1.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM) { //todo replace with .andThan(new stopShooter())
-			@Override
-			public void end(boolean interrupted) {
-				super.end(interrupted);
-				shooter.setSpeedByPID(0);
-			}
-		});
-		
-		secondJoystick.L1.whenPressed(new FlipShooter()); //todo delete the whole-flipping-concept
-		
-		secondJoystick.A.whileHeld(new InsertIntoShooter());
-
-
-		secondJoystick.B.whileHeld(new RunRoller());
-
-		
-		secondJoystick.START.whenPressed(new ToggleRoller()); //todo use .toggle
+		secondJoystick.START.toggleWhenPressed(new ToggleRoller());
 		secondJoystick.POV_DOWN.whileHeld(new RunFunnel());
 		secondJoystick.POV_UP.whenPressed(new ShooterEvacuate());
+		
 	}
 	
 	public SmartJoystick getMainJoystick() {
@@ -238,7 +93,4 @@ public class OI {
 		isHandled = false;
 	}
 	
-	public IOModes getIOMode() {
-		return IOMode;
-	}
 }

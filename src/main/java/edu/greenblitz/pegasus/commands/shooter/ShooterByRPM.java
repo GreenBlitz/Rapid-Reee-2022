@@ -1,10 +1,7 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shooter.Shooter;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class ShooterByRPM extends ShooterCommand {
-	private double EPSILON = 50; //todo make static final
+	private static final double EPSILON = 50;
 	private static final double APPROXIMATE_INSERTION_TIME = 5; //approximate amount of roborio cycles between funnel activation and shooting
 	private double lastSpeed;
 	protected double target;
@@ -14,9 +11,8 @@ public class ShooterByRPM extends ShooterCommand {
 		this.target = target;
 	}
 	
-	public ShooterByRPM(double target,double EPSILON, int inShootingSpeedMin ) {
+	public ShooterByRPM(double target,int inShootingSpeedMin ) {
 		this(target);
-		this.EPSILON = EPSILON;
 	}
 
 

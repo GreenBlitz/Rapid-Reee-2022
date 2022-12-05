@@ -1,7 +1,6 @@
 package edu.greenblitz.pegasus.subsystems;
 
 import com.revrobotics.ColorSensorV3;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.GBSubsystem;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
