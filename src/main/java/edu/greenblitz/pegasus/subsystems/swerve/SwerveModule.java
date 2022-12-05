@@ -20,7 +20,7 @@ public class SwerveModule {
 	public double targetAngle;
 	public double targetVel;
 	private GBSparkMax angleMotor;
-	private CANSparkMax linearMotor;
+	private GBSparkMax linearMotor;
 	private AnalogInput lamprey;
 	private SimpleMotorFeedforward feedforward;
 	private double wheelCirc;
@@ -39,12 +39,14 @@ public class SwerveModule {
 						.withVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO)
 		);
 
-		linearMotor = new CANSparkMax(linearMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
-		linearMotor.setSmartCurrentLimit(30);
-		linearMotor.setClosedLoopRampRate(0.4);
-		linearMotor.setOpenLoopRampRate(0.4);
-		linearMotor.setInverted(linInverted);
-		linearMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.linTicksToMeters);
+		linearMotor = new GBSparkMax(linearMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+		linearMotor.config(new GBSparkMax.SparkMaxConfObject()
+				.withCurrentLimit(30)
+				.withRampRate(0.4)
+				.withInverted(linInverted)
+				.withPID(RobotMap.Pegasus.Swerve.linPID)
+				.withPositionConversionFactor(RobotMap.Pegasus.Swerve.linTicksToMeters)
+		);
 		
 		lamprey = new AnalogInput(lampreyID);
 		lamprey.setAverageBits(2);
