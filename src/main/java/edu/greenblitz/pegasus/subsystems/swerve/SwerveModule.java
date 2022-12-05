@@ -7,6 +7,7 @@ import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.Dataset;
 import edu.greenblitz.pegasus.utils.GBMath;
 import edu.greenblitz.pegasus.utils.PIDObject;
+import edu.greenblitz.pegasus.utils.motors.GBSparkMax;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -18,7 +19,7 @@ public class SwerveModule {
 	private int isReversed = 1;
 	public double targetAngle;
 	public double targetVel;
-	private CANSparkMax angleMotor;
+	private GBSparkMax angleMotor;
 	private CANSparkMax linearMotor;
 	private AnalogInput lamprey;
 	private SimpleMotorFeedforward feedforward;
@@ -26,13 +27,17 @@ public class SwerveModule {
 
 	public	 SwerveModule (int angleMotorID, int linearMotorID, int lampreyID, boolean linInverted) {
 		//SET ANGLE MOTO
-		angleMotor = new CANSparkMax(angleMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
-		angleMotor.setSmartCurrentLimit(30);
-		angleMotor.setClosedLoopRampRate(0.4);
-		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
-		angleMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-		angleMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToRadians);
-		angleMotor.getEncoder().setVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
+		angleMotor = new GBSparkMax(angleMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+		angleMotor.config(
+				new GBSparkMax.SparkMaxConfObject()
+						.withIdleMode(CANSparkMax.IdleMode.kBrake)
+						.withCurrentLimit(30)
+						.withRampRate(0.4)
+						.withInverted(RobotMap.Pegasus.Swerve.angleMotorInverted)
+						.withPID(RobotMap.Pegasus.Swerve.angPID)
+						.withPositionConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToRadians)
+						.withVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO)
+		);
 
 		linearMotor = new CANSparkMax(linearMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
 		linearMotor.setSmartCurrentLimit(30);
@@ -43,7 +48,6 @@ public class SwerveModule {
 		
 		lamprey = new AnalogInput(lampreyID);
 		lamprey.setAverageBits(2);
-		configAnglePID(RobotMap.Pegasus.Swerve.angPID);
 		configLinPID(RobotMap.Pegasus.Swerve.linPID);
 		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
 		this.wheelCirc = RobotMap.Pegasus.Swerve.WHEEL_CIRC;

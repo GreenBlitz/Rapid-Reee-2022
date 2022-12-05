@@ -18,22 +18,18 @@ public class GBSparkMax extends CANSparkMax {
     public GBSparkMax(int deviceId, MotorType type) {
         super(deviceId, type);
     }
-//    public void config (SparkMaxConfObject conf){
-//        super.setSmartCurrentLimit(conf.getCurrentLimit());
-//        configPID(conf.getPidObject());
-//        setGearRatio(conf.getGearRatio());
-//        super.setClosedLoopRampRate(conf.getRampRate());
-//        super.setOpenLoopRampRate(conf.getRampRate());
-//        super.setInverted(conf.isInverted());
-//
-//    }
-
-    public void setGearRatio (double gearRatio){
-        //returning in radians
-        super.getEncoder().setPositionConversionFactor(gearRatio);
-        super.getEncoder().setVelocityConversionFactor(gearRatio);
+    public void config (SparkMaxConfObject conf){
+        super.setSmartCurrentLimit(conf.getCurrentLimit());
+        configPID(conf.getPidObject());
+        super.getEncoder().setPositionConversionFactor(conf.getPositionConversionFactor());
+        super.getEncoder().setVelocityConversionFactor(conf.getVelocityConversionFactor());
+        super.setClosedLoopRampRate(conf.getRampRate());
+        super.setOpenLoopRampRate(conf.getRampRate());
+        super.setInverted(conf.isInverted());
+        super.setIdleMode(conf.getIdleMode());
 
     }
+    
 
     public void configPID (PIDObject pidObject){
         super.getPIDController().setP(pidObject.getKp());
@@ -66,18 +62,38 @@ public class GBSparkMax extends CANSparkMax {
         public boolean isInverted() {
             return inverted;
         }
-
-        public double getGearRatio() {
-            return gearRatio;
-        }
-
         private int currentLimit = 0;
         private double rampRate = 0;
         private boolean inverted = false;
-        private double gearRatio = 1;
+        private IdleMode idleMode;
+        
+        private double positionConversionFactor;
+
+        public IdleMode getIdleMode() {
+            return idleMode;
+        }
+
+        public double getPositionConversionFactor() {
+            return positionConversionFactor;
+        }
+    
+        public double getVelocityConversionFactor() {
+            return velocityConversionFactor;
+        }
+    
+        private double velocityConversionFactor;
 
         public SparkMaxConfObject (){
 
+        }
+    
+        public SparkMaxConfObject withVelocityConversionFactor (double velocityConversionFactor){
+            this.velocityConversionFactor = velocityConversionFactor;
+            return this;
+        }
+        public SparkMaxConfObject withPositionConversionFactor (double positionConversionFactor){
+            this.positionConversionFactor = positionConversionFactor;
+            return this;
         }
 
         public SparkMaxConfObject withPID (PIDObject pidObject){
@@ -100,12 +116,11 @@ public class GBSparkMax extends CANSparkMax {
             return this;
         }
 
-        public SparkMaxConfObject withGearRatio (double gearRatio){
-            this.gearRatio = gearRatio;
+        public SparkMaxConfObject withIdleMode(IdleMode idleMode){
+            this.idleMode = idleMode;
             return this;
         }
-
-
+        
         public PIDObject getPidObject() {
             return pidObject;
         }
