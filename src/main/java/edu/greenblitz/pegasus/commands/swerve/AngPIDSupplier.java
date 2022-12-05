@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus.commands.swerve;
 
 import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.subsystems.Limelight;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -20,14 +21,25 @@ public class AngPIDSupplier implements DoubleSupplier{
 		chassisPid = new PIDController(RobotMap.Pegasus.Swerve.rotationPID.getKp(),RobotMap.Pegasus.Swerve.rotationPID.getKi(),RobotMap.Pegasus.Swerve.rotationPID.getKd());
 		chassisPid.enableContinuousInput(0,2*Math.PI); //min and max
 	}
+	
+	private double getAngVelDiffByVision(){
+		double vy = SwerveChassis.getInstance().getCurSpeed().vyMetersPerSecond;
+		double vx = SwerveChassis.getInstance().getCurSpeed().vxMetersPerSecond;
+		double dx = Limelight.getInstance().targetPos().getX();
+		double dy = Limelight.getInstance().targetPos().getY();
+		//(Vy*dx + Vx*dy)/(dx**2 + dy**2)
+		return ((vy*dx + vx*dy)/(dx*dx + dy*dy));
+	}
 
 	@Override
 	public double getAsDouble() {
 		double kp = SmartDashboard.getNumber("kp",1);
 		double kd = SmartDashboard.getNumber("kd",0);
 		double ki = SmartDashboard.getNumber("ki",0);
+		double ff = getAngVelDiffByVision();
 		chassisPid.setPID(kp,ki,kd);
-		double input = chassisPid.calculate(SwerveChassis.getInstance().getChassisAngle(),ang.getAsDouble());
+		SmartDashboard.putNumber("ff", ff);
+		double input = chassisPid.calculate(SwerveChassis.getInstance().getChassisAngle(),ang.getAsDouble());// + ff;
 		SmartDashboard.putNumber("ang input", input);
 		return input;
 	}
