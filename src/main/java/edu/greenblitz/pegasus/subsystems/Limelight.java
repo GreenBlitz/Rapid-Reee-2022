@@ -30,10 +30,19 @@ public class Limelight extends GBSubsystem {
 		PhotonTrackedTarget target = result.getBestTarget();
 		return GBMath.modulo(Math.toRadians(target.getYaw()),2 * Math.PI);
 	}
+	
+	/**
+	 * it is minus because photon vision is inverted
+	 * @return the curr angle minus the target angle
+	 */
 	public double fieldRelativeTargetYaw(){
 		return GBMath.modulo(SwerveChassis.getInstance().getChassisAngle() - getYawTarget(), 2* Math.PI);
 	}
 	
+	/**
+	 *
+	 * @return an array of three dimensions [x - forward , y - left, z - up]
+	 */
 	public Transform3d targetPos(){
 		var result = camera.getLatestResult();
 		if (!result.hasTargets()){return new Transform3d();}

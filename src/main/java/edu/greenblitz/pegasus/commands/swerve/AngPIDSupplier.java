@@ -22,6 +22,13 @@ public class AngPIDSupplier implements DoubleSupplier{
 		chassisPid.enableContinuousInput(0,2*Math.PI); //min and max
 	}
 	
+	/**
+	 * vx - the speed of the robot in x.
+	 * vy - the speed of the robot in y.
+	 * dx - the distance from the vision target.
+	 * dy - the distance in x from the vision target.
+	 * @return the equitation of the feedforward.
+	 */
 	private double getAngVelDiffByVision(){
 		double vy = SwerveChassis.getInstance().getCurSpeed().vyMetersPerSecond;
 		double vx = SwerveChassis.getInstance().getCurSpeed().vxMetersPerSecond;
