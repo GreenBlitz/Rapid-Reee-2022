@@ -1,7 +1,7 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.shooter.ShootByConstant;
-import edu.greenblitz.pegasus.commands.swerve.CalibrateLampreyByNeo;
+import edu.greenblitz.pegasus.commands.swerve.calibration.CalibrateAll;
 import edu.greenblitz.pegasus.utils.commands.GBCommand;
 import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
@@ -18,6 +18,7 @@ import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 
 public class OI {
@@ -84,8 +85,7 @@ public class OI {
 		});
 		
 		mainJoystick.X.whileHeld(new ShootByConstant(0.5));
-		secondJoystick.B.whenPressed(new CalibrateLampreyByNeo());
-		
+
 	}
 	
 	private void initRealButtons() {

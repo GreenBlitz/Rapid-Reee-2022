@@ -29,7 +29,7 @@ public class SwerveModule {
 		angleMotor.setSmartCurrentLimit(30);
 		angleMotor.setClosedLoopRampRate(0.4);
 		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
-
+		angleMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
 		angleMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToRadians);
 		angleMotor.getEncoder().setVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
 
@@ -94,10 +94,14 @@ public class SwerveModule {
 	/** resetEncoderToValue - reset the angular encoder to RADIANS */
 	public void resetEncoderToValue(double angle) {
 		angleMotor.getEncoder().setPosition(angle);
-	} //todo combine both into same overload
+	}
 	
 	public void resetEncoderToValue(){
 		angleMotor.getEncoder().setPosition(0);
+	}
+
+	public void resetEncoderByLamprey(){
+		resetEncoderToValue(Calibration.FRONT_LEFT.linearlyInterpolate(getLampreyVoltage())[0] /252 *2*Math.PI);
 	}
 
 	public void configLinPID(PIDObject pidObject) {

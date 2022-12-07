@@ -31,6 +31,8 @@ public class Dashboard extends GBSubsystem {
 
 				SmartDashboard.putNumber("FR-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT)), 360));
 				SmartDashboard.putNumber("FL-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_LEFT)), 360));
+				SmartDashboard.putNumber("FL-angle-lamprey", SwerveChassis.getInstance().getModuleLampreyVoltage(SwerveChassis.Module.FRONT_LEFT));
+				SmartDashboard.putNumber("FR-angle-lamprey", SwerveChassis.getInstance().getModuleLampreyVoltage(SwerveChassis.Module.FRONT_RIGHT));
 				SmartDashboard.putNumber("BR-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
 				SmartDashboard.putNumber("BL-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 360));
 

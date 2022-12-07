@@ -27,7 +27,7 @@ public class Robot extends TimedRobot {
 		//swerve
 		
 		SwerveChassis.getInstance().resetChassisAngle();
-
+		SwerveChassis.getInstance().resetAllEncoders();
 //		SwerveChassis.getInstance().resetAllEncoders();
 //		SwerveChassis.getInstance().resetAllEncodersByValues(); works
 //		SwerveChassis.getInstance().resetChassisAngle();

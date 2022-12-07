@@ -1,20 +1,25 @@
-package edu.greenblitz.pegasus.commands.swerve;
+package edu.greenblitz.pegasus.commands.swerve.calibration;
 
 import edu.greenblitz.pegasus.OI;
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.subsystems.swerve.SwerveModule;
 import edu.greenblitz.pegasus.utils.Dataset;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
-public class CalibrateLampreyByNeo extends SwerveCommand{
+public class CalibrateLampreyByNeo extends SwerveCommand {
 
 	private Dataset lampreyToNeoTicks;
-	private static final double POWER = 0.02;
+	private SwerveChassis.Module module;
 
-	public CalibrateLampreyByNeo(){
+	public CalibrateLampreyByNeo(SwerveChassis.Module module){
 		lampreyToNeoTicks = new Dataset(2);
+		this.module = module;
 	}
 
 	@Override
@@ -27,10 +32,11 @@ public class CalibrateLampreyByNeo extends SwerveCommand{
 	@Override
 	public void execute() {
 		super.execute();
-		int currNeoTicks = (int)Math.round(swerve.getModuleAngle(SwerveChassis.Module.FRONT_LEFT) *252);
+		SmartDashboard.putNumber("tick", swerve.getModuleAngle(module));
+		int currNeoTicks = (int)Math.round(swerve.getModuleAngle(module) / 0.024933276697993);
 		SmartDashboard.putNumber("curr tick", currNeoTicks);
-		if (!lampreyToNeoTicks.containsKey(currNeoTicks)){
-			lampreyToNeoTicks.addDatapoint(swerve.getModuleLampreyVoltage(SwerveChassis.Module.FRONT_LEFT), new double[]{currNeoTicks});
+		if (!lampreyToNeoTicks.containsValue(new double[]{currNeoTicks})){
+			lampreyToNeoTicks.addDatapoint(swerve.getModuleLampreyVoltage(module), new double[]{currNeoTicks});
 		}
 	}
 
@@ -48,14 +54,14 @@ public class CalibrateLampreyByNeo extends SwerveCommand{
 	@Override
 	public void end(boolean interrupted) {
 		super.end(interrupted);
-		System.out.println(lampreyToNeoTicks);
+		try {
+			PrintWriter out = new PrintWriter("/home/lvuser/"+module+".txt");
+			out.println(lampreyToNeoTicks);
+			out.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
 	}
 
-	public static void printMap(HashMap<Double, Integer> map){
-		StringBuilder out = new StringBuilder("private HashMap<Double, Double> lampreyToNeoRadians;\nlampreyToNeoRadians = new HashMap<>();");
-		for (double key : map.keySet()) {
-			out.append("lampreyToNeoRadians.put(").append(key).append(", ").append(map.get(key)).append(");\n");
-		}
-		System.out.println(out);
-	}
 }

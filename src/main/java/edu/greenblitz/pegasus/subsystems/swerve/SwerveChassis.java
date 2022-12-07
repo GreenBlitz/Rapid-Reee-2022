@@ -64,6 +64,7 @@ public class SwerveChassis extends GBSubsystem {
 				new Rotation2d(this.getChassisAngle()),
 				RobotMap.Pegasus.Swerve.initialRobotPosition
 		);
+
 	}
 
 
@@ -108,10 +109,10 @@ public class SwerveChassis extends GBSubsystem {
 
 	/** resetting all the angle motor's encoders to 0 */
 	public void resetAllEncoders() {
-		getModule(Module.FRONT_LEFT).resetEncoderToValue();
-		getModule(Module.FRONT_RIGHT).resetEncoderToValue();
-		getModule(Module.BACK_LEFT).resetEncoderToValue();
-		getModule(Module.BACK_RIGHT).resetEncoderToValue();
+		getModule(Module.FRONT_LEFT).resetEncoderByLamprey();
+		getModule(Module.FRONT_RIGHT).resetEncoderByLamprey();
+		getModule(Module.BACK_LEFT).resetEncoderByLamprey();
+		getModule(Module.BACK_RIGHT).resetEncoderByLamprey();
 	}
 	
 	

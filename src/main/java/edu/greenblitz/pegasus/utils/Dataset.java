@@ -118,13 +118,13 @@ public class Dataset {
 
 	@Override
 	public String toString() {
-		StringBuilder ret = new StringBuilder("Dateset = \n");
+		StringBuilder ret = new StringBuilder("Dataset dataset = new Dataset(" + dimension + ");\n");
 		for (TwoTuple<Double, double[]> val : data){
-			ret.append("(").append(val.getFirst()).append(", ");
+			ret.append("dataset.addDatapoint(").append(val.getFirst()).append(", new double[]{");
 			for (double d : val.getSecond()){
 				ret.append(d).append(", ");
 			}
-			ret.append(")\n");
+			ret.append("});\n");
 		}
 		return ret.toString();
 	}
@@ -149,4 +149,5 @@ public class Dataset {
 		}
 		return false;
 	}
+
 }
