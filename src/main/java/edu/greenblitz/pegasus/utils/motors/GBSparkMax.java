@@ -18,6 +18,13 @@ public class GBSparkMax extends CANSparkMax {
     public GBSparkMax(int deviceId, MotorType type) {
         super(deviceId, type);
     }
+
+
+    /**
+     * configs the motor settings using SparkMaxConfObject
+     *
+     * @param conf configObject, uses builder
+     */
     public void config (SparkMaxConfObject conf){
         super.setSmartCurrentLimit(conf.getCurrentLimit());
         configPID(conf.getPidObject());
