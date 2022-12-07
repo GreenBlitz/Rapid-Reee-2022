@@ -2,13 +2,11 @@ package edu.greenblitz.pegasus.subsystems.swerve;
 
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.PigeonGyro;
-import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.greenblitz.pegasus.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.utils.GBMath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveChassis extends GBSubsystem {
 	
@@ -28,28 +26,28 @@ public class SwerveChassis extends GBSubsystem {
 
 	public SwerveChassis() {
 
-		this.frontRight  = new SwerveModule(
+		this.frontRight  = new KazaSwerveModule(
 				RobotMap.Pegasus.Swerve.Module1.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module1.linMotorID,
 				RobotMap.Pegasus.Swerve.Module1.lampryID,
 				RobotMap.Pegasus.Swerve.Module1.INVERTED
 		);
 
-		this.frontLeft = new SwerveModule(
+		this.frontLeft = new KazaSwerveModule(
 				RobotMap.Pegasus.Swerve.Module2.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module2.linMotorID,
 				RobotMap.Pegasus.Swerve.Module2.lampryID,
 				RobotMap.Pegasus.Swerve.Module2.INVERTED
 		);
 
-		this.backRight = new SwerveModule(
+		this.backRight = new KazaSwerveModule(
 				RobotMap.Pegasus.Swerve.Module3.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module3.linMotorID,
 				RobotMap.Pegasus.Swerve.Module3.lampryID,
 				RobotMap.Pegasus.Swerve.Module3.INVERTED
 		);
 
-		this.backLeft = new SwerveModule(
+		this.backLeft = new KazaSwerveModule(
 				RobotMap.Pegasus.Swerve.Module4.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module4.linMotorID,
 				RobotMap.Pegasus.Swerve.Module4.lampryID,
@@ -133,7 +131,7 @@ public class SwerveChassis extends GBSubsystem {
 	
 	/** get the lamprey value of a specific module */
 	public double getModuleLampreyValue(Module module) {
-		return getModule(module).getLampreyValue();
+		return getModule(module).getAbsoluteEncoderValue();
 	}
 //
 //	public double getLampreyAngle(Module module) {
@@ -205,12 +203,6 @@ public class SwerveChassis extends GBSubsystem {
 	public PigeonGyro getPigeonGyro() {
 		return pigeonGyro;
 	}
-
-	@Deprecated
-	public void moveByAngle(double angle, SwerveModule module){
-
-	}
-
 
 	/**
 	 * moving a single module to radians by power.
