@@ -3,11 +3,12 @@ package edu.greenblitz.pegasus.commands.intake.extender;
 public class ToggleRoller extends ExtenderCommand {
 	@Override
 	public void initialize() {
-		intake.toggleExtender();
+		intake.extend();
 	}
-
+	
 	@Override
-	public boolean isFinished() {
-		return true;
+	public void end(boolean interrupted) {
+		intake.retract();
 	}
+	
 }

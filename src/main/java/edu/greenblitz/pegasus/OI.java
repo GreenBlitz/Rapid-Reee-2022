@@ -15,19 +15,22 @@ import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.shooter.FlipShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
+import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
+import edu.greenblitz.pegasus.subsystems.Intake;
+import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.utils.DigitalInputMap;
+import edu.greenblitz.pegasus.utils.commands.GBCommand;
+import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 
 
 public class OI {
 	
-	public enum IOModes {
-		DEBUG,/* REAL,*/ AMIR
-	}
 	
-	private static final IOModes IOMode = IOModes.DEBUG; //decides which set of controls to init.
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -37,17 +40,8 @@ public class OI {
 	private OI() {
 		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.1);
 		secondJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.SECOND, 0.2);
-		switch (IOMode) {
-			case DEBUG:
-				initDebugButtons();
-				break;
-//			case REAL:
-//				initRealButtons();
-//				break;
-			case AMIR:
-				initAmirButtons(); //todo do i really need to explain
-
-		}
+		initButtons();
+		
 	}
 	
 	public static OI getInstance() {
@@ -56,104 +50,29 @@ public class OI {
 		}
 		return instance;
 	}
-	
-	private void initDebugButtons() {
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, true));
-
-		mainJoystick.Y.whenPressed(new SwerveCommand() {
-			@Override
-			public void initialize() {
-				swerve.resetChassisAngle();
-			}
-
-			@Override
-			public boolean isFinished() {
-				return true;
-			}
-		});
-
-		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
-			@Override
-			public void initialize() {
-				SwerveChassis.getInstance().resetAllEncoders();
-			}
-
-			@Override
-			public boolean isFinished() {
-				return true;
-			}
-		});
-		
-		mainJoystick.X.whileHeld(new ShootByConstant(0.5));
-
-	}
-	
-	private void initRealButtons() {
-	}
-	
-	private void initAmirButtons() {
-		//Indexing.getInstance().setDefaultCommand(new HandleBalls());
+	private void initButtons() {
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
-
-		mainJoystick.Y.whenPressed(new SwerveCommand() {
-			@Override
-			public void initialize() {
-				swerve.resetChassisAngle();
-				SmartDashboard.putNumber("pigeon",swerve.getChassisAngle());
-			}
-
-			@Override
-			public boolean isFinished() {
-				return true;
-			}
-		});
-
-		mainJoystick.POV_UP.whenPressed(new GBCommand() { //todo use instantCommand and dont have buttons disable proper control
-			@Override
-			public void initialize() {
-				SwerveChassis.getInstance().resetAllEncoders();
-			}
-
-			@Override
-			public boolean isFinished() {
-
-				return true;
-			}
-		});
-
-		mainJoystick.R1.whileHeld(new GBCommand() { //todo make whenHeld possibly interruptible=false
-			@Override
-			public void initialize() {
-				new RetractRoller().schedule();
-			}
-
-			@Override
-			public void end(boolean interrupted) {
-				new ExtendRoller().schedule();
-			}
-		});
 		
-		secondJoystick.Y.whileHeld(new EjectEnemyBallFromGripper());
+		mainJoystick.Y.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetChassisAngle()));
 		
-		secondJoystick.R1.whileHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM) { //todo replace with .andThan(new stopShooter())
-			@Override
-			public void end(boolean interrupted) {
-				super.end(interrupted);
-				shooter.setSpeedByPID(0);
-			}
-		});
+		mainJoystick.POV_UP.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetAllEncoders()));
 		
-		secondJoystick.L1.whenPressed(new FlipShooter()); //todo delete the whole-flipping-concept
+		mainJoystick.R1.whenHeld(new StartEndCommand(() -> Intake.getInstance().getExtender().retract(),
+				() -> Intake.getInstance().getExtender().extend()));
 		
-		secondJoystick.A.whileHeld(new InsertIntoShooter());
-
-
-		secondJoystick.B.whileHeld(new RunRoller());
-
+		secondJoystick.Y.whenHeld(new EjectEnemyBallFromGripper());
 		
-		secondJoystick.START.whenPressed(new ToggleRoller()); //todo use .toggle
+		secondJoystick.R1.whenHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM).andThen(new StopShooter()));
+		
+		secondJoystick.A.whenHeld(new InsertIntoShooter());
+		
+		secondJoystick.B.whenHeld(new RunRoller().alongWith(new RunFunnel().until(() -> DigitalInputMap.getInstance().getValue(0))));
+		
+		
+		secondJoystick.START.toggleWhenPressed(new ToggleRoller());
 		secondJoystick.POV_DOWN.whileHeld(new RunFunnel());
 		secondJoystick.POV_UP.whenPressed(new ShooterEvacuate());
+		
 	}
 	
 	
@@ -173,7 +92,4 @@ public class OI {
 		isHandled = false;
 	}
 	
-	public IOModes getIOMode() {
-		return IOMode;
-	}
 }
