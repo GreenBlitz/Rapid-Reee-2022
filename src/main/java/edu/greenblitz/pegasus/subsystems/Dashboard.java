@@ -30,6 +30,7 @@ public class Dashboard extends GBSubsystem {
 				SmartDashboard.putNumber("get curr y",SwerveChassis.getInstance().getCurSpeed().vyMetersPerSecond);
 				SmartDashboard.putNumber("dx", Limelight.getInstance().targetPos().getX());
 				SmartDashboard.putNumber("dy", Limelight.getInstance().targetPos().getY());
+				SmartDashboard.putBoolean("target",Limelight.getInstance().FindTarget());
 
 				SmartDashboard.putString("alliance", DriverStation.getAlliance().toString());
 		

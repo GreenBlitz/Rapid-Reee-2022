@@ -35,6 +35,9 @@ public class AngPIDSupplier implements DoubleSupplier{
 		double dx = Limelight.getInstance().targetPos().getX();
 		double dy = Limelight.getInstance().targetPos().getY();
 		//(Vy*dx + Vx*dy)/(dx**2 + dy**2)
+		if(dx == 0 && dy == 0) {
+			return 0;
+		}
 		return ((vy*dx + vx*dy)/(dx*dx + dy*dy));
 	}
 

@@ -44,7 +44,6 @@ public class Limelight extends GBSubsystem {
 	 */
 	public Transform3d targetPos(){
 		var result = camera.getLatestResult();
-		if (!result.hasTargets()){return new Transform3d();}
 		Transform3d target = result.getBestTarget().getBestCameraToTarget();
 		return target;
 	}
