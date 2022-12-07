@@ -14,7 +14,6 @@ public class RobotMap {
 		public static class motors {
 			public final static double SPARKMAX_TICKS_PER_RADIAN = Math.PI * 2;
 			public final static double SPARKMAX_VELOCITY_UNITS_TO_RPM = 1;
-
 		}
 
 		public static class gyro {
@@ -109,14 +108,13 @@ public class RobotMap {
 			public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
 
 			public static final double ANG_GEAR_RATIO = 1 / 6.0; //todo maybe 6.0 /1?   input/output
-			public static final double LIN_GEAR_RATIO = 8.0;
+			public static final double LIN_GEAR_RATIO = 1 / 8.0;
 
 			public static final double MAX_VELOCITY = /*3.7*/ 4.5; // m/s //todo
 			public static final double MAX_ANGULAR_SPEED = 5;
 
-
 			public static final double angleTicksToWheelToRPM = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_VELOCITY_UNITS_TO_RPM;
-			public static final double linTicksToWheelToRPM = Swerve.LIN_GEAR_RATIO * motors.SPARKMAX_VELOCITY_UNITS_TO_RPM;
+			public static final double LIN_TICKS_TO_METER_PER_SEC = Swerve.LIN_GEAR_RATIO * (motors.SPARKMAX_VELOCITY_UNITS_TO_RPM / 60) * WHEEL_CIRC;
 
 			public static final double angleTicksToRadians = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN;
 

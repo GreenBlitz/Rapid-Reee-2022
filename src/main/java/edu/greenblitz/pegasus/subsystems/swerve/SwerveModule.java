@@ -25,7 +25,7 @@ public class SwerveModule {
 	private SimpleMotorFeedforward feedforward;
 	private double wheelCirc;
 
-	public	 SwerveModule (int angleMotorID, int linearMotorID, int lampreyID, boolean linInverted) {
+	public SwerveModule (int angleMotorID, int linearMotorID, int lampreyID, boolean linInverted) {
 		//SET ANGLE MOTO
 		angleMotor = new GBSparkMax(angleMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
 		angleMotor.config(
@@ -36,7 +36,7 @@ public class SwerveModule {
 						.withInverted(RobotMap.Pegasus.Swerve.angleMotorInverted)
 						.withPID(RobotMap.Pegasus.Swerve.angPID)
 						.withPositionConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToRadians)
-						.withVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO)
+						.withVelocityConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToWheelToRPM)
 		);
 
 		linearMotor = new GBSparkMax(linearMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -46,11 +46,11 @@ public class SwerveModule {
 				.withInverted(linInverted)
 				.withPID(RobotMap.Pegasus.Swerve.linPID)
 				.withPositionConversionFactor(RobotMap.Pegasus.Swerve.linTicksToMeters)
+				.withVelocityConversionFactor(RobotMap.Pegasus.Swerve.LIN_TICKS_TO_METER_PER_SEC)
 		);
 		
 		lamprey = new AnalogInput(lampreyID);
 		lamprey.setAverageBits(2);
-		configLinPID(RobotMap.Pegasus.Swerve.linPID);
 		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
 		this.wheelCirc = RobotMap.Pegasus.Swerve.WHEEL_CIRC;
 	}
@@ -87,7 +87,7 @@ public class SwerveModule {
 	}
 
 	public double getCurrentVelocity() {
-		return (linearMotor.getEncoder().getVelocity() / RobotMap.Pegasus.Swerve.linTicksToWheelToRPM);
+		return (linearMotor.getEncoder().getVelocity());
 	}
 
 	public void rotateByAngle(double angle) {
@@ -112,23 +112,12 @@ public class SwerveModule {
 	}
 
 	public void configLinPID(PIDObject pidObject) {
-		linearMotor.getPIDController().setP(pidObject.getKp());
-		linearMotor.getPIDController().setI(pidObject.getKi());
-		linearMotor.getPIDController().setD(pidObject.getKd());
-		linearMotor.getPIDController().setFF(pidObject.getKf());
-		linearMotor.getPIDController().setIZone(pidObject.getIZone());
-		linearMotor.getPIDController().setOutputRange(-pidObject.getMaxPower(), pidObject.getMaxPower());
+		linearMotor.configPID(pidObject);
 	}
 
 	public void configAnglePID(PIDObject pidObject) {
-		angleMotor.getPIDController().setP(pidObject.getKp());
-		angleMotor.getPIDController().setI(pidObject.getKi());
-		angleMotor.getPIDController().setD(pidObject.getKd());
-		angleMotor.getPIDController().setFF(pidObject.getKf());
-		angleMotor.getPIDController().setIZone(pidObject.getIZone());
-		angleMotor.getPIDController().setOutputRange(-pidObject.getMaxPower(), pidObject.getMaxPower());
+		angleMotor.configPID(pidObject);
 	}
-
 
 	private void setLinSpeed(double speed) {
 		speed *= isReversed;
