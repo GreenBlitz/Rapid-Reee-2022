@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.AnalogInput;
 public class SwerveModule {
 
 
-	private int isReversed = 1;
 	public double targetAngle;
 	public double targetVel;
 	private GBSparkMax angleMotor;
@@ -37,6 +36,7 @@ public class SwerveModule {
 						.withPID(RobotMap.Pegasus.Swerve.angPID)
 						.withPositionConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToRadians)
 						.withVelocityConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToWheelToRPM)
+
 		);
 
 		linearMotor = new GBSparkMax(linearMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -120,7 +120,6 @@ public class SwerveModule {
 	}
 
 	private void setLinSpeed(double speed) {
-		speed *= isReversed;
 		linearMotor.getPIDController().setReference(speed,ControlType.kVelocity, 0, feedforward.calculate(speed));
 	}
 
@@ -135,14 +134,6 @@ public class SwerveModule {
 		return targetAngle;
 	}
 
-	public double getTargetVel() {
-		return targetVel * isReversed;
-	}
-
-	public int getIsReversed() {
-		return isReversed;
-	}
-	
 	public SwerveModuleState getModuleState (){
 		return new SwerveModuleState(getCurrentVelocity(),new Rotation2d(this.getModuleAngle()));
 	}
