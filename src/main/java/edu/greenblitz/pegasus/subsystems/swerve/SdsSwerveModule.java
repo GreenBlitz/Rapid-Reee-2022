@@ -14,8 +14,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class SdsSwerveModule implements SwerveModule{
-	public static final double ANG_GEAR_RATIO = 1 / 6.0; //   input/output
-	public static final double LIN_GEAR_RATIO = 1 / 8.0; //
+	public static final double ANG_GEAR_RATIO = 1 / (150.0/7); //   input/output
+	public static final double LIN_GEAR_RATIO = 1 / 8.0;
 
 	public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
 	public static final double linTicksToMeters = LIN_GEAR_RATIO * RobotMap.Pegasus.motors.FALCON_TICKS_PER_RADIAN * WHEEL_CIRC;
