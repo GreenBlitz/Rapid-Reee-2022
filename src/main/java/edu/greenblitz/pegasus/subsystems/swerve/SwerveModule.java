@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.utils.Dataset;
 import edu.greenblitz.pegasus.utils.GBMath;
 import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -29,7 +30,7 @@ public class SwerveModule {
 		angleMotor.setSmartCurrentLimit(30);
 		angleMotor.setClosedLoopRampRate(0.4);
 		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
-
+		angleMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 		angleMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToRadians);
 		angleMotor.getEncoder().setVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
 
@@ -94,10 +95,14 @@ public class SwerveModule {
 	/** resetEncoderToValue - reset the angular encoder to RADIANS */
 	public void resetEncoderToValue(double angle) {
 		angleMotor.getEncoder().setPosition(angle);
-	} //todo combine both into same overload
+	}
 	
 	public void resetEncoderToValue(){
 		angleMotor.getEncoder().setPosition(0);
+	}
+
+	public void resetEncoderByLamprey(Dataset dataset){
+		resetEncoderToValue(dataset.linearlyInterpolate(getLampreyVoltage())[0] * RobotMap.Pegasus.Swerve.NEO_PHYSICAL_TICKS_TO_RADIANS);
 	}
 
 	public void configLinPID(PIDObject pidObject) {
@@ -148,8 +153,8 @@ public class SwerveModule {
 	}
 
 	/** get the lamprey's angle raw units (analog to digital converter)*/
-	public double getLampreyValue(){
-		return lamprey.getValue();
+	public double getLampreyVoltage(){
+		return lamprey.getVoltage();
 	}
 	public void setRotPowerOnlyForCalibrations(double power){
 		angleMotor.set(power);

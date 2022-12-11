@@ -2,13 +2,11 @@ package edu.greenblitz.pegasus.subsystems.swerve;
 
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.PigeonGyro;
-import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.greenblitz.pegasus.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.utils.GBMath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveChassis extends GBSubsystem {
 	
@@ -66,6 +64,7 @@ public class SwerveChassis extends GBSubsystem {
 				new Rotation2d(this.getChassisAngle()),
 				RobotMap.Pegasus.Swerve.initialRobotPosition
 		);
+
 	}
 
 
@@ -110,10 +109,10 @@ public class SwerveChassis extends GBSubsystem {
 
 	/** resetting all the angle motor's encoders to 0 */
 	public void resetAllEncoders() {
-		getModule(Module.FRONT_LEFT).resetEncoderToValue();
-		getModule(Module.FRONT_RIGHT).resetEncoderToValue();
-		getModule(Module.BACK_LEFT).resetEncoderToValue();
-		getModule(Module.BACK_RIGHT).resetEncoderToValue();
+		getModule(Module.FRONT_LEFT).resetEncoderByLamprey(Calibration.FRONT_LEFT);
+		getModule(Module.FRONT_RIGHT).resetEncoderByLamprey(Calibration.FRONT_RIGHT);
+		getModule(Module.BACK_LEFT).resetEncoderByLamprey(Calibration.BACK_LEFT);
+		getModule(Module.BACK_RIGHT).resetEncoderByLamprey(Calibration.BACK_RIGHT);
 	}
 	
 	
@@ -131,9 +130,9 @@ public class SwerveChassis extends GBSubsystem {
 	 * ALL IN RADIANS, NOT DEGREES
 	 */
 	
-	/** get the lamprey value of a specific module */
-	public double getModuleLampreyValue(Module module) {
-		return getModule(module).getLampreyValue();
+	/** get the lamprey voltage of a specific module supposedly between 0 and 5*/
+	public double getModuleLampreyVoltage(Module module) {
+		return getModule(module).getLampreyVoltage();
 	}
 //
 //	public double getLampreyAngle(Module module) {
