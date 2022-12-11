@@ -8,7 +8,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
-public class PathFollowerCommand extends SwerveControllerCommand {//todo move to experimental branch
+public class PathFollowerCommand extends SwerveControllerCommand {
 	public PathFollowerCommand(Trajectory trajectory){
 		
 		super(
