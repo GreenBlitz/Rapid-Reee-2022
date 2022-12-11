@@ -120,6 +120,9 @@ public class RobotMap {
 			public static final double linTicksToWheelMetersPerSec = linTicksToWheelToRPM * 60 / WHEEL_CIRC;
 
 			public static final double angleTicksToRadians = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN;
+
+			public static final double NEO_PHYSICAL_TICKS_TO_RADIANS = angleTicksToRadians / 42; //do not use unless you understand the meaning
+
 			public static final double linTicksToMeters = Swerve.LIN_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN * WHEEL_CIRC;
 
 

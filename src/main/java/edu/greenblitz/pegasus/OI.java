@@ -1,8 +1,6 @@
 package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
-import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
-import edu.greenblitz.pegasus.commands.intake.extender.RetractRoller;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
@@ -16,14 +14,11 @@ import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.Limelight;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
-import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 import edu.greenblitz.pegasus.subsystems.Intake;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
-import edu.greenblitz.pegasus.utils.commands.GBCommand;
 import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 
@@ -93,4 +88,5 @@ public class OI {
 		isHandled = false;
 	}
 	
+
 }
