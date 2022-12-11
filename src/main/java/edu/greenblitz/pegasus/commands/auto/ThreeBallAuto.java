@@ -5,7 +5,6 @@ import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.intake.extender.ExtendRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
 import edu.greenblitz.pegasus.commands.shooter.DoubleShoot;
-import edu.greenblitz.pegasus.commands.swerve.PathFollowerCommand;
 import edu.greenblitz.pegasus.commands.swerve.TragectoryCreator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -20,7 +19,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {//todo move to experi
 		addCommands(
 				new DoubleShoot(3000),
 				new ExtendRoller(),
-				new PathFollowerCommand(PathPlanner.loadPath("3 ball auto", RobotMap.Pegasus.Swerve.KMaxVelocity / 3, RobotMap.Pegasus.Swerve.KMMaxAcceleration / 3))
+				new PathPlannerCommand(PathPlanner.loadPath("3 ball auto", RobotMap.Pegasus.Swerve.KMaxVelocity / 3, RobotMap.Pegasus.Swerve.KMMaxAcceleration / 3))
 						.alongWith(new MoveBallUntilClick()),
 				new DoubleShoot(3000)
 		);
