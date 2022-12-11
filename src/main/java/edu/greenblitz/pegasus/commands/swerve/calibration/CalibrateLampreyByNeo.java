@@ -38,7 +38,7 @@ public class CalibrateLampreyByNeo extends SwerveCommand {
 		SmartDashboard.putNumber("curr neo tick", currNeoTicks);
 		if (!lampreyToNeoTicks.containsValue(new double[]{currNeoTicks})){
 			lampreyToNeoTicks.addDatapoint(swerve.getModuleLampreyVoltage(module), new double[]{currNeoTicks});
-		}
+		} //todo take the min value in case of clash
 	}
 
 	@Override
