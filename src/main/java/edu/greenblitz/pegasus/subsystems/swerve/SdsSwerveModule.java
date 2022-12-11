@@ -14,13 +14,22 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class SdsSwerveModule implements SwerveModule{
+	public static final double ANG_GEAR_RATIO = 1 / 6.0; //   input/output
+	public static final double LIN_GEAR_RATIO = 1 / 8.0; //
+
+	public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
+	public static final double linTicksToMeters = LIN_GEAR_RATIO * RobotMap.Pegasus.motors.FALCON_TICKS_PER_RADIAN * WHEEL_CIRC;
+	public static final double angleTicksToWheelToRPM = ANG_GEAR_RATIO * RobotMap.Pegasus.motors.FALCON_VELOCITY_UNITS_PER_RPM;
+	public static final double linTicksToWheelToRPM = LIN_GEAR_RATIO * RobotMap.Pegasus.motors.FALCON_VELOCITY_UNITS_PER_RPM;
+	public static final double angleTicksToRadians = ANG_GEAR_RATIO * RobotMap.Pegasus.motors.FALCON_TICKS_PER_RADIAN;
+
+
 	public double targetAngle;
 	public double targetVel;
 	private TalonFX angleMotor;
 	private TalonFX linearMotor;
 	private AnalogInput magEncoder;
 	private SimpleMotorFeedforward feedforward;
-	private double wheelCirc;
 
 	public SdsSwerveModule(int angleMotorID, int linearMotorID, int lampreyID, boolean linInverted) {
 		//SET ANGLE MOTO
@@ -31,7 +40,7 @@ public class SdsSwerveModule implements SwerveModule{
 		angleMotor.configClosedloopRamp(0.4);
 		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
 
-		angleMotor.configSelectedFeedbackCoefficient(RobotMap.Pegasus.Swerve.angleTicksToRadians);
+		angleMotor.configSelectedFeedbackCoefficient(/*angleTicksToRadians*/1);
 
 		linearMotor = new TalonFX(linearMotorID);
 		linearMotor.configSupplyCurrentLimit(
@@ -40,14 +49,13 @@ public class SdsSwerveModule implements SwerveModule{
 		linearMotor.configClosedloopRamp(0.4);
 		linearMotor.configOpenloopRamp(0.4);
 		linearMotor.setInverted(linInverted);
-		linearMotor.configSelectedFeedbackCoefficient(RobotMap.Pegasus.Swerve.linTicksToMeters);
+		linearMotor.configSelectedFeedbackCoefficient(linTicksToMeters);
 
 		magEncoder = new AnalogInput(lampreyID);
 		magEncoder.setAverageBits(2); //todo find real bits
 		configAnglePID(RobotMap.Pegasus.Swerve.angPID);
 		configLinPID(RobotMap.Pegasus.Swerve.linPID);
 		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
-		this.wheelCirc = RobotMap.Pegasus.Swerve.WHEEL_CIRC;
 	}
 
 
@@ -80,7 +88,7 @@ public class SdsSwerveModule implements SwerveModule{
 	@Override
 	//maybe not after gear ratio plz check ~ noam
 	public double getModuleAngle() {
-		return angleMotor.getSelectedSensorPosition();
+		return angleMotor.getSelectedSensorPosition() ;
 	}
 
 	/**

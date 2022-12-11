@@ -12,6 +12,16 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class KazaSwerveModule implements SwerveModule {
+	public static final double ANG_GEAR_RATIO = 1 / 6.0; //todo maybe 6.0 /1?   input/output
+	public static final double LIN_GEAR_RATIO = 1 / 8.0;
+
+
+	public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
+	public static final double linTicksToMeters = LIN_GEAR_RATIO * RobotMap.Pegasus.motors.SPARKMAX_TICKS_PER_RADIAN * WHEEL_CIRC;
+	public static final double angleTicksToWheelToRPM = ANG_GEAR_RATIO * RobotMap.Pegasus.motors.SPARKMAX_VELOCITY_UNITS_PER_RPM;
+	public static final double linTicksToWheelToRPM = LIN_GEAR_RATIO * RobotMap.Pegasus.motors.SPARKMAX_VELOCITY_UNITS_PER_RPM;
+	public static final double angleTicksToRadians = ANG_GEAR_RATIO * RobotMap.Pegasus.motors.SPARKMAX_TICKS_PER_RADIAN;
+
 
 
 	public double targetAngle;
@@ -20,7 +30,6 @@ public class KazaSwerveModule implements SwerveModule {
 	private CANSparkMax linearMotor;
 	private AnalogInput lamprey;
 	private SimpleMotorFeedforward feedforward;
-	private double wheelCirc;
 
 	public KazaSwerveModule(int angleMotorID, int linearMotorID, int lampreyID, boolean linInverted) {
 		//SET ANGLE MOTO
@@ -29,22 +38,21 @@ public class KazaSwerveModule implements SwerveModule {
 		angleMotor.setClosedLoopRampRate(0.4);
 		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
 
-		angleMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToRadians);
-		angleMotor.getEncoder().setVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
+		angleMotor.getEncoder().setPositionConversionFactor(angleTicksToRadians);
+		angleMotor.getEncoder().setVelocityConversionFactor(ANG_GEAR_RATIO);
 
 		linearMotor = new CANSparkMax(linearMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
 		linearMotor.setSmartCurrentLimit(30);
 		linearMotor.setClosedLoopRampRate(0.4);
 		linearMotor.setOpenLoopRampRate(0.4);
 		linearMotor.setInverted(linInverted);
-		linearMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.linTicksToMeters);
+		linearMotor.getEncoder().setPositionConversionFactor(linTicksToMeters);
 		
 		lamprey = new AnalogInput(lampreyID);
 		lamprey.setAverageBits(2);
 		configAnglePID(RobotMap.Pegasus.Swerve.angPID);
 		configLinPID(RobotMap.Pegasus.Swerve.linPID);
 		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
-		this.wheelCirc = RobotMap.Pegasus.Swerve.WHEEL_CIRC;
 	}
 
 //	public double getLampreyAngle() { // in radians;
@@ -83,7 +91,7 @@ public class KazaSwerveModule implements SwerveModule {
 
 	@Override
 	public double getCurrentVelocity() {
-		return (linearMotor.getEncoder().getVelocity() / RobotMap.Pegasus.Swerve.linTicksToWheelToRPM);
+		return (linearMotor.getEncoder().getVelocity() / linTicksToWheelToRPM);
 	}
 
 

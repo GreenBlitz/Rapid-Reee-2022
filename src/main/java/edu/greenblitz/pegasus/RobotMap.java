@@ -13,9 +13,12 @@ public class RobotMap {
 	public static class Pegasus {
 		public static class motors {
 			public final static double SPARKMAX_TICKS_PER_RADIAN = Math.PI * 2;
-			public final static double SPARKMAX_VELOCITY_UNITS_TO_RPM = 1;
+			public final static double SPARKMAX_VELOCITY_UNITS_PER_RPM = 1;
+			public final static double FALCON_TICKS_PER_RADIAN = Math.PI / 1024;
+			public final static double FALCON_VELOCITY_UNITS_PER_RPM = 600.0 /2048;
 
 		}
+
 
 		public static class gyro {
 			public static final int pigeonID = 12;
@@ -106,20 +109,13 @@ public class RobotMap {
 		public static class Swerve {
 
 			public static final Pose2d initialRobotPosition = new Pose2d(0, 0, new Rotation2d(0));
-			public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
 
-			public static final double ANG_GEAR_RATIO = 1 / 6.0; //todo maybe 6.0 /1?   input/output
-			public static final double LIN_GEAR_RATIO = 8.0;
 
 			public static final double MAX_VELOCITY = /*3.7*/ 4.5; // m/s //todo
 			public static final double MAX_ANGULAR_SPEED = 5;
 
 
-			public static final double angleTicksToWheelToRPM = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_VELOCITY_UNITS_TO_RPM;
-			public static final double linTicksToWheelToRPM = Swerve.LIN_GEAR_RATIO * motors.SPARKMAX_VELOCITY_UNITS_TO_RPM;
 
-			public static final double angleTicksToRadians = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN;
-			public static final double linTicksToMeters = Swerve.LIN_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN * WHEEL_CIRC;
 
 
 			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
@@ -153,8 +149,8 @@ public class RobotMap {
 			public static final boolean angleMotorInverted = true;
 
 			public static class Module1 {//front right
-				public static final int linMotorID = 11;
-				public static final int SteerMotorID = 3;
+				public static final int linMotorID = 2;
+				public static final int SteerMotorID = 1;
 				public static final int lampryID = 2;
 				public static final int MIN_LAMPREY_VAL = 12;
 				public static final int MAX_LAMPREY_VAL = 4041;
