@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.utils.Dataset;
 import edu.greenblitz.pegasus.utils.GBMath;
 import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -29,7 +30,7 @@ public class SwerveModule {
 		angleMotor.setSmartCurrentLimit(30);
 		angleMotor.setClosedLoopRampRate(0.4);
 		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
-		angleMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+		angleMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 		angleMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToRadians);
 		angleMotor.getEncoder().setVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
 
@@ -100,8 +101,8 @@ public class SwerveModule {
 		angleMotor.getEncoder().setPosition(0);
 	}
 
-	public void resetEncoderByLamprey(){
-		resetEncoderToValue(Calibration.FRONT_LEFT.linearlyInterpolate(getLampreyVoltage())[0] /252 *2*Math.PI);
+	public void resetEncoderByLamprey(Dataset dataset){
+		resetEncoderToValue(dataset.linearlyInterpolate(getLampreyVoltage())[0] * RobotMap.Pegasus.Swerve.NEO_PHYSICAL_TICKS_TO_RADIANS);
 	}
 
 	public void configLinPID(PIDObject pidObject) {

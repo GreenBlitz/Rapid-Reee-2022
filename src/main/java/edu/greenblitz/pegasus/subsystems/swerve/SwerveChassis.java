@@ -109,10 +109,10 @@ public class SwerveChassis extends GBSubsystem {
 
 	/** resetting all the angle motor's encoders to 0 */
 	public void resetAllEncoders() {
-		getModule(Module.FRONT_LEFT).resetEncoderByLamprey();
-		getModule(Module.FRONT_RIGHT).resetEncoderByLamprey();
-		getModule(Module.BACK_LEFT).resetEncoderByLamprey();
-		getModule(Module.BACK_RIGHT).resetEncoderByLamprey();
+		getModule(Module.FRONT_LEFT).resetEncoderByLamprey(Calibration.FRONT_LEFT);
+		getModule(Module.FRONT_RIGHT).resetEncoderByLamprey(Calibration.FRONT_RIGHT);
+		getModule(Module.BACK_LEFT).resetEncoderByLamprey(Calibration.BACK_LEFT);
+		getModule(Module.BACK_RIGHT).resetEncoderByLamprey(Calibration.BACK_RIGHT);
 	}
 	
 	
@@ -130,7 +130,7 @@ public class SwerveChassis extends GBSubsystem {
 	 * ALL IN RADIANS, NOT DEGREES
 	 */
 	
-	/** get the lamprey value of a specific module */
+	/** get the lamprey voltage of a specific module supposedly between 0 and 5*/
 	public double getModuleLampreyVoltage(Module module) {
 		return getModule(module).getLampreyVoltage();
 	}

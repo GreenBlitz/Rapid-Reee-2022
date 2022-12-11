@@ -17,6 +17,8 @@ public class CalibrateLampreyByNeo extends SwerveCommand {
 	private Dataset lampreyToNeoTicks;
 	private SwerveChassis.Module module;
 
+	private static final double NEO_TICK_VALUE = 0.024933276697993; //supposed to be 1/42 but empiricly this is the value
+
 	public CalibrateLampreyByNeo(SwerveChassis.Module module){
 		lampreyToNeoTicks = new Dataset(2);
 		this.module = module;
@@ -26,15 +28,14 @@ public class CalibrateLampreyByNeo extends SwerveCommand {
 	public void initialize() {
 		super.initialize();
 		swerve.resetAllEncoders();
-//		swerve.rotateModuleByPower(SwerveChassis.Module.FRONT_LEFT, POWER);
 	}
 
 	@Override
 	public void execute() {
 		super.execute();
-		SmartDashboard.putNumber("tick", swerve.getModuleAngle(module));
-		int currNeoTicks = (int)Math.round(swerve.getModuleAngle(module) / 0.024933276697993);
-		SmartDashboard.putNumber("curr tick", currNeoTicks);
+		SmartDashboard.putNumber("unrounded neo tick value", swerve.getModuleAngle(module));
+		int currNeoTicks = (int)Math.round(swerve.getModuleAngle(module) / NEO_TICK_VALUE);
+		SmartDashboard.putNumber("curr neo tick", currNeoTicks);
 		if (!lampreyToNeoTicks.containsValue(new double[]{currNeoTicks})){
 			lampreyToNeoTicks.addDatapoint(swerve.getModuleLampreyVoltage(module), new double[]{currNeoTicks});
 		}
@@ -55,7 +56,7 @@ public class CalibrateLampreyByNeo extends SwerveCommand {
 	public void end(boolean interrupted) {
 		super.end(interrupted);
 		try {
-			PrintWriter out = new PrintWriter("/home/lvuser/"+module+".txt");
+			PrintWriter out = new PrintWriter("/home/lvuser/"+module+".txt"); //overwrites existing file
 			out.println(lampreyToNeoTicks);
 			out.close();
 		} catch (FileNotFoundException e) {
