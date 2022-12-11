@@ -7,6 +7,7 @@ import java.util.function.DoubleSupplier;
 
 public class VisionTargetSupplier implements DoubleSupplier {
 	double target;
+	double timeStamp;
 	boolean hasTarget = false;
 
 	/**
@@ -19,10 +20,11 @@ public class VisionTargetSupplier implements DoubleSupplier {
 	public double getAsDouble() {
 		hasTarget = hasTarget || Limelight.getInstance().FindTarget();
 		if (!hasTarget){
-			target = SwerveChassis.getInstance().getChassisAngle();
+			return SwerveChassis.getInstance().getChassisAngle();
 		}
-		if (!Limelight.getInstance().FindTarget()){return target;}
+		if (!Limelight.getInstance().FindTarget() || timeStamp == Limelight.getInstance().getTimeStamp()){return target;}
 		target = Limelight.getInstance().fieldRelativeTargetYaw();
+		timeStamp = Limelight.getInstance().getTimeStamp();
 		return target;
 	}
 }

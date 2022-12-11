@@ -56,9 +56,9 @@ public class OI {
 	
 	private void initButtons() {
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement( false));
-		mainJoystick.X.whileHeld(new MoveByVisionSupplier(true));
+		mainJoystick.X.whileHeld(new MoveByVisionSupplier(false));
 		mainJoystick.Y.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetChassisAngle()));
-
+		
 		mainJoystick.R1.whenHeld(new StartEndCommand(() -> Intake.getInstance().getExtender().retract(),
 				() -> Intake.getInstance().getExtender().extend()));
 

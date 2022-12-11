@@ -35,11 +35,7 @@ public class AngPIDSupplier implements DoubleSupplier{
 		double dx = Limelight.getInstance().targetPos().getX();
 		double dy = Limelight.getInstance().targetPos().getY();
 		if (dx == 0 || dy == 0){return 0;}
-		//(Vy*dx + Vx*dy)/(dx**2 + dy**2)
-		if(dx == 0 && dy == 0) {
-			return 0;
-		}
-		return ((vy*dx + vx*dy)/(dx*dx + dy*dy));
+		return -((vy*dx + vx*dy)/(dx*dx + dy*dy));
 	}
 
 	@Override
@@ -53,8 +49,10 @@ public class AngPIDSupplier implements DoubleSupplier{
 		SmartDashboard.putNumber("dy1", Limelight.getInstance().targetPos().getY());
 		double ff = getAngVelDiffByVision();
 		chassisPid.setPID(kp,ki,kd);
+		double pidOutput = chassisPid.calculate(SwerveChassis.getInstance().getChassisAngle(),ang.getAsDouble());
 		SmartDashboard.putNumber("ff", ff);
-		double input = chassisPid.calculate(SwerveChassis.getInstance().getChassisAngle(),ang.getAsDouble()) + ff;
+		SmartDashboard.putNumber("pid output", pidOutput);
+		double input =  pidOutput ;
 		SmartDashboard.putNumber("ang input", input);
 		return input;
 	}
