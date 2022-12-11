@@ -32,7 +32,7 @@ public class Dashboard extends GBSubsystem {
 				SmartDashboard.putNumber("error",Limelight.getInstance().targetPos().getY() - SwerveChassis.getInstance().getChassisAngle());
 				SmartDashboard.putNumber("dx", Limelight.getInstance().targetPos().getX());
 				SmartDashboard.putNumber("dy", Limelight.getInstance().targetPos().getY());
-
+				SmartDashboard.putBoolean("target",Limelight.getInstance().FindTarget());
 				SmartDashboard.putString("alliance", DriverStation.getAlliance().toString());
 		
 	}
