@@ -14,7 +14,9 @@ public class RobotMap {
 		public static class motors {
 			public final static double SPARKMAX_TICKS_PER_RADIAN = Math.PI * 2;
 			public final static double SPARKMAX_VELOCITY_UNITS_PER_RPM = 1;
-			public final static double FALCON_TICKS_PER_RADIAN = Math.PI / 1024;
+			public final static double FALCON_TICKS_PER_RADIAN = 2*Math.PI / 2048.0;
+			//1000 times too big intentionally
+			//(falcon always returns whole number which means it says exactly 6 rads per rot)
 			public final static double FALCON_VELOCITY_UNITS_PER_RPM = 600.0 /2048;
 
 		}

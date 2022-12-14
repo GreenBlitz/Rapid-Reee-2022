@@ -40,7 +40,6 @@ public class SdsSwerveModule implements SwerveModule{
 		angleMotor.configClosedloopRamp(0.4);
 		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
 
-		angleMotor.configSelectedFeedbackCoefficient(/*angleTicksToRadians*/1);
 
 		linearMotor = new TalonFX(linearMotorID);
 		linearMotor.configSupplyCurrentLimit(
@@ -57,8 +56,14 @@ public class SdsSwerveModule implements SwerveModule{
 		configLinPID(RobotMap.Pegasus.Swerve.linPID);
 		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
 	}
-
-
+	
+	public static double convertRadsToTicks(double angInRads){
+		return angInRads/angleTicksToRadians;
+	}
+	public static double convertTicksToRads(double angInTicks){
+		return angInTicks*angleTicksToRadians;
+	}
+	
 	/**
 	 * @param moduleState - @class {@link SwerveModuleState} to set the module to (angle and velocity)
 	 */
@@ -69,17 +74,17 @@ public class SdsSwerveModule implements SwerveModule{
 	}
 
 	/**
-	 * @param angle - angle to turn to in radians
+	 * @param angleInRads - angle to turn to in radians
 	 */
 	@Override
-	public void rotateToAngle(double angle) {
-		double diff = GBMath.modulo(angle - getModuleAngle(), 2 * Math.PI);
+	public void rotateToAngle(double angleInRads) {
+		double diff = GBMath.modulo(angleInRads - getModuleAngle(), 2 * Math.PI);
 		diff -= diff > Math.PI ? 2*Math.PI : 0;
-		angle = getModuleAngle() + diff;
+		angleInRads = getModuleAngle() + diff;
 
-		angleMotor.set(ControlMode.Position,angle);
+		angleMotor.set(ControlMode.Position,convertRadsToTicks(angleInRads));
 
-		targetAngle = angle;
+		targetAngle = angleInRads;
 	}
 
 	/**
@@ -88,7 +93,7 @@ public class SdsSwerveModule implements SwerveModule{
 	@Override
 	//maybe not after gear ratio plz check ~ noam
 	public double getModuleAngle() {
-		return angleMotor.getSelectedSensorPosition() ;
+		return convertTicksToRads(angleMotor.getSelectedSensorPosition()) ;
 	}
 
 	/**
@@ -100,11 +105,11 @@ public class SdsSwerveModule implements SwerveModule{
 	}
 
 	/**
-	 * @param angle - Position to set for the angular encoder (in raw sensor units).
+	 * @param angleInRads - Position to set for the angular encoder (in raw sensor units).
 	 */
 	@Override
-	public void resetEncoderToValue(double angle) {
-		angleMotor.setSelectedSensorPosition(angle);
+	public void resetEncoderToValue(double angleInRads) {
+		angleMotor.setSelectedSensorPosition(convertRadsToTicks(angleInRads));
 	}
 
 	/**
