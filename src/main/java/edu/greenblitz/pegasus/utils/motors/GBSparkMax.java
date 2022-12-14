@@ -26,6 +26,7 @@ public class GBSparkMax extends CANSparkMax {
      * @param conf configObject, uses builder
      */
     public void config (SparkMaxConfObject conf){
+        restoreFactoryDefaults();
         super.setSmartCurrentLimit(conf.getCurrentLimit());
         configPID(conf.getPidObject());
         super.getEncoder().setPositionConversionFactor(conf.getPositionConversionFactor());
