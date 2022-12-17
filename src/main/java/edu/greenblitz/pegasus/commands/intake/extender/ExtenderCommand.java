@@ -1,10 +1,13 @@
 package edu.greenblitz.pegasus.commands.intake.extender;
 
-import edu.greenblitz.pegasus.commands.intake.IntakeCommand;
+import edu.greenblitz.pegasus.subsystems.Extender;
+import edu.greenblitz.pegasus.utils.commands.GBCommand;
 
-public abstract class ExtenderCommand extends IntakeCommand {
+public abstract class ExtenderCommand extends GBCommand {
+	Extender extender;
 	public ExtenderCommand() {
 		super();
-		require(intake.getExtender());
+		extender = Extender.getInstance();
+		require(extender);
 	}
 }

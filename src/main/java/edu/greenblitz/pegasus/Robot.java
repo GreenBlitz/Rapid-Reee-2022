@@ -1,10 +1,6 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.pegasus.commands.auto.Taxi;
 import edu.greenblitz.pegasus.subsystems.Dashboard;
-import edu.greenblitz.pegasus.subsystems.Indexing;
-import edu.greenblitz.pegasus.subsystems.Pneumatics;
-import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -17,11 +13,11 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().enable();
 		
 		DigitalInputMap.getInstance();
-		Pneumatics.init();
+//		Pneumatics.init();
 		Dashboard.init();
 
-		Indexing.getInstance();
-		Shooter.create(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
+//		Indexing.getInstance();
+//		Shooter.create(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
 
 		//todo add voltage compensation
 		//swerve
@@ -85,7 +81,6 @@ public class Robot extends TimedRobot {
 //		new ExtendRoller()
 //				.andThen(new DoubleShoot(3500))
 //				.andThen
-				(new Taxi(2.5, 2)).schedule(); //THIS   //todo sendablechooser for choosing auto
 
 
 

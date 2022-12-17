@@ -44,14 +44,14 @@ public class SdsSwerveModule implements SwerveModule{
 		linearMotor = new TalonFX(linearMotorID);
 		linearMotor.configSupplyCurrentLimit(
 				new SupplyCurrentLimitConfiguration(
-						true,30,30,0));
+						true,40,40,0));
 		linearMotor.configClosedloopRamp(0.4);
 		linearMotor.configOpenloopRamp(0.4);
 		linearMotor.setInverted(linInverted);
 		linearMotor.configSelectedFeedbackCoefficient(linTicksToMeters);
 
 		magEncoder = new AnalogInput(lampreyID);
-		magEncoder.setAverageBits(2); //todo find real bits
+		magEncoder.setAverageBits(2);
 		configAnglePID(RobotMap.Pegasus.Swerve.angPID);
 		configLinPID(RobotMap.Pegasus.Swerve.linPID);
 		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
