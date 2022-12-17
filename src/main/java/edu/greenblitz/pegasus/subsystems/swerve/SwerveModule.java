@@ -3,6 +3,8 @@ package edu.greenblitz.pegasus.subsystems.swerve;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel;
+
+import edu.greenblitz.pegasus.Robot;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.GBMath;
 import edu.greenblitz.pegasus.utils.PIDObject;
@@ -22,6 +24,8 @@ public class SwerveModule {
 	private AnalogInput lamprey;
 	private SimpleMotorFeedforward feedforward;
 	private double wheelCirc;
+	private double expected_speed = 0;
+	private double expected_angle = 0;
 
 	public	 SwerveModule (int angleMotorID, int linearMotorID, int lampreyID, boolean linInverted) {
 		//SET ANGLE MOTO
@@ -58,6 +62,8 @@ public class SwerveModule {
 
 	/** sets to module to be at the given module state */
 	public void setModuleState(SwerveModuleState moduleState) {
+		expected_speed = moduleState.speedMetersPerSecond;
+		expected_angle = moduleState.angle.getDegrees();
 		setLinSpeed(moduleState.speedMetersPerSecond);
 		rotateToAngle(moduleState.angle.getRadians());
 	}
@@ -144,7 +150,11 @@ public class SwerveModule {
 	}
 	
 	public SwerveModuleState getModuleState (){
-		return new SwerveModuleState(getCurrentVelocity(),new Rotation2d(this.getModuleAngle()));
+		if (Robot.isReal()){
+		return new SwerveModuleState(getCurrentVelocity(),new Rotation2d(this.getModuleAngle()));}
+		else{
+			return new SwerveModuleState(expected_speed,Rotation2d.fromDegrees(expected_angle));
+		}
 	}
 
 	/** get the lamprey's angle raw units (analog to digital converter)*/
