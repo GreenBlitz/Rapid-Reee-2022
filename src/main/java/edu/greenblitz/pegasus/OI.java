@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.SpinnerCommand;
+import edu.greenblitz.pegasus.subsystems.Extender;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
 
@@ -32,7 +33,8 @@ public class OI {
 	
 	private void initButtons() {
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
-		mainJoystick.A.whileHeld(new SpinnerCommand());
+		mainJoystick.A.whenPressed(() -> Extender.getInstance().extend());
+		mainJoystick.A.whenReleased(() -> Extender.getInstance().retract());
 //
 //		mainJoystick.Y.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetChassisAngle()));
 //
