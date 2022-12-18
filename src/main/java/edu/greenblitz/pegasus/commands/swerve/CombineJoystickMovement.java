@@ -16,8 +16,8 @@ public class CombineJoystickMovement extends SwerveCommand {
 		this.joystick = joystick;
 		this.isSlow = isSlow;
 		if (isSlow) {
-			ANG_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_ANGULAR_SPEED * 0.8;
-			LIN_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_VELOCITY * 0.5;
+			ANG_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_ANGULAR_SPEED * 0.4;
+			LIN_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_VELOCITY * 0.2;
 		}
 	}
 

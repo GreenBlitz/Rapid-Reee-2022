@@ -32,7 +32,7 @@ public class OI {
 	
 	
 	private void initButtons() {
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, true));
 		mainJoystick.A.whenPressed(() -> Extender.getInstance().extend());
 		mainJoystick.A.whenReleased(() -> Extender.getInstance().retract());
 //
