@@ -17,6 +17,7 @@ public class SwerveChassis extends GBSubsystem {
 	private final SwerveDriveKinematics kinematics;
 
 
+
 	public enum Module {
 		FRONT_RIGHT,
 		FRONT_LEFT,
@@ -199,7 +200,10 @@ public class SwerveChassis extends GBSubsystem {
 	public Pose2d getLocation(){
 		return this.localizer.getPoseMeters();
 	}
-	public void resetLocalizer(){localizer.resetPosition(new Pose2d(),new Rotation2d());}
+	public Pose2d resetLocalizer(){
+		localizer.resetPosition(new Pose2d(),new Rotation2d());
+		return getLocation();
+	}
 	
 	public PigeonGyro getPigeonGyro() {
 		return pigeonGyro;
@@ -242,6 +246,16 @@ public class SwerveChassis extends GBSubsystem {
 
 	public SwerveModuleState getModuleState (Module module){
 		return getModule(module).getModuleState();
+	}
+
+	public SwerveModuleState[] getModuleStates (){
+		SwerveModuleState[] states = {
+				getModuleState(Module.FRONT_RIGHT),
+				getModuleState(Module.FRONT_LEFT),
+				getModuleState(Module.BACK_LEFT),
+				getModuleState(Module.BACK_RIGHT)
+		};
+		return states;
 	}
 
 }
