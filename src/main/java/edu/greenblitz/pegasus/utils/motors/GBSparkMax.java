@@ -35,6 +35,7 @@ public class GBSparkMax extends CANSparkMax {
         super.setOpenLoopRampRate(conf.getRampRate());
         super.setInverted(conf.isInverted());
         super.setIdleMode(conf.getIdleMode());
+        enableVoltageCompensation(conf.getVoltageComp());
 
     }
     
@@ -55,27 +56,31 @@ public class GBSparkMax extends CANSparkMax {
      * */
 
     public static class SparkMaxConfObject{
+
         private PIDObject pidObject = new PIDObject(1,0,0);
+
+        private int currentLimit = 0;
+        private double rampRate = 0;
+        private boolean inverted = false;
+        private IdleMode idleMode;
+
+        private double positionConversionFactor;
+
+        private double velocityConversionFactor;
+
+        private double voltageComp;
+
+        public boolean isInverted() {
+            return inverted;
+        }
 
         public int getCurrentLimit() {
             return currentLimit;
         }
 
-
         public double getRampRate() {
             return rampRate;
         }
-
-
-        public boolean isInverted() {
-            return inverted;
-        }
-        private int currentLimit = 0;
-        private double rampRate = 0;
-        private boolean inverted = false;
-        private IdleMode idleMode;
-        
-        private double positionConversionFactor;
 
         public IdleMode getIdleMode() {
             return idleMode;
@@ -88,13 +93,16 @@ public class GBSparkMax extends CANSparkMax {
         public double getVelocityConversionFactor() {
             return velocityConversionFactor;
         }
-    
-        private double velocityConversionFactor;
 
+        public double getVoltageComp() {
+            return voltageComp;
+        }
+
+        //no parameters, usage for external config functions
         public SparkMaxConfObject (){
 
         }
-    
+
         public SparkMaxConfObject withVelocityConversionFactor (double velocityConversionFactor){
             this.velocityConversionFactor = velocityConversionFactor;
             return this;
@@ -128,10 +136,18 @@ public class GBSparkMax extends CANSparkMax {
             this.idleMode = idleMode;
             return this;
         }
-        
+
+        public SparkMaxConfObject withVoltageComp(double voltageComp) {
+            this.voltageComp = voltageComp;
+            return this;
+        }
+
         public PIDObject getPidObject() {
             return pidObject;
         }
+
+
+
     }
 
 }

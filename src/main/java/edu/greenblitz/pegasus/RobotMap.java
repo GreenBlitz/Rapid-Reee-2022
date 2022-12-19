@@ -2,6 +2,7 @@ package edu.greenblitz.pegasus;
 
 
 import edu.greenblitz.pegasus.utils.PIDObject;
+import edu.greenblitz.pegasus.utils.motors.GBSparkMax;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -14,6 +15,12 @@ public class RobotMap {
 		public static class motors {
 			public final static double SPARKMAX_TICKS_PER_RADIAN = Math.PI * 2;
 			public final static double SPARKMAX_VELOCITY_UNITS_TO_RPM = 1;
+
+			public static final GBSparkMax.SparkMaxConfObject defaultConfObject = new GBSparkMax.SparkMaxConfObject()
+					.withCurrentLimit(40)
+					.withRampRate(0.4)
+					.withVoltageComp(11.5);
+
 		}
 
 		public static class gyro {
@@ -59,6 +66,7 @@ public class RobotMap {
 				public static final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(ShooterMotor.ks, ShooterMotor.kv, ShooterMotor.ka);
 
 				public static final Dataset RPM_TO_POWER = new Dataset(2);
+
 
 				static { //TODO: delete this
 					RPM_TO_POWER.addDatapoint(0, new double[]{-0.0000000001});
@@ -114,13 +122,14 @@ public class RobotMap {
 			public static final double MAX_ANGULAR_SPEED = 5;
 
 			public static final double angleTicksToWheelToRPM = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_VELOCITY_UNITS_TO_RPM;
-			public static final double LIN_TICKS_TO_METER_PER_SEC = Swerve.LIN_GEAR_RATIO * (motors.SPARKMAX_VELOCITY_UNITS_TO_RPM / 60) * WHEEL_CIRC;
+			public static final double LIN_TICKS_TO_METER_PER_SEC = Swerve.LIN_GEAR_RATIO * (motors.SPARKMAX_VELOCITY_UNITS_TO_RPM / 60) * WHEEL_CIRC; // /60 is to change the RPM to per second
 
 			public static final double angleTicksToRadians = Swerve.ANG_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN;
 
 			public static final double NEO_PHYSICAL_TICKS_TO_RADIANS = angleTicksToRadians / 42; //do not use unless you understand the meaning
 
 			public static final double linTicksToMeters = Swerve.LIN_GEAR_RATIO * motors.SPARKMAX_TICKS_PER_RADIAN * WHEEL_CIRC;
+
 
 
 			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
