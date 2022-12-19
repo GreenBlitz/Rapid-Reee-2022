@@ -7,7 +7,7 @@ import java.sql.Driver;
 public class Battery extends GBSubsystem {
 
 	private double currentVoltage;
-	private static final double minVoltage = 12.50;
+	private static final double minVoltage = 11.97;
 	private static Battery instance;
 
 
