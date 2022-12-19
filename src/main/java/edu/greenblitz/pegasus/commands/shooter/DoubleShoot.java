@@ -1,11 +1,10 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.motors.brushless.AbstractMotor;
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shooter.Shooter;
-import edu.greenblitz.pegasus.RobotMap;
+import com.revrobotics.CANSparkMax;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
+import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.*;
 
 public class DoubleShoot extends SequentialCommandGroup {
@@ -21,7 +20,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 		addCommands(
 				new ParallelRaceGroup(
 						new InsertIntoShooter(),
-						new ShooterByRPM(RPM1, 25, 10),
+						new ShooterByRPM(RPM1, 10),
 						new SequentialCommandGroup(
 								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 								new WaitCommand(0.5) //if doesnt shoot second ball sometimes set to 1
@@ -33,7 +32,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 				),
 				new ParallelRaceGroup(
 						new InsertIntoShooter(),
-						new ShooterByRPM(RPM2,25, 10),
+						new ShooterByRPM(RPM2, 10),
 						new SequentialCommandGroup(
 								new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 								new WaitCommand(1)
@@ -54,7 +53,7 @@ public class DoubleShoot extends SequentialCommandGroup {
 
 	@Override
 	public void initialize() {
-		Shooter.getInstance().setIdleMode(AbstractMotor.IdleMode.Coast);
+		Shooter.getInstance().setIdleMode(CANSparkMax.IdleMode.kCoast);
 		super.initialize();
 	}
 

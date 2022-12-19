@@ -1,8 +1,7 @@
 package edu.greenblitz.pegasus.commands;
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.base.GBCommand;
-import edu.greenblitz.pegasus.Robot;
 import edu.greenblitz.pegasus.subsystems.Battery;
+import edu.greenblitz.pegasus.utils.commands.GBCommand;
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;

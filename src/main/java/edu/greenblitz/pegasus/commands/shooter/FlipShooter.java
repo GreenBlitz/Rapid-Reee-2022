@@ -1,7 +1,6 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.shooter.Shooter;
-import org.greenblitz.debug.RemoteCSVTarget;
+import edu.greenblitz.pegasus.subsystems.Shooter;
 
 public class FlipShooter extends ShooterCommand {
 

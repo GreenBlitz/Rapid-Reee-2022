@@ -1,7 +1,5 @@
 package edu.greenblitz.pegasus.subsystems;
 
-import edu.greenblitz.GBLib.src.main.java.edu.greenblitz.gblib.subsystems.GBSubsystem;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 
 import java.sql.Driver;
