@@ -164,7 +164,7 @@ public class RobotMap {
             public static final double ANGLE_TICKS_TO_WHEEL_RPM = Swerve.ANG_GEAR_RATIO * General.SPARKMAX_VELOCITY_UNITS_TO_RPM;
             public static final double NEO_PHYSICAL_TICKS_TO_RADIANS = ANGLE_TICKS_TO_RADIANS / 42; //do not use unless you understand the meaning
 
-            public static final PIDObject angPID = new PIDObject().withKp(0.5).withKd(10).withMaxPower(0.8);
+            public static final PIDObject angPID = new PIDObject().withKp(0.5).withMaxPower(1.0);//.withKd(10).withMaxPower(0.8);
             private static final GBSparkMax.SparkMaxConfObject baseAngConfObj =
                     new GBSparkMax.SparkMaxConfObject()
                             .withIdleMode(CANSparkMax.IdleMode.kBrake)
@@ -218,7 +218,7 @@ public class RobotMap {
                 public static final int SteerMotorID = 2;
                 public static final int lampryID = 1;
                 public static final GBSparkMax.SparkMaxConfObject angConfObj = new GBSparkMax.SparkMaxConfObject(baseAngConfObj);
-                public static final GBSparkMax.SparkMaxConfObject linConfObj = new GBSparkMax.SparkMaxConfObject(baseLinConfObj).withInverted(true);
+                public static final GBSparkMax.SparkMaxConfObject linConfObj = new GBSparkMax.SparkMaxConfObject(baseLinConfObj).withInverted(false);
             }
         }
 
