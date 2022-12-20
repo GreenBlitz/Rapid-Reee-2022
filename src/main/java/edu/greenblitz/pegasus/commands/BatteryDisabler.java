@@ -32,15 +32,13 @@ public class BatteryDisabler extends GBCommand {
 
 	@Override
 	public void execute() {
-		SmartDashboard.putBoolean(" is disabled: ", 	DriverStation.isDisabled());
-		
 		SmartDashboard.putNumber("by battery voltage: ", Battery.getInstance().getCurrentVoltage());
 		
 		
-		double a = voltageFilter.calculate(battery.getCurrentVoltage());
-		SmartDashboard.putNumber("battery avarage: ", a );
-		
-		if (a <= battery.getMinVoltage()&&DriverStation.getMatchType() == DriverStation.MatchType.None){
+		double currentAverageVoltage = voltageFilter.calculate(battery.getCurrentVoltage());
+
+		if (currentAverageVoltage <= battery.getMinVoltage()&&DriverStation.getMatchType() == DriverStation.MatchType.None){
+
 			throw new java.lang.RuntimeException("Battery is low");
 		}
 	}
