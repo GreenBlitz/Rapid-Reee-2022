@@ -5,31 +5,21 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.PIDObject;
+import edu.greenblitz.pegasus.utils.motors.GBSparkMax;
 
 public class Shooter extends GBSubsystem {
 	
 	private final static double RPM = 3000;
 	private int flipped = 1;
-	private final CANSparkMax motor;
+	private final GBSparkMax motor;
 	private boolean preparedToShoot;
 	private boolean isShooter; //todo
 	
 	private static Shooter instance;
 	
 	private Shooter(int id) {
-		this.motor = new CANSparkMax(id, CANSparkMaxLowLevel.MotorType.kBrushless);
-//		//leader.setClosedLoopRampRate(1);
-//		this.motor.configurePID(RobotMap.Pegasus.Shooter.ShooterMotor.pid);
-		
-		//setting the motor pid
-		this.motor.setInverted(RobotMap.Pegasus.Shooter.ShooterMotor.LEADER_INVERTED);
-		this.motor.getPIDController().setP(RobotMap.Pegasus.Shooter.ShooterMotor.pid.getKp());
-		this.motor.getPIDController().setI(RobotMap.Pegasus.Shooter.ShooterMotor.pid.getKi());
-		this.motor.getPIDController().setD(RobotMap.Pegasus.Shooter.ShooterMotor.pid.getKd());
-		this.motor.getPIDController().setFF(RobotMap.Pegasus.Shooter.ShooterMotor.pid.getKf());
-		this.motor.getPIDController().setIZone(RobotMap.Pegasus.Shooter.ShooterMotor.pid.getIZone());
-		this.motor.getPIDController().setOutputRange(-RobotMap.Pegasus.Shooter.ShooterMotor.pid.getMaxPower(), RobotMap.Pegasus.Shooter.ShooterMotor.pid.getMaxPower());
-		
+		this.motor = new GBSparkMax(id, CANSparkMaxLowLevel.MotorType.kBrushless);
+		motor.config(RobotMap.Pegasus.Shooter.ShooterMotor.shooterConf);
 		preparedToShoot = false;
 	}
 	
@@ -61,12 +51,7 @@ public class Shooter extends GBSubsystem {
 	}
 	
 	public void setPIDConsts(PIDObject obj) {
-		this.motor.getPIDController().setP(obj.getKp());
-		this.motor.getPIDController().setI(obj.getKi());
-		this.motor.getPIDController().setD(obj.getKd());
-		this.motor.getPIDController().setFF(obj.getKf());
-		this.motor.getPIDController().setIZone(obj.getIZone());
-		this.motor.getPIDController().setOutputRange(obj.getMaxPower(), RobotMap.Pegasus.Shooter.ShooterMotor.pid.getMaxPower());
+		motor.configPID(obj);
 		
 	}
 	
