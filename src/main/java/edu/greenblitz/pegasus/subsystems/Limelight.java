@@ -3,7 +3,8 @@ package edu.greenblitz.pegasus.subsystems;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.GBMath;
-import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.*;
+import edu.wpi.first.wpilibj.Timer;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
@@ -11,6 +12,7 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 public class Limelight extends GBSubsystem {
 	private static Limelight instance;
 	private PhotonCamera camera;
+	private Transform2d cameraToRobot;
 	private Limelight(){
 		camera = new PhotonCamera("photonvision");
 	}
@@ -53,11 +55,20 @@ public class Limelight extends GBSubsystem {
 		var result = camera.getLatestResult();
 		return result.getTimestampSeconds();
 	}
+
+	public Pose2d estimateLocationByVision(){
+		Transform3d target = camera.getLatestResult().getBestTarget().getBestCameraToTarget().inverse();
+		Pose3d camPose = RobotMap.Pegasus.Vision.apriltagLocation.transformBy(target);
+		cameraToRobot = RobotMap.Pegasus.Vision.initialCamPosition;
+		Pose2d robotPose = camPose.toPose2d().transformBy(cameraToRobot);
+		return robotPose;
+	}
 	
 	public boolean FindTarget(){
 		return camera.getLatestResult().hasTargets();
 	}
 
+	public double getImageCaptureTime(){return Timer.getFPGATimestamp() - camera.getLatestResult().getLatencyMillis();}
 }
 
 

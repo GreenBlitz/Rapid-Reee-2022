@@ -1,12 +1,18 @@
 package edu.greenblitz.pegasus.subsystems.swerve;
 
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.subsystems.Limelight;
 import edu.greenblitz.pegasus.utils.PigeonGyro;
 import edu.greenblitz.pegasus.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.utils.GBMath;
+import edu.wpi.first.math.MatBuilder;
+import edu.wpi.first.math.Nat;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 
 public class SwerveChassis extends GBSubsystem {
 	
@@ -15,8 +21,8 @@ public class SwerveChassis extends GBSubsystem {
 	private final PigeonGyro pigeonGyro;
 	private final SwerveDriveOdometry localizer;
 	private final SwerveDriveKinematics kinematics;
-
-
+	private final SwerveDrivePoseEstimator poseEstimator;
+	private final Field2d field = new Field2d();
 	public enum Module {
 		FRONT_RIGHT,
 		FRONT_LEFT,
@@ -65,6 +71,11 @@ public class SwerveChassis extends GBSubsystem {
 				RobotMap.Pegasus.Swerve.initialRobotPosition
 		);
 
+		this.poseEstimator = new SwerveDrivePoseEstimator(new Rotation2d(), new Pose2d(),this.kinematics,
+				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01, 0.02, 0.02),
+				new MatBuilder<>(Nat.N1(), Nat.N1()).fill(0.02, 0.02, 0.01),
+				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1, 0.1, 0.01));
+
 	}
 
 
@@ -81,6 +92,8 @@ public class SwerveChassis extends GBSubsystem {
 		localizer.update(new Rotation2d(getChassisAngle()),
 				frontLeft.getModuleState(), frontRight.getModuleState(),
 				backLeft.getModuleState(), backRight.getModuleState());
+		updatePoseEstimation();
+		field.setRobotPose(getRobotPose());
 	}
 	
 	/**
@@ -243,6 +256,16 @@ public class SwerveChassis extends GBSubsystem {
 		getModule(module).setRotPowerOnlyForCalibrations(power);
 	}
 
+	public void updatePoseEstimation(){
+		poseEstimator.update(new Rotation2d(getChassisAngle()),
+				frontLeft.getModuleState(), frontRight.getModuleState(),
+				backLeft.getModuleState(), backRight.getModuleState());
+		poseEstimator.addVisionMeasurement(Limelight.getInstance().estimateLocationByVision(),Limelight.getInstance().getImageCaptureTime());
+	}
+
+	public Pose2d getRobotPose(){return poseEstimator.getEstimatedPosition();}
+
+	public Sendable getField(){return field;}
 
 	public SwerveModuleState getModuleState (Module module){
 		return getModule(module).getModuleState();

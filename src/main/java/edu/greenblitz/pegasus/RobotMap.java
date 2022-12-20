@@ -3,9 +3,7 @@ package edu.greenblitz.pegasus;
 
 import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
 
@@ -101,6 +99,11 @@ public class RobotMap {
 
 		public static class DigitalInputMap {
 			public static final int MACRO_SWITCH = 0;
+		}
+
+		public static class Vision{
+			public static final Transform2d initialCamPosition = new Transform2d();
+			public static final Pose3d apriltagLocation = new Pose3d(new Translation3d(),new Rotation3d());
 		}
 
 		public static class Swerve {
