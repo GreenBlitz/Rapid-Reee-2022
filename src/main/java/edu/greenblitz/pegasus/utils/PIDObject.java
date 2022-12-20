@@ -1,5 +1,7 @@
 package edu.greenblitz.pegasus.utils;
 
+import com.pathplanner.lib.auto.PIDConstants;
+
 public class PIDObject {
 
 	private double kp, kd, ki, ff;
@@ -81,6 +83,8 @@ public class PIDObject {
 	public void invert() {
 		inverted *= -1;
 	}
+	
+	public PIDConstants getPIDConst(){return new PIDConstants(this.kp,this.ki, this.kd);}
 
 	public int getInverted() {
 		return inverted;

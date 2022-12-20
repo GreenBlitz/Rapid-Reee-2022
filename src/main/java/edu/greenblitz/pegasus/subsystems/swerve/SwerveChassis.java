@@ -7,6 +7,7 @@ import edu.greenblitz.pegasus.utils.GBMath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class SwerveChassis extends GBSubsystem {
 	
@@ -15,9 +16,12 @@ public class SwerveChassis extends GBSubsystem {
 	private final PigeonGyro pigeonGyro;
 	private final SwerveDriveOdometry localizer;
 	private final SwerveDriveKinematics kinematics;
-
-
-
+	
+	public void resetLocalizer(Pose2d pose2d) {
+		this.resetLocalizer();
+	}
+	
+	
 	public enum Module {
 		FRONT_RIGHT,
 		FRONT_LEFT,
@@ -257,5 +261,6 @@ public class SwerveChassis extends GBSubsystem {
 		};
 		return states;
 	}
-
+	
+	
 }

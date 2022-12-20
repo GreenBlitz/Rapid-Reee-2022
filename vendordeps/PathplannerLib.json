@@ -11,7 +11,7 @@
         {
             "groupId": "com.pathplanner.lib",
             "artifactId": "PathplannerLib-java",
-            "version": "2022.2.1"
+            "version": "2023.2.0"
         }
     ],
     "jniDependencies": [],
@@ -27,7 +27,7 @@
             "binaryPlatforms": [
                 "windowsx86-64",
                 "linuxx86-64",
-                "osxx86-64",
+                "osxuniversal",
                 "linuxathena"
             ]
         }
