@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus.utils.motors;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXPIDSetConfiguration;
@@ -29,6 +30,9 @@ public class GBFalcon extends TalonFX {
         super.configOpenloopRamp(conf.getRampRate());
         super.setInverted(conf.isInverted());
         super.configSelectedFeedbackCoefficient(conf.getConversionFactor());
+        super.configVoltageCompSaturation(conf.getVoltageCompSaturation());
+        super.setNeutralMode(conf.getNeutralMode());
+        configPID(conf.pidObject);
     }
 
     private void configPID(PIDObject pidObject){
@@ -39,14 +43,20 @@ public class GBFalcon extends TalonFX {
         super.config_IntegralZone(0, pidObject.getIZone());
         super.configClosedLoopPeakOutput(0,pidObject.getMaxPower());
     }
-
-
+    
+    /**
+     * @see GBSparkMax.SparkMaxConfObject
+     */
     public static class FalconConfObject {
-        private PIDObject pidObject = new PIDObject(1, 0, 0);
+        private PIDObject pidObject = new PIDObject(0, 0, 0);
         private int currentLimit = 0;
         private double rampRate = 0;
         private boolean inverted = false;
-        private double ConversionFactor;
+        private double ConversionFactor = 1;
+        private double voltageCompSaturation = 0;
+        private NeutralMode neutralMode = NeutralMode.Brake;
+        
+        
         public FalconConfObject() {
 
         }
@@ -66,7 +76,20 @@ public class GBFalcon extends TalonFX {
         public double getConversionFactor() {
             return ConversionFactor;
         }
-
+        
+        public double getVoltageCompSaturation() {
+            return voltageCompSaturation;
+        }
+    
+        public NeutralMode getNeutralMode() {
+            return neutralMode;
+        }
+    
+        public FalconConfObject withNeutralMode(NeutralMode neutralMode) {
+            this.neutralMode = neutralMode;
+            return this;
+        }
+    
         public FalconConfObject withConversionFactor (double velocityConversionFactor){
             this.ConversionFactor = velocityConversionFactor;
             return this;
@@ -91,11 +114,17 @@ public class GBFalcon extends TalonFX {
             this.inverted = inverted;
             return this;
         }
+    
+    
+        public FalconConfObject withVoltageCompSaturation(double voltageCompSaturation) {
+            this.voltageCompSaturation = voltageCompSaturation;
+            return this;
+        }
 
         public PIDObject getPidObject() {
             return pidObject;
         }
-
-
+    
+    
     }
 }

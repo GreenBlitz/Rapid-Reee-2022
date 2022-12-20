@@ -69,18 +69,18 @@ public class GBSparkMax extends CANSparkMax {
 
     public static class SparkMaxConfObject{
 
-        private PIDObject pidObject = new PIDObject(1,0,0);
+        private PIDObject pidObject = new PIDObject(0,0,0);
 
         private int currentLimit = 0;
         private double rampRate = 0;
         private boolean inverted = false;
-        private IdleMode idleMode;
+        private IdleMode idleMode = IdleMode.kBrake;
 
-        private double positionConversionFactor;
+        private double positionConversionFactor = 1;
 
-        private double velocityConversionFactor;
+        private double velocityConversionFactor = 1;
 
-        private double voltageComp;
+        private double voltageComp = 0;
 
         //no parameters, usage for external config functions
         public SparkMaxConfObject (){
