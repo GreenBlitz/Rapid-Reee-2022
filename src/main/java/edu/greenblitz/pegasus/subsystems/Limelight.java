@@ -57,10 +57,13 @@ public class Limelight extends GBSubsystem {
 	}
 
 	public Pose2d estimateLocationByVision(){
-		Transform3d target = camera.getLatestResult().getBestTarget().getBestCameraToTarget().inverse();
-		Pose3d camPose = RobotMap.Pegasus.Vision.apriltagLocation.transformBy(target);
-		cameraToRobot = RobotMap.Pegasus.Vision.initialCamPosition;
-		Pose2d robotPose = camPose.toPose2d().transformBy(cameraToRobot);
+		if(FindTarget()){
+			Transform3d target = camera.getLatestResult().getBestTarget().getBestCameraToTarget().inverse();
+			Pose3d camPose = RobotMap.Pegasus.Vision.apriltagLocation.transformBy(target);
+			cameraToRobot = RobotMap.Pegasus.Vision.initialCamPosition;
+			Pose2d robotPose = camPose.toPose2d().transformBy(cameraToRobot);
+		}
+		Pose2d robotPose = new Pose2d(new Translation2d(),new Rotation2d());
 		return robotPose;
 	}
 	

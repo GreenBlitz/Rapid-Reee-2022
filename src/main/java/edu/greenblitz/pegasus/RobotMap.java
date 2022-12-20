@@ -102,7 +102,7 @@ public class RobotMap {
 		}
 
 		public static class Vision{
-			public static final Transform2d initialCamPosition = new Transform2d();
+			public static final Transform2d initialCamPosition = new Transform2d(new Translation2d(),new Rotation2d());
 			public static final Pose3d apriltagLocation = new Pose3d(new Translation3d(),new Rotation3d());
 		}
 

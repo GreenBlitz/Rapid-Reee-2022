@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveChassis extends GBSubsystem {
 	
@@ -72,10 +73,10 @@ public class SwerveChassis extends GBSubsystem {
 		);
 
 		this.poseEstimator = new SwerveDrivePoseEstimator(new Rotation2d(), new Pose2d(),this.kinematics,
-				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01, 0.02, 0.02),
-				new MatBuilder<>(Nat.N1(), Nat.N1()).fill(0.02, 0.02, 0.01),
-				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1, 0.1, 0.01));
-
+				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01),
+				new MatBuilder<>(Nat.N1(), Nat.N1()).fill(1),//0.02),
+				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0,0,0));//0.1, 0.1, 0.01));
+		SmartDashboard.putData("field",getField());
 	}
 
 
@@ -260,7 +261,7 @@ public class SwerveChassis extends GBSubsystem {
 		poseEstimator.update(new Rotation2d(getChassisAngle()),
 				frontLeft.getModuleState(), frontRight.getModuleState(),
 				backLeft.getModuleState(), backRight.getModuleState());
-		poseEstimator.addVisionMeasurement(Limelight.getInstance().estimateLocationByVision(),Limelight.getInstance().getImageCaptureTime());
+		if(Limelight.getInstance().FindTarget()){poseEstimator.addVisionMeasurement(Limelight.getInstance().estimateLocationByVision(),Limelight.getInstance().getTimeStamp());}
 	}
 
 	public Pose2d getRobotPose(){return poseEstimator.getEstimatedPosition();}
