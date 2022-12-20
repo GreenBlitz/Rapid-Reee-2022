@@ -53,6 +53,18 @@ public class GBSparkMax extends CANSparkMax {
 
     /**
      * inner conf class
+     * usage example:
+     * this.motor = new GBSparkMax(id, CANSparkMaxLowLevel.MotorType.kBrushless);
+     * motor.config(new GBSparkMax.SparkMaxConfObject()
+     *                         .withInverted(true) //whether the motor should be flipped
+     *                         .withCurrentLimit(40) // the max current to allow should be inline with the fuse
+     *                         .withIdleMode(CANSparkMax.IdleMode.kCoast) // trying to force brake is harmful for the motor
+     *                         .withRampRate(General.RAMP_RATE_VAL) // prevents the motor from drawing to much when rapidly changing speeds
+     *                         .withVoltageComp(General.VOLTAGE_COMP_VAL) // makes for more reproducible results
+     *                         .withPositionConversionFactor(1)
+     *                         .withVelocityConversionFactor(1)
+     *                         .withPID(new PIDObject(0.0003, 0.0000003, 0).withIZone(300)
+     *                         );
      * */
 
     public static class SparkMaxConfObject{
@@ -69,6 +81,22 @@ public class GBSparkMax extends CANSparkMax {
         private double velocityConversionFactor;
 
         private double voltageComp;
+
+        //no parameters, usage for external config functions
+        public SparkMaxConfObject (){
+
+        }
+
+        public SparkMaxConfObject(SparkMaxConfObject other) {
+            this.pidObject = new PIDObject(other.pidObject);
+            this.currentLimit = other.currentLimit;
+            this.rampRate = other.rampRate;
+            this.inverted = other.inverted;
+            this.idleMode = other.idleMode;
+            this.positionConversionFactor = other.positionConversionFactor;
+            this.velocityConversionFactor = other.velocityConversionFactor;
+            this.voltageComp = other.voltageComp;
+        }
 
         public boolean isInverted() {
             return inverted;
@@ -96,11 +124,6 @@ public class GBSparkMax extends CANSparkMax {
 
         public double getVoltageComp() {
             return voltageComp;
-        }
-
-        //no parameters, usage for external config functions
-        public SparkMaxConfObject (){
-
         }
 
         public SparkMaxConfObject withVelocityConversionFactor (double velocityConversionFactor){
@@ -145,7 +168,6 @@ public class GBSparkMax extends CANSparkMax {
         public PIDObject getPidObject() {
             return pidObject;
         }
-
 
 
     }

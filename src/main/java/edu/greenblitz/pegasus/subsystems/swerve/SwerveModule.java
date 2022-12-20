@@ -24,30 +24,13 @@ public class SwerveModule {
 	private SimpleMotorFeedforward feedforward;
 	private double wheelCirc;
 
-	public SwerveModule (int angleMotorID, int linearMotorID, int lampreyID, boolean linInverted) {
-		//SET ANGLE MOTO
+	public SwerveModule (int angleMotorID, int linearMotorID, int lampreyID, GBSparkMax.SparkMaxConfObject angConfObj, GBSparkMax.SparkMaxConfObject linConfObj) {
+		//SET ANGLE MOTOR
 		angleMotor = new GBSparkMax(angleMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
-		angleMotor.config(
-				new GBSparkMax.SparkMaxConfObject()
-						.withIdleMode(CANSparkMax.IdleMode.kBrake)
-						.withCurrentLimit(30)
-						.withRampRate(0.4)
-						.withInverted(RobotMap.Pegasus.Swerve.angleMotorInverted)
-						.withPID(RobotMap.Pegasus.Swerve.angPID)
-						.withPositionConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToRadians)
-						.withVelocityConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToWheelToRPM)
-
-		);
+		angleMotor.config(angConfObj);
 
 		linearMotor = new GBSparkMax(linearMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
-		linearMotor.config(new GBSparkMax.SparkMaxConfObject()
-				.withCurrentLimit(30)
-				.withRampRate(0.4)
-				.withInverted(linInverted)
-				.withPID(RobotMap.Pegasus.Swerve.linPID)
-				.withPositionConversionFactor(RobotMap.Pegasus.Swerve.linTicksToMeters)
-				.withVelocityConversionFactor(RobotMap.Pegasus.Swerve.LIN_TICKS_TO_METER_PER_SEC)
-		);
+		linearMotor.config(linConfObj);
 		
 		lamprey = new AnalogInput(lampreyID);
 		lamprey.setAverageBits(2);
