@@ -1035,6 +1035,6 @@ public class Calibration {
 		BACK_RIGHT.addDatapoint(4.750976076000001, new double[]{1.0,});
 		BACK_RIGHT.addDatapoint(4.752196779, new double[]{0.0,});
 		BACK_RIGHT.addDatapoint(4.761962403, new double[]{2.0,});
-		BACK_RIGHT.addDatapoint(4.761962403, new double[]{2.0,});
+		BACK_RIGHT.addDatapoint(5, new double[]{2.0,});
 	}
 }

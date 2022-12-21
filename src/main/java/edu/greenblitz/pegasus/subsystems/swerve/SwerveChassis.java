@@ -18,7 +18,7 @@ public class SwerveChassis extends GBSubsystem {
 	private final SwerveDriveKinematics kinematics;
 	
 	public void resetLocalizer(Pose2d pose2d) {
-		this.resetLocalizer();
+		localizer.resetPosition(pose2d, new Rotation2d(getChassisAngle()));
 	}
 	
 	

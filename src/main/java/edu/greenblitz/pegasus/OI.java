@@ -1,6 +1,6 @@
 package edu.greenblitz.pegasus;
 
-import edu.greenblitz.pegasus.commands.auto.Auto_test_command;
+import edu.greenblitz.pegasus.commands.auto.PathFollowerBuilder;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
@@ -10,11 +10,11 @@ import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
+import edu.greenblitz.pegasus.commands.swerve.calibration.CalibrateLampreyByNeo;
 import edu.greenblitz.pegasus.subsystems.Intake;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 
@@ -27,10 +27,12 @@ public class OI {
     private final SmartJoystick mainJoystick;
 
     private final SmartJoystick secondJoystick;
+    private final SmartJoystick debugJoystick;
 
     private OI() {
         mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.1);
         secondJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.SECOND, 0.2);
+        debugJoystick = new SmartJoystick(3, 0.2);
         initButtons();
 
     }
@@ -52,10 +54,10 @@ public class OI {
 
     private void initButtons() {
         SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
-
+debugJoystick.A.whenPressed(new CalibrateLampreyByNeo(SwerveChassis.Module.BACK_LEFT));
         mainJoystick.Y.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetChassisAngle()));
 
-        mainJoystick.X.whenPressed(() -> new Auto_test_command("3 ball auto.path"));
+        mainJoystick.X.whenPressed(PathFollowerBuilder.getInstance().followPath("1 meter"));
 
         mainJoystick.POV_UP.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetAllEncoders()));
 
