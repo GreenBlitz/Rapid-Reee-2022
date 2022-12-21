@@ -1,6 +1,10 @@
 package edu.greenblitz.pegasus;
 
+import edu.greenblitz.pegasus.commands.BatteryDisabler;
 import edu.greenblitz.pegasus.commands.auto.Taxi;
+import edu.greenblitz.pegasus.subsystems.Battery;
+import edu.greenblitz.pegasus.subsystems.Dashboard;
+import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
@@ -20,8 +24,8 @@ public class Robot extends TimedRobot {
 		Intake.getInstance();
 		Indexing.getInstance();
 		Shooter.create(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
+		Battery.getInstance().setDefaultCommand(new BatteryDisabler());
 
-		//todo add voltage compensation
 		//swerve
 		
 		SwerveChassis.getInstance().resetChassisAngle();
@@ -34,8 +38,12 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotPeriodic() {
-		CommandScheduler.getInstance().run();
-		SmartDashboard.putNumber("pigeon angle", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
+
+		//TODO noam - because of the low battery disable command everything if the periodic must be in the if
+
+			CommandScheduler.getInstance().run();
+			SmartDashboard.putNumber("pigeon angle", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
+		
 	}
 
 
