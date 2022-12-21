@@ -32,7 +32,7 @@ public class BatteryDisabler extends GBCommand {
 
 	@Override
 	public void execute() {
-		SmartDashboard.putNumber("by battery voltage: ", Battery.getInstance().getCurrentVoltage());
+		SmartDashboard.putNumber("current battery voltage: ", Battery.getInstance().getCurrentVoltage());
 		
 		
 		double currentAverageVoltage = voltageFilter.calculate(battery.getCurrentVoltage());

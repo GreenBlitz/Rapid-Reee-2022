@@ -2,12 +2,10 @@ package edu.greenblitz.pegasus.subsystems;
 
 import edu.wpi.first.wpilibj.RobotController;
 
-import java.sql.Driver;
-
 public class Battery extends GBSubsystem {
 
 	private double currentVoltage;
-	private static final double minVoltage = 12.30;
+	private static final double minVoltage = 11.97;
 	private static Battery instance;
 
 
