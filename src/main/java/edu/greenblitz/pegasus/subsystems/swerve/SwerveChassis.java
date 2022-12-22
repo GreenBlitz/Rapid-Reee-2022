@@ -72,7 +72,7 @@ public class SwerveChassis extends GBSubsystem {
 				RobotMap.Pegasus.Swerve.initialRobotPosition
 		);
 
-		this.poseEstimator = new SwerveDrivePoseEstimator(new Rotation2d(), new Pose2d(),this.kinematics,
+		this.poseEstimator = new SwerveDrivePoseEstimator(new Rotation2d(this.getChassisAngle()), Limelight.getInstance().estimateLocationByVision(), this.kinematics,
 				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01),
 				new MatBuilder<>(Nat.N1(), Nat.N1()).fill(1),//0.02),
 				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0,0,0));//0.1, 0.1, 0.01));
