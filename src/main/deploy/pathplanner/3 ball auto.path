@@ -16,9 +16,7 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [
-          "ExtendAndCollect"
-        ],
+        "names": [],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 1.5
@@ -66,10 +64,10 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "FullShoot300"
+          "FullShoot2000"
         ],
         "executionBehavior": "parallel",
-        "waitBehavior": "minimum",
+        "waitBehavior": "deadline",
         "waitTime": 4.0
       }
     }
@@ -79,7 +77,13 @@
       "position": 1.4109090909090933,
       "names": [
         "StopRoller",
-        "ShooterByRPM300"
+        "ShooterByRPM2000"
+      ]
+    },
+    {
+      "position": 0.0,
+      "names": [
+        "ExtendAndCollect"
       ]
     }
   ]

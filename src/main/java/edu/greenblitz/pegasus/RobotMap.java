@@ -139,7 +139,7 @@ public class RobotMap {
 
 			};
 			//TODO: calibrate GOOD PID
-			public static final PIDObject angPID = new PIDObject().withKp(0.5).withMaxPower(0.8);//).withKd(10).withMaxPower(0.8);
+			public static final PIDObject angPID = new PIDObject().withKp(0.5).withMaxPower(0.5);
 			public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.5);
 			public static final PIDObject rotationPID = new PIDObject().withKp(0.5).withKi(0).withKd(0).withFF(0.1);
 

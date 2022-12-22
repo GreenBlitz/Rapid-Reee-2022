@@ -57,7 +57,7 @@ public class OI {
 debugJoystick.A.whenPressed(new CalibrateLampreyByNeo(SwerveChassis.Module.BACK_LEFT));
         mainJoystick.Y.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetChassisAngle()));
 
-        mainJoystick.X.whenPressed(PathFollowerBuilder.getInstance().followPath("1 meter"));
+        mainJoystick.X.whenPressed(PathFollowerBuilder.getInstance().followPath("3 ball auto"));
 
         mainJoystick.POV_UP.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetAllEncoders()));
 

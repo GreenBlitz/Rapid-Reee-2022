@@ -11,9 +11,14 @@ import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.utils.commands.GBCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PathFollowerBuilder extends SwerveAutoBuilder{
@@ -21,8 +26,8 @@ public class PathFollowerBuilder extends SwerveAutoBuilder{
 	private static final HashMap<String, Command> eventMap = new HashMap<>();
 	static {
 		// the event name, the command()
-		eventMap.put("ShooterByRPM300", new ShooterByRPM(300));
-		eventMap.put("FullShoot300", new ShooterByRPM(300).alongWith(new InsertIntoShooter()));
+		eventMap.put("ShooterByRPM2000", new ShooterByRPM(2000));
+		eventMap.put("FullShoot2000", new ShooterByRPM(2000).alongWith(new InsertIntoShooter()));
 		eventMap.put("StopShooter", new StopShooter());
 		eventMap.put("ExtendAndCollect", new ExtendAndCollect());
 		eventMap.put("StopRoller", new StopRoller());
@@ -52,7 +57,7 @@ public class PathFollowerBuilder extends SwerveAutoBuilder{
 	
 	public CommandBase followPath(String pathName) {
 		
-		return followPath(PathPlanner.loadPath(
+		return fullAuto(PathPlanner.loadPath(
 				pathName,
 				new PathConstraints(
 						RobotMap.Pegasus.Swerve.MAX_VELOCITY,
@@ -61,4 +66,4 @@ public class PathFollowerBuilder extends SwerveAutoBuilder{
 		);
 	}
 
-    }
+}
