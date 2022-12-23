@@ -31,7 +31,7 @@ public class SdsSwerveModule implements SwerveModule{
 	private AnalogInput magEncoder;
 	private SimpleMotorFeedforward feedforward;
 
-	public SdsSwerveModule(int angleMotorID, int linearMotorID, int lampreyID, boolean linInverted) {
+	public SdsSwerveModule(int angleMotorID, int linearMotorID, int AbsoluteEncoderID, boolean linInverted) {
 		//SET ANGLE MOTO
 		angleMotor = new TalonFX(angleMotorID);
 		angleMotor.configSupplyCurrentLimit(
@@ -50,7 +50,7 @@ public class SdsSwerveModule implements SwerveModule{
 		linearMotor.setInverted(linInverted);
 		linearMotor.configSelectedFeedbackCoefficient(linTicksToMeters);
 
-		magEncoder = new AnalogInput(lampreyID);
+		magEncoder = new AnalogInput(AbsoluteEncoderID);
 		magEncoder.setAverageBits(2); //todo find real bits
 		configAnglePID(RobotMap.Pegasus.Swerve.angPID);
 		configLinPID(RobotMap.Pegasus.Swerve.linPID);

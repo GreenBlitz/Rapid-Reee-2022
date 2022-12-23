@@ -31,7 +31,7 @@ public class KazaSwerveModule implements SwerveModule {
 	private AnalogInput lamprey;
 	private SimpleMotorFeedforward feedforward;
 
-	public KazaSwerveModule(int angleMotorID, int linearMotorID, int lampreyID, boolean linInverted) {
+	public KazaSwerveModule(int angleMotorID, int linearMotorID, int AbsoluteEncoderID, boolean linInverted) {
 		//SET ANGLE MOTO
 		angleMotor = new CANSparkMax(angleMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
 		angleMotor.setSmartCurrentLimit(30);
@@ -48,7 +48,7 @@ public class KazaSwerveModule implements SwerveModule {
 		linearMotor.setInverted(linInverted);
 		linearMotor.getEncoder().setPositionConversionFactor(linTicksToMeters);
 		
-		lamprey = new AnalogInput(lampreyID);
+		lamprey = new AnalogInput(AbsoluteEncoderID);
 		lamprey.setAverageBits(2);
 		configAnglePID(RobotMap.Pegasus.Swerve.angPID);
 		configLinPID(RobotMap.Pegasus.Swerve.linPID);
