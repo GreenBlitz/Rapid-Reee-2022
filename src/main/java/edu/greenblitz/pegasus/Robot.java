@@ -7,6 +7,8 @@ import edu.greenblitz.pegasus.subsystems.Pneumatics;
 import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -71,7 +73,8 @@ public class Robot extends TimedRobot {
 		//resets encoders
 		SwerveChassis.getInstance().resetAllEncoders();
 		SwerveChassis.getInstance().resetLocalizer();
-		//				SwerveChassis.getInstance().resetChassisAngle(/*88.5*/-90);
+		SwerveChassis.getInstance().getLocalizer().resetPosition(new Pose2d(10, 0, new Rotation2d(SwerveChassis.getInstance().getChassisAngle())),new Rotation2d(SwerveChassis.getInstance().getChassisAngle()));
+		SwerveChassis.getInstance().resetChassisAngle(/*88.5*/-90);
 
 		/**old auto
 		new ExtendRoller()
@@ -92,8 +95,8 @@ public class Robot extends TimedRobot {
 		//				SwerveChassis.getInstance().resetChassisAngle(/*46.5*/-47);
 		//				SwerveChassis.getInstance().resetChassisAngle(/*1.5*/-0);
 		//				SwerveChassis.getInstance().resetChassisAngle(/*43.5*/-315);
-		//		new PathFollowerCommand(new TragectoryCreator(new ArrayList<Translation2d>(0),new Pose2d(2,0,new Rotation2d())).generate()).schedule();
-//		new PathFollowerCommand(PathPlanner.loadPath("New New Path", RobotMap.Pegasus.Swerve.KMaxVelocity / 3, RobotMap.Pegasus.Swerve.KMMaxAcceleration / 3)).schedule();
+		//new PathFollowerCommand(new TragectoryCreator(new ArrayList<Translation2d>(0),new Pose2d(2,0,new Rotation2d())).generate()).schedule();
+		//new PathFollowerCommand(PathPlanner.loadPath("New New Path", RobotMap.Pegasus.Swerve.KMaxVelocity / 3, RobotMap.Pegasus.Swerve.KMMaxAcceleration / 3)).schedule();
 	}
 
 	@Override
