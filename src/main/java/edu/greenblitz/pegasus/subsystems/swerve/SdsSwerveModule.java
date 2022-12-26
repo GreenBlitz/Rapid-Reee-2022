@@ -14,14 +14,14 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class SdsSwerveModule implements SwerveModule{
-	public static final double ANG_GEAR_RATIO = 1 / (150.0/7); //   input/output
-	public static final double LIN_GEAR_RATIO = 1 / 8.0;
+	public static final double ANG_GEAR_RATIO = (150.0/7); //   input/output
+	public static final double LIN_GEAR_RATIO = 8.14;
 
 	public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
-	public static final double linTicksToMeters = LIN_GEAR_RATIO * RobotMap.Pegasus.motors.FALCON_TICKS_PER_RADIAN * WHEEL_CIRC;
-	public static final double angleTicksToWheelToRPM = ANG_GEAR_RATIO * RobotMap.Pegasus.motors.FALCON_VELOCITY_UNITS_PER_RPM;
-	public static final double linTicksToWheelToRPM = LIN_GEAR_RATIO * RobotMap.Pegasus.motors.FALCON_VELOCITY_UNITS_PER_RPM;
-	public static final double angleTicksToRadians = ANG_GEAR_RATIO * RobotMap.Pegasus.motors.FALCON_TICKS_PER_RADIAN;
+	public static final double linTicksToMeters = RobotMap.Pegasus.motors.FALCON_TICKS_PER_RADIAN * WHEEL_CIRC / LIN_GEAR_RATIO;
+	public static final double angleTicksToWheelToRPM = RobotMap.Pegasus.motors.FALCON_VELOCITY_UNITS_PER_RPM / ANG_GEAR_RATIO;
+	public static final double linTicksToMetersPerSecond = RobotMap.Pegasus.motors.FALCON_VELOCITY_UNITS_PER_RPM / LIN_GEAR_RATIO * WHEEL_CIRC; // anyone confused about the units ask ctre
+	public static final double angleTicksToRadians = RobotMap.Pegasus.motors.FALCON_TICKS_PER_RADIAN / ANG_GEAR_RATIO;
 
 
 	public double targetAngle;
@@ -42,16 +42,16 @@ public class SdsSwerveModule implements SwerveModule{
 
 
 		linearMotor = new TalonFX(linearMotorID);
+		linearMotor.configFactoryDefault();
 		linearMotor.configSupplyCurrentLimit(
 				new SupplyCurrentLimitConfiguration(
 						true,30,30,0));
 		linearMotor.configClosedloopRamp(0.4);
 		linearMotor.configOpenloopRamp(0.4);
 		linearMotor.setInverted(linInverted);
-		linearMotor.configSelectedFeedbackCoefficient(linTicksToMeters);
 
 		magEncoder = new AnalogInput(AbsoluteEncoderID);
-		magEncoder.setAverageBits(2); //todo find real bits
+		magEncoder.setAverageBits(2);
 		configAnglePID(RobotMap.Pegasus.Swerve.angPID);
 		configLinPID(RobotMap.Pegasus.Swerve.linPID);
 		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
@@ -101,7 +101,7 @@ public class SdsSwerveModule implements SwerveModule{
 	 */
 	@Override
 	public double getCurrentVelocity() {
-		return linearMotor.getSelectedSensorVelocity();
+		return linearMotor.getSelectedSensorVelocity() * linTicksToMetersPerSecond;
 	}
 
 	/**
@@ -141,13 +141,13 @@ public class SdsSwerveModule implements SwerveModule{
 	}
 
 	/**
-	 * @param speed - double of the wanted speed of the linear motor, uses PID and feedForward
+	 * @param speed - double of the wanted speed (m/s) of the linear motor, uses PID and feedForward
 	 */
 	@Override
 	public void setLinSpeed(double speed) {
 		linearMotor.set(
 				TalonFXControlMode.Velocity,
-				speed,
+				speed / linTicksToMetersPerSecond,
 				DemandType.ArbitraryFeedForward,
 				feedforward.calculate(speed));
 	}

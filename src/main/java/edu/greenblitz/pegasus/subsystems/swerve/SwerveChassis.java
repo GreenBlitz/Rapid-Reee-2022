@@ -33,21 +33,21 @@ public class SwerveChassis extends GBSubsystem {
 				RobotMap.Pegasus.Swerve.Module1.INVERTED
 		);
 
-		this.frontLeft = new DecoyModule(
+		this.frontLeft = new SdsSwerveModule(
 				RobotMap.Pegasus.Swerve.Module2.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module2.linMotorID,
 				RobotMap.Pegasus.Swerve.Module2.AbsoluteEncoderID,
 				RobotMap.Pegasus.Swerve.Module2.INVERTED
 		);
 
-		this.backRight = new DecoyModule(
+		this.backRight = new SdsSwerveModule(
 				RobotMap.Pegasus.Swerve.Module3.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module3.linMotorID,
 				RobotMap.Pegasus.Swerve.Module3.AbsoluteEncoderID,
 				RobotMap.Pegasus.Swerve.Module3.INVERTED
 		);
 
-		this.backLeft = new DecoyModule(
+		this.backLeft = new SdsSwerveModule(
 				RobotMap.Pegasus.Swerve.Module4.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module4.linMotorID,
 				RobotMap.Pegasus.Swerve.Module4.AbsoluteEncoderID,

@@ -15,8 +15,6 @@ public class RobotMap {
 			public final static double SPARKMAX_TICKS_PER_RADIAN = Math.PI * 2;
 			public final static double SPARKMAX_VELOCITY_UNITS_PER_RPM = 1;
 			public final static double FALCON_TICKS_PER_RADIAN = 2*Math.PI / 2048.0;
-			//1000 times too big intentionally
-			//(falcon always returns whole number which means it says exactly 6 rads per rot)
 			public final static double FALCON_VELOCITY_UNITS_PER_RPM = 600.0 /2048;
 
 		}
@@ -151,43 +149,43 @@ public class RobotMap {
 			public static final boolean angleMotorInverted = true;
 
 			public static class Module1 {//front right
-				public static final int linMotorID = 2;
+				public static final int linMotorID = 0;
 				public static final int SteerMotorID = 1;
 				public static final int AbsoluteEncoderID = 2;
 				public static final int MIN_LAMPREY_VAL = 12;
 				public static final int MAX_LAMPREY_VAL = 4041;
-				public static final boolean INVERTED = false;
+				public static final boolean INVERTED = true;
 			}
 
 			public static class Module2 {//front left
 
-				public static final int linMotorID = 10;
-				public static final int SteerMotorID = 1;
+				public static final int linMotorID = 2;
+				public static final int SteerMotorID = 3;
 				public static final int AbsoluteEncoderID = 0;
 
 				public static final int MIN_LAMPREY_VAL = 22;
 				public static final int MAX_LAMPREY_VAL = 4040;
-				public static final boolean INVERTED = true;
+				public static final boolean INVERTED = false;
 			}
 
 			public static class Module3 {//back right
 
-				public static final int linMotorID = 5;
-				public static final int SteerMotorID = 12;
+				public static final int linMotorID = 4;
+				public static final int SteerMotorID = 5;
 				public static final int AbsoluteEncoderID = 3;
 
 				public static final int MIN_LAMPREY_VAL = 32;
 				public static final int MAX_LAMPREY_VAL = 4021;
-				public static final boolean INVERTED = false;
+				public static final boolean INVERTED = true;
 			}
 
 			public static class Module4 {//back left
-				public static final int linMotorID = 8;
-				public static final int SteerMotorID = 2;
+				public static final int linMotorID = 6;
+				public static final int SteerMotorID = 7;
 				public static final int AbsoluteEncoderID = 1;
 				public static final int MIN_LAMPREY_VAL = 20;
 				public static final int MAX_LAMPREY_VAL = 2646; //todo calibrate in 5v
-				public static final boolean INVERTED = true;
+				public static final boolean INVERTED = false;
 			}
 		}
 
