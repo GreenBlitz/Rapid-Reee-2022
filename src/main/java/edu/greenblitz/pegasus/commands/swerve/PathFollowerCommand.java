@@ -13,7 +13,7 @@ public class PathFollowerCommand extends SwerveControllerCommand {//todo move to
 		
 		super(
 				trajectory,
-				SwerveChassis.getInstance()::getLocation,
+				() -> SwerveChassis.getInstance().getRobotPose(),
 				SwerveChassis.getInstance().getKinematics(),
 				createPIDController(),
 				createPIDController(),

@@ -20,7 +20,6 @@ public class SwerveChassis extends GBSubsystem {
 	private final SwerveModule frontRight, frontLeft, backRight, backLeft;
 	//	private final PigeonGyro pigeonGyro;
 	private final PigeonGyro pigeonGyro;
-	private final SwerveDriveOdometry localizer;
 	private final SwerveDriveKinematics kinematics;
 	private final SwerveDrivePoseEstimator poseEstimator;
 	private final Field2d field = new Field2d();
@@ -66,13 +65,8 @@ public class SwerveChassis extends GBSubsystem {
 		this.kinematics = new SwerveDriveKinematics(
 				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates
 		);
-		this.localizer = new SwerveDriveOdometry(
-				this.kinematics,
-				new Rotation2d(this.getChassisAngle()),
-				RobotMap.Pegasus.Swerve.initialRobotPosition
-		);
 
-		this.poseEstimator = new SwerveDrivePoseEstimator(new Rotation2d(this.getChassisAngle()), Limelight.getInstance().estimateLocationByVision(), this.kinematics,
+		this.poseEstimator = new SwerveDrivePoseEstimator(this.getPigeonAngle(), Limelight.getInstance().estimateLocationByVision(), this.kinematics,
 				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01),
 				new MatBuilder<>(Nat.N1(), Nat.N1()).fill(1),//0.02),
 				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0,0,0));//0.1, 0.1, 0.01));
@@ -90,9 +84,6 @@ public class SwerveChassis extends GBSubsystem {
 	
 	@Override
 	public void periodic() {
-		localizer.update(new Rotation2d(getChassisAngle()),
-				frontLeft.getModuleState(), frontRight.getModuleState(),
-				backLeft.getModuleState(), backRight.getModuleState());
 		updatePoseEstimation();
 		field.setRobotPose(getRobotPose());
 	}
@@ -170,8 +161,12 @@ public class SwerveChassis extends GBSubsystem {
 
 
 	/** returns chassis angle in radians */
-	public double getChassisAngle() {
-		return GBMath.modulo(pigeonGyro.getYaw(), 2 * Math.PI);
+	private Rotation2d getPigeonAngle() {
+		return new Rotation2d(GBMath.modulo(pigeonGyro.getYaw(), 2 * Math.PI));
+	}
+
+	public double getChassisAngle(){
+		return getRobotPose().getRotation().getRadians();
 	}
 
 	/** get module target angle (radians) */
@@ -211,13 +206,6 @@ public class SwerveChassis extends GBSubsystem {
 	public SwerveDriveKinematics getKinematics(){
 		return this.kinematics;
 	}
-	public SwerveDriveOdometry getLocalizer (){
-		return this.localizer;
-	}
-	public Pose2d getLocation(){
-		return this.localizer.getPoseMeters();
-	}
-	public void resetLocalizer(){localizer.resetPosition(new Pose2d(),new Rotation2d());}
 	
 	public PigeonGyro getPigeonGyro() {
 		return pigeonGyro;
@@ -258,7 +246,7 @@ public class SwerveChassis extends GBSubsystem {
 	}
 
 	public void updatePoseEstimation(){
-		poseEstimator.update(new Rotation2d(getChassisAngle()),
+		poseEstimator.update(getPigeonAngle(),
 				frontLeft.getModuleState(), frontRight.getModuleState(),
 				backLeft.getModuleState(), backRight.getModuleState());
 		if(Limelight.getInstance().FindTarget()){poseEstimator.addVisionMeasurement(Limelight.getInstance().estimateLocationByVision(),Limelight.getInstance().getTimeStamp());}

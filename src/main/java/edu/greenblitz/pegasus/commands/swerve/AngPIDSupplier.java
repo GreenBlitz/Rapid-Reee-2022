@@ -4,20 +4,20 @@ import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.subsystems.Limelight;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
 
 public class AngPIDSupplier implements DoubleSupplier{
-	private DoubleSupplier ang;
+	private Translation2d targetLoc;
 	private PIDController chassisPid;
 
-	public AngPIDSupplier(DoubleSupplier ang){
+	public AngPIDSupplier(Translation2d targetLoc){
 		SmartDashboard.putNumber("kp", 1);
 		SmartDashboard.putNumber("ki", 0);
 		SmartDashboard.putNumber("kd", 0);
-		this.ang = ang;
+		this.targetLoc = targetLoc;
 		chassisPid = new PIDController(RobotMap.Pegasus.Swerve.rotationPID.getKp(),RobotMap.Pegasus.Swerve.rotationPID.getKi(),RobotMap.Pegasus.Swerve.rotationPID.getKd());
 		chassisPid.enableContinuousInput(0,2*Math.PI); //min and max
 	}
@@ -43,16 +43,14 @@ public class AngPIDSupplier implements DoubleSupplier{
 		double kp = SmartDashboard.getNumber("kp",1);
 		double kd = SmartDashboard.getNumber("kd",0);
 		double ki = SmartDashboard.getNumber("ki",0);
-		SmartDashboard.putNumber("1get curr x",SwerveChassis.getInstance().getCurSpeed().vxMetersPerSecond);
-		SmartDashboard.putNumber("1get curr y",SwerveChassis.getInstance().getCurSpeed().vyMetersPerSecond);
-		SmartDashboard.putNumber("dx1", Limelight.getInstance().targetPos().getX());
-		SmartDashboard.putNumber("dy1", Limelight.getInstance().targetPos().getY());
 		double ff = getAngVelDiffByVision();
+		Translation2d relativeLoc = targetLoc.minus(SwerveChassis.getInstance().getRobotPose().getTranslation());
+		double ang = Math.atan2(relativeLoc.getY(), relativeLoc.getX());
 		chassisPid.setPID(kp,ki,kd);
-		double pidOutput = chassisPid.calculate(SwerveChassis.getInstance().getChassisAngle(),ang.getAsDouble());
+		double pidOutput = chassisPid.calculate(SwerveChassis.getInstance().getChassisAngle(),ang);
 		SmartDashboard.putNumber("ff", ff);
 		SmartDashboard.putNumber("pid output", pidOutput);
-		double input =  pidOutput + ff;
+		double input =  pidOutput;
 		SmartDashboard.putNumber("ang input", input);
 		return input;
 	}
