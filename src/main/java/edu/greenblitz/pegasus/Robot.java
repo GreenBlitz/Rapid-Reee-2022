@@ -7,6 +7,7 @@ import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.util.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -28,7 +29,7 @@ public class Robot extends TimedRobot {
 		PortForwarder.add(5804, "gloworm.local", 5804);
 		PortForwarder.add(5805, "gloworm.local", 5805);
 		Shooter.create(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
-
+		LiveWindow.disableAllTelemetry();
 		//todo add voltage compensation
 		//swerve
 
@@ -43,9 +44,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
-		SmartDashboard.putNumber("pigeon angle", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle()));
-		SmartDashboard.putNumber("ang in deg", Math.toDegrees(SmartDashboard.getNumber("ang target", 0)));
-		SmartDashboard.putNumber("ang dif", Math.toDegrees(SwerveChassis.getInstance().getChassisAngle() - SmartDashboard.getNumber("ang target", 0)));
 	}
 
 

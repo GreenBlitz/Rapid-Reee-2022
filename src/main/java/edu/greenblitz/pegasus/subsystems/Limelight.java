@@ -62,6 +62,7 @@ public class Limelight extends GBSubsystem {
 			Pose3d camPose = RobotMap.Pegasus.Vision.apriltagLocation.transformBy(target);
 			cameraToRobot = RobotMap.Pegasus.Vision.initialCamPosition;
 			Pose2d robotPose = camPose.toPose2d().transformBy(cameraToRobot);
+			return robotPose;
 		}
 		Pose2d robotPose = new Pose2d(new Translation2d(),new Rotation2d());
 		return robotPose;

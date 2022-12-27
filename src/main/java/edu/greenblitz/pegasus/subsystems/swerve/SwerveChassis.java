@@ -65,11 +65,11 @@ public class SwerveChassis extends GBSubsystem {
 		this.kinematics = new SwerveDriveKinematics(
 				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates
 		);
-
+		System.out.println(Limelight.getInstance().estimateLocationByVision());
 		this.poseEstimator = new SwerveDrivePoseEstimator(this.getPigeonAngle(), Limelight.getInstance().estimateLocationByVision(), this.kinematics,
 				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01),
-				new MatBuilder<>(Nat.N1(), Nat.N1()).fill(1),//0.02),
-				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0,0,0));//0.1, 0.1, 0.01));
+				new MatBuilder<>(Nat.N1(), Nat.N1()).fill(0.1),//0.02),
+				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1,0.1,0.01));//0.1, 0.1, 0.01));
 		SmartDashboard.putData("field",getField());
 	}
 

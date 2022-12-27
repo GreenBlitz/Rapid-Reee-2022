@@ -1,6 +1,5 @@
 package edu.greenblitz.pegasus.commands.shooter;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.greenblitz.debug.RemoteCSVTarget;
 
 public class ShootByConstant extends ShooterCommand {

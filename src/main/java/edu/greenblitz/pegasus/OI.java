@@ -18,7 +18,6 @@ import edu.greenblitz.pegasus.subsystems.Intake;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 

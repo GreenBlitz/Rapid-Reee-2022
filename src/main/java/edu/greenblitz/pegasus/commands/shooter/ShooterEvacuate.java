@@ -3,7 +3,6 @@ package edu.greenblitz.pegasus.commands.shooter;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 
 public class ShooterEvacuate extends ParallelRaceGroup {

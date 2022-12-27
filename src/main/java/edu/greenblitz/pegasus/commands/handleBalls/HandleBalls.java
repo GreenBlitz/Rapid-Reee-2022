@@ -7,7 +7,6 @@ import edu.greenblitz.pegasus.commands.intake.roller.ReverseRunRoller;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
@@ -34,9 +33,6 @@ public class HandleBalls extends IntakeCommand {
 
 	@Override
 	public void execute() {
-		SmartDashboard.putBoolean("isBallInFunnel", isBallInFunnel);
-		SmartDashboard.putBoolean("isEnemyBallUnSensor", index.isEnemyBallInSensor());
-		SmartDashboard.putBoolean("isMacroSwitch", DigitalInputMap.getInstance().getValue(0));
 
 		if (index.isTeamsBallInSensor()) {
 			//if our team's ball is in front of the sensor activate the boolean
@@ -50,7 +46,6 @@ public class HandleBalls extends IntakeCommand {
 		if (index.isEnemyBallInSensor()) {
 			if (DigitalInputMap.getInstance().getValue(0) || isBallInFunnel) {
 				isBallInFunnel = false;
-				SmartDashboard.putBoolean("isEvacuatingFromShooter", false);
 				//back direction
 				new ParallelDeadlineGroup(
 						new WaitCommand(0.5),
@@ -59,7 +54,6 @@ public class HandleBalls extends IntakeCommand {
 				).andThen(new RunFunnel().until(() -> DigitalInputMap.getInstance().getValue(0))).schedule(false);
 			} else {
 				//shooter evacuation
-				SmartDashboard.putBoolean("isEvacuatingFromShooter", true);
 				new ShooterEvacuate().raceWith(new WaitCommand(5)).schedule(false);
 
 			}
