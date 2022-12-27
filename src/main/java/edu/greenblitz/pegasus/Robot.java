@@ -1,8 +1,11 @@
 package edu.greenblitz.pegasus;
 
+import edu.greenblitz.pegasus.commands.auto.PathFollowerBuilder;
+import edu.greenblitz.pegasus.commands.auto.PathPlannerCommand;
 import edu.greenblitz.pegasus.commands.auto.Taxi;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.utils.AutoSelector;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -64,7 +67,7 @@ public class Robot extends TimedRobot {
 		SwerveChassis.getInstance().resetAllEncoders();
 		SwerveChassis.getInstance().resetLocalizer();
 				(new Taxi(2.5, 2)).schedule(); //THIS   //todo sendablechooser for choosing auto
-
+		PathFollowerBuilder.getInstance().followPath(AutoSelector.getInstance().getSelectedAuto());
 
 	}
 
