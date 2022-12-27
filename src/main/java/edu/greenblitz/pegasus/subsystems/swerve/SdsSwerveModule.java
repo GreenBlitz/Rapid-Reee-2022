@@ -20,7 +20,7 @@ public class SdsSwerveModule implements SwerveModule{
 	public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
 	public static final double linTicksToMeters = RobotMap.Pegasus.motors.FALCON_TICKS_PER_RADIAN * WHEEL_CIRC / LIN_GEAR_RATIO;
 	public static final double angleTicksToWheelToRPM = RobotMap.Pegasus.motors.FALCON_VELOCITY_UNITS_PER_RPM / ANG_GEAR_RATIO;
-	public static final double linTicksToMetersPerSecond = RobotMap.Pegasus.motors.FALCON_VELOCITY_UNITS_PER_RPM / LIN_GEAR_RATIO * WHEEL_CIRC; // anyone confused about the units ask ctre
+	public static final double linTicksToMetersPerSecond = RobotMap.Pegasus.motors.FALCON_VELOCITY_UNITS_PER_RPM / LIN_GEAR_RATIO * WHEEL_CIRC / 60;
 	public static final double angleTicksToRadians = RobotMap.Pegasus.motors.FALCON_TICKS_PER_RADIAN / ANG_GEAR_RATIO;
 
 
@@ -203,4 +203,9 @@ public class SdsSwerveModule implements SwerveModule{
 	public void setRotPowerOnlyForCalibrations(double power) {
 		angleMotor.set(ControlMode.PercentOutput, power);
 	}
+	@Override
+	public void setLinPowerOnlyForCalibrations(double power){
+		linearMotor.set(ControlMode.PercentOutput, power);
+	}
+	
 }

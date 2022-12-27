@@ -12,15 +12,15 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class KazaSwerveModule implements SwerveModule {
-	public static final double ANG_GEAR_RATIO = 1 / 6.0; //todo maybe 6.0 /1?   input/output
-	public static final double LIN_GEAR_RATIO = 1 / 8.0;
+	public static final double ANG_GEAR_RATIO = 6.0; //todo maybe 6.0 /1?   input/output
+	public static final double LIN_GEAR_RATIO = 8.0;
 
 
 	public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
-	public static final double linTicksToMeters = LIN_GEAR_RATIO * RobotMap.Pegasus.motors.SPARKMAX_TICKS_PER_RADIAN * WHEEL_CIRC;
-	public static final double angleTicksToWheelToRPM = ANG_GEAR_RATIO * RobotMap.Pegasus.motors.SPARKMAX_VELOCITY_UNITS_PER_RPM;
-	public static final double linTicksToMetersPerSecond = LIN_GEAR_RATIO * RobotMap.Pegasus.motors.SPARKMAX_VELOCITY_UNITS_PER_RPM * WHEEL_CIRC / 60;
-	public static final double angleTicksToRadians = ANG_GEAR_RATIO * RobotMap.Pegasus.motors.SPARKMAX_TICKS_PER_RADIAN;
+	public static final double linTicksToMeters = RobotMap.Pegasus.motors.SPARKMAX_TICKS_PER_RADIAN * WHEEL_CIRC / LIN_GEAR_RATIO;
+	public static final double angleTicksToWheelToRPM = RobotMap.Pegasus.motors.SPARKMAX_VELOCITY_UNITS_PER_RPM / ANG_GEAR_RATIO;
+	public static final double linTicksToMetersPerSecond = RobotMap.Pegasus.motors.SPARKMAX_VELOCITY_UNITS_PER_RPM * WHEEL_CIRC / 60 / LIN_GEAR_RATIO;
+	public static final double angleTicksToRadians = RobotMap.Pegasus.motors.SPARKMAX_TICKS_PER_RADIAN / ANG_GEAR_RATIO;
 
 
 
@@ -165,6 +165,10 @@ public class KazaSwerveModule implements SwerveModule {
 	@Override
 	public void setRotPowerOnlyForCalibrations(double power){
 		angleMotor.set(power);
+	}
+	@Override
+	public void setLinPowerOnlyForCalibrations(double power){
+		linearMotor.set(power);
 	}
 
 

@@ -82,4 +82,9 @@ public class DecoyModule implements SwerveModule{
 	public void setRotPowerOnlyForCalibrations(double power) {
 
 	}
+	
+	@Override
+	public void setLinPowerOnlyForCalibrations(double power) {
+	
+	}
 }
