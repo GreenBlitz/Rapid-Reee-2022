@@ -68,7 +68,7 @@ public class SwerveChassis extends GBSubsystem {
 		System.out.println(Limelight.getInstance().estimateLocationByVision());
 		this.poseEstimator = new SwerveDrivePoseEstimator(this.getPigeonAngle(), Limelight.getInstance().estimateLocationByVision(), this.kinematics,
 				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01),
-				new MatBuilder<>(Nat.N1(), Nat.N1()).fill(0.1),//0.02),
+				new MatBuilder<>(Nat.N1(), Nat.N1()).fill(0.02),//0.02),
 				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1,0.1,0.01));//0.1, 0.1, 0.01));
 		SmartDashboard.putData("field",getField());
 	}
@@ -253,7 +253,7 @@ public class SwerveChassis extends GBSubsystem {
 	}
 
 	public Pose2d getRobotPose(){return poseEstimator.getEstimatedPosition();}
-
+	
 	public Sendable getField(){return field;}
 
 	public SwerveModuleState getModuleState (Module module){

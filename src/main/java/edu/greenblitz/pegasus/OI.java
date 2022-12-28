@@ -55,7 +55,6 @@ public class OI {
 		
 		mainJoystick.R1.whenHeld(new StartEndCommand(() -> Intake.getInstance().getExtender().retract(),
 				() -> Intake.getInstance().getExtender().extend()));
-
 		secondJoystick.Y.whenHeld(new EjectEnemyBallFromGripper());
 
 		secondJoystick.R1.whenHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM).andThen(new StopShooter()));
