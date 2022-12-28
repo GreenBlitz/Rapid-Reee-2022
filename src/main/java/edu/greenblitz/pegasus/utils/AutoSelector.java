@@ -11,7 +11,7 @@ public class AutoSelector {
         chooser.addOption("1 meter", "1 meter");
         chooser.addOption("3 ball auto","3 ball auto");
         chooser.addOption("new", "new"); //this is the name of the path
-
+        chooser.setDefaultOption("default","1 meter");
         SmartDashboard.putData(chooser);
     }
 

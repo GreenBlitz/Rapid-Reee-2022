@@ -23,6 +23,7 @@ public class Robot extends TimedRobot {
 		Intake.getInstance();
 		Indexing.getInstance();
 		Shooter.create(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
+		AutoSelector.getInstance();
 
 		//todo add voltage compensation
 		//swerve
@@ -66,8 +67,8 @@ public class Robot extends TimedRobot {
 		//resets encoders
 		SwerveChassis.getInstance().resetAllEncoders();
 		SwerveChassis.getInstance().resetLocalizer();
-				(new Taxi(2.5, 2)).schedule(); //THIS   //todo sendablechooser for choosing auto
-		PathFollowerBuilder.getInstance().followPath(AutoSelector.getInstance().getSelectedAuto());
+//		PathFollowerBuilder.getInstance().followPath(AutoSelector.getInstance().getSelectedAuto());
+		SmartDashboard.putString("dood", AutoSelector.getInstance().getSelectedAuto());
 
 	}
 
