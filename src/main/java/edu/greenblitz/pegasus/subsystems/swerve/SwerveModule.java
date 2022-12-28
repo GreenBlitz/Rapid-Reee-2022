@@ -33,8 +33,9 @@ public class SwerveModule {
 		angleMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 		angleMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToRadians);
 		angleMotor.getEncoder().setVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
-
+		
 		linearMotor = new CANSparkMax(linearMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+		linearMotor.restoreFactoryDefaults();
 		linearMotor.setSmartCurrentLimit(30);
 		linearMotor.setClosedLoopRampRate(0.4);
 		linearMotor.setOpenLoopRampRate(0.4);
@@ -81,7 +82,7 @@ public class SwerveModule {
 	}
 
 	public double getCurrentVelocity() {
-		return (linearMotor.getEncoder().getVelocity() / RobotMap.Pegasus.Swerve.linTicksToWheelMetersPerSec);
+		return (linearMotor.getEncoder().getVelocity() * RobotMap.Pegasus.Swerve.linTicksToWheelMetersPerSec);
 	}
 
 	public void rotateByAngle(double angle) {

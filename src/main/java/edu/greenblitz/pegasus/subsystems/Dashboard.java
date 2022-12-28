@@ -24,15 +24,13 @@ public class Dashboard extends GBSubsystem {
 	}
 
 
+	double angularState = 0;
+	long lastRead = System.currentTimeMillis();
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("FR lamprey voltage",SwerveChassis.getInstance().getModuleLampreyVoltage(SwerveChassis.Module.FRONT_RIGHT));
-		SmartDashboard.putNumber("FL lamprey voltage",SwerveChassis.getInstance().getModuleLampreyVoltage(SwerveChassis.Module.FRONT_LEFT));
-		SmartDashboard.putNumber("BR lamprey voltage",SwerveChassis.getInstance().getModuleLampreyVoltage(SwerveChassis.Module.BACK_RIGHT));
-		SmartDashboard.putNumber("BL lamprey voltage",SwerveChassis.getInstance().getModuleLampreyVoltage(SwerveChassis.Module.BACK_LEFT));
-		SmartDashboard.putNumber("FR lamprey angle", Math.toDegrees(Calibration.FRONT_RIGHT.linearlyInterpolate(SwerveChassis.getInstance().getModuleLampreyVoltage(SwerveChassis.Module.FRONT_RIGHT))[0] * RobotMap.Pegasus.Swerve.NEO_PHYSICAL_TICKS_TO_RADIANS));
-		SmartDashboard.putNumber("FL lamprey angle", Math.toDegrees(Calibration.FRONT_LEFT.linearlyInterpolate(SwerveChassis.getInstance().getModuleLampreyVoltage(SwerveChassis.Module.FRONT_LEFT))[0] * RobotMap.Pegasus.Swerve.NEO_PHYSICAL_TICKS_TO_RADIANS));
-		SmartDashboard.putNumber("BR lamprey angle", Math.toDegrees(Calibration.BACK_RIGHT.linearlyInterpolate(SwerveChassis.getInstance().getModuleLampreyVoltage(SwerveChassis.Module.BACK_RIGHT))[0] * RobotMap.Pegasus.Swerve.NEO_PHYSICAL_TICKS_TO_RADIANS));
-		SmartDashboard.putNumber("BL lamprey angle", Math.toDegrees(Calibration.BACK_LEFT.linearlyInterpolate(SwerveChassis.getInstance().getModuleLampreyVoltage(SwerveChassis.Module.BACK_LEFT))[0] * RobotMap.Pegasus.Swerve.NEO_PHYSICAL_TICKS_TO_RADIANS));
+		SmartDashboard.putNumber("module speed", SwerveChassis.getInstance().getModuleState(SwerveChassis.Module.FRONT_RIGHT).speedMetersPerSecond);
+		SmartDashboard.putNumber("angular speed", (SwerveChassis.getInstance().getPigeonGyro().getYaw() - angularState)/((System.currentTimeMillis() - lastRead)/1000.0));
+		lastRead = System.currentTimeMillis();
+		angularState = SwerveChassis.getInstance().getPigeonGyro().getYaw();
 	}
 }
