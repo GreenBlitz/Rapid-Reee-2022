@@ -31,30 +31,45 @@ public class OI {
 	
 	private final SmartJoystick secondJoystick;
 	
+	
+	
 	private OI() {
 		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.1);
 		secondJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.SECOND, 0.2);
-
 		initButtons();
 		
 	}
 	
+
+	
+
+	
+
 	public static OI getInstance() {
 		if (instance == null) {
 			instance = new OI();
 		}
 		return instance;
 	}
-	
 
-	
+	public static boolean isIsHandled() {
+		return isHandled;
+	}
+
+	public static void disableHandling() {
+		isHandled = false;
+	}
+
 	private void initButtons() {
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement( false));
-		mainJoystick.X.whileHeld(new MoveByVisionSupplier(false));
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(false));
+
 		mainJoystick.Y.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetChassisAngle()));
-		
+		mainJoystick.X.whenPressed(new MoveByVisionSupplier(true));
+		mainJoystick.POV_UP.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetAllEncoders()));
+ 
 		mainJoystick.R1.whenHeld(new StartEndCommand(() -> Intake.getInstance().getExtender().retract(),
 				() -> Intake.getInstance().getExtender().extend()));
+
 		secondJoystick.Y.whenHeld(new EjectEnemyBallFromGripper());
 
 		secondJoystick.R1.whenHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM).andThen(new StopShooter()));
@@ -69,22 +84,13 @@ public class OI {
 		secondJoystick.POV_UP.whenPressed(new ShooterEvacuate());
 
 	}
-	
+
 	public SmartJoystick getMainJoystick() {
 		return mainJoystick;
 	}
-	
+
 	public SmartJoystick getSecondJoystick() {
 		return secondJoystick;
 	}
-	
-	public static boolean isIsHandled() {
-		return isHandled;
-	}
-	
-	public static void disableHandling() {
-		isHandled = false;
-	}
-	
 
 }

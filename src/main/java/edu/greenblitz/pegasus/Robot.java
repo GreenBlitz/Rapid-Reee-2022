@@ -1,7 +1,11 @@
 package edu.greenblitz.pegasus;
 
 
+import edu.greenblitz.pegasus.commands.BatteryDisabler;
 import edu.greenblitz.pegasus.commands.auto.Taxi;
+import edu.greenblitz.pegasus.subsystems.Battery;
+import edu.greenblitz.pegasus.subsystems.Dashboard;
+import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
@@ -31,6 +35,8 @@ public class Robot extends TimedRobot {
 		Shooter.create(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
 		LiveWindow.disableAllTelemetry();
 		//todo add voltage compensation
+		Battery.getInstance().setDefaultCommand(new BatteryDisabler());
+		
 		//swerve
 
 		SwerveChassis.getInstance().resetChassisAngle();

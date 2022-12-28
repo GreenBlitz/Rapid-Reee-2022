@@ -7,6 +7,7 @@ import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.Dataset;
 import edu.greenblitz.pegasus.utils.GBMath;
 import edu.greenblitz.pegasus.utils.PIDObject;
+import edu.greenblitz.pegasus.utils.motors.GBSparkMax;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -15,37 +16,25 @@ import edu.wpi.first.wpilibj.AnalogInput;
 public class SwerveModule {
 
 
-	private int isReversed = 1;
 	public double targetAngle;
 	public double targetVel;
-	private CANSparkMax angleMotor;
-	private CANSparkMax linearMotor;
+	private GBSparkMax angleMotor;
+	private GBSparkMax linearMotor;
 	private AnalogInput lamprey;
 	private SimpleMotorFeedforward feedforward;
 	private double wheelCirc;
 
-	public	 SwerveModule (int angleMotorID, int linearMotorID, int lampreyID, boolean linInverted) {
-		//SET ANGLE MOTO
-		angleMotor = new CANSparkMax(angleMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
-		angleMotor.setSmartCurrentLimit(30);
-		angleMotor.setClosedLoopRampRate(0.4);
-		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
-		angleMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-		angleMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.angleTicksToRadians);
-		angleMotor.getEncoder().setVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANG_GEAR_RATIO);
-		
-		linearMotor = new CANSparkMax(linearMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
-		linearMotor.restoreFactoryDefaults();
-		linearMotor.setSmartCurrentLimit(30);
-		linearMotor.setClosedLoopRampRate(0.4);
-		linearMotor.setOpenLoopRampRate(0.4);
-		linearMotor.setInverted(linInverted);
-		linearMotor.getEncoder().setPositionConversionFactor(RobotMap.Pegasus.Swerve.linTicksToMeters);
+
+	public SwerveModule (int angleMotorID, int linearMotorID, int lampreyID, GBSparkMax.SparkMaxConfObject angConfObj, GBSparkMax.SparkMaxConfObject linConfObj) {
+		//SET ANGLE MOTOR
+		angleMotor = new GBSparkMax(angleMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+		angleMotor.config(angConfObj);
+
+		linearMotor = new GBSparkMax(linearMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+		linearMotor.config(linConfObj);
 		
 		lamprey = new AnalogInput(lampreyID);
 		lamprey.setAverageBits(2);
-		configAnglePID(RobotMap.Pegasus.Swerve.angPID);
-		configLinPID(RobotMap.Pegasus.Swerve.linPID);
 		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
 		this.wheelCirc = RobotMap.Pegasus.Swerve.WHEEL_CIRC;
 	}
@@ -82,7 +71,7 @@ public class SwerveModule {
 	}
 
 	public double getCurrentVelocity() {
-		return (linearMotor.getEncoder().getVelocity() * RobotMap.Pegasus.Swerve.linTicksToWheelMetersPerSec);
+		return (linearMotor.getEncoder().getVelocity());
 	}
 
 	public void rotateByAngle(double angle) {
@@ -107,26 +96,14 @@ public class SwerveModule {
 	}
 
 	public void configLinPID(PIDObject pidObject) {
-		linearMotor.getPIDController().setP(pidObject.getKp());
-		linearMotor.getPIDController().setI(pidObject.getKi());
-		linearMotor.getPIDController().setD(pidObject.getKd());
-		linearMotor.getPIDController().setFF(pidObject.getKf());
-		linearMotor.getPIDController().setIZone(pidObject.getIZone());
-		linearMotor.getPIDController().setOutputRange(-pidObject.getMaxPower(), pidObject.getMaxPower());
+		linearMotor.configPID(pidObject);
 	}
 
 	public void configAnglePID(PIDObject pidObject) {
-		angleMotor.getPIDController().setP(pidObject.getKp());
-		angleMotor.getPIDController().setI(pidObject.getKi());
-		angleMotor.getPIDController().setD(pidObject.getKd());
-		angleMotor.getPIDController().setFF(pidObject.getKf());
-		angleMotor.getPIDController().setIZone(pidObject.getIZone());
-		angleMotor.getPIDController().setOutputRange(-pidObject.getMaxPower(), pidObject.getMaxPower());
+		angleMotor.configPID(pidObject);
 	}
 
-
 	private void setLinSpeed(double speed) {
-		speed *= isReversed;
 		linearMotor.getPIDController().setReference(speed,ControlType.kVelocity, 0, feedforward.calculate(speed));
 	}
 
@@ -141,14 +118,6 @@ public class SwerveModule {
 		return targetAngle;
 	}
 
-	public double getTargetVel() {
-		return targetVel * isReversed;
-	}
-
-	public int getIsReversed() {
-		return isReversed;
-	}
-	
 	public SwerveModuleState getModuleState (){
 		return new SwerveModuleState(getCurrentVelocity(),new Rotation2d(this.getModuleAngle()));
 	}
