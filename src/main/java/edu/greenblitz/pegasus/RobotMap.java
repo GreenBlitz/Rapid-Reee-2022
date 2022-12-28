@@ -156,8 +156,8 @@ public class RobotMap {
 			public static final boolean angleMotorInverted = true;
 
 			public static class Module1 {//front left
-				public static final int linMotorID = 2;
-				public static final int SteerMotorID = 3;
+				public static final int linMotorID = 10;
+				public static final int SteerMotorID = 1;
 				public static final int AbsoluteEncoderID = 0;
 				
 				public static final int MIN_LAMPREY_VAL = 22;
@@ -166,8 +166,8 @@ public class RobotMap {
 			}
 
 			public static class Module2 {//front right
-				public static final int linMotorID = 0;
-				public static final int SteerMotorID = 1;
+				public static final int linMotorID = 11;
+				public static final int SteerMotorID = 3;
 				public static final int AbsoluteEncoderID = 2;
 				public static final int MIN_LAMPREY_VAL = 12;
 				public static final int MAX_LAMPREY_VAL = 4041;
@@ -176,8 +176,8 @@ public class RobotMap {
 			}
 
 			public static class Module3 {//back left
-				public static final int linMotorID = 6;
-				public static final int SteerMotorID = 7;
+				public static final int linMotorID = 8;
+				public static final int SteerMotorID = 2;
 				public static final int AbsoluteEncoderID = 1;
 				public static final int MIN_LAMPREY_VAL = 20;
 				public static final int MAX_LAMPREY_VAL = 2646; //todo calibrate in 5v
@@ -186,8 +186,8 @@ public class RobotMap {
 
 			public static class Module4 {//back right
 				
-				public static final int linMotorID = 4;
-				public static final int SteerMotorID = 5;
+				public static final int linMotorID = 5;
+				public static final int SteerMotorID = 12;
 				public static final int AbsoluteEncoderID = 3;
 				
 				public static final int MIN_LAMPREY_VAL = 32;
