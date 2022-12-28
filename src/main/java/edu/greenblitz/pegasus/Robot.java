@@ -1,8 +1,11 @@
 package edu.greenblitz.pegasus;
 
+import edu.greenblitz.pegasus.commands.auto.PathFollowerBuilder;
+import edu.greenblitz.pegasus.commands.auto.PathPlannerCommand;
 import edu.greenblitz.pegasus.commands.auto.Taxi;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.utils.AutoSelector;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,6 +23,7 @@ public class Robot extends TimedRobot {
 		Intake.getInstance();
 		Indexing.getInstance();
 		Shooter.create(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
+		AutoSelector.getInstance();
 
 		//todo add voltage compensation
 		//swerve
@@ -63,8 +67,8 @@ public class Robot extends TimedRobot {
 		//resets encoders
 		SwerveChassis.getInstance().resetAllEncoders();
 		SwerveChassis.getInstance().resetLocalizer();
-				(new Taxi(2.5, 2)).schedule(); //THIS   //todo sendablechooser for choosing auto
-
+//		PathFollowerBuilder.getInstance().followPath(AutoSelector.getInstance().getSelectedAuto());
+		SmartDashboard.putString("dood", AutoSelector.getInstance().getSelectedAuto());
 
 	}
 
