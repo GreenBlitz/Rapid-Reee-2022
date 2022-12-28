@@ -81,7 +81,7 @@ public class SwerveModule {
 	}
 
 	public double getCurrentVelocity() {
-		return (linearMotor.getEncoder().getVelocity() / RobotMap.Pegasus.Swerve.linTicksToWheelToRPM);
+		return (RobotMap.Pegasus.Swerve.linRPMToMetersPerSecond * linearMotor.getEncoder().getVelocity());
 	}
 
 	public void rotateByAngle(double angle) {
