@@ -12,7 +12,7 @@ public class BatteryDisabler extends GBCommand {
 
 	private Battery battery;
 	
-	private static final int LEN_OF_AVG = 10;
+	private static final int LEN_OF_AVG = 50;
 	private LinearFilter voltageFilter;
 	
 

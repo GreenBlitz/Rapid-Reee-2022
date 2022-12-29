@@ -237,7 +237,7 @@ public class RobotMap {
                 public static final int SteerMotorID = 2;
                 public static final int lampryID = 1;
                 public static final GBSparkMax.SparkMaxConfObject angConfObj = new GBSparkMax.SparkMaxConfObject(baseAngConfObj);
-                public static final GBSparkMax.SparkMaxConfObject linConfObj = new GBSparkMax.SparkMaxConfObject(baseLinConfObj).withInverted(false);
+                public static final GBSparkMax.SparkMaxConfObject linConfObj = new GBSparkMax.SparkMaxConfObject(baseLinConfObj).withInverted(true);
             }
         }
 

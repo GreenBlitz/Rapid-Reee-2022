@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
 import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -29,9 +30,11 @@ public class SwerveChassis extends GBSubsystem {
 		BACK_RIGHT,
 		BACK_LEFT
 	}
+	private Timer timer;
 
 	public SwerveChassis() {
-
+		timer = new Timer();
+		timer.start();
 		this.frontRight  = new SwerveModule(
 				RobotMap.Pegasus.Swerve.Module1.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module1.linMotorID,
@@ -86,8 +89,9 @@ public class SwerveChassis extends GBSubsystem {
 		return instance;
 	}
 	
+	
 	@Override
-	public void periodic() {
+	public void periodic(){
 		updatePoseEstimation();
 		field.setRobotPose(getRobotPose());
 	}
@@ -249,7 +253,7 @@ public class SwerveChassis extends GBSubsystem {
 		getModule(module).setRotPowerOnlyForCalibrations(power);
 	}
 
-	public void updatePoseEstimation(){
+	public void updatePoseEstimation(){ //todo NaN protection
 		poseEstimator.update(getPigeonAngle(),
 				frontLeft.getModuleState(), frontRight.getModuleState(),
 				backLeft.getModuleState(), backRight.getModuleState());

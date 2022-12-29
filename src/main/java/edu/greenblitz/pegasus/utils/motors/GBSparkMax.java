@@ -26,16 +26,16 @@ public class GBSparkMax extends CANSparkMax {
      * @param conf configObject, uses builder
      */
     public void config (SparkMaxConfObject conf){
-        restoreFactoryDefaults();
-        super.setSmartCurrentLimit(conf.getCurrentLimit());
-        configPID(conf.getPidObject());
-        super.getEncoder().setPositionConversionFactor(conf.getPositionConversionFactor());
-        super.getEncoder().setVelocityConversionFactor(conf.getVelocityConversionFactor());
-        super.setClosedLoopRampRate(conf.getRampRate());
-        super.setOpenLoopRampRate(conf.getRampRate());
-        super.setInverted(conf.isInverted());
-        super.setIdleMode(conf.getIdleMode());
-        enableVoltageCompensation(conf.getVoltageComp());
+//        restoreFactoryDefaults();
+//        super.setSmartCurrentLimit(conf.getCurrentLimit());
+//        configPID(conf.getPidObject());
+//        super.getEncoder().setPositionConversionFactor(conf.getPositionConversionFactor());
+//        super.getEncoder().setVelocityConversionFactor(conf.getVelocityConversionFactor());
+//        super.setClosedLoopRampRate(conf.getRampRate());
+//        super.setOpenLoopRampRate(conf.getRampRate());
+//        super.setInverted(conf.isInverted());
+//        super.setIdleMode(conf.getIdleMode());
+//        enableVoltageCompensation(conf.getVoltageComp());
 
     }
     

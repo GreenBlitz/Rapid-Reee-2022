@@ -67,7 +67,10 @@ public class SwerveModule {
 
 	/** get the module angle by radians */
 	public double getModuleAngle() {
-		return angleMotor.getEncoder().getPosition();
+		double angle = angleMotor.getEncoder().getPosition();
+		if (Double.isNaN(angle))
+			throw new RuntimeException("angle motor returned nan id:" + angleMotor.getDeviceId());
+		return angle;
 	}
 
 	public double getCurrentVelocity() {
