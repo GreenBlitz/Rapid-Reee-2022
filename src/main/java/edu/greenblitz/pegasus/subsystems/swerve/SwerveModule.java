@@ -18,6 +18,7 @@ public class SwerveModule {
 
 	public double targetAngle;
 	public double targetVel;
+	private SwerveModuleState lastModuleState = new SwerveModuleState(); //part of NaN protection
 	private GBSparkMax angleMotor;
 	private GBSparkMax linearMotor;
 	private AnalogInput lamprey;
@@ -49,6 +50,7 @@ public class SwerveModule {
 
 	/** sets to module to be at the given module state */
 	public void setModuleState(SwerveModuleState moduleState) {
+		lastModuleState = moduleState;
 		setLinSpeed(moduleState.speedMetersPerSecond);
 		rotateToAngle(moduleState.angle.getRadians());
 	}
@@ -122,7 +124,11 @@ public class SwerveModule {
 	}
 
 	public SwerveModuleState getModuleState (){
+		if(Double.isNaN(this.getModuleAngle())){ //NaN protection
+			return lastModuleState;
+		}
 		return new SwerveModuleState(getCurrentVelocity(),new Rotation2d(this.getModuleAngle()));
+		
 	}
 
 	/** get the lamprey's angle raw units (analog to digital converter)*/
