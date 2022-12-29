@@ -24,7 +24,7 @@ public class GBFalcon extends TalonFX {
      * @param conf configObject, uses builder
      */
     public void config (GBFalcon.FalconConfObject conf){
-        configFactoryDefault();
+//        configFactoryDefault();
         super.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, conf.getCurrentLimit(), conf.getCurrentLimit(), 0));
         super.configClosedloopRamp(conf.getRampRate());
         super.configOpenloopRamp(conf.getRampRate());
