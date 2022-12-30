@@ -39,6 +39,11 @@ public class DecoyModule implements SwerveModule{
 	}
 
 	@Override
+	public void resetEncoderByAbsoluteEncoder(SwerveChassis.Module module) {
+
+	}
+
+	@Override
 	public void configLinPID(PIDObject pidObject) {
 
 	}

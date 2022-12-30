@@ -1,13 +1,13 @@
 package edu.greenblitz.pegasus.subsystems.swerve;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.revrobotics.CANSparkMax;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.GBMath;
 import edu.greenblitz.pegasus.utils.PIDObject;
+import edu.greenblitz.pegasus.utils.motors.GBFalcon;
+import edu.greenblitz.pegasus.utils.motors.GBSparkMax;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -19,41 +19,49 @@ public class SdsSwerveModule implements SwerveModule{
 	public static final double LIN_GEAR_RATIO = 8.14;
 
 	public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
-	public static final double linTicksToMeters = RobotMap.Pegasus.motors.FALCON_TICKS_PER_RADIAN * WHEEL_CIRC / LIN_GEAR_RATIO;
-	public static final double angleTicksToWheelToRPM = RobotMap.Pegasus.motors.FALCON_VELOCITY_UNITS_PER_RPM / ANG_GEAR_RATIO;
-	public static final double linTicksToMetersPerSecond = RobotMap.Pegasus.motors.FALCON_VELOCITY_UNITS_PER_RPM / LIN_GEAR_RATIO * WHEEL_CIRC / 60;
-	public static final double angleTicksToRadians = RobotMap.Pegasus.motors.FALCON_TICKS_PER_RADIAN / ANG_GEAR_RATIO;
+	public static final double linTicksToMeters = RobotMap.Pegasus.General.Motors.FALCON_TICKS_PER_RADIAN * WHEEL_CIRC / LIN_GEAR_RATIO;
+	public static final double angleTicksToWheelToRPM = RobotMap.Pegasus.General.Motors.FALCON_VELOCITY_UNITS_PER_RPM / ANG_GEAR_RATIO;
+	public static final double linTicksToMetersPerSecond = RobotMap.Pegasus.General.Motors.FALCON_VELOCITY_UNITS_PER_RPM / LIN_GEAR_RATIO * WHEEL_CIRC / 60;
+	public static final double angleTicksToRadians = RobotMap.Pegasus.General.Motors.FALCON_TICKS_PER_RADIAN / ANG_GEAR_RATIO;
+	public static final double magEncoderTicksToFalconTicks = 2*Math.PI/angleTicksToRadians;
+
+	public static final PIDObject angPID = new PIDObject().withKp(0.5).withMaxPower(1.0);//.withKd(10).withMaxPower(0.8);
+	private static final GBFalcon.FalconConfObject baseAngConfObj =
+			new GBFalcon.FalconConfObject()
+					.withNeutralMode(NeutralMode.Brake)
+					.withCurrentLimit(30)
+					.withRampRate(RobotMap.Pegasus.General.RAMP_RATE_VAL)
+					.withVoltageCompSaturation(RobotMap.Pegasus.General.VOLTAGE_COMP_VAL)
+					.withInverted(true)
+					.withPID(angPID);
+
+	public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.5);
+	private static final GBFalcon.FalconConfObject baseLinConfObj =
+			new GBFalcon.FalconConfObject()
+					.withNeutralMode(NeutralMode.Brake)
+					.withCurrentLimit(40)
+					.withRampRate(RobotMap.Pegasus.General.RAMP_RATE_VAL)
+					.withVoltageCompSaturation(RobotMap.Pegasus.General.VOLTAGE_COMP_VAL)
+					.withPID(linPID);
 
 
 	public double targetAngle;
 	public double targetVel;
-	private TalonFX angleMotor;
-	private TalonFX linearMotor;
+	private GBFalcon angleMotor;
+	private GBFalcon linearMotor;
 	private DutyCycleEncoder magEncoder;
 	private SimpleMotorFeedforward feedforward;
 
 	public SdsSwerveModule(int angleMotorID, int linearMotorID, int AbsoluteEncoderID, boolean linInverted) {
 		//SET ANGLE MOTO
-		angleMotor = new TalonFX(angleMotorID);
-		angleMotor.configSupplyCurrentLimit(
-				new SupplyCurrentLimitConfiguration(
-						true,30,30,0));
-		angleMotor.configClosedloopRamp(0.4);
-		angleMotor.setInverted(RobotMap.Pegasus.Swerve.angleMotorInverted);
+		angleMotor = new GBFalcon(angleMotorID);
+		angleMotor.config(new GBFalcon.FalconConfObject(baseAngConfObj));
 
 
-		linearMotor = new TalonFX(linearMotorID);
-		linearMotor.configFactoryDefault();
-		linearMotor.configSupplyCurrentLimit(
-				new SupplyCurrentLimitConfiguration(
-						true,30,30,0));
-		linearMotor.configClosedloopRamp(0.4);
-		linearMotor.configOpenloopRamp(0.4);
-		linearMotor.setInverted(linInverted);
+		linearMotor = new GBFalcon(linearMotorID);
+		linearMotor.config(new GBFalcon.FalconConfObject(baseLinConfObj).withInverted(linInverted));
 
 		magEncoder = new DutyCycleEncoder(AbsoluteEncoderID);
-		configAnglePID(RobotMap.Pegasus.Swerve.angPID);
-		configLinPID(RobotMap.Pegasus.Swerve.linPID);
 		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
 	}
 	
@@ -121,23 +129,18 @@ public class SdsSwerveModule implements SwerveModule{
 	}
 
 	@Override
+	public void resetEncoderByAbsoluteEncoder(SwerveChassis.Module module) {
+		angleMotor.setSelectedSensorPosition(getAbsoluteEncoderValue() * magEncoderTicksToFalconTicks);
+	}
+
+	@Override
 	public void configLinPID(PIDObject pidObject) {
-		linearMotor.config_kP(0,pidObject.getKp());
-		linearMotor.config_kI(0,pidObject.getKi());
-		linearMotor.config_kD(0,pidObject.getKd());
-		linearMotor.config_kF(0,pidObject.getKf());
-		linearMotor.config_IntegralZone(0,pidObject.getIZone());
-		linearMotor.configClosedLoopPeakOutput(0,pidObject.getMaxPower());
+		linearMotor.configPID(pidObject);
 	}
 
 	@Override
 	public void configAnglePID(PIDObject pidObject) {
-		angleMotor.config_kP(0,pidObject.getKp());
-		angleMotor.config_kI(0,pidObject.getKi());
-		angleMotor.config_kD(0,pidObject.getKd());
-		angleMotor.config_kF(0,pidObject.getKf());
-		angleMotor.config_IntegralZone(0,pidObject.getIZone());
-		angleMotor.configClosedLoopPeakOutput(0,pidObject.getMaxPower());
+		angleMotor.configPID(pidObject);
 	}
 
 	/**
@@ -189,7 +192,7 @@ public class SdsSwerveModule implements SwerveModule{
 	}
 
 	/**
-	 * get the magEncoder's angle raw value
+	 * get the magEncoder's angle value in rotations
 	 * */
 	@Override
 	public double getAbsoluteEncoderValue() {

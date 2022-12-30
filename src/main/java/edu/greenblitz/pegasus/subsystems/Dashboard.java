@@ -1,11 +1,6 @@
 package edu.greenblitz.pegasus.subsystems;
 
-import edu.greenblitz.pegasus.subsystems.swerve.SdsSwerveModule;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
-import edu.greenblitz.pegasus.utils.GBMath;
-import edu.greenblitz.pegasus.OI;
-import edu.greenblitz.pegasus.utils.DigitalInputMap;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -23,18 +18,18 @@ public class Dashboard extends GBSubsystem {
 
 	@Override
 	public void periodic() {
-//				SmartDashboard.putBoolean("macroSwitch", DigitalInputMap.getInstance().getValue(0));
-//				SmartDashboard.putBoolean("readyToShoot", Shooter.getInstance().isPreparedToShoot());
-//				SmartDashboard.putNumber("ShooterSpeed", Shooter.getInstance().getShooterSpeed());
+		double falconEncoder =SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT);
+		double brAbsEncoder = SwerveChassis.getInstance().getModuleAbsoluteValue(SwerveChassis.Module.BACK_RIGHT) * 2 * Math.PI;
+		double blAbsEncoder = SwerveChassis.getInstance().getModuleAbsoluteValue(SwerveChassis.Module.BACK_LEFT) * 2 * Math.PI;
+		double frAbsEncoder = SwerveChassis.getInstance().getModuleAbsoluteValue(SwerveChassis.Module.FRONT_RIGHT) * 2 * Math.PI;
+		double flAbsEncoder = SwerveChassis.getInstance().getModuleAbsoluteValue(SwerveChassis.Module.FRONT_LEFT) * 2 * Math.PI;
+		SmartDashboard.putNumber("falcon encoder", falconEncoder);
+		SmartDashboard.putNumber("br abs encoder", brAbsEncoder);
+		SmartDashboard.putNumber("bl abs encoder", blAbsEncoder);
+		SmartDashboard.putNumber("fr abs encoder", frAbsEncoder);
+		SmartDashboard.putNumber("fl abs encoder", flAbsEncoder);
+		SmartDashboard.putNumber("error", Math.toDegrees(falconEncoder - brAbsEncoder) %);
 
-//		SmartDashboard.putNumber("FR-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT)), 360));
-//		SmartDashboard.putNumber("FR-raw-val", SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT));
-		SmartDashboard.putNumber("FR-raw-val", SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT));
-//				SmartDashboard.putNumber("FL-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_LEFT)), 360));
-//				SmartDashboard.putNumber("BR-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
-//				SmartDashboard.putNumber("BL-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 360));
-//
-//				SmartDashboard.putString("alliance", DriverStation.getAlliance().toString());
-		
+
 	}
 }

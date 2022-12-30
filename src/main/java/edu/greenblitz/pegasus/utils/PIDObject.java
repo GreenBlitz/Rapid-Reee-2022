@@ -28,13 +28,16 @@ public class PIDObject {
 		setInverted(inv);
 	}
 
-	public PIDObject(PIDObject p) {
-		this.kp = p.getKp();
-		this.kd = p.getKd();
-		this.ki = p.getKi();
-		this.ff = p.getKf();
-		this.iZone = p.getIZone();
-		setInverted(p.getInverted());
+
+	public PIDObject(PIDObject other) {
+		this.kp = other.kp;
+		this.kd = other.kd;
+		this.ki = other.ki;
+		this.ff = other.ff;
+		this.iZone = other.iZone;
+		this.tolerance = other.tolerance;
+		this.inverted = other.inverted;
+		this.maxPower = other.maxPower;
 	}
 
 	public PIDObject(double kp, double ki, double kd) {
@@ -64,6 +67,8 @@ public class PIDObject {
 	public PIDObject(double kp, int inv) {
 		this(kp, 0.0, inv);
 	}
+
+
 
 	// -----
 

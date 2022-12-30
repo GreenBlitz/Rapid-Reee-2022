@@ -1,6 +1,7 @@
 package edu.greenblitz.pegasus.subsystems.swerve;
 
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.utils.PigeonGyro;
 import edu.greenblitz.pegasus.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.utils.GBMath;
 import edu.greenblitz.pegasus.utils.PigeonGyro;
@@ -30,28 +31,28 @@ public class SwerveChassis extends GBSubsystem {
 	
 	public SwerveChassis() {
 
-		this.frontLeft = new KazaSwerveModule(
+		this.frontLeft = new SdsSwerveModule(
 				RobotMap.Pegasus.Swerve.Module1.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module1.linMotorID,
 				RobotMap.Pegasus.Swerve.Module1.AbsoluteEncoderID,
 				RobotMap.Pegasus.Swerve.Module1.INVERTED
 		);
 		
-		this.frontRight = new KazaSwerveModule(
+		this.frontRight = new SdsSwerveModule(
 				RobotMap.Pegasus.Swerve.Module2.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module2.linMotorID,
 				RobotMap.Pegasus.Swerve.Module2.AbsoluteEncoderID,
 				RobotMap.Pegasus.Swerve.Module2.INVERTED
 		);
 		
-		this.backLeft = new KazaSwerveModule(
+		this.backLeft = new SdsSwerveModule(
 				RobotMap.Pegasus.Swerve.Module3.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module3.linMotorID,
 				RobotMap.Pegasus.Swerve.Module3.AbsoluteEncoderID,
 				RobotMap.Pegasus.Swerve.Module3.INVERTED
 		);
 		
-		this.backRight = new KazaSwerveModule(
+		this.backRight = new SdsSwerveModule(
 				RobotMap.Pegasus.Swerve.Module4.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module4.linMotorID,
 				RobotMap.Pegasus.Swerve.Module4.AbsoluteEncoderID,
@@ -68,6 +69,7 @@ public class SwerveChassis extends GBSubsystem {
 				new Rotation2d(this.getChassisAngle()),
 				RobotMap.Pegasus.Swerve.initialRobotPosition
 		);
+
 	}
 	
 	
@@ -118,10 +120,10 @@ public class SwerveChassis extends GBSubsystem {
 	 * resetting all the angle motor's encoders to 0
 	 */
 	public void resetAllEncoders() {
-		getModule(Module.FRONT_LEFT).resetEncoderToValue();
-		getModule(Module.FRONT_RIGHT).resetEncoderToValue();
-		getModule(Module.BACK_LEFT).resetEncoderToValue();
-		getModule(Module.BACK_RIGHT).resetEncoderToValue();
+		getModule(Module.FRONT_LEFT).resetEncoderByAbsoluteEncoder(Module.FRONT_LEFT);
+		getModule(Module.FRONT_RIGHT).resetEncoderByAbsoluteEncoder(Module.FRONT_RIGHT);
+		getModule(Module.BACK_LEFT).resetEncoderByAbsoluteEncoder(Module.BACK_LEFT);
+		getModule(Module.BACK_RIGHT).resetEncoderByAbsoluteEncoder(Module.BACK_RIGHT);
 	}
 
 
@@ -138,11 +140,11 @@ public class SwerveChassis extends GBSubsystem {
 	 * <p>
 	 * ALL IN RADIANS, NOT DEGREES
 	 */
-	
+
 	/**
-	 * get the lamprey value of a specific module
+	 * get the absolute encoder value of a specific module
 	 */
-	public double getModuleLampreyValue(Module module) {
+	public double getModuleAbsoluteValue(Module module) {
 		return getModule(module).getAbsoluteEncoderValue();
 	}
 	

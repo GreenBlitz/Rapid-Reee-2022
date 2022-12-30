@@ -18,6 +18,9 @@ public interface SwerveModule {
 
 	void resetEncoderToValue();
 
+	// reads the absolute angle from the absolute encoder and puts it into the relative encoder
+	void resetEncoderByAbsoluteEncoder(SwerveChassis.Module module);
+
 	void configLinPID(PIDObject pidObject);
 
 	void configAnglePID(PIDObject pidObject);

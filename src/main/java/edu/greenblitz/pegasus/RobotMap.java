@@ -1,7 +1,9 @@
 package edu.greenblitz.pegasus;
 
 
+import com.revrobotics.CANSparkMax;
 import edu.greenblitz.pegasus.utils.PIDObject;
+import edu.greenblitz.pegasus.utils.motors.GBSparkMax;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -11,14 +13,19 @@ import org.greenblitz.motion.interpolation.Dataset;
 
 public class RobotMap {
 	public static class Pegasus {
-		public static class motors {
-			public final static double SPARKMAX_TICKS_PER_RADIAN = Math.PI * 2;
-			public final static double SPARKMAX_VELOCITY_UNITS_PER_RPM = 1;
-			public final static double FALCON_TICKS_PER_RADIAN = 2*Math.PI / 2048.0;
-			public final static double FALCON_VELOCITY_UNITS_PER_RPM = 600.0 /2048;
+		public static class General {
+			public static class Motors {
+				public final static double SPARKMAX_TICKS_PER_RADIAN = Math.PI * 2;
+				public final static double SPARKMAX_VELOCITY_UNITS_PER_RPM = 1;
+				public static final double NEO_PHYSICAL_TICKS_TO_RADIANS = SPARKMAX_TICKS_PER_RADIAN / 42; //do not use unless you understand the meaning
 
+				public final static double FALCON_TICKS_PER_RADIAN = 2 * Math.PI / 2048.0;
+				public final static double FALCON_VELOCITY_UNITS_PER_RPM = 600.0 / 2048;
+			}
+
+			public final static double VOLTAGE_COMP_VAL = 11.5;
+			public final static double RAMP_RATE_VAL = 0.4;
 		}
-
 
 		public static class gyro {
 			public static final int pigeonID = 12;
@@ -48,12 +55,19 @@ public class RobotMap {
 		public static class Shooter {
 			public static class ShooterMotor {
 				public static final int PORT_LEADER = 7;
-				public static final boolean LEADER_INVERTED = true; //todo use this
+
+				public static final GBSparkMax.SparkMaxConfObject shooterConf = new GBSparkMax.SparkMaxConfObject()
+						.withInverted(true) //whether the motor should be flipped
+						.withCurrentLimit(40) // the max current to allow should be inline with the fuse
+						.withIdleMode(CANSparkMax.IdleMode.kCoast) // trying to force brake is harmful for the motor
+						.withRampRate(General.RAMP_RATE_VAL) // prevents the motor from drawing to much when rapidly changing speeds
+						.withVoltageComp(General.VOLTAGE_COMP_VAL) // makes for more reproducible results
+						.withPositionConversionFactor(1) // todo the gear ratio was not used on the shooter at any point this year should change but not trivial
+						.withVelocityConversionFactor(1)
+						.withPID(new PIDObject(0.0003, 0.0000003, 0).withIZone(300));
 
 
 				public static final double RPM = 2350;
-				public static final PIDObject pid = new PIDObject(0.0003, 0.0000003, 0).withIZone(300).withMaxPower(0.9)/*.withFF(0.00012)*/; //d1: 0.0001, 0.0000003, 0
-
 
 				// devided by 60 because the SysID is in RPS and our code is in RPM
 				public static final double ks = 0.31979 / 60; //todo
@@ -63,6 +77,7 @@ public class RobotMap {
 				public static final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(ShooterMotor.ks, ShooterMotor.kv, ShooterMotor.ka);
 
 				public static final Dataset RPM_TO_POWER = new Dataset(2);
+
 
 				static { //TODO: delete this
 					RPM_TO_POWER.addDatapoint(0, new double[]{-0.0000000001});
@@ -102,29 +117,9 @@ public class RobotMap {
 			}
 		}
 
-		public static class DigitalInputMap {
-			public static final int MACRO_SWITCH = 0;
-		}
-
 		public static class Swerve {
 
 			public static final Pose2d initialRobotPosition = new Pose2d(0, 0, new Rotation2d(0));
-
-/*
-
-			public static final double MAX_VELOCITY = */
-/*3.7*//*
- 4.5; // m/s //todo
-			public static final double MAX_ANGULAR_SPEED = 5;
-*/
-			public static final double MAX_VELOCITY = 4.1818320981472068;
-			public static final double MAX_ANGULAR_SPEED = 10.454580245368017;
-
-			
-
-
-
-
 			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
 					//the WPILib coordinate system is stupid. (x is forwards, y is leftwards)
 					//the translations are given rotated by 90 degrees clockwise to avoid coordinates system conversion at output
@@ -138,9 +133,11 @@ public class RobotMap {
 //					new Translation2d(0.3020647, 0.25265)
 
 			};
-			//TODO: calibrate GOOD PID
-			public static final PIDObject angPID = new PIDObject().withKp(0.5).withKd(10).withMaxPower(0.8);
-			public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.5);
+
+
+			public static final double MAX_VELOCITY = 4.1818320981472068;
+			public static final double MAX_ANGULAR_SPEED = 10.454580245368017;
+
 			public static final PIDObject rotationPID = new PIDObject().withKp(0.5).withKi(0).withKd(0).withFF(0.1);
 
 
@@ -155,13 +152,12 @@ public class RobotMap {
 
 			public static final boolean angleMotorInverted = true;
 
+
+			/* kazaSwerve chassis
 			public static class Module1 {//front left
 				public static final int linMotorID = 10;
 				public static final int SteerMotorID = 1;
 				public static final int AbsoluteEncoderID = 0;
-				
-				public static final int MIN_LAMPREY_VAL = 22;
-				public static final int MAX_LAMPREY_VAL = 4040;
 				public static final boolean INVERTED = false;
 			}
 
@@ -169,31 +165,53 @@ public class RobotMap {
 				public static final int linMotorID = 11;
 				public static final int SteerMotorID = 3;
 				public static final int AbsoluteEncoderID = 2;
-				public static final int MIN_LAMPREY_VAL = 12;
-				public static final int MAX_LAMPREY_VAL = 4041;
 				public static final boolean INVERTED = true;
-				
+
 			}
 
 			public static class Module3 {//back left
 				public static final int linMotorID = 8;
 				public static final int SteerMotorID = 2;
 				public static final int AbsoluteEncoderID = 1;
-				public static final int MIN_LAMPREY_VAL = 20;
-				public static final int MAX_LAMPREY_VAL = 2646; //todo calibrate in 5v
 				public static final boolean INVERTED = false;
 			}
 
 			public static class Module4 {//back right
-				
+
 				public static final int linMotorID = 5;
 				public static final int SteerMotorID = 12;
 				public static final int AbsoluteEncoderID = 3;
-				
-				public static final int MIN_LAMPREY_VAL = 32;
-				public static final int MAX_LAMPREY_VAL = 4021;
 				public static final boolean INVERTED = true;
-				}
+			}*/
+			public static class Module1 {//front left
+				public static final int linMotorID = 0;
+				public static final int SteerMotorID = 1;
+				public static final int AbsoluteEncoderID = 3;
+				public static final boolean INVERTED = false;
+			}
+
+			public static class Module2 {//front right
+				public static final int linMotorID = 2;
+				public static final int SteerMotorID = 3;
+				public static final int AbsoluteEncoderID = 2;
+				public static final boolean INVERTED = true;
+
+			}
+
+			public static class Module3 {//back left
+				public static final int linMotorID = 4;
+				public static final int SteerMotorID = 5;
+				public static final int AbsoluteEncoderID = 1;
+				public static final boolean INVERTED = false;
+			}
+
+			public static class Module4 {//back right
+
+				public static final int linMotorID = 6;
+				public static final int SteerMotorID = 7;
+				public static final int AbsoluteEncoderID = 0;
+				public static final boolean INVERTED = true;
+			}
 		}
 
 	}
