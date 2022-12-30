@@ -12,6 +12,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 public class SdsSwerveModule implements SwerveModule{
 	public static final double ANG_GEAR_RATIO = (150.0/7); //   input/output
@@ -28,7 +29,7 @@ public class SdsSwerveModule implements SwerveModule{
 	public double targetVel;
 	private TalonFX angleMotor;
 	private TalonFX linearMotor;
-	private AnalogInput magEncoder;
+	private DutyCycleEncoder magEncoder;
 	private SimpleMotorFeedforward feedforward;
 
 	public SdsSwerveModule(int angleMotorID, int linearMotorID, int AbsoluteEncoderID, boolean linInverted) {
@@ -50,8 +51,7 @@ public class SdsSwerveModule implements SwerveModule{
 		linearMotor.configOpenloopRamp(0.4);
 		linearMotor.setInverted(linInverted);
 
-		magEncoder = new AnalogInput(AbsoluteEncoderID);
-		magEncoder.setAverageBits(2);
+		magEncoder = new DutyCycleEncoder(AbsoluteEncoderID);
 		configAnglePID(RobotMap.Pegasus.Swerve.angPID);
 		configLinPID(RobotMap.Pegasus.Swerve.linPID);
 		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
@@ -189,11 +189,11 @@ public class SdsSwerveModule implements SwerveModule{
 	}
 
 	/**
-	 * get the magEncoder's angle raw units (analog to digital converter)
+	 * get the magEncoder's angle raw value
 	 * */
 	@Override
 	public double getAbsoluteEncoderValue() {
-		return magEncoder.getValue();
+		return magEncoder.getAbsolutePosition();
 	}
 
 	/**
