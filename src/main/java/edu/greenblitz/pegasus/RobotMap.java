@@ -193,7 +193,7 @@ public class RobotMap {
 			public static class Module2 {//front right
 				public static final int linMotorID = 2;
 				public static final int SteerMotorID = 3;
-				public static final int AbsoluteEncoderID = 2;
+				public static final int AbsoluteEncoderID = 1;
 				public static final boolean INVERTED = true;
 
 			}
@@ -201,7 +201,7 @@ public class RobotMap {
 			public static class Module3 {//back left
 				public static final int linMotorID = 4;
 				public static final int SteerMotorID = 5;
-				public static final int AbsoluteEncoderID = 1;
+				public static final int AbsoluteEncoderID = 2;
 				public static final boolean INVERTED = false;
 			}
 
