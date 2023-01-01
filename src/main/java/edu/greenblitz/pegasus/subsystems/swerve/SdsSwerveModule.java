@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SdsSwerveModule implements SwerveModule{
 	public static final double ANG_GEAR_RATIO = (150.0/7); //   input/output
@@ -52,7 +53,7 @@ public class SdsSwerveModule implements SwerveModule{
 	private DutyCycleEncoder magEncoder;
 	private SimpleMotorFeedforward feedforward;
 
-	public SdsSwerveModule(int angleMotorID, int linearMotorID, int AbsoluteEncoderID, boolean linInverted) {
+	public SdsSwerveModule(int angleMotorID, int linearMotorID, int AbsoluteEncoderID, boolean linInverted,double magEncoderOffset) {
 		//SET ANGLE MOTO
 		angleMotor = new GBFalcon(angleMotorID);
 		angleMotor.config(new GBFalcon.FalconConfObject(baseAngConfObj));
@@ -62,6 +63,8 @@ public class SdsSwerveModule implements SwerveModule{
 		linearMotor.config(new GBFalcon.FalconConfObject(baseLinConfObj).withInverted(linInverted));
 
 		magEncoder = new DutyCycleEncoder(AbsoluteEncoderID);
+		this.magEncoder.setPositionOffset(magEncoderOffset);
+
 		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
 	}
 	
