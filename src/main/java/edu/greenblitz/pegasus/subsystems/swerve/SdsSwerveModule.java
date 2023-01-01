@@ -25,7 +25,7 @@ public class SdsSwerveModule implements SwerveModule{
 	public static final double angleTicksToRadians = RobotMap.Pegasus.General.Motors.FALCON_TICKS_PER_RADIAN / ANG_GEAR_RATIO;
 	public static final double magEncoderTicksToFalconTicks = 2*Math.PI/angleTicksToRadians;
 
-	public static final PIDObject angPID = new PIDObject().withKp(0.5).withMaxPower(1.0);//.withKd(10).withMaxPower(0.8);
+	public static final PIDObject angPID = new PIDObject().withKp(0.05).withMaxPower(1.0).withFF(0);//.withKd(10).withMaxPower(0.8);
 	private static final GBFalcon.FalconConfObject baseAngConfObj =
 			new GBFalcon.FalconConfObject()
 					.withNeutralMode(NeutralMode.Brake)

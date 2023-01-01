@@ -9,6 +9,7 @@ import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
+import edu.greenblitz.pegasus.commands.swerve.RotateAllWheelsToAngle;
 import edu.greenblitz.pegasus.subsystems.Funnel;
 import edu.greenblitz.pegasus.subsystems.Intake;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
@@ -17,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 
 
-public class OI {
+public class OI { //GEVALD
 
 
 	private static OI instance;
@@ -51,6 +52,8 @@ public class OI {
 	private void initButtons() {
 		mainJoystick.A.whenHeld(new StartEndCommand(() -> SwerveChassis.getInstance().rotateModuleByPower(SwerveChassis.Module.BACK_RIGHT, 0.1),
 				()->SwerveChassis.getInstance().rotateModuleByPower(SwerveChassis.Module.BACK_RIGHT, 0)));
+		mainJoystick.B.whileHeld(new RotateAllWheelsToAngle(Math.PI/2));
+		mainJoystick.X.whileHeld(new RotateAllWheelsToAngle(0));
 		/*
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
 
