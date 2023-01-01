@@ -64,10 +64,12 @@ public class SdsSwerveModule implements SwerveModule{
 
 		magEncoder = new DutyCycleEncoder(AbsoluteEncoderID);
 		this.magEncoder.setPositionOffset(magEncoderOffset);
+		SmartDashboard.putNumber("lol", magEncoder.getPositionOffset());
 
 		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
 	}
 	
+
 	public static double convertRadsToTicks(double angInRads){
 		return angInRads/angleTicksToRadians;
 	}
@@ -199,7 +201,7 @@ public class SdsSwerveModule implements SwerveModule{
 	 * */
 	@Override
 	public double getAbsoluteEncoderValue() {
-		return magEncoder.getAbsolutePosition();
+		return magEncoder.get();
 	}
 
 	/**

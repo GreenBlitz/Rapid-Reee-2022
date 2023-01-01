@@ -54,7 +54,7 @@ public class SwerveChassis extends GBSubsystem {
 				RobotMap.Pegasus.Swerve.Module3.INVERTED,
 				RobotMap.Pegasus.Swerve.Module3.magEncoderOffset
 		);
-		
+
 		this.backRight = new SdsSwerveModule(
 				RobotMap.Pegasus.Swerve.Module4.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module4.linMotorID,

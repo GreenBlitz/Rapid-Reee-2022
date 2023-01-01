@@ -127,11 +127,6 @@ public class RobotMap {
 					new Translation2d(0.3020647, -0.25265),/*fr*/
 					new Translation2d(-0.3020647, 0.25265),/*bl*/
 					new Translation2d(-0.3020647, -0.25265)/*br*/
-//					new Translation2d(-0.3020647, -0.25265),
-//					new Translation2d(-0.3020647, 0.25265),
-//					new Translation2d(0.3020647, -0.25265),
-//					new Translation2d(0.3020647, 0.25265)
-
 			};
 
 
@@ -153,7 +148,7 @@ public class RobotMap {
 			public static final boolean angleMotorInverted = true;
 
 
-			/* kazaSwerve chassis
+			// kazaSwerve chassis
 			public static class Module1 {//front left
 				public static final int linMotorID = 10;
 				public static final int SteerMotorID = 1;
@@ -182,13 +177,15 @@ public class RobotMap {
 				public static final int SteerMotorID = 12;
 				public static final int AbsoluteEncoderID = 3;
 				public static final boolean INVERTED = true;
-			}*/
+			}
+
+			/*sds swerve
 			public static class Module1 {//front left
 				public static final int linMotorID = 0;
 				public static final int SteerMotorID = 1;
 				public static final int AbsoluteEncoderID = 3;
 				public static final boolean INVERTED = false;
-				public static final double magEncoderOffset = -3.4635 /(2*Math.PI);
+				public static final double magEncoderOffset = 3.4635 /(2*Math.PI);
 			}
 
 			public static class Module2 {//front right
@@ -196,7 +193,7 @@ public class RobotMap {
 				public static final int SteerMotorID = 3;
 				public static final int AbsoluteEncoderID = 1;
 				public static final boolean INVERTED = true;
-				public static final double magEncoderOffset = -4.55/(2*Math.PI);
+				public static final double magEncoderOffset = 4.55/(2*Math.PI);
 			}
 
 			public static class Module3 {//back left
@@ -204,7 +201,7 @@ public class RobotMap {
 				public static final int SteerMotorID = 5;
 				public static final int AbsoluteEncoderID = 2;
 				public static final boolean INVERTED = false;
-				public static final double magEncoderOffset = -3.947/(2*Math.PI);
+				public static final double magEncoderOffset = 3.947/(2*Math.PI);
 			}
 
 			public static class Module4 {//back right
@@ -213,8 +210,9 @@ public class RobotMap {
 				public static final int SteerMotorID = 7;
 				public static final int AbsoluteEncoderID = 0;
 				public static final boolean INVERTED = true;
-				public static final double magEncoderOffset = -5.386/(2*Math.PI);
+				public static final double magEncoderOffset = 5.386/(2*Math.PI);
 			}
+			*/
 		}
 
 	}

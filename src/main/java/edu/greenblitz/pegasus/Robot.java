@@ -16,17 +16,17 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
 		
-//		Pneumatics.init();
+		Pneumatics.init();
 		Dashboard.init();
-//		Funnel.getInstance();
-//		Intake.getInstance();
-//		Indexing.getInstance();
-//		Shooter.create(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
+		Funnel.getInstance();
+		Intake.getInstance();
+		Indexing.getInstance();
+		Shooter.create(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
 		Battery.getInstance().setDefaultCommand(new BatteryDisabler());
 
 		//swerve
 		
-//		SwerveChassis.getInstance().resetChassisAngle();
+		SwerveChassis.getInstance().resetChassisAngle();
 		SwerveChassis.getInstance().resetAllEncoders();
 		SmartDashboard.putNumber("auto number", 1);
 
