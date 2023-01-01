@@ -2,6 +2,10 @@ package edu.greenblitz.pegasus;
 
 
 import com.revrobotics.CANSparkMax;
+
+import edu.greenblitz.pegasus.subsystems.swerve.KazaSwerveModule;
+import edu.greenblitz.pegasus.subsystems.swerve.SdsSwerveModule;
+import edu.greenblitz.pegasus.subsystems.swerve.SdsSwerveModule.SdsSwerveModuleConfigObject;
 import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.greenblitz.pegasus.utils.motors.GBSparkMax;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -149,70 +153,30 @@ public class RobotMap {
 
 
 			// kazaSwerve chassis
-			public static class Module1 {//front left
-				public static final int linMotorID = 10;
-				public static final int SteerMotorID = 1;
-				public static final int AbsoluteEncoderID = 0;
-				public static final boolean INVERTED = false;
-			}
+			public static KazaSwerveModule.KazaSwerveModuleConfigObject KazaModule1 =
+			 new KazaSwerveModule.KazaSwerveModuleConfigObject(10,1,0,false); //front left
 
-			public static class Module2 {//front right
-				public static final int linMotorID = 11;
-				public static final int SteerMotorID = 3;
-				public static final int AbsoluteEncoderID = 2;
-				public static final boolean INVERTED = true;
+			public static KazaSwerveModule.KazaSwerveModuleConfigObject KazaModule2 =
+			 new KazaSwerveModule.KazaSwerveModuleConfigObject(11,3,2,true); //front right
 
-			}
+			 public static KazaSwerveModule.KazaSwerveModuleConfigObject KazaModule3 =
+			 new KazaSwerveModule.KazaSwerveModuleConfigObject(8,2,1,false); //back left
 
-			public static class Module3 {//back left
-				public static final int linMotorID = 8;
-				public static final int SteerMotorID = 2;
-				public static final int AbsoluteEncoderID = 1;
-				public static final boolean INVERTED = false;
-			}
+			 public static KazaSwerveModule.KazaSwerveModuleConfigObject KazaModule4 =
+			 new KazaSwerveModule.KazaSwerveModuleConfigObject(5,12,3,true); //back right
 
-			public static class Module4 {//back right
+			 public static SdsSwerveModule.SdsSwerveModuleConfigObject SdsModule1 = 
+			 new SdsSwerveModule.SdsSwerveModuleConfigObject(0, 1, 3,false, 3.4635/(2*Math.PI)); //front left
 
-				public static final int linMotorID = 5;
-				public static final int SteerMotorID = 12;
-				public static final int AbsoluteEncoderID = 3;
-				public static final boolean INVERTED = true;
-			}
+			 public static SdsSwerveModule.SdsSwerveModuleConfigObject SdsModule2 = 
+			 new SdsSwerveModule.SdsSwerveModuleConfigObject(2, 3, 1,true, 4.55/(2*Math.PI)); //front right
 
-			/*sds swerve
-			public static class Module1 {//front left
-				public static final int linMotorID = 0;
-				public static final int SteerMotorID = 1;
-				public static final int AbsoluteEncoderID = 3;
-				public static final boolean INVERTED = false;
-				public static final double magEncoderOffset = 3.4635 /(2*Math.PI);
-			}
+			 public static SdsSwerveModule.SdsSwerveModuleConfigObject SdsModule3 = 
+			 new SdsSwerveModule.SdsSwerveModuleConfigObject(4, 5, 2,false, 3.947/(2*Math.PI)); //back left
 
-			public static class Module2 {//front right
-				public static final int linMotorID = 2;
-				public static final int SteerMotorID = 3;
-				public static final int AbsoluteEncoderID = 1;
-				public static final boolean INVERTED = true;
-				public static final double magEncoderOffset = 4.55/(2*Math.PI);
-			}
-
-			public static class Module3 {//back left
-				public static final int linMotorID = 4;
-				public static final int SteerMotorID = 5;
-				public static final int AbsoluteEncoderID = 2;
-				public static final boolean INVERTED = false;
-				public static final double magEncoderOffset = 3.947/(2*Math.PI);
-			}
-
-			public static class Module4 {//back right
-
-				public static final int linMotorID = 6;
-				public static final int SteerMotorID = 7;
-				public static final int AbsoluteEncoderID = 0;
-				public static final boolean INVERTED = true;
-				public static final double magEncoderOffset = 5.386/(2*Math.PI);
-			}
-			*/
+			 public static SdsSwerveModule.SdsSwerveModuleConfigObject SdsModule4 = 
+			 new SdsSwerveModule.SdsSwerveModuleConfigObject(6, 7, 0,true, 5.386/(2*Math.PI)); //back right
+			
 		}
 
 	}

@@ -73,6 +73,28 @@ public class KazaSwerveModule implements SwerveModule {
 		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
 	}
 
+	
+	public KazaSwerveModule(KazaSwerveModuleConfigObject KazaModuleConfigObject){
+		this(KazaModuleConfigObject.angleMotorID,
+		KazaModuleConfigObject.linearMotorID,
+		KazaModuleConfigObject.AbsoluteEncoderID,
+		KazaModuleConfigObject.linInverted);
+	}
+
+	public static class KazaSwerveModuleConfigObject{
+		private int angleMotorID;
+		private int linearMotorID;
+		private int AbsoluteEncoderID;
+		private boolean linInverted;
+
+		public KazaSwerveModuleConfigObject(int angleMotorID, int linearMotorID, int AbsoluteEncoderID, boolean linInverted){
+			this.angleMotorID = angleMotorID;
+			this.linearMotorID = linearMotorID;
+			this.AbsoluteEncoderID = AbsoluteEncoderID;
+			this.linInverted = linInverted;
+		}
+	}
+
 //	public double getLampreyAngle() { // in radians;
 //		int val = lamprey.getValue();
 //		if(val < minLampreyVal) minLampreyVal = val;

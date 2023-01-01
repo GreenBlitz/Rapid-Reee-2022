@@ -68,6 +68,30 @@ public class SdsSwerveModule implements SwerveModule{
 
 		this.feedforward = new SimpleMotorFeedforward(RobotMap.Pegasus.Swerve.ks, RobotMap.Pegasus.Swerve.kv, RobotMap.Pegasus.Swerve.ka);;
 	}
+
+	public SdsSwerveModule(SdsSwerveModuleConfigObject SdsModuleConfigObject){
+		this(SdsModuleConfigObject.angleMotorID,
+		SdsModuleConfigObject.linearMotorID,
+		SdsModuleConfigObject.AbsoluteEncoderID,
+		SdsModuleConfigObject.linInverted,
+		SdsModuleConfigObject.magEncoderOffset);
+	}
+
+	public static class SdsSwerveModuleConfigObject{
+		private int angleMotorID;
+		private int linearMotorID;
+		private int AbsoluteEncoderID;
+		private boolean linInverted;
+		private double magEncoderOffset;
+
+		public SdsSwerveModuleConfigObject(int angleMotorID, int linearMotorID, int AbsoluteEncoderID, boolean linInverted,double magEncoderOffset){
+			this.angleMotorID = angleMotorID;
+			this.linearMotorID = linearMotorID;
+			this.AbsoluteEncoderID = AbsoluteEncoderID;
+			this.linInverted = linInverted;
+			this.magEncoderOffset = magEncoderOffset;
+		}
+	}
 	
 
 	public static double convertRadsToTicks(double angInRads){
