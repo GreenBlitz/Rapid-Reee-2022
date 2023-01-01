@@ -4,7 +4,7 @@ import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 public class DecoyModule implements SwerveModule{
-	public DecoyModule(int angleMotorID, int linearMotorID, int lampreyID, boolean linInverted) {
+	public DecoyModule() {
 
 	}
 

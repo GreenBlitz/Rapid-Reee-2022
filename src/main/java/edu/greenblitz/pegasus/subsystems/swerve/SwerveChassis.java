@@ -30,13 +30,9 @@ public class SwerveChassis extends GBSubsystem {
 	}
 	
 	public SwerveChassis() {
-
 		this.frontLeft = new KazaSwerveModule(RobotMap.Pegasus.Swerve.KazaModule1);
-		
 		this.frontRight = new KazaSwerveModule(RobotMap.Pegasus.Swerve.KazaModule2);
-		
 		this.backLeft = new KazaSwerveModule(RobotMap.Pegasus.Swerve.KazaModule3);
-
 		this.backRight = new KazaSwerveModule(RobotMap.Pegasus.Swerve.KazaModule4);
 		
 		this.pigeonGyro = new PigeonGyro(RobotMap.Pegasus.gyro.pigeonID);
