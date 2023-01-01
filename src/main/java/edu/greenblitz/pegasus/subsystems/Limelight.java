@@ -50,12 +50,20 @@ public class Limelight extends GBSubsystem {
 		Transform3d target = result.getBestTarget().getBestCameraToTarget();
 		return target;
 	}
-	
+
+	/**
+	 *
+	 * @return the estimated time the frame was taken
+	 */
 	public double getTimeStamp(){
 		var result = camera.getLatestResult();
 		return result.getTimestampSeconds();
 	}
 
+	/**
+	 * transforms the target location and the initial cam location.
+	 * @return the location of the vision by the robot.
+	 */
 	public Pose2d estimateLocationByVision(){
 		if(FindTarget()){
 			Transform3d target = camera.getLatestResult().getBestTarget().getBestCameraToTarget().inverse();
@@ -72,7 +80,6 @@ public class Limelight extends GBSubsystem {
 		return camera.getLatestResult().hasTargets();
 	}
 
-	public double getImageCaptureTime(){return Timer.getFPGATimestamp() - camera.getLatestResult().getLatencyMillis();}
 }
 
 
