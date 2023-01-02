@@ -15,8 +15,8 @@ public class RobotMap {
             public final static double SPARKMAX_TICKS_PER_RADIAN = Math.PI * 2;
             public final static double SPARKMAX_VELOCITY_UNITS_TO_RPM = 1;
 
-            public final static double VOLTAGE_COMP_VAL = 11.5;
-            public final static double RAMP_RATE_VAL = 0.4;
+            public final static double VOLTAGE_COMP_VAL = 10.5;
+            public final static double RAMP_RATE_VAL = 1;
         }
 
         public static class gyro {
@@ -118,7 +118,7 @@ public class RobotMap {
 
 		public static class Vision{
 			public static final Transform2d initialCamPosition = new Transform2d(new Translation2d(),new Rotation2d());
-			public static final Pose3d apriltagLocation = new Pose3d(new Translation3d(),new Rotation3d());
+			public static final Pose3d apriltagLocation = new Pose3d(new Translation3d(5,5,0),new Rotation3d(0,0,Math.PI));
 		}
 
 		public static class Swerve {
@@ -126,22 +126,20 @@ public class RobotMap {
 			public static final Pose2d initialRobotPosition = new Pose2d(0, 0, new Rotation2d(0));
 			public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
 
-			public static final double ANG_GEAR_RATIO = 1 / 6.0; //todo maybe 6.0 /1?   input/output
+			public static final double ANG_GEAR_RATIO = 6.0;
 			public static final double LIN_GEAR_RATIO = 8.0;
 
 			public static final double MAX_VELOCITY = /*3.7*/ 4.5; // m/s //todo
 			public static final double MAX_ANGULAR_SPEED = 5;
 
 
-			public static final double angleTicksToWheelToRPM = Swerve.ANG_GEAR_RATIO * General.SPARKMAX_VELOCITY_UNITS_TO_RPM;
-			public static final double linTicksToWheelToRPM = Swerve.LIN_GEAR_RATIO * General.SPARKMAX_VELOCITY_UNITS_TO_RPM;
-			public static final double linTicksToWheelMetersPerSec = General.SPARKMAX_VELOCITY_UNITS_TO_RPM * WHEEL_CIRC / 60 / LIN_GEAR_RATIO;;
-
-			public static final double angleTicksToRadians = Swerve.ANG_GEAR_RATIO * General.SPARKMAX_TICKS_PER_RADIAN;
+            public static final double linTicksToMeters = RobotMap.Pegasus.General.SPARKMAX_TICKS_PER_RADIAN * WHEEL_CIRC / LIN_GEAR_RATIO;
+            public static final double angleTicksToWheelToRPM = RobotMap.Pegasus.General.SPARKMAX_VELOCITY_UNITS_TO_RPM / ANG_GEAR_RATIO;
+            public static final double linTicksToMetersPerSecond = RobotMap.Pegasus.General.SPARKMAX_VELOCITY_UNITS_TO_RPM * WHEEL_CIRC / 60 / LIN_GEAR_RATIO;
+            public static final double angleTicksToRadians = RobotMap.Pegasus.General.SPARKMAX_TICKS_PER_RADIAN / ANG_GEAR_RATIO;
 
 			public static final double NEO_PHYSICAL_TICKS_TO_RADIANS = angleTicksToRadians / 42; //do not use unless you understand the meaning
 
-			public static final double linTicksToMeters = Swerve.LIN_GEAR_RATIO * General.SPARKMAX_TICKS_PER_RADIAN * WHEEL_CIRC;
 
 
 
@@ -163,7 +161,7 @@ public class RobotMap {
 			//TODO: calibrate GOOD PID
 			public static final PIDObject angPID = new PIDObject().withKp(0.5).withKd(10).withMaxPower(0.8);
 			public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.5);
-			public static final PIDObject rotationPID = new PIDObject().withKp(0.1).withKi(0).withKd(0).withFF(0.1);
+			public static final PIDObject rotationPID = new PIDObject().withKp(0.05).withKi(0).withKd(0);
 
             public static final double ks = 0.14876;
             public static final double kv = 3.3055;
@@ -177,33 +175,27 @@ public class RobotMap {
 
 
 
-            public static final double LIN_TICKS_TO_METERS = Swerve.LIN_GEAR_RATIO * General.SPARKMAX_TICKS_PER_RADIAN * WHEEL_CIRC;
-            public static final double LIN_TICKS_TO_METER_PER_SEC = Swerve.LIN_GEAR_RATIO * (General.SPARKMAX_VELOCITY_UNITS_TO_RPM / 60) * WHEEL_CIRC; // /60 is to change the RPM to per second
-
-            public static final double ANGLE_TICKS_TO_RADIANS = Swerve.ANG_GEAR_RATIO * General.SPARKMAX_TICKS_PER_RADIAN;
-            public static final double ANGLE_TICKS_TO_WHEEL_RPM = Swerve.ANG_GEAR_RATIO * General.SPARKMAX_VELOCITY_UNITS_TO_RPM;
-			
             private static final GBSparkMax.SparkMaxConfObject baseAngConfObj =
                     new GBSparkMax.SparkMaxConfObject()
                             .withIdleMode(CANSparkMax.IdleMode.kBrake)
-                            .withCurrentLimit(30)
+                            .withCurrentLimit(20)
                             .withRampRate(General.RAMP_RATE_VAL)
                             .withVoltageComp(General.VOLTAGE_COMP_VAL)
                             .withInverted(true)
                             .withPID(angPID)
-                            .withPositionConversionFactor(RobotMap.Pegasus.Swerve.ANGLE_TICKS_TO_RADIANS)
-                            .withVelocityConversionFactor(RobotMap.Pegasus.Swerve.ANGLE_TICKS_TO_WHEEL_RPM);
+                            .withPositionConversionFactor(Swerve.angleTicksToRadians)
+                            .withVelocityConversionFactor(Swerve.angleTicksToWheelToRPM);
 		
 
             private static final GBSparkMax.SparkMaxConfObject baseLinConfObj =
                     new GBSparkMax.SparkMaxConfObject()
                             .withIdleMode(CANSparkMax.IdleMode.kBrake)
-                            .withCurrentLimit(40)
+                            .withCurrentLimit(20)
                             .withRampRate(General.RAMP_RATE_VAL)
                             .withVoltageComp(General.VOLTAGE_COMP_VAL)
                             .withPID(linPID)
-                            .withPositionConversionFactor(RobotMap.Pegasus.Swerve.LIN_TICKS_TO_METERS)
-                            .withVelocityConversionFactor(RobotMap.Pegasus.Swerve.LIN_TICKS_TO_METER_PER_SEC);
+                            .withPositionConversionFactor(Swerve.linTicksToMeters)
+                            .withVelocityConversionFactor(Swerve.linTicksToMetersPerSecond);
 
             public static class Module1 {//front right
                 public static final int linMotorID = 11;
