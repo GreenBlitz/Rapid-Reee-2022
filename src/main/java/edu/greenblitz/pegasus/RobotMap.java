@@ -119,6 +119,7 @@ public class RobotMap {
 		public static class Vision{
 			public static final Transform2d initialCamPosition = new Transform2d(new Translation2d(),new Rotation2d());
 			public static final Pose3d apriltagLocation = new Pose3d(new Translation3d(5,5,0),new Rotation3d(0,0,Math.PI));
+
 		}
 
 		public static class Swerve {
@@ -202,7 +203,7 @@ public class RobotMap {
                 public static final int SteerMotorID = 3;
                 public static final int lampryID = 2;
                 public static final GBSparkMax.SparkMaxConfObject angConfObj = new GBSparkMax.SparkMaxConfObject(baseAngConfObj);
-                public static final GBSparkMax.SparkMaxConfObject linConfObj = new GBSparkMax.SparkMaxConfObject(baseLinConfObj).withInverted(false);
+                public static final GBSparkMax.SparkMaxConfObject linConfObj = new GBSparkMax.SparkMaxConfObject(baseLinConfObj).withInverted(true);
             }
 
 
@@ -212,7 +213,7 @@ public class RobotMap {
                 public static final int SteerMotorID = 1;
                 public static final int lampryID = 0;
                 public static final GBSparkMax.SparkMaxConfObject angConfObj = new GBSparkMax.SparkMaxConfObject(baseAngConfObj);
-                public static final GBSparkMax.SparkMaxConfObject linConfObj = new GBSparkMax.SparkMaxConfObject(baseLinConfObj).withInverted(true);
+                public static final GBSparkMax.SparkMaxConfObject linConfObj = new GBSparkMax.SparkMaxConfObject(baseLinConfObj).withInverted(false);
             }
 
             public static class Module3 {//back right
@@ -221,7 +222,7 @@ public class RobotMap {
                 public static final int SteerMotorID = 12;
                 public static final int lampryID = 3;
                 public static final GBSparkMax.SparkMaxConfObject angConfObj = new GBSparkMax.SparkMaxConfObject(baseAngConfObj);
-                public static final GBSparkMax.SparkMaxConfObject linConfObj = new GBSparkMax.SparkMaxConfObject(baseLinConfObj).withInverted(false);
+                public static final GBSparkMax.SparkMaxConfObject linConfObj = new GBSparkMax.SparkMaxConfObject(baseLinConfObj).withInverted(true);
             }
 
             public static class Module4 {//back left
@@ -229,7 +230,7 @@ public class RobotMap {
                 public static final int SteerMotorID = 2;
                 public static final int lampryID = 1;
                 public static final GBSparkMax.SparkMaxConfObject angConfObj = new GBSparkMax.SparkMaxConfObject(baseAngConfObj);
-                public static final GBSparkMax.SparkMaxConfObject linConfObj = new GBSparkMax.SparkMaxConfObject(baseLinConfObj).withInverted(true);
+                public static final GBSparkMax.SparkMaxConfObject linConfObj = new GBSparkMax.SparkMaxConfObject(baseLinConfObj).withInverted(false);
             }
         }
 

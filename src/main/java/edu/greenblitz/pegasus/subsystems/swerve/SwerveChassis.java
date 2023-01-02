@@ -78,6 +78,7 @@ public class SwerveChassis extends GBSubsystem {
 				new MatBuilder<>(Nat.N1(), Nat.N1()).fill(0.1),//0.02),
 				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1,0.1,0.01));//0.1, 0.1, 0.01));
 		SmartDashboard.putData("field",getField());
+		field.getObject("apriltag").setPose(RobotMap.Pegasus.Vision.apriltagLocation.toPose2d());
 	}
 
 
