@@ -15,7 +15,7 @@ public class RobotMap {
             public final static double SPARKMAX_TICKS_PER_RADIAN = Math.PI * 2;
             public final static double SPARKMAX_VELOCITY_UNITS_TO_RPM = 1;
 
-            public final static double VOLTAGE_COMP_VAL = 10.5;
+            public final static double VOLTAGE_COMP_VAL = 11.5;
             public final static double RAMP_RATE_VAL = 1;
         }
 
@@ -179,7 +179,7 @@ public class RobotMap {
             private static final GBSparkMax.SparkMaxConfObject baseAngConfObj =
                     new GBSparkMax.SparkMaxConfObject()
                             .withIdleMode(CANSparkMax.IdleMode.kBrake)
-                            .withCurrentLimit(20)
+                            .withCurrentLimit(30)
                             .withRampRate(General.RAMP_RATE_VAL)
                             .withVoltageComp(General.VOLTAGE_COMP_VAL)
                             .withInverted(true)
@@ -191,7 +191,7 @@ public class RobotMap {
             private static final GBSparkMax.SparkMaxConfObject baseLinConfObj =
                     new GBSparkMax.SparkMaxConfObject()
                             .withIdleMode(CANSparkMax.IdleMode.kBrake)
-                            .withCurrentLimit(20)
+                            .withCurrentLimit(40)
                             .withRampRate(General.RAMP_RATE_VAL)
                             .withVoltageComp(General.VOLTAGE_COMP_VAL)
                             .withPID(linPID)

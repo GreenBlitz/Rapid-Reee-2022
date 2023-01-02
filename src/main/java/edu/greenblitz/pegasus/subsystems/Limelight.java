@@ -37,7 +37,7 @@ public class Limelight extends GBSubsystem {
 	 * @return the curr angle minus the target angle
 	 */
 	public double fieldRelativeTargetYaw(){
-		return GBMath.modulo(SwerveChassis.getInstance().getChassisAngle() - getYawTarget(), 2* Math.PI);
+		return GBMath.modulo(SwerveChassis.getInstance().getChassisAngle() - getYawTarget(),2 * Math.PI);
 	}
 	
 	/**

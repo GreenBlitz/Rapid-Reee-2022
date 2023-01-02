@@ -3,6 +3,7 @@ package edu.greenblitz.pegasus.commands.swerve;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.subsystems.Limelight;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.utils.GBMath;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,7 +20,7 @@ public class AngPIDSupplier implements DoubleSupplier{
 		SmartDashboard.putNumber("kd", 0);
 		this.targetLoc = targetLoc;
 		chassisPid = new PIDController(RobotMap.Pegasus.Swerve.rotationPID.getKp(),RobotMap.Pegasus.Swerve.rotationPID.getKi(),RobotMap.Pegasus.Swerve.rotationPID.getKd());
-		chassisPid.enableContinuousInput(0,2*Math.PI); //min and max
+		chassisPid.enableContinuousInput(0,2 * Math.PI); //min and max
 	}
 	
 	/**
@@ -43,15 +44,9 @@ public class AngPIDSupplier implements DoubleSupplier{
 		double kp = SmartDashboard.getNumber("kp",1);
 		double kd = SmartDashboard.getNumber("kd",0);
 		double ki = SmartDashboard.getNumber("ki",0);
-		double ff = getAngVelDiffByVision();
 		Translation2d relativeLoc = targetLoc.minus(SwerveChassis.getInstance().getRobotPose().getTranslation());
-		double ang = Math.atan2(relativeLoc.getY(), relativeLoc.getX());
+		double ang = GBMath.modulo(Math.atan2(relativeLoc.getY(), relativeLoc.getX()), 2 * Math.PI);
 		chassisPid.setPID(kp,ki,kd);
-		double pidOutput = chassisPid.calculate(SwerveChassis.getInstance().getChassisAngle(),ang);
-		SmartDashboard.putNumber("ff", ff);
-		SmartDashboard.putNumber("pid output", pidOutput);
-		double input =  pidOutput;
-		SmartDashboard.putNumber("ang input", input);
-		return input;
+		return chassisPid.calculate(SwerveChassis.getInstance().getChassisAngle(),ang);
 	}
 }

@@ -21,7 +21,7 @@ public class CombineJoystickMovement extends SwerveCommand {
 	}
 	
 	public CombineJoystickMovement(boolean isSlow) {
-		this(isSlow, () -> OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.RIGHT_X));
+		this(isSlow, () -> -OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.RIGHT_X));
 	}
 	
 	@Override
@@ -36,7 +36,7 @@ public class CombineJoystickMovement extends SwerveCommand {
 	public void execute() {
 		double leftwardSpeed = -OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.LEFT_X) * LIN_SPEED_FACTOR;
 		double forwardSpeed = OI.getInstance().getMainJoystick().getAxisValue(SmartJoystick.Axis.LEFT_Y) * LIN_SPEED_FACTOR;
-		double angSpeed = -angSupplier.getAsDouble() * ANG_SPEED_FACTOR;
+		double angSpeed = angSupplier.getAsDouble() * ANG_SPEED_FACTOR;
 		angSpeed = Math.min(angSpeed, ANG_SPEED_FACTOR);
 		if (forwardSpeed == 0 && leftwardSpeed == 0 && angSpeed == 0) {
 			swerve.stop();
