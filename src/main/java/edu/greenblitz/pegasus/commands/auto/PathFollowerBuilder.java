@@ -12,6 +12,7 @@ import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.commands.GBCommand;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -64,6 +65,12 @@ public class PathFollowerBuilder extends SwerveAutoBuilder{
 						RobotMap.Pegasus.Swerve.KMMaxAcceleration
 				))
 		);
+	}
+
+	public Trajectory getTrajectory (String trajectory){
+		return PathPlanner.loadPath(trajectory,
+				0.5,
+				0.1);
 	}
 
 }

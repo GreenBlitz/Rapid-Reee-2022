@@ -105,7 +105,7 @@ public class RobotMap {
 
 		public static class Swerve {
 
-			public static final Pose2d initialRobotPosition = new Pose2d(0, 0, new Rotation2d(0));
+			public static final Pose2d initialRobotPosition = new Pose2d(8, 8, new Rotation2d(0));
 			public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
 
 			public static final double ANG_GEAR_RATIO = 1 / 6.0; //todo maybe 6.0 /1?   input/output

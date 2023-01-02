@@ -4,14 +4,19 @@ import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.utils.PigeonGyro;
 import edu.greenblitz.pegasus.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.utils.GBMath;
+import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.*;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class SwerveChassis extends GBSubsystem {
 	
 	private final SwerveModule frontRight, frontLeft, backRight, backLeft;
+	public static Field2d field2d = new Field2d();
 	//	private final PigeonGyro pigeonGyro;
 	private final PigeonGyro pigeonGyro;
 	private final SwerveDriveOdometry localizer;
@@ -30,7 +35,7 @@ public class SwerveChassis extends GBSubsystem {
 	}
 
 	public SwerveChassis() {
-
+		SmartDashboard.putData(field2d);
 		this.frontRight  = new SwerveModule(
 				RobotMap.Pegasus.Swerve.Module1.SteerMotorID,
 				RobotMap.Pegasus.Swerve.Module1.linMotorID,
@@ -86,6 +91,7 @@ public class SwerveChassis extends GBSubsystem {
 		localizer.update(new Rotation2d(getChassisAngle()),
 				frontLeft.getModuleState(), frontRight.getModuleState(),
 				backLeft.getModuleState(), backRight.getModuleState());
+		field2d.setRobotPose(localizer.getPoseMeters());
 	}
 	
 	/**

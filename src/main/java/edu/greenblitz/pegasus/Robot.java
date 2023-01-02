@@ -7,6 +7,8 @@ import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.AutoSelector;
 import edu.greenblitz.pegasus.utils.DigitalInputMap;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -31,7 +33,8 @@ public class Robot extends TimedRobot {
 		SwerveChassis.getInstance().resetChassisAngle();
 		SwerveChassis.getInstance().resetAllEncoders();
 		SmartDashboard.putNumber("auto number", 1);
-
+		SwerveChassis.field2d.getObject("traj").setTrajectory(PathFollowerBuilder.getInstance().getTrajectory("1 meter"));
+		SwerveChassis.field2d.setRobotPose(new Pose2d(1,1,new Rotation2d(0)));
 		OI.getInstance();
 	}
 
@@ -67,8 +70,8 @@ public class Robot extends TimedRobot {
 		//resets encoders
 		SwerveChassis.getInstance().resetAllEncoders();
 		SwerveChassis.getInstance().resetLocalizer();
-//		PathFollowerBuilder.getInstance().followPath(AutoSelector.getInstance().getSelectedAuto());
-		SmartDashboard.putString("dood", AutoSelector.getInstance().getSelectedAuto());
+		PathFollowerBuilder.getInstance().followPath("1 meter").schedule();
+//		SmartDashboard.putString("dood", AutoSelector.getInstance().getSelectedAuto());
 
 	}
 
