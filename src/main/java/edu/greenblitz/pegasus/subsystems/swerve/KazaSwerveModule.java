@@ -16,42 +16,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import static edu.greenblitz.pegasus.RobotMap.Pegasus.General.Motors.NEO_PHYSICAL_TICKS_TO_RADIANS;
 
 public class KazaSwerveModule implements SwerveModule {
-	public static final double ANG_GEAR_RATIO = 6.0;
-	public static final double LIN_GEAR_RATIO = 8.0;
-
-
-	public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
-	public static final double linTicksToMeters = RobotMap.Pegasus.General.Motors.SPARKMAX_TICKS_PER_RADIAN * WHEEL_CIRC / LIN_GEAR_RATIO;
-	public static final double angleTicksToWheelToRPM = RobotMap.Pegasus.General.Motors.SPARKMAX_VELOCITY_UNITS_PER_RPM / ANG_GEAR_RATIO;
-	public static final double linTicksToMetersPerSecond = RobotMap.Pegasus.General.Motors.SPARKMAX_VELOCITY_UNITS_PER_RPM * WHEEL_CIRC / 60 / LIN_GEAR_RATIO;
-	public static final double angleTicksToRadians = RobotMap.Pegasus.General.Motors.SPARKMAX_TICKS_PER_RADIAN / ANG_GEAR_RATIO;
-
-	public static final PIDObject angPID = new PIDObject().withKp(0.5).withMaxPower(1.0);//.withKd(10).withMaxPower(0.8);
-	private static final GBSparkMax.SparkMaxConfObject baseAngConfObj =
-			new GBSparkMax.SparkMaxConfObject()
-					.withIdleMode(CANSparkMax.IdleMode.kBrake)
-					.withCurrentLimit(30)
-					.withRampRate(RobotMap.Pegasus.General.RAMP_RATE_VAL)
-					.withVoltageComp(RobotMap.Pegasus.General.VOLTAGE_COMP_VAL)
-					.withInverted(true)
-					.withPID(angPID)
-					.withPositionConversionFactor(angleTicksToRadians)
-					.withVelocityConversionFactor(angleTicksToWheelToRPM);
-
-	public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.5);
-	private static final GBSparkMax.SparkMaxConfObject baseLinConfObj =
-			new GBSparkMax.SparkMaxConfObject()
-					.withIdleMode(CANSparkMax.IdleMode.kBrake)
-					.withCurrentLimit(40)
-					.withRampRate(RobotMap.Pegasus.General.RAMP_RATE_VAL)
-					.withVoltageComp(RobotMap.Pegasus.General.VOLTAGE_COMP_VAL)
-					.withPID(linPID)
-					.withPositionConversionFactor(linTicksToMeters)
-					.withVelocityConversionFactor(linTicksToMetersPerSecond);
-
-
-
-
+	
 	public double targetAngle;
 	public double targetVel;
 	private GBSparkMax angleMotor;
@@ -63,10 +28,10 @@ public class KazaSwerveModule implements SwerveModule {
 	public KazaSwerveModule(int angleMotorID, int linearMotorID, int lampreyID, boolean linInverted) {
 		//SET ANGLE MOTOR
 		angleMotor = new GBSparkMax(angleMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
-		angleMotor.config(baseAngConfObj);
+		angleMotor.config(RobotMap.Pegasus.Swerve.KazaSwerve.baseAngConfObj);
 
 		linearMotor = new GBSparkMax(linearMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
-		linearMotor.config(baseLinConfObj.withInverted(linInverted));
+		linearMotor.config(RobotMap.Pegasus.Swerve.KazaSwerve.baseLinConfObj.withInverted(linInverted));
 
 		lamprey = new AnalogInput(lampreyID);
 		lamprey.setAverageBits(2);
@@ -86,6 +51,8 @@ public class KazaSwerveModule implements SwerveModule {
 		private int linearMotorID;
 		private int AbsoluteEncoderID;
 		private boolean linInverted;
+		
+		
 
 		public KazaSwerveModuleConfigObject(int angleMotorID, int linearMotorID, int AbsoluteEncoderID, boolean linInverted){
 			this.angleMotorID = angleMotorID;
@@ -94,13 +61,7 @@ public class KazaSwerveModule implements SwerveModule {
 			this.linInverted = linInverted;
 		}
 	}
-
-//	public double getLampreyAngle() { // in radians;
-//		int val = lamprey.getValue();
-//		if(val < minLampreyVal) minLampreyVal = val;
-//		if(val > maxLampreyVal) maxLampreyVal = val;
-//		return (lamprey.getValue() - minLampreyVal) / (maxLampreyVal - minLampreyVal) * Math.PI * 2;
-//	}
+	
 
 
 	/** sets to module to be at the given module state */
@@ -109,7 +70,9 @@ public class KazaSwerveModule implements SwerveModule {
 		setLinSpeed(moduleState.speedMetersPerSecond);
 		rotateToAngle(moduleState.angle.getRadians());
 	}
-
+	
+	/** gets a target angle in radians, sets the internal PIDController to the shortest route to the angle
+	 * relative to the encoder module angle*/
 	@Override
 	public void rotateToAngle(double angle) {
 
@@ -131,7 +94,7 @@ public class KazaSwerveModule implements SwerveModule {
 
 	@Override
 	public double getCurrentVelocity() {
-		return (linearMotor.getEncoder().getVelocity() / linTicksToMetersPerSecond);
+		return (linearMotor.getEncoder().getVelocity() / RobotMap.Pegasus.Swerve.KazaSwerve.linTicksToMetersPerSecond);
 	}
 
 

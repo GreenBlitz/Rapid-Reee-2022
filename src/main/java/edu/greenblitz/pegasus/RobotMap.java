@@ -1,23 +1,27 @@
 package edu.greenblitz.pegasus;
 
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.revrobotics.CANSparkMax;
 
 import edu.greenblitz.pegasus.subsystems.swerve.KazaSwerveModule;
 import edu.greenblitz.pegasus.subsystems.swerve.SdsSwerveModule;
 import edu.greenblitz.pegasus.subsystems.swerve.SdsSwerveModule.SdsSwerveModuleConfigObject;
 import edu.greenblitz.pegasus.utils.PIDObject;
+import edu.greenblitz.pegasus.utils.motors.GBFalcon;
 import edu.greenblitz.pegasus.utils.motors.GBSparkMax;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
 
 public class RobotMap {
 	public static class Pegasus {
 		public static class General {
+			public final static double minVoltageBattery = 11.0;
 			public static class Motors {
 				public final static double SPARKMAX_TICKS_PER_RADIAN = Math.PI * 2;
 				public final static double SPARKMAX_VELOCITY_UNITS_PER_RPM = 1;
@@ -122,6 +126,71 @@ public class RobotMap {
 		}
 
 		public static class Swerve {
+			public static class KazaSwerve{
+				public static final double ANG_GEAR_RATIO = 6.0;
+				public static final double LIN_GEAR_RATIO = 8.0;
+				
+				
+				public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI;
+				public static final double linTicksToMeters = RobotMap.Pegasus.General.Motors.SPARKMAX_TICKS_PER_RADIAN * WHEEL_CIRC / LIN_GEAR_RATIO;
+				public static final double angleTicksToWheelToRPM = RobotMap.Pegasus.General.Motors.SPARKMAX_VELOCITY_UNITS_PER_RPM / ANG_GEAR_RATIO;
+				public static final double linTicksToMetersPerSecond = RobotMap.Pegasus.General.Motors.SPARKMAX_VELOCITY_UNITS_PER_RPM * WHEEL_CIRC / 60 / LIN_GEAR_RATIO;
+				public static final double angleTicksToRadians = RobotMap.Pegasus.General.Motors.SPARKMAX_TICKS_PER_RADIAN / ANG_GEAR_RATIO;
+				
+				public static final PIDObject angPID = new PIDObject().withKp(0.5).withMaxPower(1.0);//.withKd(10).withMaxPower(0.8);
+				public static final GBSparkMax.SparkMaxConfObject baseAngConfObj =
+						new GBSparkMax.SparkMaxConfObject()
+								.withIdleMode(CANSparkMax.IdleMode.kBrake)
+								.withCurrentLimit(30)
+								.withRampRate(RobotMap.Pegasus.General.RAMP_RATE_VAL)
+								.withVoltageComp(RobotMap.Pegasus.General.VOLTAGE_COMP_VAL)
+								.withInverted(true)
+								.withPID(angPID)
+								.withPositionConversionFactor(angleTicksToRadians)
+								.withVelocityConversionFactor(angleTicksToWheelToRPM);
+				
+				public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.5);
+				public static final GBSparkMax.SparkMaxConfObject baseLinConfObj =
+						new GBSparkMax.SparkMaxConfObject()
+								.withIdleMode(CANSparkMax.IdleMode.kBrake)
+								.withCurrentLimit(40)
+								.withRampRate(RobotMap.Pegasus.General.RAMP_RATE_VAL)
+								.withVoltageComp(RobotMap.Pegasus.General.VOLTAGE_COMP_VAL)
+								.withPID(linPID)
+								.withPositionConversionFactor(linTicksToMeters)
+								.withVelocityConversionFactor(linTicksToMetersPerSecond);
+			}
+			
+			public static class SdsSwerve{
+				public static final double ANG_GEAR_RATIO = (150.0/7);
+				public static final double LIN_GEAR_RATIO = 8.14;
+				
+				public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI;
+				public static final double linTicksToMeters = RobotMap.Pegasus.General.Motors.FALCON_TICKS_PER_RADIAN * WHEEL_CIRC / LIN_GEAR_RATIO;
+				public static final double angleTicksToWheelToRPM = RobotMap.Pegasus.General.Motors.FALCON_VELOCITY_UNITS_PER_RPM / ANG_GEAR_RATIO;
+				public static final double linTicksToMetersPerSecond = RobotMap.Pegasus.General.Motors.FALCON_VELOCITY_UNITS_PER_RPM / LIN_GEAR_RATIO * WHEEL_CIRC / 60;
+				public static final double angleTicksToRadians = RobotMap.Pegasus.General.Motors.FALCON_TICKS_PER_RADIAN / ANG_GEAR_RATIO;
+				public static final double magEncoderTicksToFalconTicks = 2*Math.PI/angleTicksToRadians;
+				
+				public static final PIDObject angPID = new PIDObject().withKp(0.05).withMaxPower(1.0).withFF(0);//.withKd(10).withMaxPower(0.8);
+				public static final GBFalcon.FalconConfObject baseAngConfObj =
+						new GBFalcon.FalconConfObject()
+								.withNeutralMode(NeutralMode.Brake)
+								.withCurrentLimit(30)
+								.withRampRate(RobotMap.Pegasus.General.RAMP_RATE_VAL)
+								.withVoltageCompSaturation(RobotMap.Pegasus.General.VOLTAGE_COMP_VAL)
+								.withInverted(true)
+								.withPID(angPID);
+				
+				public static final PIDObject linPID = new PIDObject().withKp(0.0003).withMaxPower(0.5);
+				public static final GBFalcon.FalconConfObject baseLinConfObj =
+						new GBFalcon.FalconConfObject()
+								.withNeutralMode(NeutralMode.Brake)
+								.withCurrentLimit(40)
+								.withRampRate(RobotMap.Pegasus.General.RAMP_RATE_VAL)
+								.withVoltageCompSaturation(RobotMap.Pegasus.General.VOLTAGE_COMP_VAL)
+								.withPID(linPID);
+			}
 
 			public static final Pose2d initialRobotPosition = new Pose2d(0, 0, new Rotation2d(0));
 			public static final Translation2d[] SwerveLocationsInSwerveKinematicsCoordinates = new Translation2d[]{
@@ -152,7 +221,6 @@ public class RobotMap {
 			public static final boolean angleMotorInverted = true;
 
 
-			// kazaSwerve chassis
 			public static KazaSwerveModule.KazaSwerveModuleConfigObject KazaModule1 =
 			 new KazaSwerveModule.KazaSwerveModuleConfigObject(10,1,0,false); //front left
 
