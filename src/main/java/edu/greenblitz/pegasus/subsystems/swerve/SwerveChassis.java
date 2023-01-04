@@ -103,14 +103,6 @@ public class SwerveChassis extends GBSubsystem {
 	}
 
 
-//	public void resetAllEncodersByLamprey() {
-//		getModule(Module.FRONT_LEFT).resetEncoderByLamprey();
-//		getModule(Module.FRONT_RIGHT).resetEncoderByLamprey();
-//		getModule(Module.BACK_LEFT).resetEncoderByLamprey();
-//		getModule(Module.BACK_RIGHT).resetEncoderByLamprey();
-//
-//	}
-//
 	/**
 	 * all code below is self-explanatory - well, after a long time It's maybe not self-explanatory
 	 * <p>
@@ -123,11 +115,7 @@ public class SwerveChassis extends GBSubsystem {
 	public double getModuleAbsoluteValue(Module module) {
 		return getModule(module).getAbsoluteEncoderValue();
 	}
-	
-	//
-//	public double getLampreyAngle(Module module) {
-//		return getModule(module).getLampreyAngle();
-//	}
+
 	public double getModuleAngle(Module module) {
 		return getModule(module).getModuleAngle();
 	}
@@ -223,17 +211,7 @@ public class SwerveChassis extends GBSubsystem {
 	private void setModuleStateForModule(Module module, SwerveModuleState state) {
 		getModule(module).setModuleState(state);
 	}
-	
-	
-	/**
-	 * moving the chassis linear by angle (radians) and percentOutput [-1, 1]
-	 */
-	public void moveChassisLin(double angle, double percentOutput) {
-		for (Module module : Module.values()) {
-			getModule(module).rotateToAngle(angle);
-			getModule(module).setLinPowerOnlyForCalibrations(percentOutput);
-		}
-	}
+
 	
 	/**
 	 * rotates chassis by percentOutput [-1, 1]

@@ -1,4 +1,4 @@
-package edu.greenblitz.pegasus.commands.swerve.calibration;
+package edu.greenblitz.pegasus.commands.swerve.measurement;
 
 import edu.greenblitz.pegasus.OI;
 import edu.greenblitz.pegasus.RobotMap;
