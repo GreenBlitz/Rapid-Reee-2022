@@ -71,10 +71,6 @@ public class Robot extends TimedRobot {
 	*/
 	@Override
 	public void autonomousInit() {
-		//resets encoders
-		SwerveChassis.getInstance().resetAllEncoders();
-				(new Taxi(2.5, 2)).schedule(); //THIS   //todo sendablechooser for choosing auto
-
 
 	}
 

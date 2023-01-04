@@ -35,7 +35,7 @@ public class Dashboard extends GBSubsystem {
 		for (SwerveChassis.Module module : SwerveChassis.Module.values()){
 			sum+=SwerveChassis.getInstance().getModuleAngle(module);
 		}
-		SmartDashboard.putBoolean("is nan", Double.isNaN(sum));
+		SmartDashboard.putBoolean("an azimuth encoder is nan", Double.isNaN(sum));
 		SmartDashboard.putString("pose", SwerveChassis.getInstance().getRobotPose().toString());
 
 	}

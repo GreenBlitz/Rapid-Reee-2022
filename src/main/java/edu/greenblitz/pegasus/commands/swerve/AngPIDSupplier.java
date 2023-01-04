@@ -26,8 +26,9 @@ public class AngPIDSupplier implements DoubleSupplier{
 	/**
 	 * vx - the speed of the robot in x.
 	 * vy - the speed of the robot in y.
-	 * dx - the distance from the vision target.
-	 * dy - the distance in x from the vision target.
+	 * dx - the x distance from the vision target.
+	 * dy - the y distance from the vision target.
+	 * all in wpilib coordinates
 	 * @return the equitation of the feedforward(more math in this site: https://tinyurl.com/visionGB).
 	 */
 	private double getAngVelDiffByVision(){

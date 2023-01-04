@@ -21,7 +21,7 @@ import org.greenblitz.motion.interpolation.Dataset;
 public class RobotMap {
 	public static class Pegasus {
 		public static class General {
-			public final static double minVoltageBattery = 11.0;
+			public final static double minVoltageBattery = 11.97;
 			public static class Motors {
 				public final static double SPARKMAX_TICKS_PER_RADIAN = Math.PI * 2;
 				public final static double SPARKMAX_VELOCITY_UNITS_PER_RPM = 1;
