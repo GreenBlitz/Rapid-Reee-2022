@@ -2,6 +2,8 @@ package edu.greenblitz.pegasus.subsystems.swerve;
 
 import edu.greenblitz.pegasus.utils.Dataset;
 
+import java.util.HashMap;
+
 public class Calibration {
 	public static final Dataset FRONT_LEFT = new Dataset(2);
 
@@ -1036,5 +1038,13 @@ public class Calibration {
 		BACK_RIGHT.addDatapoint(4.752196779, new double[]{0.0,});
 		BACK_RIGHT.addDatapoint(4.761962403, new double[]{2.0,});
 		BACK_RIGHT.addDatapoint(4.761962403, new double[]{2.0,});
+	}
+
+	public static final HashMap<SwerveChassis.Module, Dataset> CALIBRATION_DATASETS = new HashMap<>();
+	static {
+		CALIBRATION_DATASETS.put(SwerveChassis.Module.FRONT_LEFT, FRONT_LEFT);
+		CALIBRATION_DATASETS.put(SwerveChassis.Module.FRONT_RIGHT, FRONT_RIGHT);
+		CALIBRATION_DATASETS.put(SwerveChassis.Module.BACK_LEFT, BACK_LEFT);
+		CALIBRATION_DATASETS.put(SwerveChassis.Module.BACK_RIGHT, BACK_RIGHT);
 	}
 }

@@ -2,9 +2,11 @@ package edu.greenblitz.pegasus.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.greenblitz.pegasus.RobotMap;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class Funnel extends GBSubsystem {
 	private final WPI_TalonSRX motor;
+	private DigitalInput macroSwitch;
 
 	private static Funnel instance;
 
@@ -18,6 +20,7 @@ public class Funnel extends GBSubsystem {
 	protected Funnel() {
 		motor = new WPI_TalonSRX(RobotMap.Pegasus.Funnel.FunnelMotor.MOTOR_PORT);
 		motor.setInverted(RobotMap.Pegasus.Funnel.FunnelMotor.IS_REVERSED);
+		macroSwitch = new DigitalInput(RobotMap.Pegasus.Funnel.MACRO_SWITCH_PORT);
 	}
 
 	public void moveMotor(double power) {
@@ -34,5 +37,8 @@ public class Funnel extends GBSubsystem {
 
 	public void stopMotor() {
 		motor.set(0);
+	}
+	public boolean isMacroSwitchPressed(){
+		return macroSwitch.get();
 	}
 }

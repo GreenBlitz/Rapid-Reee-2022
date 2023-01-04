@@ -16,8 +16,8 @@ public class CombineJoystickMovement extends SwerveCommand {
 		this.joystick = joystick;
 		this.isSlow = isSlow;
 		if (isSlow) {
-			ANG_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_ANGULAR_SPEED * 0.8;
-			LIN_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_VELOCITY * 0.5;
+			ANG_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_ANGULAR_SPEED * 0.01;
+			LIN_SPEED_FACTOR = RobotMap.Pegasus.Swerve.MAX_VELOCITY * 0.025;
 		}
 	}
 
@@ -25,7 +25,7 @@ public class CombineJoystickMovement extends SwerveCommand {
 	public void execute() {
 		double leftwardSpeed = -joystick.getAxisValue(SmartJoystick.Axis.LEFT_X) * LIN_SPEED_FACTOR;
 		double forwardSpeed = joystick.getAxisValue(SmartJoystick.Axis.LEFT_Y) * LIN_SPEED_FACTOR;
-		double angSpeed = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_X) * ANG_SPEED_FACTOR;
+		double angSpeed = -joystick.getAxisValue(SmartJoystick.Axis.RIGHT_X) * ANG_SPEED_FACTOR;
 		if (forwardSpeed == 0 && leftwardSpeed == 0 && angSpeed == 0) {
 			swerve.stop();
 			return;

@@ -1,4 +1,4 @@
-package edu.greenblitz.pegasus.commands.swerve.calibration;
+package edu.greenblitz.pegasus.commands.swerve.measurement;
 
 import edu.greenblitz.pegasus.OI;
 import edu.greenblitz.pegasus.RobotMap;
@@ -37,7 +37,7 @@ public class CalibrateLampreyByNeo extends SwerveCommand {
 		int currNeoTicks = (int)Math.round(swerve.getModuleAngle(module) / NEO_TICK_VALUE);
 		SmartDashboard.putNumber("curr neo tick", currNeoTicks);
 		if (!lampreyToNeoTicks.containsValue(new double[]{currNeoTicks})){
-			lampreyToNeoTicks.addDatapoint(swerve.getModuleLampreyVoltage(module), new double[]{currNeoTicks});
+			lampreyToNeoTicks.addDatapoint(swerve.getModuleAbsoluteValue(module), new double[]{currNeoTicks});
 		} //todo take the min value in case of clash
 	}
 

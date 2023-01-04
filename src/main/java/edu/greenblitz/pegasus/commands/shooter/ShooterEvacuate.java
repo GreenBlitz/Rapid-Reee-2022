@@ -2,8 +2,7 @@ package edu.greenblitz.pegasus.commands.shooter;
 
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
-import edu.greenblitz.pegasus.utils.DigitalInputMap;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.greenblitz.pegasus.subsystems.Funnel;
 import edu.wpi.first.wpilibj2.command.*;
 
 public class ShooterEvacuate extends ParallelRaceGroup {
@@ -15,7 +14,7 @@ public class ShooterEvacuate extends ParallelRaceGroup {
 		addCommands(
 				new ShootByConstant(0.3),
 				new SequentialCommandGroup(
-						new RunFunnel().alongWith(new RunRoller()).until(() -> DigitalInputMap.getInstance().getValue(0)),
+						new RunFunnel().alongWith(new RunRoller()).until(() -> Funnel.getInstance().isMacroSwitchPressed()),
 						new WaitCommand(0.2),
 						new ParallelRaceGroup(new RunFunnel(),new WaitCommand(0.3))
 				)

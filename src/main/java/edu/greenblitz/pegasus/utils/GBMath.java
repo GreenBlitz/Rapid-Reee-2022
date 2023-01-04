@@ -15,7 +15,7 @@ public class GBMath {
 	 * @return the correct modulo result
 	 *
 	 */
-	public static double modulo(double x, double y) {
+	public static double  modulo(double x, double y) {
 		return ((x % y) + y) % y;
 	}
 
