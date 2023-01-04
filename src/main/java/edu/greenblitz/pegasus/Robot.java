@@ -32,7 +32,6 @@ public class Robot extends TimedRobot {
 		PortForwarder.add(5805, "gloworm.local", 5805);
 		Shooter.create(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
 		LiveWindow.disableAllTelemetry();
-		//todo add voltage compensation
 		Battery.getInstance().setDefaultCommand(new BatteryDisabler());
 		
 		//swerve

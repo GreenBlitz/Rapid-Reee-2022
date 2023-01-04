@@ -142,8 +142,8 @@ public class RobotMap {
 				public static final double angleTicksToWheelToRPM = RobotMap.Pegasus.General.Motors.SPARKMAX_VELOCITY_UNITS_PER_RPM / ANG_GEAR_RATIO;
 				public static final double linTicksToMetersPerSecond = RobotMap.Pegasus.General.Motors.SPARKMAX_VELOCITY_UNITS_PER_RPM * WHEEL_CIRC / 60 / LIN_GEAR_RATIO;
 				public static final double angleTicksToRadians = RobotMap.Pegasus.General.Motors.SPARKMAX_TICKS_PER_RADIAN / ANG_GEAR_RATIO;
-				
-				public static final PIDObject angPID = new PIDObject().withKp(0.5).withMaxPower(1.0);//.withKd(10).withMaxPower(0.8);
+
+				public static final PIDObject angPID = new PIDObject().withKp(0.5).withMaxPower(1.0);
 				public static final GBSparkMax.SparkMaxConfObject baseAngConfObj =
 						new GBSparkMax.SparkMaxConfObject()
 								.withIdleMode(CANSparkMax.IdleMode.kBrake)
@@ -218,13 +218,6 @@ public class RobotMap {
 			public static final double ks = 0.14876;
 			public static final double kv = 3.3055;
 			public static final double ka = 0.11023;
-
-			public static final double KMaxVelocity = 3.7; //todo find real max speed (meters per second)
-			public static final double KMMaxAcceleration = 3; //todo find real max acceleration (meters per second ^2)
-			public static final double KMaxAngularVelocity = 9.39; //todo find real max speed (radians per second)
-			public static final double KMMaxAngularAcceleration = 1; //todo find real max acceleration (radians per second ^2)
-
-			public static final boolean angleMotorInverted = true;
 
 
 			public static KazaSwerveModule.KazaSwerveModuleConfigObject KazaModule1 =

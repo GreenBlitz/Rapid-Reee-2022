@@ -105,12 +105,22 @@ public class SwerveChassis extends GBSubsystem {
 	/**
 	 * resetting all the angle motor's encoders to 0
 	 */
+	public void resetEncodersByCalibrationRod(){
+		getModule(Module.FRONT_LEFT).resetEncoderToValue(0);
+		getModule(Module.FRONT_RIGHT).resetEncoderToValue(0);
+		getModule(Module.BACK_LEFT).resetEncoderToValue(0);
+		getModule(Module.BACK_RIGHT).resetEncoderToValue(0);
+	}
+
 	public void resetAllEncoders() {
 		getModule(Module.FRONT_LEFT).resetEncoderByAbsoluteEncoder(Module.FRONT_LEFT);
 		getModule(Module.FRONT_RIGHT).resetEncoderByAbsoluteEncoder(Module.FRONT_RIGHT);
 		getModule(Module.BACK_LEFT).resetEncoderByAbsoluteEncoder(Module.BACK_LEFT);
 		getModule(Module.BACK_RIGHT).resetEncoderByAbsoluteEncoder(Module.BACK_RIGHT);
+
 	}
+
+
 
 
 	/**

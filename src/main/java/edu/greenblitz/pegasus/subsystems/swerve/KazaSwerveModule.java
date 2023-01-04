@@ -94,7 +94,7 @@ public class KazaSwerveModule implements SwerveModule {
 
 	@Override
 	public double getCurrentVelocity() {
-		return (linearMotor.getEncoder().getVelocity() / RobotMap.Pegasus.Swerve.KazaSwerve.linTicksToMetersPerSecond);
+		return (linearMotor.getEncoder().getVelocity());
 	}
 
 
