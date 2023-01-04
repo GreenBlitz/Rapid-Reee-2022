@@ -228,16 +228,16 @@ public class RobotMap {
 
 
 			public static KazaSwerveModule.KazaSwerveModuleConfigObject KazaModule1 =
-			 new KazaSwerveModule.KazaSwerveModuleConfigObject(10,1,0,false); //front left
+			 new KazaSwerveModule.KazaSwerveModuleConfigObject(1,10,0,false); //front left
 
 			public static KazaSwerveModule.KazaSwerveModuleConfigObject KazaModule2 =
-			 new KazaSwerveModule.KazaSwerveModuleConfigObject(11,3,2,true); //front right
+			 new KazaSwerveModule.KazaSwerveModuleConfigObject(3,11,2,true); //front right
 
 			 public static KazaSwerveModule.KazaSwerveModuleConfigObject KazaModule3 =
-			 new KazaSwerveModule.KazaSwerveModuleConfigObject(8,2,1,false); //back left
+			 new KazaSwerveModule.KazaSwerveModuleConfigObject(2,8,1,false); //back left
 
 			 public static KazaSwerveModule.KazaSwerveModuleConfigObject KazaModule4 =
-			 new KazaSwerveModule.KazaSwerveModuleConfigObject(5,12,3,true); //back right
+			 new KazaSwerveModule.KazaSwerveModuleConfigObject(12,5,3,true); //back right
 
 			 public static SdsSwerveModule.SdsSwerveModuleConfigObject SdsModule1 = 
 			 new SdsSwerveModule.SdsSwerveModuleConfigObject(0, 1, 3,false, 3.4635/(2*Math.PI)); //front left
