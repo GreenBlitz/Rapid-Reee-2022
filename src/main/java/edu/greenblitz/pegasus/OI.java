@@ -14,17 +14,16 @@ import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.Limelight;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
+import edu.greenblitz.pegasus.commands.swerve.RotateAllWheelsToAngle;
+import edu.greenblitz.pegasus.subsystems.Funnel;
 import edu.greenblitz.pegasus.subsystems.Intake;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
-import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 
+public class OI { //GEVALD
 
-public class OI {
-	
-	
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
@@ -39,11 +38,6 @@ public class OI {
 		initButtons();
 		
 	}
-	
-
-	
-
-	
 
 	public static OI getInstance() {
 		if (instance == null) {
@@ -76,7 +70,7 @@ public class OI {
 
 		secondJoystick.A.whenHeld(new InsertIntoShooter());
 
-		secondJoystick.B.whenHeld(new RunRoller().alongWith(new RunFunnel().until(() -> DigitalInputMap.getInstance().getValue(0))));
+		secondJoystick.B.whenHeld(new RunRoller().alongWith(new RunFunnel().until(() -> Funnel.getInstance().isMacroSwitchPressed())));
 
 
 		secondJoystick.START.toggleWhenPressed(new ToggleRoller());

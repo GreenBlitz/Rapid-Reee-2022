@@ -8,7 +8,6 @@ import edu.greenblitz.pegasus.subsystems.Dashboard;
 import edu.greenblitz.pegasus.subsystems.Indexing;
 import edu.greenblitz.pegasus.subsystems.*;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
-import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.util.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -19,7 +18,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		CommandScheduler.getInstance().enable();
-		DigitalInputMap.getInstance();
 		Pneumatics.init();
 		Dashboard.init();
 		Limelight.getInstance();

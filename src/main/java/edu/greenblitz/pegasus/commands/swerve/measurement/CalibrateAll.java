@@ -1,4 +1,4 @@
-package edu.greenblitz.pegasus.commands.swerve.calibration;
+package edu.greenblitz.pegasus.commands.swerve.measurement;
 
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;

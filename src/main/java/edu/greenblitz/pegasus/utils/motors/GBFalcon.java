@@ -35,7 +35,7 @@ public class GBFalcon extends TalonFX {
         configPID(conf.pidObject);
     }
 
-    private void configPID(PIDObject pidObject){
+    public void configPID(PIDObject pidObject){
         super.config_kP(0, pidObject.getKp());
         super.config_kI(0, pidObject.getKi());
         super.config_kD(0, pidObject.getKd());
@@ -55,7 +55,15 @@ public class GBFalcon extends TalonFX {
         private double ConversionFactor = 1;
         private double voltageCompSaturation = 0;
         private NeutralMode neutralMode = NeutralMode.Brake;
-        
+
+        public FalconConfObject(FalconConfObject other){
+            this.pidObject = new PIDObject(other.pidObject);
+            this.currentLimit = other.currentLimit;
+            this.rampRate = other.rampRate;
+            this.inverted = other.inverted;
+            this.neutralMode = other.neutralMode;
+            this.voltageCompSaturation = other.voltageCompSaturation;
+        }
         
         public FalconConfObject() {
 

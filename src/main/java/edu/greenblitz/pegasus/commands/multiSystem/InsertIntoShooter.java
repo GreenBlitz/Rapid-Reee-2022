@@ -1,10 +1,10 @@
 package edu.greenblitz.pegasus.commands.multiSystem;
 
+import edu.greenblitz.pegasus.subsystems.Funnel;
 import edu.greenblitz.pegasus.subsystems.Shooter;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
-import edu.greenblitz.pegasus.utils.DigitalInputMap;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
@@ -23,7 +23,7 @@ public class InsertIntoShooter extends SequentialCommandGroup {
 				new WaitUntilCommand(() -> Shooter.getInstance().isPreparedToShoot()),
 
 				new ParallelDeadlineGroup(//activates both roller and funnel until ball is no longer at macro switch (was probably propelled)
-						new WaitUntilCommand(() -> !DigitalInputMap.getInstance().getValue(RobotMap.Pegasus.Funnel.MACRO_SWITCH_PORT)),
+						new WaitUntilCommand(() -> !Funnel.getInstance().isMacroSwitchPressed()),
 						new RunFunnel(),
 						new RunRoller()
 				));
