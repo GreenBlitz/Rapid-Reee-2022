@@ -21,7 +21,7 @@ import org.greenblitz.motion.interpolation.Dataset;
 public class RobotMap {
 	public static class Pegasus {
 		public static class General {
-			public final static double minVoltageBattery = 11.97;
+			public final static double minVoltageBattery = 11;
 			public static class Motors {
 				public final static double SPARKMAX_TICKS_PER_RADIAN = Math.PI * 2;
 				public final static double SPARKMAX_VELOCITY_UNITS_PER_RPM = 1;
@@ -233,16 +233,16 @@ public class RobotMap {
 			 new KazaSwerveModule.KazaSwerveModuleConfigObject(12,5,3,true); //back right
 
 			 public static SdsSwerveModule.SdsSwerveModuleConfigObject SdsModule1 = 
-			 new SdsSwerveModule.SdsSwerveModuleConfigObject(0, 1, 3,false, 3.4635/(2*Math.PI)); //front left
+			 new SdsSwerveModule.SdsSwerveModuleConfigObject(1, 0, 3,false, 3.4635/(2*Math.PI)); //front left
 
 			 public static SdsSwerveModule.SdsSwerveModuleConfigObject SdsModule2 = 
-			 new SdsSwerveModule.SdsSwerveModuleConfigObject(2, 3, 1,true, 4.55/(2*Math.PI)); //front right
+			 new SdsSwerveModule.SdsSwerveModuleConfigObject(3, 2, 1,true, 4.55/(2*Math.PI)); //front right
 
 			 public static SdsSwerveModule.SdsSwerveModuleConfigObject SdsModule3 = 
-			 new SdsSwerveModule.SdsSwerveModuleConfigObject(4, 5, 2,false, 3.947/(2*Math.PI)); //back left
+			 new SdsSwerveModule.SdsSwerveModuleConfigObject(5, 4, 2,false, 3.947/(2*Math.PI)); //back left
 
 			 public static SdsSwerveModule.SdsSwerveModuleConfigObject SdsModule4 = 
-			 new SdsSwerveModule.SdsSwerveModuleConfigObject(6, 7, 0,true, 5.386/(2*Math.PI)); //back right
+			 new SdsSwerveModule.SdsSwerveModuleConfigObject(7, 6, 0,true, 5.386/(2*Math.PI)); //back right
 			
 		}
 
