@@ -28,13 +28,10 @@
         "y": 5.0
       },
       "prevControl": {
-        "x": 7.956159299839376,
-        "y": 5.623576329452989
+        "x": 6.096443920933169,
+        "y": 5.064827693394764
       },
-      "nextControl": {
-        "x": 8.060594591444142,
-        "y": 4.138121590690774
-      },
+      "nextControl": null,
       "holonomicAngle": 0,
       "isReversal": false,
       "velOverride": null,
@@ -44,28 +41,6 @@
         "names": [
           "StopShooter"
         ],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 8.078079612249876,
-        "y": 3.473690800072818
-      },
-      "prevControl": {
-        "x": 8.043109570638405,
-        "y": 5.053171012857609
-      },
-      "nextControl": null,
-      "holonomicAngle": 0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0

@@ -61,8 +61,8 @@ public class PathFollowerBuilder extends SwerveAutoBuilder{
 		return fullAuto(PathPlanner.loadPath(
 				pathName,
 				new PathConstraints(
-						RobotMap.Pegasus.Swerve.MAX_VELOCITY,
-						RobotMap.Pegasus.Swerve.KMMaxAcceleration
+						2,
+						1
 				))
 		);
 	}

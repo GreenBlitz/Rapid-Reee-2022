@@ -33,8 +33,6 @@ public class Robot extends TimedRobot {
 		SwerveChassis.getInstance().resetChassisAngle();
 		SwerveChassis.getInstance().resetAllEncoders();
 		SmartDashboard.putNumber("auto number", 1);
-		SwerveChassis.field2d.getObject("traj").setTrajectory(PathFollowerBuilder.getInstance().getTrajectory("1 meter"));
-		SwerveChassis.field2d.setRobotPose(new Pose2d(1,1,new Rotation2d(0)));
 		OI.getInstance();
 	}
 
