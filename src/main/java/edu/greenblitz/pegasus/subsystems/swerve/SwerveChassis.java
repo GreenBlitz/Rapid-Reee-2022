@@ -1,9 +1,20 @@
 package edu.greenblitz.pegasus.subsystems.swerve;
 
 import edu.greenblitz.pegasus.RobotMap;
+import edu.greenblitz.pegasus.subsystems.Limelight;
 import edu.greenblitz.pegasus.utils.PigeonGyro;
 import edu.greenblitz.pegasus.subsystems.GBSubsystem;
 import edu.greenblitz.pegasus.utils.GBMath;
+import edu.wpi.first.math.MatBuilder;
+import edu.wpi.first.math.Nat;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.*;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.greenblitz.pegasus.utils.PigeonGyro;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -16,11 +27,11 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 public class SwerveChassis extends GBSubsystem {
 	
 	private final SwerveModule frontRight, frontLeft, backRight, backLeft;
-	//	private final PigeonGyro pigeonGyro;
 	private final PigeonGyro pigeonGyro;
-	private final SwerveDriveOdometry localizer;
 	private final SwerveDriveKinematics kinematics;
-	
+	private final SwerveDrivePoseEstimator poseEstimator;
+	private final Field2d field = new Field2d();
+
 	
 	public enum Module {
 		FRONT_LEFT,
@@ -28,24 +39,23 @@ public class SwerveChassis extends GBSubsystem {
 		BACK_LEFT,
 		BACK_RIGHT
 	}
-	
 	public SwerveChassis() {
 		this.frontLeft = new KazaSwerveModule(RobotMap.Pegasus.Swerve.KazaModule1);
 		this.frontRight = new KazaSwerveModule(RobotMap.Pegasus.Swerve.KazaModule2);
 		this.backLeft = new KazaSwerveModule(RobotMap.Pegasus.Swerve.KazaModule3);
 		this.backRight = new KazaSwerveModule(RobotMap.Pegasus.Swerve.KazaModule4);
-		
+
 		this.pigeonGyro = new PigeonGyro(RobotMap.Pegasus.gyro.pigeonID);
 		
 		this.kinematics = new SwerveDriveKinematics(
 				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates
 		);
-		this.localizer = new SwerveDriveOdometry(
-				this.kinematics,
-				new Rotation2d(this.getChassisAngle()),
-				RobotMap.Pegasus.Swerve.initialRobotPosition
-		);
-
+		this.poseEstimator = new SwerveDrivePoseEstimator(this.getPigeonAngle(), Limelight.getInstance().estimateLocationByVision(), this.kinematics,
+				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01),
+				new MatBuilder<>(Nat.N1(), Nat.N1()).fill(0.1),//0.02),
+				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1,0.1,0.01));//0.1, 0.1, 0.01));
+		SmartDashboard.putData("field",getField());
+		field.getObject("apriltag").setPose(RobotMap.Pegasus.Vision.apriltagLocation.toPose2d());
 	}
 	
 	
@@ -58,11 +68,11 @@ public class SwerveChassis extends GBSubsystem {
 		return instance;
 	}
 	
+	
 	@Override
-	public void periodic() {
-		localizer.update(new Rotation2d(getChassisAngle()),
-				frontLeft.getModuleState(), frontRight.getModuleState(),
-				backLeft.getModuleState(), backRight.getModuleState());
+	public void periodic(){
+		updatePoseEstimation();
+		field.setRobotPose(getRobotPose());
 	}
 	
 	/**
@@ -95,12 +105,22 @@ public class SwerveChassis extends GBSubsystem {
 	/**
 	 * resetting all the angle motor's encoders to 0
 	 */
+	public void resetEncodersByCalibrationRod(){
+		getModule(Module.FRONT_LEFT).resetEncoderToValue(0);
+		getModule(Module.FRONT_RIGHT).resetEncoderToValue(0);
+		getModule(Module.BACK_LEFT).resetEncoderToValue(0);
+		getModule(Module.BACK_RIGHT).resetEncoderToValue(0);
+	}
+
 	public void resetAllEncoders() {
 		getModule(Module.FRONT_LEFT).resetEncoderByAbsoluteEncoder(Module.FRONT_LEFT);
 		getModule(Module.FRONT_RIGHT).resetEncoderByAbsoluteEncoder(Module.FRONT_RIGHT);
 		getModule(Module.BACK_LEFT).resetEncoderByAbsoluteEncoder(Module.BACK_LEFT);
 		getModule(Module.BACK_RIGHT).resetEncoderByAbsoluteEncoder(Module.BACK_RIGHT);
+
 	}
+
+
 
 
 	/**
@@ -134,14 +154,18 @@ public class SwerveChassis extends GBSubsystem {
 	
 	public void resetChassisAngle() {
 		pigeonGyro.setYaw(0);
+		poseEstimator.resetPosition(new Pose2d(), getPigeonAngle());
 	}
-	
-	
-	/**
-	 * returns chassis angle in radians
-	 */
-	public double getChassisAngle() {
-		return GBMath.modulo(pigeonGyro.getYaw(), 2 * Math.PI);
+
+
+	/** returns chassis angle in radians */
+	private Rotation2d getPigeonAngle() {
+		return new Rotation2d(pigeonGyro.getYaw());
+	}
+
+	public double getChassisAngle(){
+		return getRobotPose().getRotation().getRadians();
+
 	}
 	
 	/**
@@ -168,6 +192,10 @@ public class SwerveChassis extends GBSubsystem {
 		
 	}
 	
+	public ChassisSpeeds getCurSpeed(){
+		return kinematics.toChassisSpeeds(frontLeft.getModuleState(),frontRight.getModuleState(),backLeft.getModuleState(),backRight.getModuleState());
+	}
+	
 	public void moveByChassisSpeeds(double forwardSpeed, double leftwardSpeed, double angSpeed, double currentAng) {
 		ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
 				forwardSpeed,
@@ -188,19 +216,7 @@ public class SwerveChassis extends GBSubsystem {
 	public SwerveDriveKinematics getKinematics() {
 		return this.kinematics;
 	}
-	
-	public SwerveDriveOdometry getLocalizer() {
-		return this.localizer;
-	}
-	
-	public Pose2d getLocation() {
-		return this.localizer.getPoseMeters();
-	}
-	
-	public void resetLocalizer() {
-		localizer.resetPosition(new Pose2d(), new Rotation2d());
-	}
-	
+
 	public PigeonGyro getPigeonGyro() {
 		return pigeonGyro;
 	}
@@ -231,10 +247,19 @@ public class SwerveChassis extends GBSubsystem {
 	public void rotateModuleByPower(Module module, double power) {
 		getModule(module).setRotPowerOnlyForCalibrations(power);
 	}
+	public void updatePoseEstimation(){ //todo NaN protection
+		poseEstimator.update(getPigeonAngle(),
+				frontLeft.getModuleState(), frontRight.getModuleState(),
+				backLeft.getModuleState(), backRight.getModuleState());
+		if(Limelight.getInstance().FindTarget()){poseEstimator.addVisionMeasurement(Limelight.getInstance().estimateLocationByVision(),Limelight.getInstance().getTimeStamp());}
+	}
+
+	public Pose2d getRobotPose(){return poseEstimator.getEstimatedPosition();}
 	
-	
-	public SwerveModuleState getModuleState(Module module) {
-		return getModule(module).getModuleState();
+	public Sendable getField(){return field;}
+
+	public SwerveModuleState getModuleState (Module module){
+	return getModule(module).getModuleState();
 	}
 	
 }

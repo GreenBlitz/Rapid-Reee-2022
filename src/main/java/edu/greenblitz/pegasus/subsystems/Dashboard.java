@@ -1,6 +1,9 @@
 package edu.greenblitz.pegasus.subsystems;
 
+import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.utils.GBMath;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -16,26 +19,24 @@ public class Dashboard extends GBSubsystem {
 	}
 
 
+	double angularState = 0;
+	long lastRead = System.currentTimeMillis();
 	@Override
 	public void periodic() {
-		double brFalconEncoder =SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT);
-		double blFlconEncoder =SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT);
-		double flFalconEncoder =SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_LEFT);
-		double frFalconEncoder =SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT);
-		double brAbsEncoder = SwerveChassis.getInstance().getModuleAbsoluteValue(SwerveChassis.Module.BACK_RIGHT) * 2 * Math.PI;
-		double blAbsEncoder = SwerveChassis.getInstance().getModuleAbsoluteValue(SwerveChassis.Module.BACK_LEFT) * 2 * Math.PI;
-		double frAbsEncoder = SwerveChassis.getInstance().getModuleAbsoluteValue(SwerveChassis.Module.FRONT_RIGHT) * 2 * Math.PI;
-		double flAbsEncoder = SwerveChassis.getInstance().getModuleAbsoluteValue(SwerveChassis.Module.FRONT_LEFT) * 2 * Math.PI;
+		SmartDashboard.putNumber("module speed", SwerveChassis.getInstance().getModuleState(SwerveChassis.Module.FRONT_RIGHT).speedMetersPerSecond);
+		SmartDashboard.putNumber("angular speed", (SwerveChassis.getInstance().getPigeonGyro().getYaw() - angularState)/((System.currentTimeMillis() - lastRead)/1000.0));
+		SmartDashboard.putNumber("pigeon angle", SwerveChassis.getInstance().getPigeonGyro().getYaw());
+		lastRead = System.currentTimeMillis();
+		SmartDashboard.putNumber("FR-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT)), 360));
+		SmartDashboard.putNumber("FL-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_LEFT)), 360));
+		SmartDashboard.putNumber("BR-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
+		SmartDashboard.putNumber("BL-angle-neo", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 360));
+		double sum = 0;
+		for (SwerveChassis.Module module : SwerveChassis.Module.values()){
+			sum+=SwerveChassis.getInstance().getModuleAngle(module);
+		}
+		SmartDashboard.putBoolean("an azimuth encoder is nan", Double.isNaN(sum));
+		SmartDashboard.putString("pose", SwerveChassis.getInstance().getRobotPose().toString());
 
-		SmartDashboard.putNumber("br falcon", brFalconEncoder);
-		SmartDashboard.putNumber("bl falcon", blFlconEncoder);
-		SmartDashboard.putNumber("fr falcon", frFalconEncoder);
-		SmartDashboard.putNumber("fl falcon", flFalconEncoder);
-
-		SmartDashboard.putNumber("br abs encoder", brAbsEncoder);
-		SmartDashboard.putNumber("bl abs encoder", blAbsEncoder);
-		SmartDashboard.putNumber("fr abs encoder", frAbsEncoder);
-		SmartDashboard.putNumber("fl abs encoder", flAbsEncoder);
-//		SmartDashboard.putNumber("error", Math.toDegrees(falconEncoder - brAbsEncoder) %);
 	}
 }

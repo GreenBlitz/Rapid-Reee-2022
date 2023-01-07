@@ -3,7 +3,6 @@ package edu.greenblitz.pegasus.subsystems;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.awt.*;
 
@@ -52,7 +51,6 @@ public class Indexing extends GBSubsystem {
 	 */
 	public boolean isEnemyBallInSensor() {
 		DriverStation.Alliance a = instance.getBallColor();
-		SmartDashboard.putString("color", a.toString());
 		return a != alliance
 				&& a != DriverStation.Alliance.Invalid;
 	}
@@ -62,7 +60,6 @@ public class Indexing extends GBSubsystem {
 	 */
 	public boolean isTeamsBallInSensor() {
 		DriverStation.Alliance a = instance.getBallColor();
-		SmartDashboard.putString("color", a.toString());
 		return a == alliance
 				&& a != DriverStation.Alliance.Invalid;
 	}

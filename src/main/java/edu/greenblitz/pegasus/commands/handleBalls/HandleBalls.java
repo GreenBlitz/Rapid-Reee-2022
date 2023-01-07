@@ -50,7 +50,6 @@ public class HandleBalls extends IntakeCommand {
 		if (index.isEnemyBallInSensor()) {
 			if (Funnel.getInstance().isMacroSwitchPressed() || isBallInFunnel) {
 				isBallInFunnel = false;
-				SmartDashboard.putBoolean("isEvacuatingFromShooter", false);
 				//back direction
 				new ParallelDeadlineGroup(
 						new WaitCommand(0.5),
@@ -59,7 +58,6 @@ public class HandleBalls extends IntakeCommand {
 				).andThen(new RunFunnel().until(() -> Funnel.getInstance().isMacroSwitchPressed())).schedule(false);
 			} else {
 				//shooter evacuation
-				SmartDashboard.putBoolean("isEvacuatingFromShooter", true);
 				new ShooterEvacuate().raceWith(new WaitCommand(5)).schedule(false);
 
 			}

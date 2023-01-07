@@ -12,7 +12,7 @@ public class BatteryDisabler extends GBCommand {
 
 	private Battery battery;
 	
-	private static final int LEN_OF_AVG = 10;
+	private static final int LEN_OF_AVG = 50;
 	private LinearFilter voltageFilter;
 	
 
@@ -38,7 +38,8 @@ public class BatteryDisabler extends GBCommand {
 		double currentAverageVoltage = voltageFilter.calculate(battery.getCurrentVoltage());
 
 		if (currentAverageVoltage <= battery.getMinVoltage()&&DriverStation.getMatchType() == DriverStation.MatchType.None){
-
+			CommandScheduler.getInstance().cancelAll();
+			CommandScheduler.getInstance().disable();
 			throw new java.lang.RuntimeException("Battery is low");
 		}
 	}

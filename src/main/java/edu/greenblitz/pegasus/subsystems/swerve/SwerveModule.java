@@ -7,14 +7,12 @@ public interface SwerveModule {
 	void setModuleState(SwerveModuleState moduleState);
 
 	void rotateToAngle(double angle);
-
 	double getModuleAngle();
 
 	double getCurrentVelocity();
 
 
-	void resetEncoderToValue(double angle) //todo combine both into same overload
-	;
+	void resetEncoderToValue(double angle);
 
 	void resetEncoderToValue();
 
@@ -38,6 +36,6 @@ public interface SwerveModule {
 	double getAbsoluteEncoderValue();
 
 	void setRotPowerOnlyForCalibrations(double power);
-	
+
 	void setLinPowerOnlyForCalibrations(double power);
 }

@@ -1,7 +1,6 @@
 package edu.greenblitz.pegasus.commands.intake.roller;
 
 import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RollByTrigger extends RollerCommand {
 	private final SmartJoystick joystick;
@@ -12,7 +11,6 @@ public class RollByTrigger extends RollerCommand {
 
 	@Override
 	public void execute() {
-		SmartDashboard.putBoolean("RollByTrigger", true);
 		double power = joystick.getAxisValue(SmartJoystick.Axis.RIGHT_TRIGGER);
 		intake.moveRoller(-power);
 	}
@@ -24,7 +22,6 @@ public class RollByTrigger extends RollerCommand {
 
 	@Override
 	public void end(boolean interrupted) {
-		SmartDashboard.putBoolean("RollByConstant", false);
 		intake.moveRoller(0);
 	}
 }

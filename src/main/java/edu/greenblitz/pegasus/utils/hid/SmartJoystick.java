@@ -137,7 +137,6 @@ public class SmartJoystick { //todo use not this, but the WPILib equivalent
 	 */
 	public void rumble(boolean left, double power) {
 		joystick.setRumble(left ? GenericHID.RumbleType.kLeftRumble : GenericHID.RumbleType.kRightRumble, power);
-		SmartDashboard.putNumber((left ? "left" : "right") + " rumble", power);
 	}
 
 	public enum Axis {

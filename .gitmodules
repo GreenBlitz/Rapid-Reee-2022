@@ -1,4 +1,0 @@
-[submodule "src/main/java/edu/greenblitz/GBLib"]
-	path = src/main/java/edu/greenblitz/GBLib
-	url = https://github.com/GreenBlitz/GBLib.git
-	branch = GBLib-submodule

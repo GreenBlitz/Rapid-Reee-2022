@@ -43,17 +43,17 @@ public class PigeonGyro extends PigeonIMU {
 
 	@Override
 	public double getYaw(){
-		return GBMath.modulo(Math.toRadians(super.getYaw()) - yawOffset, 2 * Math.PI);
+		return GBMath.modulo((Math.toRadians(super.getYaw()) - yawOffset), 2 * Math.PI);
 	}
 
 	@Override
 	public double getPitch(){
-		return GBMath.modulo(Math.toRadians(super.getYaw()) - pitchOffset, 2 * Math.PI);
+		return GBMath.modulo((Math.toRadians(super.getYaw()) - pitchOffset) , 2 * Math.PI);
 	}
 
 	@Override
 	public double getRoll(){
-		return GBMath.modulo(Math.toRadians(super.getYaw()) - rollOffset, 2 * Math.PI);
+		return GBMath.modulo((Math.toRadians(super.getYaw()) - rollOffset) , 2 * Math.PI);
 	}
 
 

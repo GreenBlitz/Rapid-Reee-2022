@@ -9,7 +9,7 @@ import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
 import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
-import edu.greenblitz.pegasus.commands.swerve.RotateAllWheelsToAngle;
+import edu.greenblitz.pegasus.commands.swerve.MoveByVisionSupplier;
 import edu.greenblitz.pegasus.subsystems.Funnel;
 import edu.greenblitz.pegasus.subsystems.Intake;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
@@ -17,15 +17,14 @@ import edu.greenblitz.pegasus.utils.hid.SmartJoystick;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 
-
 public class OI { //GEVALD
-
 
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
 
 	private final SmartJoystick secondJoystick;
+
 
 	private OI() {
 		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.1);
@@ -50,9 +49,10 @@ public class OI { //GEVALD
 	}
 
 	private void initButtons() {
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
-		mainJoystick.Y.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetChassisAngle()));
+		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(false));
 
+		mainJoystick.Y.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetChassisAngle()));
+		mainJoystick.X.whenHeld(new MoveByVisionSupplier(false));
 		mainJoystick.POV_UP.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetAllEncoders()));
 
 		mainJoystick.R1.whenHeld(new StartEndCommand(() -> Intake.getInstance().getExtender().retract(),
