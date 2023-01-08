@@ -23,7 +23,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PathFollowerBuilder extends SwerveAutoBuilder{
-	
+
+
+	/** the use of the event map is to run a marker by its name run a command */
 	private static final HashMap<String, Command> eventMap = new HashMap<>();
 	static {
 		// the event name, the command()
@@ -55,7 +57,10 @@ public class PathFollowerBuilder extends SwerveAutoBuilder{
 		return instance;
 	}
 	
-	
+
+	/**
+	 * @return returns the command for the full auto (commands and trajectory included)
+	 * */
 	public CommandBase followPath(String pathName) {
 		
 		return fullAuto(PathPlanner.loadPath(
@@ -67,6 +72,7 @@ public class PathFollowerBuilder extends SwerveAutoBuilder{
 		);
 	}
 
+	/** get the WPILib trajectory object from a .path file */
 	public Trajectory getTrajectory (String trajectory){
 		return PathPlanner.loadPath(trajectory,
 				0.5,
