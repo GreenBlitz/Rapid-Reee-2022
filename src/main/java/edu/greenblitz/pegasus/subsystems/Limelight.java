@@ -79,6 +79,12 @@ public class Limelight extends GBSubsystem {
 	public boolean FindTarget(){
 		return camera.getLatestResult().hasTargets();
 	}
+	
+	/**
+	 *
+	 * @return the apriltag id
+	 */
+	public int FindTagId(){return camera.getLatestResult().getBestTarget().getFiducialId();}
 
 }
 
