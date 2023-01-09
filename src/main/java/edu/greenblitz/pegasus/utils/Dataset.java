@@ -14,7 +14,7 @@ import java.util.List;
 public class Dataset {
 
 	/**
-	 * The function is from R to R^n, then the dimension is n + 1. This is because a function as described is a n+1
+	 * The function is from R to R^n, then the dimension is n + 1. This is because a function as described is an n+1
 	 * dimensional curve.
 	 */
 	private int dimension;
@@ -106,8 +106,24 @@ public class Dataset {
 	 * known sample.
 	 */
 	public double[] linearlyInterpolate(double x){
+		if(Double.isNaN(x)){
+			throw new RuntimeException("x is NaN");
+		}
 		TwoTuple<TwoTuple<Double, double[]>, TwoTuple<Double, double[]>> data = getAdjesent(x);
-		double weight = (x - data.getFirst().getFirst()) / (data.getSecond().getFirst() - data.getFirst().getFirst());
+		double weight;
+		if(x == data.getFirst().getFirst()){
+			weight = 0;
+		}
+		else {
+			double denom = data.getSecond().getFirst() - data.getFirst().getFirst();
+			if (denom == 0) {
+				throw new RuntimeException("denom is 0" + x + " : " + data.getFirst().getFirst() + " : " + data.getSecond().getFirst());
+			}
+			weight = (x - data.getFirst().getFirst()) / (denom);
+			if (Double.isNaN(weight)) {
+				throw new RuntimeException("weight is NaN");
+			}
+		}
 		double[] ret = new double[dimension];
 		for (int i = 0; i < dimension - 1; i++){
 			ret[i] = data.getFirst().getSecond()[i] +

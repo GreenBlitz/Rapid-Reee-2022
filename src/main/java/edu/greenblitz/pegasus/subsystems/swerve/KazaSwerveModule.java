@@ -113,7 +113,11 @@ public class KazaSwerveModule implements SwerveModule {
 
 	@Override
 	public void resetEncoderByAbsoluteEncoder(SwerveChassis.Module module){
-		resetEncoderToValue(Calibration.CALIBRATION_DATASETS.get(module).linearlyInterpolate(getAbsoluteEncoderValue())[0] * NEO_PHYSICAL_TICKS_TO_RADIANS);
+		double lampreyDeterminedValue = Calibration.CALIBRATION_DATASETS.get(module).linearlyInterpolate(getAbsoluteEncoderValue())[0] * NEO_PHYSICAL_TICKS_TO_RADIANS;
+		if (Double.isNaN(lampreyDeterminedValue)){
+			throw new RuntimeException("the problem is in the reset encoder function");
+		}
+		resetEncoderToValue(lampreyDeterminedValue);
 	}
 	@Override
 	public void configLinPID(PIDObject pidObject) {
