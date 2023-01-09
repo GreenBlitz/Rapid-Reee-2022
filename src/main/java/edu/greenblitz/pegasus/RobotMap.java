@@ -42,6 +42,8 @@ public class RobotMap {
 		public static class Joystick {
 			public static final int MAIN = 0;
 			public static final int SECOND = 1;
+			
+			public static final int debug = 2;
 		}
 
 		public static class Intake {

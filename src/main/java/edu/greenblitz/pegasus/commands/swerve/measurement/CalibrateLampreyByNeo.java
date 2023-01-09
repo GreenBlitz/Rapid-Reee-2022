@@ -27,7 +27,7 @@ public class CalibrateLampreyByNeo extends SwerveCommand {
 	@Override
 	public void initialize() {
 		super.initialize();
-		swerve.resetAllEncoders();
+		swerve.resetEncodersByCalibrationRod();
 	}
 
 	@Override

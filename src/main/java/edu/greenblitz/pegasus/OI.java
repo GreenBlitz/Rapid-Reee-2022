@@ -1,5 +1,6 @@
 package edu.greenblitz.pegasus;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
@@ -10,6 +11,8 @@ import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.MoveByVisionSupplier;
+import edu.greenblitz.pegasus.commands.swerve.measurement.CalibrateAll;
+import edu.greenblitz.pegasus.commands.swerve.measurement.CalibrateLampreyByNeo;
 import edu.greenblitz.pegasus.subsystems.Funnel;
 import edu.greenblitz.pegasus.subsystems.Intake;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
@@ -22,13 +25,15 @@ public class OI { //GEVALD
 	private static OI instance;
 	private static boolean isHandled = true;
 	private final SmartJoystick mainJoystick;
-
+	
+	private final SmartJoystick thirdJoyStick;
 	private final SmartJoystick secondJoystick;
 
 
 	private OI() {
 		mainJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.MAIN, 0.1);
 		secondJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.SECOND, 0.2);
+		thirdJoyStick = new SmartJoystick(RobotMap.Pegasus.Joystick.debug);
 		initButtons();
 
 	}
@@ -70,7 +75,14 @@ public class OI { //GEVALD
 		secondJoystick.START.toggleWhenPressed(new ToggleRoller());
 		secondJoystick.POV_DOWN.whileHeld(new RunFunnel());
 		secondJoystick.POV_UP.whenPressed(new ShooterEvacuate());
+		
+		
 
+		
+		//debug joysticks
+		thirdJoyStick.X.toggleWhenPressed(new CalibrateAll());
+
+		
 	}
 
 	public SmartJoystick getMainJoystick() {
