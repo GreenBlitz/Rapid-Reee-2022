@@ -108,7 +108,7 @@ public class RobotMap {
 		public static class Funnel {
 			public static final double POWER = 0.7;
 			public static final double REVERSE_POWER = -0.7;
-			public static final int MACRO_SWITCH_PORT = 0;
+			public static final int MACRO_SWITCH_PORT = 1;
 
 			public static class FunnelMotor {
 				public static final int MOTOR_PORT = 5;
