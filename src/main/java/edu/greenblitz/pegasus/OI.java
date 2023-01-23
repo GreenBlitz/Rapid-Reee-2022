@@ -1,18 +1,12 @@
 package edu.greenblitz.pegasus;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
-import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
 import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
-import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
 import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
-import edu.greenblitz.pegasus.commands.swerve.MoveByVisionSupplier;
-import edu.greenblitz.pegasus.commands.swerve.measurement.CalibrateAll;
-import edu.greenblitz.pegasus.commands.swerve.measurement.CalibrateLampreyByNeo;
 import edu.greenblitz.pegasus.subsystems.Funnel;
 import edu.greenblitz.pegasus.subsystems.Intake;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
@@ -35,7 +29,6 @@ public class OI { //GEVALD
 		secondJoystick = new SmartJoystick(RobotMap.Pegasus.Joystick.SECOND, 0.2);
 		thirdJoyStick = new SmartJoystick(RobotMap.Pegasus.Joystick.debug);
 		initButtons();
-
 	}
 
 	public static OI getInstance() {
@@ -56,31 +49,27 @@ public class OI { //GEVALD
 	private void initButtons() {
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(false));
 
-		mainJoystick.Y.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetChassisAngle()));
-		mainJoystick.X.whenHeld(new MoveByVisionSupplier(false));
-		mainJoystick.POV_UP.whenPressed(new InstantCommand(() -> SwerveChassis.getInstance().resetAllEncoders()));
+		mainJoystick.Y.onTrue(new InstantCommand(() -> SwerveChassis.getInstance().resetChassisAngle(0)));
+		mainJoystick.POV_UP.onTrue(new InstantCommand(() -> SwerveChassis.getInstance().resetAllEncoders()));
 
-		mainJoystick.R1.whenHeld(new StartEndCommand(() -> Intake.getInstance().getExtender().retract(),
+		mainJoystick.R1.whileTrue(new StartEndCommand(() -> Intake.getInstance().getExtender().retract(),
 				() -> Intake.getInstance().getExtender().extend()));
 
-		secondJoystick.Y.whenHeld(new EjectEnemyBallFromGripper());
+		secondJoystick.Y.whileTrue(new EjectEnemyBallFromGripper());
 
-		secondJoystick.R1.whenHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM).andThen(new StopShooter()));
-
-		secondJoystick.A.whenHeld(new InsertIntoShooter());
-
-		secondJoystick.B.whenHeld(new RunRoller().alongWith(new RunFunnel().until(() -> Funnel.getInstance().isMacroSwitchPressed())));
+		secondJoystick.R1.whileTrue(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM).andThen(new StopShooter()));
 
 
-		secondJoystick.START.toggleWhenPressed(new ToggleRoller());
-		secondJoystick.POV_DOWN.whileHeld(new RunFunnel());
-		secondJoystick.POV_UP.whenPressed(new ShooterEvacuate());
+		secondJoystick.B.whileTrue(new RunRoller().alongWith(new RunFunnel().until(() -> Funnel.getInstance().isMacroSwitchPressed())));
+
+
+		secondJoystick.START.onTrue(new ToggleRoller());
+		secondJoystick.POV_DOWN.whileTrue(new RunFunnel());
 		
 		
 
 		
 		//debug joysticks
-		thirdJoyStick.X.toggleWhenPressed(new CalibrateAll());
 
 		
 	}

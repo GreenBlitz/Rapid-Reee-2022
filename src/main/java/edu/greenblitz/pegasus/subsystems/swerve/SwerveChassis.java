@@ -4,34 +4,27 @@ import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.subsystems.Limelight;
 import edu.greenblitz.pegasus.utils.PigeonGyro;
 import edu.greenblitz.pegasus.subsystems.GBSubsystem;
-import edu.greenblitz.pegasus.utils.GBMath;
 import edu.wpi.first.math.MatBuilder;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.*;
 import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.greenblitz.pegasus.utils.PigeonGyro;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+
+import java.util.function.Consumer;
 
 public class SwerveChassis extends GBSubsystem {
 	
-	private final SwerveModule frontRight, frontLeft, backRight, backLeft;
-	private final PigeonGyro pigeonGyro;
-	private final SwerveDriveKinematics kinematics;
-	private final SwerveDrivePoseEstimator poseEstimator;
+	private  KazaSwerveModule frontRight, frontLeft, backRight, backLeft;
+	private  PigeonGyro pigeonGyro;
+	private  SwerveDriveKinematics kinematics;
 	private final Field2d field = new Field2d();
-
 	
 	public enum Module {
 		FRONT_LEFT,
@@ -50,10 +43,10 @@ public class SwerveChassis extends GBSubsystem {
 		this.kinematics = new SwerveDriveKinematics(
 				RobotMap.Pegasus.Swerve.SwerveLocationsInSwerveKinematicsCoordinates
 		);
-		this.poseEstimator = new SwerveDrivePoseEstimator(this.getPigeonAngle(), Limelight.getInstance().estimateLocationByVision(), this.kinematics,
-				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01),
-				new MatBuilder<>(Nat.N1(), Nat.N1()).fill(0.1),//0.02),
-				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1,0.1,0.01));//0.1, 0.1, 0.01));
+//		this.poseEstimator = new SwerveDrivePoseEstimator(this.getPigeonAngle(), Limelight.getInstance().estimateLocationByVision(), this.kinematics,
+//				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01),
+//				new MatBuilder<>(Nat.N1(), Nat.N1()).fill(0.1),//0.02),
+//				new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1,0.1,0.01));//0.1, 0.1, 0.01));
 		SmartDashboard.putData("field",getField());
 		field.getObject("apriltag").setPose(RobotMap.Pegasus.Vision.apriltagLocation.toPose2d());
 	}
@@ -71,8 +64,9 @@ public class SwerveChassis extends GBSubsystem {
 	
 	@Override
 	public void periodic(){
-		updatePoseEstimation();
-		field.setRobotPose(getRobotPose());
+//		updatePoseEstimation();
+//		field.setRobotPose(getRobotPose());
+
 	}
 	
 	/**
@@ -144,7 +138,6 @@ public class SwerveChassis extends GBSubsystem {
 	 * make the pigeon (gyro) set this angle to be the angle in radians
 	 */
 	public void resetChassisAngle(double angInRads) {
-		
 		pigeonGyro.setYaw(angInRads);
 	}
 	
@@ -152,11 +145,19 @@ public class SwerveChassis extends GBSubsystem {
 	 * when no parameter is given reset the chassis angle to 0
 	 */
 	
-	public void resetChassisAngle() {
-		pigeonGyro.setYaw(0);
-		poseEstimator.resetPosition(new Pose2d(), getPigeonAngle());
-	}
-
+//	public Pose2d resetChassisPose() {
+//		pigeonGyro.setYaw(0);
+//		poseEstimator.resetPosition(new Pose2d(), getPigeonAngle());
+//		return poseEstimator.getEstimatedPosition();
+		
+	//}
+	
+//	public Pose2d resetChassisPose(Pose2d pose2d) {
+//		pigeonGyro.setYaw(pose2d.getRotation().getDegrees());
+//		poseEstimator.resetPosition(pose2d, getPigeonAngle());
+//		return poseEstimator.getEstimatedPosition();
+//
+//	}
 
 	/** returns chassis angle in radians */
 	private Rotation2d getPigeonAngle() {
@@ -164,7 +165,7 @@ public class SwerveChassis extends GBSubsystem {
 	}
 
 	public double getChassisAngle(){
-		return getRobotPose().getRotation().getRadians();
+		return pigeonGyro.getYaw();
 
 	}
 	
@@ -216,7 +217,9 @@ public class SwerveChassis extends GBSubsystem {
 	public SwerveDriveKinematics getKinematics() {
 		return this.kinematics;
 	}
-
+//	public Pose2d getLocation(){
+//		return this.poseEstimator.getEstimatedPosition();
+//	}
 	public PigeonGyro getPigeonGyro() {
 		return pigeonGyro;
 	}
@@ -247,19 +250,30 @@ public class SwerveChassis extends GBSubsystem {
 	public void rotateModuleByPower(Module module, double power) {
 		getModule(module).setRotPowerOnlyForCalibrations(power);
 	}
-	public void updatePoseEstimation(){ //todo NaN protection
-		poseEstimator.update(getPigeonAngle(),
-				frontLeft.getModuleState(), frontRight.getModuleState(),
-				backLeft.getModuleState(), backRight.getModuleState());
-		if(Limelight.getInstance().FindTarget()){poseEstimator.addVisionMeasurement(Limelight.getInstance().estimateLocationByVision(),Limelight.getInstance().getTimeStamp());}
-	}
+//	public void updatePoseEstimation(){ //todo NaN protection
+//		poseEstimator.update(getPigeonAngle(),
+//				frontLeft.getModuleState(), frontRight.getModuleState(),
+//				backLeft.getModuleState(), backRight.getModuleState());
+//		if(Limelight.getInstance().FindTarget()){poseEstimator.addVisionMeasurement(Limelight.getInstance().estimateLocationByVision(),Limelight.getInstance().getTimeStamp());}
+//	}
 
-	public Pose2d getRobotPose(){return poseEstimator.getEstimatedPosition();}
+	//public Pose2d getRobotPose(){return poseEstimator.getEstimatedPosition();}
 	
 	public Sendable getField(){return field;}
 
 	public SwerveModuleState getModuleState (Module module){
 	return getModule(module).getModuleState();
 	}
+	
+	public SwerveModuleState[] getModuleStates (){
+		SwerveModuleState[] states = {
+				getModuleState(Module.FRONT_RIGHT),
+				getModuleState(Module.FRONT_LEFT),
+				getModuleState(Module.BACK_LEFT),
+				getModuleState(Module.BACK_RIGHT)
+		};
+		return states;
+	}
+	
 	
 }

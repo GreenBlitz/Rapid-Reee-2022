@@ -1,9 +1,9 @@
 package edu.greenblitz.pegasus.subsystems;
 
-import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
 import edu.greenblitz.pegasus.utils.GBMath;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -36,7 +36,18 @@ public class Dashboard extends GBSubsystem {
 			sum+=SwerveChassis.getInstance().getModuleAngle(module);
 		}
 		SmartDashboard.putBoolean("an azimuth encoder is nan", Double.isNaN(sum));
-		SmartDashboard.putString("pose", SwerveChassis.getInstance().getRobotPose().toString());
 
+
+		SmartDashboard.putNumber("FR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_RIGHT)), 360));
+		SmartDashboard.putNumber("FL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.FRONT_LEFT)), 360));
+		SmartDashboard.putNumber("BR-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_RIGHT)), 360));
+		SmartDashboard.putNumber("BL-angle", GBMath.modulo(Math.toDegrees(SwerveChassis.getInstance().getModuleAngle(SwerveChassis.Module.BACK_LEFT)), 360));
+		
+		SmartDashboard.putNumber("FR-abs-encoder-volt", SwerveChassis.getInstance().getModuleAbsoluteValue(SwerveChassis.Module.FRONT_RIGHT));
+		SmartDashboard.putNumber("FL-abs-encoder-volt", SwerveChassis.getInstance().getModuleAbsoluteValue(SwerveChassis.Module.FRONT_LEFT));
+		SmartDashboard.putNumber("BR-abs-encoder-volt", SwerveChassis.getInstance().getModuleAbsoluteValue(SwerveChassis.Module.BACK_RIGHT));
+		SmartDashboard.putNumber("BL-abs-encoder-volt", SwerveChassis.getInstance().getModuleAbsoluteValue(SwerveChassis.Module.BACK_LEFT));
+		
+		SmartDashboard.putString("alliance", DriverStation.getAlliance().toString());
 	}
 }

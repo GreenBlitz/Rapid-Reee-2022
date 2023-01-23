@@ -4,7 +4,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.greenblitz.pegasus.RobotMap;
-import edu.greenblitz.pegasus.utils.Dataset;
 import edu.greenblitz.pegasus.utils.GBMath;
 import edu.greenblitz.pegasus.utils.PIDObject;
 import edu.greenblitz.pegasus.utils.motors.GBSparkMax;
@@ -112,8 +111,8 @@ public class KazaSwerveModule implements SwerveModule {
 
 
 	@Override
-	public void resetEncoderByAbsoluteEncoder(SwerveChassis.Module module){
-		double lampreyDeterminedValue = Calibration.CALIBRATION_DATASETS.get(module).linearlyInterpolate(getAbsoluteEncoderValue())[0] * NEO_PHYSICAL_TICKS_TO_RADIANS;
+	public void resetEncoderByAbsoluteEncoder(SwerveChassis.Module module) {
+		double lampreyDeterminedValue = 1 * NEO_PHYSICAL_TICKS_TO_RADIANS;
 		if (Double.isNaN(lampreyDeterminedValue)){
 			throw new RuntimeException("the problem is in the reset encoder function");
 		}
@@ -128,7 +127,7 @@ public class KazaSwerveModule implements SwerveModule {
 	public void configAnglePID(PIDObject pidObject) {
 		angleMotor.configPID(pidObject);
 	}
-
+	
 
 	@Override
 	public void setLinSpeed(double speed) {

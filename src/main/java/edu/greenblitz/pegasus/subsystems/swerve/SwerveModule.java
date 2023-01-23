@@ -36,6 +36,5 @@ public interface SwerveModule {
 	double getAbsoluteEncoderValue();
 
 	void setRotPowerOnlyForCalibrations(double power);
-
 	void setLinPowerOnlyForCalibrations(double power);
 }

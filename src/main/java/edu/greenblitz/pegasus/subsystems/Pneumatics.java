@@ -37,7 +37,7 @@ public class Pneumatics extends GBSubsystem {
 	}
 
 	public boolean isEnabled() {
-		return compressor.enabled();
+		return compressor.isEnabled();
 	}
 
 	public void reset(){
