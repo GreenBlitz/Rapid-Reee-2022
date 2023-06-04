@@ -9,7 +9,6 @@ import edu.greenblitz.pegasus.utils.motors.GBSparkMax;
 
 public class Shooter extends GBSubsystem {
 	
-	private final static double RPM = 3000;
 	private int flipped = 1;
 	private final GBSparkMax motor;
 	private boolean preparedToShoot;
