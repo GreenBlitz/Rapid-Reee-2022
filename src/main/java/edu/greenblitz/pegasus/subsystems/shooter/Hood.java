@@ -4,6 +4,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.subsystems.GBSubsystem;
+import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.utils.cords.Point;
 import edu.greenblitz.pegasus.utils.motors.GBSparkMax;
 import edu.wpi.first.wpilibj.DigitalInput;
 
@@ -36,10 +38,21 @@ public class Hood extends GBSubsystem {
 	public void setHoodAngle(double angle){
 		hoodMotor.getPIDController().setReference(angle, CANSparkMax.ControlType.kPosition);
 	}
-	
-	
-	
-	
-	
-	
+
+
+	@Override
+	public void periodic() {
+
+		Point target = RobotMap.GameField.SHOOTING_TARGET_POINT;
+
+		double distanceFromTarget = Math.sqrt(
+				Math.pow(target.getX() - SwerveChassis.getInstance().getRobotPose().getX(),2)+
+						Math.pow( target.getY() - SwerveChassis.getInstance().getRobotPose().getY(),2)
+
+
+		);
+
+		distanceFromTarget = Math.abs(distanceFromTarget);
+		this.setHoodAngle(RobotMap.Pegasus.Shooter.DISTANCE_TO_SHOOTING.linearlyInterpolate(distanceFromTarget)[0]);
+	}
 }

@@ -2,7 +2,6 @@ package edu.greenblitz.pegasus;
 
 
 import edu.greenblitz.pegasus.commands.BatteryDisabler;
-import edu.greenblitz.pegasus.commands.auto.Taxi;
 import edu.greenblitz.pegasus.subsystems.Battery;
 import edu.greenblitz.pegasus.subsystems.Dashboard;
 import edu.greenblitz.pegasus.subsystems.Indexing;
@@ -30,7 +29,6 @@ public class Robot extends TimedRobot {
 		PortForwarder.add(5803, "gloworm.local", 5803);
 		PortForwarder.add(5804, "gloworm.local", 5804);
 		PortForwarder.add(5805, "gloworm.local", 5805);
-		Shooter.create(RobotMap.Pegasus.Shooter.ShooterMotor.PORT_LEADER);
 		LiveWindow.disableAllTelemetry();
 		Battery.getInstance().setDefaultCommand(new BatteryDisabler());
 		

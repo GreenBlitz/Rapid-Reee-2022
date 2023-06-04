@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMax;
 import edu.greenblitz.pegasus.subsystems.swerve.KazaSwerveModule;
 import edu.greenblitz.pegasus.subsystems.swerve.SdsSwerveModule;
 import edu.greenblitz.pegasus.utils.PIDObject;
+import edu.greenblitz.pegasus.utils.cords.Point;
 import edu.greenblitz.pegasus.utils.motors.GBFalcon;
 import edu.greenblitz.pegasus.utils.motors.GBSparkMax;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -15,6 +16,11 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import org.greenblitz.motion.interpolation.Dataset;
 
 public class RobotMap {
+	public static class GameField{
+		//todo place real coordinates
+		public static final Point SHOOTING_TARGET_POINT = new Point(5,5); //currently one point maybe later add more
+
+	}
 	public static class Pegasus {
 		public static class General {
 			public final static double minVoltageBattery = 11;
@@ -63,19 +69,41 @@ public class RobotMap {
 			
 			public static class Hood{
 				public static final int MOTOR_ID = 8;
+
 				public static final int LIMIT_SWITCH = 3;
+
+
+				//todo calibrate
+				public static final double kS = 0;
+				public static final double kV = 0;
+				public static final double kA = 0;
+
+				public static final SimpleMotorFeedforward FEED_FORWARD = new SimpleMotorFeedforward(Hood.kS, Hood.kV, Hood.kA);
+
+
+				public static final double GEAR_RATIO = 1;
+				public static final PIDObject PID = new PIDObject(1, 1, 0);
+
+				public static final GBSparkMax.SparkMaxConfObject MOTOR_CONF =  new GBSparkMax.SparkMaxConfObject()
+						.withInverted(false) //whether the motor should be flipped
+						.withCurrentLimit(40) // the max current to allow should be inline with the fuse
+						.withIdleMode(CANSparkMax.IdleMode.kBrake) // trying to force brake is harmful for the motor
+						.withRampRate(General.RAMP_RATE_VAL) // prevents the motor from drawing to much when rapidly changing speeds
+						.withVoltageComp(General.VOLTAGE_COMP_VAL) // makes for more reproducible results
+						.withPositionConversionFactor(GEAR_RATIO)
+						.withVelocityConversionFactor(GEAR_RATIO)
+						.withPID(PID);
+
 			}
-			public static class ShooterMotor {
-				public static final int PORT_LEADER = 7;
-				
-				public static final double RPM = 2350;
-				
+			public static class FlyWheel {
+				public static final int ID = 7;
+
 				// devided by 60 because the SysID is in RPS and our code is in RPM
 				public static final double ks = 0.31979 / 60; //todo
 				public static final double kv = 0.13012 / 60;
 				public static final double ka = 0.017243 / 60;
 				
-				public static final GBSparkMax.SparkMaxConfObject shooterConf = new GBSparkMax.SparkMaxConfObject()
+				public static final GBSparkMax.SparkMaxConfObject SHOOTER_MOTOR_CONF = new GBSparkMax.SparkMaxConfObject()
 						.withInverted(true) //whether the motor should be flipped
 						.withCurrentLimit(40) // the max current to allow should be inline with the fuse
 						.withIdleMode(CANSparkMax.IdleMode.kCoast) // trying to force brake is harmful for the motor
@@ -84,15 +112,20 @@ public class RobotMap {
 						.withPositionConversionFactor(1) // todo the gear ratio was not used on the shooter at any point this year should change but not trivial
 						.withVelocityConversionFactor(1)
 						.withPID(new PIDObject(0.0003, 0.0000003, 0).withIZone(300));
-				
-				
+
+
+
+				public static final SimpleMotorFeedforward FEED_FORWARD = new SimpleMotorFeedforward(FlyWheel.ks, FlyWheel.kv, FlyWheel.ka);
+
+				public static final double TOLERANCE = 5; //RPM
+
 			}
 			
 		
-			public static final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(ShooterMotor.ks, ShooterMotor.kv, ShooterMotor.ka);
-			
+
 			public static final Dataset DISTANCE_TO_SHOOTING = new Dataset(2);
-			
+
+
 			
 			static {
 				

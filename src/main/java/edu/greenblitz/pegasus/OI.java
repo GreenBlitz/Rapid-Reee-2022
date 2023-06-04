@@ -1,6 +1,5 @@
 package edu.greenblitz.pegasus;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import edu.greenblitz.pegasus.commands.funnel.RunFunnel;
 import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
@@ -12,7 +11,6 @@ import edu.greenblitz.pegasus.commands.shooter.StopShooter;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.MoveByVisionSupplier;
 import edu.greenblitz.pegasus.commands.swerve.measurement.CalibrateAll;
-import edu.greenblitz.pegasus.commands.swerve.measurement.CalibrateLampreyByNeo;
 import edu.greenblitz.pegasus.subsystems.Funnel;
 import edu.greenblitz.pegasus.subsystems.Intake;
 import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
@@ -65,7 +63,6 @@ public class OI { //GEVALD
 
 		secondJoystick.Y.whenHeld(new EjectEnemyBallFromGripper());
 
-		secondJoystick.R1.whenHeld(new ShooterByRPM(RobotMap.Pegasus.Shooter.ShooterMotor.RPM).andThen(new StopShooter()));
 
 		secondJoystick.A.whenHeld(new InsertIntoShooter());
 
@@ -74,8 +71,7 @@ public class OI { //GEVALD
 
 		secondJoystick.START.toggleWhenPressed(new ToggleRoller());
 		secondJoystick.POV_DOWN.whileHeld(new RunFunnel());
-		secondJoystick.POV_UP.whenPressed(new ShooterEvacuate());
-		
+
 		
 
 		
