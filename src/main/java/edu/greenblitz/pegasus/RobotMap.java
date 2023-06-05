@@ -94,6 +94,9 @@ public class RobotMap {
 						.withVelocityConversionFactor(GEAR_RATIO)
 						.withPID(PID);
 
+
+				public static final double TOLERANCE = Units.degreesToRadians(3);
+
 			}
 			public static class FlyWheel {
 				public static final int ID = 7;

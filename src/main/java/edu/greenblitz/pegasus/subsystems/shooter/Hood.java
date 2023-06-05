@@ -9,11 +9,11 @@ import edu.greenblitz.pegasus.utils.cords.Point;
 import edu.greenblitz.pegasus.utils.motors.GBSparkMax;
 import edu.wpi.first.wpilibj.DigitalInput;
 
-import java.awt.image.AreaAveragingScaleFilter;
-
 public class Hood extends GBSubsystem {
 	GBSparkMax hoodMotor;
 	DigitalInput microSwitch;
+
+	private double targetAngle;
 	
 	private static Hood instance;
 	public static Hood getInstance(){
@@ -25,6 +25,7 @@ public class Hood extends GBSubsystem {
 	private Hood(){
 		this.hoodMotor = new GBSparkMax(RobotMap.Pegasus.Shooter.Hood.MOTOR_ID, CANSparkMaxLowLevel.MotorType.kBrushless);
 		this.microSwitch = new DigitalInput(RobotMap.Pegasus.Shooter.Hood.LIMIT_SWITCH);
+		targetAngle = 0;
 	}
 	
 	public double getAngle(){
@@ -36,6 +37,7 @@ public class Hood extends GBSubsystem {
 	}
 	
 	public void setHoodAngle(double angle){
+		targetAngle = angle;
 		hoodMotor.getPIDController().setReference(angle, CANSparkMax.ControlType.kPosition);
 	}
 
@@ -55,4 +57,9 @@ public class Hood extends GBSubsystem {
 		distanceFromTarget = Math.abs(distanceFromTarget);
 		this.setHoodAngle(RobotMap.Pegasus.Shooter.DISTANCE_TO_SHOOTING.linearlyInterpolate(distanceFromTarget)[0]);
 	}
+
+	public boolean isAtAngle (){
+		return this.getAngle() - targetAngle < RobotMap.Pegasus.Shooter.Hood.TOLERANCE;
+	}
+
 }
