@@ -24,10 +24,16 @@ public class Hood extends GBSubsystem {
 	}
 	private Hood(){
 		this.hoodMotor = new GBSparkMax(RobotMap.Pegasus.Shooter.Hood.MOTOR_ID, CANSparkMaxLowLevel.MotorType.kBrushless);
+		this.hoodMotor.config(RobotMap.Pegasus.Shooter.Hood.MOTOR_CONF);
+
 		this.microSwitch = new DigitalInput(RobotMap.Pegasus.Shooter.Hood.LIMIT_SWITCH);
 		targetAngle = 0;
 	}
-	
+
+
+	/**
+	 * @return angle in radians
+	 * */
 	public double getAngle(){
 		return hoodMotor.getEncoder().getPosition();
 	}
@@ -35,7 +41,11 @@ public class Hood extends GBSubsystem {
 	public boolean isPressed(){
 		return microSwitch.get();
 	}
-	
+
+
+	/**
+	 * @param angle angle in radians
+	 */
 	public void setHoodAngle(double angle){
 		targetAngle = angle;
 		hoodMotor.getPIDController().setReference(angle, CANSparkMax.ControlType.kPosition);
@@ -47,15 +57,11 @@ public class Hood extends GBSubsystem {
 
 		Point target = RobotMap.GameField.SHOOTING_TARGET_POINT;
 
-		double distanceFromTarget = Math.sqrt(
-				Math.pow(target.getX() - SwerveChassis.getInstance().getRobotPose().getX(),2)+
-						Math.pow( target.getY() - SwerveChassis.getInstance().getRobotPose().getY(),2)
-
-
-		);
-
-		distanceFromTarget = Math.abs(distanceFromTarget);
-		this.setHoodAngle(RobotMap.Pegasus.Shooter.DISTANCE_TO_SHOOTING.linearlyInterpolate(distanceFromTarget)[0]);
+		double distance = Point.dist(target, new Point(
+				SwerveChassis.getInstance().getRobotPose().getX(),
+				SwerveChassis.getInstance().getRobotPose().getY()
+		));
+		this.setHoodAngle(RobotMap.Pegasus.Shooter.DISTANCE_TO_SHOOTING.linearlyInterpolate(distance)[0]);
 	}
 
 	public boolean isAtAngle (){

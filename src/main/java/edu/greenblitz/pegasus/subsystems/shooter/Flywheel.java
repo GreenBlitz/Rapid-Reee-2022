@@ -5,6 +5,8 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
 import edu.greenblitz.pegasus.RobotMap;
 import edu.greenblitz.pegasus.subsystems.GBSubsystem;
+import edu.greenblitz.pegasus.subsystems.swerve.SwerveChassis;
+import edu.greenblitz.pegasus.utils.cords.Point;
 import edu.greenblitz.pegasus.utils.motors.GBSparkMax;
 
 public class Flywheel extends GBSubsystem {
@@ -14,7 +16,7 @@ public class Flywheel extends GBSubsystem {
 
     private Flywheel() {
         this.motor = new GBSparkMax(RobotMap.Pegasus.Shooter.FlyWheel.ID, CANSparkMaxLowLevel.MotorType.kBrushless);
-        motor.config(RobotMap.Pegasus.Shooter.FlyWheel.SHOOTER_MOTOR_CONF);
+        motor.config(RobotMap.Pegasus.Shooter.FlyWheel.FLYWHEEL_CONF);
         speedTarget = 0;
     }
 
@@ -47,6 +49,14 @@ public class Flywheel extends GBSubsystem {
     }
 
 
+    @Override
+    public void periodic() {
+        Point target = RobotMap.GameField.SHOOTING_TARGET_POINT;
 
-
+        double distance = Point.dist(target, new Point(
+                SwerveChassis.getInstance().getRobotPose().getX(),
+                SwerveChassis.getInstance().getRobotPose().getY()
+        ));
+        this.setShooterSpeed(RobotMap.Pegasus.Shooter.DISTANCE_TO_SHOOTING.linearlyInterpolate(distance)[1]);
+    }
 }

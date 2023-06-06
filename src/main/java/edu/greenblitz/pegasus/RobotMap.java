@@ -106,7 +106,7 @@ public class RobotMap {
 				public static final double kv = 0.13012 / 60;
 				public static final double ka = 0.017243 / 60;
 				
-				public static final GBSparkMax.SparkMaxConfObject SHOOTER_MOTOR_CONF = new GBSparkMax.SparkMaxConfObject()
+				public static final GBSparkMax.SparkMaxConfObject FLYWHEEL_CONF = new GBSparkMax.SparkMaxConfObject()
 						.withInverted(true) //whether the motor should be flipped
 						.withCurrentLimit(40) // the max current to allow should be inline with the fuse
 						.withIdleMode(CANSparkMax.IdleMode.kCoast) // trying to force brake is harmful for the motor
