@@ -3,40 +3,51 @@ package edu.greenblitz.pegasus.commands.indexing;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromShooter;
 import edu.greenblitz.pegasus.commands.multiSystem.MoveBallUntilClick;
-import edu.greenblitz.pegasus.subsystems.Indexing;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class HandleBalls extends IndexingCommand{
-	private Command lastCommand;
+	private Command runningCommand;
 
 	@Override
 	public void initialize() {
-		lastCommand = null;
+		runningCommand = null;
+	}
+
+	private boolean isCommandNeeded() {
+		return runningCommand == null || runningCommand.isFinished();
+	}
+
+	private void insertFriendlyBall() {
+		System.out.println("Adding a ball");
+		indexing.addBall();
+
+		if (!indexing.isBallUp()) {
+			System.out.println("Moving until click");
+			runningCommand = new MoveBallUntilClick();
+			runningCommand.schedule(false);
+		}
+	}
+
+	private void ejectEnemyBall() {
+		System.out.println("Trying to eject");
+		if (!indexing.isBallUp()) {
+			System.out.println("Ejecting from shooter");
+			runningCommand = new EjectEnemyBallFromShooter();
+		} else {
+			System.out.println("Ejecting from gripper");
+			runningCommand = new EjectEnemyBallFromGripper();
+		}
+		runningCommand.schedule(false);
 	}
 
 	@Override
 	public void execute() {
-		if(lastCommand == null || lastCommand.isFinished()) { //need to do an action - not action is active right now
-			if (indexing.getPerceivedColor() == indexing.getAllianceColor()) { //the incoming ball is the same color
-				System.out.println("Adding a ball");
-				indexing.addBall();
-				if (!indexing.isBallUp()) { //the incoming ball is the first ball
-					System.out.println("Moving until click");
-					lastCommand = new MoveBallUntilClick();
-					lastCommand.schedule(false);
-				}else{
-					//No need for action - the incoming ball is the second ball
-				}
-			} else if(indexing.getPerceivedColor() != Indexing.BallColor.OTHER){ //the incoming ball is the second ball
-				System.out.println("Trying to eject");
-				if (!indexing.isBallUp()) { // there are no balls in the system - shoot by shooter
-					System.out.println("Shooter");
-					lastCommand = new EjectEnemyBallFromShooter();
-				}else{ //there is one ball in the system - shoot by gripper
-					System.out.println("Gripper");
-					lastCommand = new EjectEnemyBallFromGripper();
-				}
-				lastCommand.schedule(false);
+		if(isCommandNeeded()) {
+			if (indexing.getPerceivedColor() == indexing.getAllianceColor()) {
+				insertFriendlyBall();
+			} else if (indexing.getPerceivedColor() != DriverStation.Alliance.Invalid){
+				ejectEnemyBall();
 			}
 		}
 	}

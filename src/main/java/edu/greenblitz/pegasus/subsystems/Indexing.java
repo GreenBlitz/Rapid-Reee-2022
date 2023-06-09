@@ -7,23 +7,19 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj2.command.Command;
-
-import java.util.Queue;
 
 public class Indexing extends GBSubsystem {
-	private final I2C.Port i2cPort = I2C.Port.kOnboard;
 	private final ColorSensorV3 colorSensor;
 	private final DigitalInput macroSwitch;
 	private int ballCount;
-	private BallColor allianceColor;
+	private DriverStation.Alliance allianceColor;
 
 	private static Indexing instance;
 
+	private static final I2C.Port i2cPort = I2C.Port.kOnboard;
 	private static final double MARGIN_OF_ERROR = 0.1;
 	private static final double THRESHOLD = 0.3;
-
-	public enum BallColor {RED, BLUE, OTHER}
+	private static final int MAX_BALL_COUNT = 2;
 
 	private Indexing() {
 		colorSensor = new ColorSensorV3(i2cPort);
@@ -43,10 +39,11 @@ public class Indexing extends GBSubsystem {
 		return instance;
 	}
 
-	public Color getColor() {
+	public Color getColor() throws Exception {
 		Color color = colorSensor.getColor();
-		if(color.blue == color.red && color.red == color.green && color.green == 0)
-			System.out.println("Color Sensor is not connected");
+		if(color.blue == color.red && color.red == color.green && color.green == 0){
+			throw new Exception("Color sensor is not connected");
+		}
 		return color;
 	}
 
@@ -54,24 +51,28 @@ public class Indexing extends GBSubsystem {
 		return macroSwitch.get();
 	}
 
-	public BallColor getPerceivedColor() {
-		Color color = this.getColor();
-		BallColor perceivedColor = BallColor.OTHER;
-		if (color.red - color.blue > (MARGIN_OF_ERROR) && color.red > THRESHOLD) {
-			perceivedColor = BallColor.RED;
-		} else if (color.blue - color.red > (MARGIN_OF_ERROR) && color.blue > THRESHOLD) {
-			perceivedColor = BallColor.BLUE;
+	public DriverStation.Alliance getPerceivedColor() {
+		try {
+			Color color = this.getColor();
+			if (color.red - color.blue > MARGIN_OF_ERROR && color.red > THRESHOLD) {
+				return DriverStation.Alliance.Red;
+			} else if (color.blue - color.red > MARGIN_OF_ERROR && color.blue > THRESHOLD) {
+				return DriverStation.Alliance.Blue;
+			}
+			return DriverStation.Alliance.Invalid;
+		} catch (Exception e) {
+			return DriverStation.Alliance.Invalid;
 		}
-		return perceivedColor;
 	}
 
-	public BallColor getAllianceColor(){
+	public DriverStation.Alliance getAllianceColor(){
 		return this.allianceColor;
 	}
 
 	public void addBall(){
-		if(this.ballCount < 2)
+		if(this.ballCount < MAX_BALL_COUNT) {
 			this.ballCount++;
+		}
 	}
 
 	public void resetBallCount(){
@@ -83,6 +84,6 @@ public class Indexing extends GBSubsystem {
 	}
 
 	public void initSetAlliance(){
-		allianceColor = DriverStation.getAlliance() == DriverStation.Alliance.Blue ? BallColor.BLUE : BallColor.RED;
+		allianceColor = DriverStation.getAlliance();
 	}
 }
