@@ -12,9 +12,7 @@ import edu.greenblitz.pegasus.commands.intake.extender.ToggleRoller;
 import edu.greenblitz.pegasus.commands.intake.roller.RunRoller;
 import edu.greenblitz.pegasus.commands.multiSystem.EjectEnemyBallFromGripper;
 import edu.greenblitz.pegasus.commands.multiSystem.InsertIntoShooter;
-import edu.greenblitz.pegasus.commands.shooter.FlipShooter;
-import edu.greenblitz.pegasus.commands.shooter.ShooterByRPM;
-import edu.greenblitz.pegasus.commands.shooter.ShooterEvacuate;
+import edu.greenblitz.pegasus.commands.shooter.*;
 import edu.greenblitz.pegasus.commands.swerve.CombineJoystickMovement;
 import edu.greenblitz.pegasus.commands.swerve.SwerveCommand;
 import edu.greenblitz.pegasus.commands.swerve.garbage.CalibrateMaxMin;
@@ -59,20 +57,10 @@ public class OI {
 	}
 	
 	private void initDebugButtons() {
-		SwerveChassis.getInstance().resetAllEncodersByValues();
-//		SwerveChassis.getInstance().resetChassisAngle(0);
-		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
-		mainJoystick.X.whileHeld(new ShooterByRPM(2000));
-		mainJoystick.Y.whileHeld(new RunFunnel());
-		mainJoystick.A.whileHeld(new RunRoller());
-		mainJoystick.B.whenPressed(new ToggleRoller());
-		
-		mainJoystick.L1.whenPressed(new ParallelCommandGroup(
-				new CalibrateMaxMin(0.2, SwerveChassis.Module.FRONT_RIGHT),
-				new CalibrateMaxMin(0.2, SwerveChassis.Module.FRONT_LEFT),
-				new CalibrateMaxMin(0.2, SwerveChassis.Module.BACK_RIGHT),
-				new CalibrateMaxMin(0.2, SwerveChassis.Module.BACK_LEFT)
-		));
+
+		mainJoystick.B.whileHeld(new RollShooter());
+		mainJoystick.X.whileHeld(new RollFunnel());
+		mainJoystick.A.whileHeld(new RollIntake());
 		
 		
 	}
