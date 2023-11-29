@@ -81,7 +81,6 @@ public class OI {
 	}
 	
 	private void initAmirButtons() {
-		//Indexing.getInstance().setDefaultCommand(new HandleBalls());
 		SwerveChassis.getInstance().setDefaultCommand(new CombineJoystickMovement(mainJoystick, false));
 		mainJoystick.Y.whenPressed(new SwerveCommand() {
 			@Override
