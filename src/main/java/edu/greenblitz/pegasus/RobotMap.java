@@ -71,6 +71,7 @@ public class RobotMap {
 		public static class Funnel {
 			public static final double POWER = 0.7;
 			public static final double REVERSE_POWER = -0.7;
+			public static final int MACRO_SWITCH_PORT = 0;
 			
 			public static class FunnelMotor {
 				public static final int MOTOR_PORT = 5;
@@ -89,6 +90,9 @@ public class RobotMap {
 			}
 		}
 		
+		public static class DigitalInputMap {
+			public static final int MACRO_SWITCH = 0;
+		}
 		
 		public static class Swerve {
 			public static final double WHEEL_CIRC = 0.0517 * 2 * Math.PI; //very accurate right now
