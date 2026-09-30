@@ -28,6 +28,7 @@ public class Funnel extends GBSubsystem {
 	public void moveMotor(boolean reversed) {
 		moveMotor(reversed ? RobotMap.Pegasus.Funnel.REVERSE_POWER : RobotMap.Pegasus.Funnel.POWER);
 	}
+	
 
 	public void moveMotor() {
 		moveMotor(false);
